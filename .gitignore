@@ -2,3 +2,5 @@ venv/
 .direnv/
 db.sqlite3
 __pycache__/
+.env
+secret.ini
