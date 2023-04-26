@@ -13,7 +13,9 @@ class Channel(models.Model):
 
 class Video(models.Model):
     yt_id = models.CharField(max_length=11, unique=True)
-    channel = models.ForeignKey(Channel, on_delete=models.CASCADE)
+    channel = models.ForeignKey(
+        Channel, related_name="videos", on_delete=models.CASCADE
+    )
     date_publication = models.DateTimeField("date of video publication")
 
     def __str__(self):
@@ -22,7 +24,9 @@ class Video(models.Model):
 
 class ChannelSnapshot(models.Model):
     name_en = models.CharField(max_length=20)
-    channel = models.ForeignKey(Channel, on_delete=models.CASCADE)
+    channel = models.ForeignKey(
+        Channel, related_name="snapshots", on_delete=models.CASCADE
+    )
     count_subscribers = models.IntegerField(default=0, blank=True, null=True)
     count_views = models.IntegerField(default=0, blank=True, null=True)
     count_videos = models.IntegerField(default=0, blank=True, null=True)
@@ -37,7 +41,7 @@ class ChannelSnapshot(models.Model):
 
 class VideoSnapshot(models.Model):
     title_en = models.CharField(max_length=100)
-    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+    video = models.ForeignKey(Video, related_name="snapshots", on_delete=models.CASCADE)
     count_views = models.IntegerField(default=0, blank=True, null=True)
     count_likes = models.IntegerField(default=0, blank=True, null=True)
     count_comments = models.IntegerField(default=0, blank=True, null=True)
@@ -53,8 +57,10 @@ class ChannelRating(models.Model):
     rating = models.PositiveIntegerField(
         default=0, validators=[MinValueValidator(0), MaxValueValidator(10)]
     )
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    channel = models.ForeignKey(Channel, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name="ratings", on_delete=models.CASCADE)
+    channel = models.ForeignKey(
+        Channel, related_name="ratings", on_delete=models.CASCADE
+    )
     date_publication = models.DateTimeField("date of rating publication")
     review_title = models.TextField(max_length=100, blank=True)
     review_body = models.TextField(max_length=5000, blank=True)
