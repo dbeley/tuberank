@@ -1,0 +1,16 @@
+{% load rest_framework %}
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+
+<h1>Channel - {{ channel.last_snapshot.name }}</h1>
+
+<form action="{% url 'channel_detail_html' pk=channel.pk %}" method="post" novalidate>
+    {% csrf_token %}
+    {% render_form serializer template_pack='rest_framework/vertical' %}
+    <button type="submit" class="btn btn-default">Save</button>
+</form>
+</body></html>

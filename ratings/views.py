@@ -24,6 +24,20 @@ class ChannelViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
+class ChannelRatingViewSet(viewsets.ModelViewSet):
+    serializer_class = ChannelRatingSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return ChannelRating.objects.filter(user=user).order_by("date_publication")
+
+    def perform_create(self, serializer):
+        serializer.save(
+            user=self.request.user, date_publication=datetime.now(timezone.utc)
+        )
+
+
 class VideoViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Video.objects.all().order_by("-date_publication")
     serializer_class = VideoSerializer
@@ -37,20 +51,6 @@ class VideoRatingViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         return VideoRating.objects.filter(user=user).order_by("date_publication")
-
-    def perform_create(self, serializer):
-        serializer.save(
-            user=self.request.user, date_publication=datetime.now(timezone.utc)
-        )
-
-
-class ChannelRatingViewSet(viewsets.ModelViewSet):
-    serializer_class = ChannelRatingSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        return ChannelRating.objects.filter(user=user).order_by("date_publication")
 
     def perform_create(self, serializer):
         serializer.save(

@@ -71,7 +71,7 @@ class ChannelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Channel
-        fields = ["yt_id", "date_creation", "last_snapshot", "videos"]
+        fields = ["pk", "yt_id", "date_creation", "last_snapshot", "videos"]
 
 
 class ChannelSnapshotSerializer(serializers.ModelSerializer):
@@ -91,6 +91,7 @@ class ChannelSnapshotSerializer(serializers.ModelSerializer):
 
 class ChannelRatingSerializer(serializers.ModelSerializer):
     date_publication = serializers.DateTimeField(read_only=True)
+    channel = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = ChannelRating
