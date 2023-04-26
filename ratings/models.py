@@ -15,12 +15,6 @@ class Video(models.Model):
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE)
 
 
-class VideoSnapshot(models.Model):
-    count_views = models.IntegerField(default=0)
-    date_creation = models.DateTimeField("date of snapshot creation")
-    video = models.ForeignKey(Video, on_delete=models.CASCADE)
-
-
 class ChannelSnapshot(models.Model):
     count_subscribers = models.IntegerField(default=0)
     count_views = models.IntegerField(default=0)
@@ -28,7 +22,13 @@ class ChannelSnapshot(models.Model):
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE)
 
 
-class VideoRating(models.Model):
+class VideoSnapshot(models.Model):
+    count_views = models.IntegerField(default=0)
+    date_creation = models.DateTimeField("date of snapshot creation")
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+
+
+class ChannelRating(models.Model):
     rating = models.IntegerField(min_value=0, max_value=10)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date_publication = models.DateTimeField("date of rating publication")
@@ -36,7 +36,7 @@ class VideoRating(models.Model):
     review_body = models.TextField(max_length=5000, blank=True)
 
 
-class ChannelRating(models.Model):
+class VideoRating(models.Model):
     rating = models.IntegerField(min_value=0, max_value=10)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date_publication = models.DateTimeField("date of rating publication")
