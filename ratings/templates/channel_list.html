@@ -1,0 +1,8 @@
+<html><body>
+<h1>Channels</h1>
+<ul>
+    {% for channel in channels %}
+    <li>{{ channel.last_snapshot.name_en }} | {{ channel.yt_id }}: {{ channel.last_snapshot.count_videos }} videos <a href="{% url 'channel_detail_html' pk=channel.pk %}">Details</a></li>
+    {% endfor %}
+</ul>
+</body></html>
