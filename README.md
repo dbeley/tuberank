@@ -5,6 +5,8 @@ A community website to rate and discover youtube videos.
 ## Development
 
 ```
+python -m venv venv
+source venv/bin/activate
 pip install poetry
-poetry init
+poetry install
 ```

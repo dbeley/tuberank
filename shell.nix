@@ -9,7 +9,6 @@ in pkgs.mkShell rec {
     pythonPackages.python
 
     pythonPackages.pip
-    ruff
   ];
 
 }
