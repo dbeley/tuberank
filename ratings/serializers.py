@@ -1,6 +1,13 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from ratings.models import Channel, ChannelSnapshot, Video, VideoSnapshot
+from ratings.models import (
+    Channel,
+    ChannelSnapshot,
+    ChannelRating,
+    Video,
+    VideoSnapshot,
+    VideoRating,
+)
 from django.db.models import Avg
 
 
@@ -40,6 +47,20 @@ class VideoSnapshotSerializer(serializers.ModelSerializer):
         ]
 
 
+class VideoRatingSerializer(serializers.ModelSerializer):
+    date_publication = serializers.DateTimeField(read_only=True)
+
+    class Meta:
+        model = VideoRating
+        fields = [
+            "rating",
+            "video",
+            "date_publication",
+            "review_title",
+            "review_body",
+        ]
+
+
 class ChannelSerializer(serializers.ModelSerializer):
     last_snapshot = serializers.SerializerMethodField()
     videos = VideoSerializer(many=True, read_only=True)
@@ -65,4 +86,18 @@ class ChannelSnapshotSerializer(serializers.ModelSerializer):
             "custom_url",
             "description",
             "thumbnail_url",
+        ]
+
+
+class ChannelRatingSerializer(serializers.ModelSerializer):
+    date_publication = serializers.DateTimeField(read_only=True)
+
+    class Meta:
+        model = ChannelRating
+        fields = [
+            "rating",
+            "channel",
+            "date_publication",
+            "review_title",
+            "review_body",
         ]
