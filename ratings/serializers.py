@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from ratings.models import Channel, ChannelSnapshot
+from ratings.models import Channel, ChannelSnapshot, Video, VideoSnapshot
+from django.db.models import Avg
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -9,8 +10,39 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ["url", "username", "email", "groups"]
 
 
-class ChannelSerializer(serializers.HyperlinkedModelSerializer):
+class VideoSerializer(serializers.ModelSerializer):
     last_snapshot = serializers.SerializerMethodField()
+    average_rating = serializers.SerializerMethodField()
+
+    def get_last_snapshot(self, obj):
+        last_snapshot = obj.snapshots.last()
+        return VideoSnapshotSerializer(last_snapshot).data
+
+    def get_average_rating(self, obj):
+        return obj.ratings.aggregate(avg=Avg("rating"))["avg"]
+
+    class Meta:
+        model = Video
+        fields = ["yt_id", "date_publication", "last_snapshot", "average_rating"]
+
+
+class VideoSnapshotSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VideoSnapshot
+        fields = [
+            "title_en",
+            "count_views",
+            "count_likes",
+            "count_comments",
+            "date_creation",
+            "description",
+            "thumbnail_url",
+        ]
+
+
+class ChannelSerializer(serializers.ModelSerializer):
+    last_snapshot = serializers.SerializerMethodField()
+    videos = VideoSerializer(many=True, read_only=True)
 
     def get_last_snapshot(self, obj):
         last_snapshot = obj.snapshots.last()
@@ -18,13 +50,14 @@ class ChannelSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Channel
-        fields = ["yt_id", "date_creation", "last_snapshot"]
+        fields = ["yt_id", "date_creation", "last_snapshot", "videos"]
 
 
 class ChannelSnapshotSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChannelSnapshot
         fields = [
+            "name_en",
             "count_subscribers",
             "count_views",
             "count_videos",
