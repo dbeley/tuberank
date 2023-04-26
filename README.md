@@ -10,3 +10,7 @@ source venv/bin/activate
 pip install poetry
 poetry install
 ```
+
+```
+python manage.py migrate --run-syncdb
+```
