@@ -12,7 +12,7 @@ class Channel(models.Model):
 
     @property
     def last_snapshot(self):
-        return Channel.snapshots.last()
+        return self.snapshots.last()
 
 
 class Video(models.Model):
@@ -24,6 +24,10 @@ class Video(models.Model):
 
     def __str__(self):
         return f"{self.pk} - {self.yt_id} - {self.date_publication}"
+
+    @property
+    def last_snapshot(self):
+        return self.snapshots.last()
 
 
 class ChannelSnapshot(models.Model):

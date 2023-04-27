@@ -2,7 +2,7 @@
 {% load rest_framework %}
 {% block page_content %}
 
-<h1>Video - {{ video.yt_id }}</h1>
+<h1>Video - {{ video.last_snapshot.name_en }} {{ video.yt_id }}</h1>
 
 <form action="{% url 'video_rating_html' pk=video.pk %}" method="post" novalidate>
     {% csrf_token %}

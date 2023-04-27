@@ -1,4 +1,4 @@
-from ratings.models import Channel, Video
+from ratings.models import Channel, Video, ChannelRating, VideoRating
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -29,16 +29,23 @@ class ChannelRatingDetail(APIView):
 
     def get(self, request, pk):
         channel = get_object_or_404(Channel, pk=pk)
-        serializer = ChannelRatingSerializer(channel)
+        channel_rating = ChannelRating(channel=channel, user=request.user)
+        serializer = ChannelRatingSerializer(channel_rating)
         return Response({"serializer": serializer, "channel": channel})
 
     def post(self, request, pk):
         channel = get_object_or_404(Channel, pk=pk)
-        serializer = ChannelRatingSerializer(channel, data=request.data)
+        channel_rating = ChannelRating(channel=channel, user=request.user)
+        serializer = ChannelRatingSerializer(channel_rating, data=request.data)
         if not serializer.is_valid():
             return Response({"serializer": serializer, "channel": channel})
-        serializer.save(
-            user=self.request.user, date_publication=datetime.now(timezone.utc)
+        ChannelRating.objects.update_or_create(
+            channel=channel,
+            user=request.user,
+            defaults={
+                "date_publication": datetime.now(timezone.utc),
+                **serializer.validated_data,
+            },
         )
         return redirect("channels_html")
 
@@ -60,15 +67,22 @@ class VideoRatingDetail(APIView):
 
     def get(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
-        serializer = VideoRatingSerializer(video)
+        video_rating = VideoRating(video=video, user=request.user)
+        serializer = VideoRatingSerializer(video_rating)
         return Response({"serializer": serializer, "video": video})
 
     def post(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
-        serializer = VideoRatingSerializer(video, data=request.data)
+        video_rating = VideoRating(video=video, user=request.user)
+        serializer = VideoRatingSerializer(video_rating, data=request.data)
         if not serializer.is_valid():
             return Response({"serializer": serializer, "video": video})
-        serializer.save(
-            user=self.request.user, date_publication=datetime.now(timezone.utc)
+        VideoRating.objects.update_or_create(
+            video=video,
+            user=request.user,
+            defaults={
+                "date_publication": datetime.now(timezone.utc),
+                **serializer.validated_data,
+            },
         )
-        return redirect("videos_html")
+        return redirect("videos_html", pk=video.channel_id)

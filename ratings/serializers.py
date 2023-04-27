@@ -62,6 +62,7 @@ class VideoSnapshotSerializer(serializers.ModelSerializer):
 class VideoRatingSerializer(serializers.ModelSerializer):
     date_publication = serializers.DateTimeField(read_only=True)
     video = serializers.PrimaryKeyRelatedField(read_only=True)
+    # video = serializers.PrimaryKeyRelatedField(queryset=Video.objects.all())
 
     class Meta:
         model = VideoRating
@@ -77,14 +78,25 @@ class VideoRatingSerializer(serializers.ModelSerializer):
 class ChannelSerializer(serializers.ModelSerializer):
     last_snapshot = serializers.SerializerMethodField()
     videos = VideoSerializer(many=True, read_only=True)
+    average_rating = serializers.SerializerMethodField()
 
     def get_last_snapshot(self, obj):
         last_snapshot = obj.snapshots.last()
         return ChannelSnapshotSerializer(last_snapshot).data
 
+    def get_average_rating(self, obj):
+        return obj.ratings.aggregate(avg=Avg("rating"))["avg"]
+
     class Meta:
         model = Channel
-        fields = ["pk", "yt_id", "date_creation", "last_snapshot", "videos"]
+        fields = [
+            "pk",
+            "yt_id",
+            "date_creation",
+            "last_snapshot",
+            "videos",
+            "average_rating",
+        ]
 
 
 class ChannelSnapshotSerializer(serializers.ModelSerializer):
