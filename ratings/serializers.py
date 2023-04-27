@@ -19,18 +19,30 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 class VideoSerializer(serializers.ModelSerializer):
     last_snapshot = serializers.SerializerMethodField()
+    title = serializers.SerializerMethodField()
     average_rating = serializers.SerializerMethodField()
 
     def get_last_snapshot(self, obj):
         last_snapshot = obj.snapshots.last()
         return VideoSnapshotSerializer(last_snapshot).data
 
+    def get_title(self, obj):
+        last_snapshot = obj.snapshots.last()
+        return last_snapshot.title_en
+
     def get_average_rating(self, obj):
         return obj.ratings.aggregate(avg=Avg("rating"))["avg"]
 
     class Meta:
         model = Video
-        fields = ["yt_id", "date_publication", "last_snapshot", "average_rating"]
+        fields = [
+            "pk",
+            "yt_id",
+            "date_publication",
+            "title",
+            "last_snapshot",
+            "average_rating",
+        ]
 
 
 class VideoSnapshotSerializer(serializers.ModelSerializer):
@@ -49,6 +61,7 @@ class VideoSnapshotSerializer(serializers.ModelSerializer):
 
 class VideoRatingSerializer(serializers.ModelSerializer):
     date_publication = serializers.DateTimeField(read_only=True)
+    video = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = VideoRating

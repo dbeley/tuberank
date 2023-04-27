@@ -18,6 +18,8 @@ pre-commit = "^3.2.2"
 jedi = "^0.18.2"
 black = "^23.3.0"
 pyflakes = "^3.0.1"
+isort = "^5.12.0"
+pyright = "^1.1.305"
 
 [build-system]
 requires = ["poetry-core"]

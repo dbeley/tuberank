@@ -10,6 +10,10 @@ class Channel(models.Model):
     def __str__(self):
         return f"{self.pk} - {self.yt_id} - {self.date_creation}"
 
+    @property
+    def last_snapshot(self):
+        return Channel.snapshots.last()
+
 
 class Video(models.Model):
     yt_id = models.CharField(max_length=11, unique=True)

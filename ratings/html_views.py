@@ -1,9 +1,14 @@
-from ratings.models import Channel, ChannelRating, Video, VideoRating
+from ratings.models import Channel, Video
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
-from ratings.serializers import ChannelSerializer, ChannelRatingSerializer
+from ratings.serializers import (
+    ChannelSerializer,
+    ChannelRatingSerializer,
+    VideoSerializer,
+    VideoRatingSerializer,
+)
 from datetime import datetime, timezone
 from django.shortcuts import redirect
 
@@ -35,4 +40,35 @@ class ChannelRatingDetail(APIView):
         serializer.save(
             user=self.request.user, date_publication=datetime.now(timezone.utc)
         )
-        return redirect("channel_html")
+        return redirect("channels_html")
+
+
+class VideoList(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "video_list.html"
+
+    def get(self, request, pk):
+        channel = get_object_or_404(Channel, pk=pk)
+        queryset = Video.objects.filter(channel=channel).all()
+        videos = VideoSerializer(queryset, many=True)
+        return Response({"videos": videos.data[:]})
+
+
+class VideoRatingDetail(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "video_rating_detail.html"
+
+    def get(self, request, pk):
+        video = get_object_or_404(Video, pk=pk)
+        serializer = VideoRatingSerializer(video)
+        return Response({"serializer": serializer, "video": video})
+
+    def post(self, request, pk):
+        video = get_object_or_404(Video, pk=pk)
+        serializer = VideoRatingSerializer(video, data=request.data)
+        if not serializer.is_valid():
+            return Response({"serializer": serializer, "video": video})
+        serializer.save(
+            user=self.request.user, date_publication=datetime.now(timezone.utc)
+        )
+        return redirect("videos_html")
