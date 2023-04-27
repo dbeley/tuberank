@@ -1,16 +1,14 @@
+{% extends "base.html" %}
 {% load rest_framework %}
+{% block page_content %}
 
-<html>
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-</head>
-<body>
+<img width="100" src="{{ channel.last_snapshot.thumbnail_url }}"  alt=""/>
+<h1>Channel - {{ channel.last_snapshot.name_en }} {{ channel.yt_id }}</h1>
 
-<h1>Channel - {{ channel.last_snapshot.name }}</h1>
-
-<form action="{% url 'channel_detail_html' pk=channel.pk %}" method="post" novalidate>
+<form action="{% url 'channel_rating_html' pk=channel.pk %}" method="post" novalidate>
     {% csrf_token %}
     {% render_form serializer template_pack='rest_framework/vertical' %}
     <button type="submit" class="btn btn-default">Save</button>
 </form>
-</body></html>
+
+{% endblock %}

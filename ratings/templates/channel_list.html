@@ -1,8 +1,42 @@
-<html><body>
+{% extends "base.html" %}
+{% block page_content %}
 <h1>Channels</h1>
 <ul>
     {% for channel in channels %}
-    <li>{{ channel.last_snapshot.name_en }} | {{ channel.yt_id }}: {{ channel.last_snapshot.count_videos }} videos <a href="{% url 'channel_detail_html' pk=channel.pk %}">Details</a></li>
+    <li>
+        <div>
+        <img width="50" src="{{ channel.last_snapshot.thumbnail_url }}"  alt=""/>
+        {{ channel.last_snapshot.name_en }} | {{ channel.yt_id }}
+        <p>
+            {{ channel.indexed_videos_count }} indexed videos |
+            {{ channel.last_snapshot.count_videos }} total videos |
+            Rating: {{ channel.average_rating }}/10
+        </p>
+        <a href="{% url 'channel_rating_html' pk=channel.pk %}">Rate</a>
+        <a href="{% url 'videos_html' pk=channel.pk %}">Videos</a>
+        </div>
+    </li>
+
     {% endfor %}
 </ul>
-</body></html>
+
+<h1>Best channels</h1>
+<ul>
+    {% for channel in best_channels %}
+    <li>
+        <div>
+        <img width="50" src="{{ channel.last_snapshot.thumbnail_url }}"  alt=""/>
+        {{ channel.last_snapshot.name_en }} | {{ channel.yt_id }}
+        <p>
+            {{ channel.indexed_videos_count }} indexed videos |
+            {{ channel.last_snapshot.count_videos }} total videos |
+            Rating: {{ channel.average_rating }}/10
+        </p>
+        <a href="{% url 'channel_rating_html' pk=channel.pk %}">Rate</a>
+        <a href="{% url 'videos_html' pk=channel.pk %}">Videos</a>
+        </div>
+    </li>
+
+    {% endfor %}
+</ul>
+{% endblock %}

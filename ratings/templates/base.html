@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>ytvd</title>
+</head>
+
+<body>
+    <div>
+        <ul>
+        <li>
+            <a href="{% url 'channels_html' %}">Home</a>
+        </li>
+        <li>
+            <a href="/api-auth/login/?next=/channels_html">Login</a>
+        </li>
+        </ul>
+    </div>
+<br>
+
+<div class="container">
+    {% block page_content %}{% endblock %}
+</div>
+</body>
+</html>

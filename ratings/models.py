@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
+from django.db.models import Avg
 
 
 class Channel(models.Model):
@@ -9,6 +10,18 @@ class Channel(models.Model):
 
     def __str__(self):
         return f"{self.pk} - {self.yt_id} - {self.date_creation}"
+
+    @property
+    def last_snapshot(self):
+        return self.snapshots.last()
+
+    @property
+    def average_rating(self):
+        return self.ratings.aggregate(avg=Avg("rating"))["avg"] or 0
+
+    @property
+    def indexed_videos_count(self):
+        return Video.objects.filter(channel=self).count()
 
 
 class Video(models.Model):
@@ -20,6 +33,14 @@ class Video(models.Model):
 
     def __str__(self):
         return f"{self.pk} - {self.yt_id} - {self.date_publication}"
+
+    @property
+    def last_snapshot(self):
+        return self.snapshots.last()
+
+    @property
+    def average_rating(self) -> int:
+        return self.ratings.aggregate(avg=Avg("rating"))["avg"] or 0
 
 
 class ChannelSnapshot(models.Model):

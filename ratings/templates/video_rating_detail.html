@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load rest_framework %}
+{% block page_content %}
+
+<img width="200" src="{{ video.last_snapshot.thumbnail_url }}"  alt=""/>
+<h1>Video - {{ video.last_snapshot.name_en }} {{ video.yt_id }}</h1>
+<h2>{{ video.last_snapshot.title_en }}</h2>
+
+<p>
+    {{ video.last_snapshot.count_views }} views |
+    {{ video.last_snapshot.count_likes }} likes |
+    {{ video.last_snapshot.count_comments }} comments
+</p>
+
+<p>
+    {{ video.last_snapshot.description }}
+</p>
+
+<form action="{% url 'video_rating_html' pk=video.pk %}" method="post" novalidate>
+    {% csrf_token %}
+    {% render_form serializer template_pack='rest_framework/vertical' %}
+    <button type="submit" class="btn btn-default">Save</button>
+</form>
+
+{% endblock %}

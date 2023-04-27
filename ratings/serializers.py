@@ -8,7 +8,6 @@ from ratings.models import (
     VideoSnapshot,
     VideoRating,
 )
-from django.db.models import Avg
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -19,18 +18,29 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 class VideoSerializer(serializers.ModelSerializer):
     last_snapshot = serializers.SerializerMethodField()
+    title = serializers.SerializerMethodField()
     average_rating = serializers.SerializerMethodField()
 
     def get_last_snapshot(self, obj):
-        last_snapshot = obj.snapshots.last()
-        return VideoSnapshotSerializer(last_snapshot).data
+        return VideoSnapshotSerializer(obj.last_snapshot).data
+
+    def get_title(self, obj):
+        last_snapshot = obj.last_snapshot
+        return last_snapshot.title_en
 
     def get_average_rating(self, obj):
-        return obj.ratings.aggregate(avg=Avg("rating"))["avg"]
+        return obj.average_rating
 
     class Meta:
         model = Video
-        fields = ["yt_id", "date_publication", "last_snapshot", "average_rating"]
+        fields = [
+            "pk",
+            "yt_id",
+            "date_publication",
+            "title",
+            "last_snapshot",
+            "average_rating",
+        ]
 
 
 class VideoSnapshotSerializer(serializers.ModelSerializer):
@@ -49,6 +59,8 @@ class VideoSnapshotSerializer(serializers.ModelSerializer):
 
 class VideoRatingSerializer(serializers.ModelSerializer):
     date_publication = serializers.DateTimeField(read_only=True)
+    video = serializers.PrimaryKeyRelatedField(read_only=True)
+    # video = serializers.PrimaryKeyRelatedField(queryset=Video.objects.all())
 
     class Meta:
         model = VideoRating
@@ -64,14 +76,29 @@ class VideoRatingSerializer(serializers.ModelSerializer):
 class ChannelSerializer(serializers.ModelSerializer):
     last_snapshot = serializers.SerializerMethodField()
     videos = VideoSerializer(many=True, read_only=True)
+    average_rating = serializers.SerializerMethodField()
+    indexed_videos_count = serializers.SerializerMethodField()
 
     def get_last_snapshot(self, obj):
-        last_snapshot = obj.snapshots.last()
-        return ChannelSnapshotSerializer(last_snapshot).data
+        return ChannelSnapshotSerializer(obj.last_snapshot).data
+
+    def get_average_rating(self, obj):
+        return obj.average_rating
+
+    def get_indexed_videos_count(self, obj):
+        return obj.indexed_videos_count
 
     class Meta:
         model = Channel
-        fields = ["pk", "yt_id", "date_creation", "last_snapshot", "videos"]
+        fields = [
+            "pk",
+            "yt_id",
+            "date_creation",
+            "last_snapshot",
+            "videos",
+            "average_rating",
+            "indexed_videos_count",
+        ]
 
 
 class ChannelSnapshotSerializer(serializers.ModelSerializer):
