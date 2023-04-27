@@ -1,13 +1,15 @@
-<html><body>
+{% extends "base.html" %}
+{% block page_content %}
 <h1>Videos</h1>
 <ul>
     {% for video in videos %}
     <li>
         <div>
+        <img width="100" src="{{ video.last_snapshot.thumbnail_url }}"  alt=""/>
         {{ video.yt_id }} {{video.last_snapshot.title_en}} Note {{ video.average_rating }}/10
         <a href="{% url 'video_rating_html' pk=video.pk %}">Rate</a>
         </div>
     </li>
     {% endfor %}
 </ul>
-</body></html>
+{% endblock %}

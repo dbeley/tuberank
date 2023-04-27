@@ -17,7 +17,11 @@ class Channel(models.Model):
 
     @property
     def average_rating(self):
-        return self.ratings.aggregate(avg=Avg("rating"))["avg"]
+        return self.ratings.aggregate(avg=Avg("rating"))["avg"] or 0
+
+    @property
+    def indexed_videos_count(self):
+        return Video.objects.filter(channel=self).count()
 
 
 class Video(models.Model):
@@ -35,8 +39,8 @@ class Video(models.Model):
         return self.snapshots.last()
 
     @property
-    def average_rating(self):
-        return self.ratings.aggregate(avg=Avg("rating"))["avg"]
+    def average_rating(self) -> int:
+        return self.ratings.aggregate(avg=Avg("rating"))["avg"] or 0
 
 
 class ChannelSnapshot(models.Model):

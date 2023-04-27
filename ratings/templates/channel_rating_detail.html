@@ -2,6 +2,7 @@
 {% load rest_framework %}
 {% block page_content %}
 
+<img width="100" src="{{ channel.last_snapshot.thumbnail_url }}"  alt=""/>
 <h1>Channel - {{ channel.last_snapshot.name_en }} {{ channel.yt_id }}</h1>
 
 <form action="{% url 'channel_rating_html' pk=channel.pk %}" method="post" novalidate>

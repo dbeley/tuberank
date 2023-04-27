@@ -5,8 +5,13 @@
     {% for channel in channels %}
     <li>
         <div>
-        {{ channel.last_snapshot.name_en }} | {{ channel.yt_id }}: {{ channel.last_snapshot.count_videos }} videos
-        {{ channel.average_rating }}/10
+        <img width="50" src="{{ channel.last_snapshot.thumbnail_url }}"  alt=""/>
+        {{ channel.last_snapshot.name_en }} | {{ channel.yt_id }}
+        <p>
+            {{ channel.indexed_videos_count }} indexed videos |
+            {{ channel.last_snapshot.count_videos }} total videos |
+            Rating: {{ channel.average_rating }}/10
+        </p>
         <a href="{% url 'channel_rating_html' pk=channel.pk %}">Rate</a>
         <a href="{% url 'videos_html' pk=channel.pk %}">Videos</a>
         </div>
@@ -20,8 +25,13 @@
     {% for channel in best_channels %}
     <li>
         <div>
-        {{ channel.last_snapshot.name_en }} | {{ channel.yt_id }}: {{ channel.last_snapshot.count_videos }} videos
-        {{ channel.average_rating }}/10
+        <img width="50" src="{{ channel.last_snapshot.thumbnail_url }}"  alt=""/>
+        {{ channel.last_snapshot.name_en }} | {{ channel.yt_id }}
+        <p>
+            {{ channel.indexed_videos_count }} indexed videos |
+            {{ channel.last_snapshot.count_videos }} total videos |
+            Rating: {{ channel.average_rating }}/10
+        </p>
         <a href="{% url 'channel_rating_html' pk=channel.pk %}">Rate</a>
         <a href="{% url 'videos_html' pk=channel.pk %}">Videos</a>
         </div>

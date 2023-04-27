@@ -8,7 +8,6 @@ from ratings.models import (
     VideoSnapshot,
     VideoRating,
 )
-from django.db.models import Avg
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -78,12 +77,16 @@ class ChannelSerializer(serializers.ModelSerializer):
     last_snapshot = serializers.SerializerMethodField()
     videos = VideoSerializer(many=True, read_only=True)
     average_rating = serializers.SerializerMethodField()
+    indexed_videos_count = serializers.SerializerMethodField()
 
     def get_last_snapshot(self, obj):
         return ChannelSnapshotSerializer(obj.last_snapshot).data
 
     def get_average_rating(self, obj):
         return obj.average_rating
+
+    def get_indexed_videos_count(self, obj):
+        return obj.indexed_videos_count
 
     class Meta:
         model = Channel
@@ -94,6 +97,7 @@ class ChannelSerializer(serializers.ModelSerializer):
             "last_snapshot",
             "videos",
             "average_rating",
+            "indexed_videos_count",
         ]
 
 
