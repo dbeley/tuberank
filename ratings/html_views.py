@@ -20,7 +20,13 @@ class ChannelList(APIView):
     def get(self, request):
         queryset = Channel.objects.all()
         channels = ChannelSerializer(queryset, many=True)
-        return Response({"channels": channels.data[:]})
+        best_channels = ChannelSerializer(
+            sorted(queryset, key=lambda obj: obj.average_rating, reverse=True),
+            many=True,
+        )
+        return Response(
+            {"channels": channels.data[:], "best_channels": best_channels.data[:]}
+        )
 
 
 class ChannelRatingDetail(APIView):

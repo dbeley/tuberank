@@ -15,4 +15,18 @@
     {% endfor %}
 </ul>
 
+<h1>Best channels</h1>
+<ul>
+    {% for channel in best_channels %}
+    <li>
+        <div>
+        {{ channel.last_snapshot.name_en }} | {{ channel.yt_id }}: {{ channel.last_snapshot.count_videos }} videos
+        {{ channel.average_rating }}/10
+        <a href="{% url 'channel_rating_html' pk=channel.pk %}">Rate</a>
+        <a href="{% url 'videos_html' pk=channel.pk %}">Videos</a>
+        </div>
+    </li>
+
+    {% endfor %}
+</ul>
 {% endblock %}

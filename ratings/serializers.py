@@ -23,15 +23,14 @@ class VideoSerializer(serializers.ModelSerializer):
     average_rating = serializers.SerializerMethodField()
 
     def get_last_snapshot(self, obj):
-        last_snapshot = obj.snapshots.last()
-        return VideoSnapshotSerializer(last_snapshot).data
+        return VideoSnapshotSerializer(obj.last_snapshot).data
 
     def get_title(self, obj):
-        last_snapshot = obj.snapshots.last()
+        last_snapshot = obj.last_snapshot
         return last_snapshot.title_en
 
     def get_average_rating(self, obj):
-        return obj.ratings.aggregate(avg=Avg("rating"))["avg"]
+        return obj.average_rating
 
     class Meta:
         model = Video
@@ -81,11 +80,10 @@ class ChannelSerializer(serializers.ModelSerializer):
     average_rating = serializers.SerializerMethodField()
 
     def get_last_snapshot(self, obj):
-        last_snapshot = obj.snapshots.last()
-        return ChannelSnapshotSerializer(last_snapshot).data
+        return ChannelSnapshotSerializer(obj.last_snapshot).data
 
     def get_average_rating(self, obj):
-        return obj.ratings.aggregate(avg=Avg("rating"))["avg"]
+        return obj.average_rating
 
     class Meta:
         model = Channel
