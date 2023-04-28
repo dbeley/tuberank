@@ -11,16 +11,23 @@ router.register(
 router.register(r"video-ratings", views.VideoRatingViewSet, basename="video-ratings")
 urlpatterns = [
     path("", include(router.urls)),
-    path("channels_html", html_views.ChannelList.as_view(), name="channels_html"),
-    path("videos_html/<int:pk>", html_views.VideoList.as_view(), name="videos_html"),
+    path("html", html_views.HomepageView.as_view(), name="homepage"),
+    path(
+        "videos_html/<int:pk>", html_views.VideoListView.as_view(), name="videos_html"
+    ),
     path(
         "channel_rating_html/<int:pk>",
-        html_views.ChannelRatingDetail.as_view(),
+        html_views.ChannelRatingDetailView.as_view(),
         name="channel_rating_html",
     ),
     path(
         "video_rating_html/<int:pk>",
-        html_views.VideoRatingDetail.as_view(),
+        html_views.VideoRatingDetailView.as_view(),
         name="video_rating_html",
+    ),
+    path(
+        "subscribe",
+        html_views.SubscribeView.as_view(),
+        name="subscribe",
     ),
 ]
