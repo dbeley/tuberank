@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 
-from django.db.models import Avg, Count
+from django.db.models import Avg
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
@@ -43,7 +43,15 @@ class ChannelRatingDetailView(APIView):
 
     def get(self, request, pk):
         channel = get_object_or_404(Channel, pk=pk)
-        channel_rating = ChannelRating(channel=channel, user=request.user)
+        if not ChannelRating.objects.filter(
+            channel=channel,
+            user=request.user,
+        ).exists():
+            channel_rating = ChannelRating(channel=channel, user=request.user)
+        else:
+            channel_rating = ChannelRating.objects.get(
+                channel=channel, user=request.user
+            )
         serializer = ChannelRatingSerializer(channel_rating)
         return Response({"serializer": serializer, "channel": channel})
 
@@ -61,7 +69,7 @@ class ChannelRatingDetailView(APIView):
                 **serializer.validated_data,
             },
         )
-        return redirect("html")
+        return redirect("homepage")
 
 
 class VideoListView(APIView):
@@ -83,7 +91,13 @@ class VideoRatingDetailView(APIView):
 
     def get(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
-        video_rating = VideoRating(video=video, user=request.user)
+        if not VideoRating.objects.filter(
+            video=video,
+            user=request.user,
+        ).exists():
+            video_rating = VideoRating(video=video, user=request.user)
+        else:
+            video_rating = VideoRating.objects.get(video=video, user=request.user)
         serializer = VideoRatingSerializer(video_rating)
         return Response({"serializer": serializer, "video": video})
 
