@@ -19,7 +19,7 @@
                 <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}" class="h-48 w-full object-cover">
             </a>
             <div class="p-4">
-                <a href="{% url 'video_rating' pk=video.id %}">
+                <a href="{% url 'video_details' pk=video.id %}">
                     <h3 class="font-semibold text-gray-900 mb-2 text-lg">{{ video.last_snapshot.title_en }}</h3>
                 </a>
                 <a href="{% url 'channel_details' pk=video.channel.id %}" class="text-gray-700 text-sm mb-2">{{ video.channel.last_snapshot.name_en }}</p>
@@ -72,34 +72,34 @@
     <div class="grid grid-cols-3 gap-8 mb-12">
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
             <div class="h-40 bg-gray-300 flex items-center justify-center">
-            <p class="text-4xl font-bold text-gray-800"> 9 </p>
+            <p class="text-4xl font-bold text-gray-800"> {{ number_of_users }} </p>
             <p class="text-lg text-gray-500 ml-2"> users </p>
             </div>
             <div class="px-4 py-2">
             <h2 class="text-xl font-bold mb-2">Number of users</h2>
-            <p class="text-gray-700">9 users have signed up for YTVD.</p>
+            <p class="text-gray-700">{{ number_of_users }} users have signed up for YTVD.</p>
             </div>
         </div>
 
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
             <div class="h-40 bg-gray-300 flex items-center justify-center">
-            <p class="text-4xl font-bold text-gray-800"> 9 </p>
+            <p class="text-4xl font-bold text-gray-800"> {{ number_of_channels }} </p>
             <p class="text-lg text-gray-500 ml-2"> channels </p>
             </div>
             <div class="px-4 py-2">
             <h2 class="text-xl font-bold mb-2">Number of channels</h2>
-            <p class="text-gray-700">YTVD has catalogued 3 channels.</p>
+            <p class="text-gray-700">YTVD has catalogued {{ number_of_channels }} channels.</p>
             </div>
         </div>
 
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
             <div class="h-40 bg-gray-300 flex items-center justify-center">
-            <p class="text-4xl font-bold text-gray-800"> 3 </p>
+            <p class="text-4xl font-bold text-gray-800"> {{ number_of_videos }} </p>
             <p class="text-lg text-gray-500 ml-2"> videos </p>
             </div>
             <div class="px-4 py-2">
             <h2 class="text-xl font-bold mb-2">Number of videos</h2>
-            <p class="text-gray-700">YTVD has catalogued 3 videos.</p>
+            <p class="text-gray-700">YTVD has catalogued {{ number_of_videos }} videos.</p>
             </div>
         </div>
     </div>

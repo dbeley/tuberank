@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.contrib.auth.models import User
 
 from ratings.models import Channel, Video, VideoRating
 from ratings.serializers import (
@@ -32,11 +33,18 @@ class HomepageView(APIView):
             many=True,
         )
 
+        number_of_users = User.objects.count()
+        number_of_channels = Channel.objects.count()
+        number_of_videos = Video.objects.count()
+
         return Response(
             {
                 "channels": channels.data,
                 "latest_videos": latest_videos.data,
                 "best_videos": best_videos.data,
+                "number_of_users": number_of_users,
+                "number_of_channels": number_of_channels,
+                "number_of_videos": number_of_videos,
             }
         )
 
