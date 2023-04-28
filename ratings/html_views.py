@@ -7,11 +7,9 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ratings.models import Channel, ChannelRating, Video, VideoRating, VideoSnapshot
+from ratings.models import Channel, Video, VideoRating, VideoSnapshot
 from ratings.serializers import (
-    ChannelRatingSerializer,
     ChannelSerializer,
-    UserSerializer,
     VideoRatingSerializer,
     VideoSerializer,
 )
