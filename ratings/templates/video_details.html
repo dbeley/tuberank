@@ -9,7 +9,8 @@
         <a href="{% url 'channel_details' pk=video.channel.id %}" class="mr-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
             &#8592; Return to Channel
         </a>
-    </div>    <h1 class="text-4xl font-bold mb-8">{{ video.last_snapshot.title_en }}</h1>
+    </div>
+    <h1 class="text-4xl font-bold mb-8">{{ video.last_snapshot.title_en }}</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
             <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}" class="h-48 w-full object-cover mb-4">
@@ -28,11 +29,28 @@
                         <td class="text-gray-700">{{ video.last_snapshot.count_likes|intcomma }}</td>
                     </tr>
                     <tr>
+                        <td class="font-bold text-gray-900 pr-4">Comments:</td>
+                        <td class="text-gray-700">{{ video.last_snapshot.count_comments|intcomma }}</td>
+                    </tr>
+                    <tr>
                         <td class="font-bold text-gray-900 pr-4">Uploaded:</td>
                         <td class="text-gray-700">{{ video.date_publication }}</td>
                     </tr>
+                    <tr>
+                        <td class="font-bold text-gray-900 pr-4">Average:</td>
+                        <td class="text-gray-700">{{ video.average_rating }}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold text-gray-900 pr-4">Ratings:</td>
+                        <td class="text-gray-700">{{ video.ratings_count }}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold text-gray-900 pr-4">Description:</td>
+                        <td class="text-gray-700">{{ video.last_snapshot.description | safe | linebreaks }}</td>
+                    </tr>
                 </tbody>
             </table>
+
             <div class="flex justify-start pt-4">
                 <a href="{{ video.url }}" target="_blank" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Watch on YouTube
@@ -59,6 +77,5 @@
         </div>
     </div>
 </div>
-
 
 {% endblock %}
