@@ -33,71 +33,8 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class VideoSerializer(serializers.ModelSerializer):
-    last_snapshot = serializers.SerializerMethodField()
-    title = serializers.SerializerMethodField()
-    average_rating = serializers.SerializerMethodField()
-    url = serializers.SerializerMethodField()
-
-    def get_last_snapshot(self, obj):
-        return VideoSnapshotSerializer(obj.last_snapshot).data
-
-    def get_title(self, obj):
-        last_snapshot = obj.last_snapshot
-        return last_snapshot.title_en
-
-    def get_average_rating(self, obj):
-        return obj.average_rating
-
-    def get_url(self, obj):
-        return obj.url
-
-    class Meta:
-        model = Video
-        fields = [
-            "pk",
-            "yt_id",
-            "date_publication",
-            "title",
-            "last_snapshot",
-            "average_rating",
-            "url",
-        ]
-
-
-class VideoSnapshotSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = VideoSnapshot
-        fields = [
-            "title_en",
-            "count_views",
-            "count_likes",
-            "count_comments",
-            "date_creation",
-            "description",
-            "thumbnail_url",
-        ]
-
-
-class VideoRatingSerializer(serializers.ModelSerializer):
-    date_publication = serializers.DateTimeField(read_only=True)
-    video = serializers.PrimaryKeyRelatedField(read_only=True)
-    # video = serializers.PrimaryKeyRelatedField(queryset=Video.objects.all())
-
-    class Meta:
-        model = VideoRating
-        fields = [
-            "rating",
-            "video",
-            "date_publication",
-            "review_title",
-            "review_body",
-        ]
-
-
 class ChannelSerializer(serializers.ModelSerializer):
     last_snapshot = serializers.SerializerMethodField()
-    videos = VideoSerializer(many=True, read_only=True)
     average_rating = serializers.SerializerMethodField()
     indexed_videos_count = serializers.SerializerMethodField()
 
@@ -117,7 +54,6 @@ class ChannelSerializer(serializers.ModelSerializer):
             "yt_id",
             "date_creation",
             "last_snapshot",
-            "videos",
             "average_rating",
             "indexed_videos_count",
         ]
@@ -147,6 +83,70 @@ class ChannelRatingSerializer(serializers.ModelSerializer):
         fields = [
             "rating",
             "channel",
+            "date_publication",
+            "review_title",
+            "review_body",
+        ]
+
+
+class VideoSerializer(serializers.ModelSerializer):
+    last_snapshot = serializers.SerializerMethodField()
+    title = serializers.SerializerMethodField()
+    average_rating = serializers.SerializerMethodField()
+    url = serializers.SerializerMethodField()
+    channel = ChannelSerializer(read_only=True)
+
+    def get_last_snapshot(self, obj):
+        return VideoSnapshotSerializer(obj.last_snapshot).data
+
+    def get_title(self, obj):
+        last_snapshot = obj.last_snapshot
+        return last_snapshot.title_en
+
+    def get_average_rating(self, obj):
+        return obj.average_rating
+
+    def get_url(self, obj):
+        return obj.url
+
+    class Meta:
+        model = Video
+        fields = [
+            "pk",
+            "yt_id",
+            "date_publication",
+            "title",
+            "last_snapshot",
+            "average_rating",
+            "url",
+            "channel",
+        ]
+
+
+class VideoSnapshotSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VideoSnapshot
+        fields = [
+            "title_en",
+            "count_views",
+            "count_likes",
+            "count_comments",
+            "date_creation",
+            "description",
+            "thumbnail_url",
+        ]
+
+
+class VideoRatingSerializer(serializers.ModelSerializer):
+    date_publication = serializers.DateTimeField(read_only=True)
+    video = serializers.PrimaryKeyRelatedField(read_only=True)
+    # video = serializers.PrimaryKeyRelatedField(queryset=Video.objects.all())
+
+    class Meta:
+        model = VideoRating
+        fields = [
+            "rating",
+            "video",
             "date_publication",
             "review_title",
             "review_body",
