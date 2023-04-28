@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "django_extensions",
     "ratings.apps.RatingsConfig",
+    "django.contrib.humanize",
 ]
 
 MIDDLEWARE = [

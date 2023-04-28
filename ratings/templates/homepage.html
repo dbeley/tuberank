@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block title %}Home{% endblock %}
 
@@ -23,7 +24,7 @@
                 </a>
                 <a href="{% url 'channel_details' pk=video.channel.id %}" class="text-gray-700 text-sm mb-2">{{ video.channel.last_snapshot.name_en }}</p>
                 <p class="text-gray-700 text-sm mb-2">Average Rating: {{ video.average_rating }}</p>
-                <p class="text-gray-700 text-sm mb-2">{{ video.last_snapshot.count_views }} views</p>
+                <p class="text-gray-700 text-sm mb-2">{{ video.last_snapshot.count_views|intcomma }} views</p>
             </div>
             <div class="flex justify-end p-4">
                 <a href="{{ video.url }}" target="_blank" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -51,7 +52,7 @@
                 </a>
                 <p class="text-gray-700 text-sm mb-2">{{ video.channel.last_snapshot.name_en }}</p>
                 <p class="text-gray-700 text-sm mb-2">Average Rating: {{ video.average_rating }}</p>
-                <p class="text-gray-700 text-sm mb-2">{{ video.last_snapshot.count_views }} views</p>
+                <p class="text-gray-700 text-sm mb-2">{{ video.last_snapshot.count_views|intcomma }} views</p>
             </div>
             <div class="flex justify-end p-4">
                 <a href="{{ video.url }}" target="_blank" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">

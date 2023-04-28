@@ -7,6 +7,7 @@ from django.db.models import Avg
 class Channel(models.Model):
     yt_id = models.CharField(max_length=24, unique=True)
     date_creation = models.DateTimeField("date of channel creation")
+    description = models.TextField(max_length=5000, blank=True)
 
     def __str__(self):
         return f"{self.pk} - {self.yt_id} - {self.date_creation}"
