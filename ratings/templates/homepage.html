@@ -3,95 +3,75 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-  <div class="flex flex-col items-center">
+<div class="flex flex-col items-center">
     <h1 class="text-4xl font-bold mb-8">Welcome to ytvd!</h1>
     <p class="text-xl mb-4">ytvd is a platform where you can curate and rate YouTube videos.</p>
-  </div>
-
-    <h2 class="text-2xl font-bold mb-4">Best Videos</h2>
-    <div class="grid grid-cols-3 gap-4 mb-8">
-      {% for video in best_videos %}
-        <div class="bg-white rounded-lg overflow-hidden shadow-md">
-          <a href="{% url 'video_rating_html' pk=video.pk %}">
-            <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }} thumbnail" class="w-full h-40 object-cover">
-            <div class="p-4">
-              <p class="font-semibold text-lg mb-2">{{ video.last_snapshot.title_en }}</p>
-              <p class="text-gray-700 text-sm">{{ video.channel.name_en }}</p>
-              <p class="text-gray-700 text-sm">{{ video.last_snapshot.count_views }} views</p>
-              <p class="text-gray-700 text-sm">{{ video.average_rating }} average rating</p>
-              <a href="{{ video.url }}">Watch on Youtube</a>
-        <a href="{{ video.url }}" class="block mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Watch on YouTube
-        </a>
-        <a href="{% url 'video_rating_html' pk=video.pk %}" class="block mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Rate this video
-        </a>
-            </div>
-          </a>
-        </div>
-<div class="flex flex-col md:flex-row rounded-lg shadow-lg overflow-hidden">
-  <div class="md:w-7/12">
-    <a href="{% url 'video_rating_html' pk=video.pk %}">
-      <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}" class="h-48 md:h-64 w-full object-cover">
-    </a>
-  </div>
-  <div class="bg-white md:w-5/12 p-4 md:p-6">
-    <a href="{% url 'video_rating_html' pk=video.pk %}">
-      <h3 class="font-semibold text-gray-900 mb-2 text-lg">{{ video.last_snapshot.title_en }}</h3>
-    </a>
-    <p class="text-gray-700 text-sm mb-2">{{ video.last_snapshot.count_views }} views</p>
-    <p class="text-gray-700 text-sm mb-2">Average Rating: {{ video.average_rating }}</p>
-    <div class="flex">
-      <a href="{{ video.url }}" target="_blank" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        Watch on YouTube
-      </a>
-      <a href="{% url 'video_rating_html' pk=video.pk %}" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-        Rate this video
-      </a>
-    </div>
-  </div>
 </div>
-      {% empty %}
-        <p>No videos found.</p>
-      {% endfor %}
+
+<h2 class="text-2xl font-bold mb-4">Best Videos</h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    {% for video in best_videos %}
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <a href="{% url 'video_rating_html' pk=video.pk %}">
+            <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}" class="h-48 w-full object-cover">
+        </a>
+        <div class="p-4">
+            <a href="{% url 'video_rating_html' pk=video.pk %}">
+            <h3 class="font-semibold text-gray-900 mb-2 text-lg">{{ video.last_snapshot.title_en }}</h3>
+            </a>
+            <p class="text-gray-700 text-sm mb-2">{{ video.channel.last_snapshot.name_en }}</p>
+            <p class="text-gray-700 text-sm mb-2">Average Rating: {{ video.average_rating }}</p>
+            <p class="text-gray-700 text-sm mb-2">{{ video.count_views }} views</p>
+            <div class="flex">
+            <a href="{{ video.url }}" target="_blank" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Watch on YouTube
+            </a>
+            <a href="{% url 'video_rating_html' pk=video.pk %}" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                Rate this video
+            </a>
+            </div>
+        </div>
+        </div>
+    {% endfor %}
     </div>
 
-
-
-  <div class="grid grid-cols-3 gap-8 mb-12">
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-      <div class="h-40 bg-gray-300 flex items-center justify-center">
-        <p class="text-4xl font-bold text-gray-800"> 9 </p>
-        <p class="text-lg text-gray-500 ml-2"> users </p>
-      </div>
-      <div class="px-4 py-2">
-        <h2 class="text-xl font-bold mb-2">Number of users</h2>
-        <p class="text-gray-700">9 users have signed up for YTVD.</p>
-      </div>
-    </div>
-
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-      <div class="h-40 bg-gray-300 flex items-center justify-center">
-        <p class="text-4xl font-bold text-gray-800"> 9 </p>
-        <p class="text-lg text-gray-500 ml-2"> channels </p>
-      </div>
-      <div class="px-4 py-2">
-        <h2 class="text-xl font-bold mb-2">Number of channels</h2>
-        <p class="text-gray-700">YTVD has catalogued 3 channels.</p>
-      </div>
-    </div>
-
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-      <div class="h-40 bg-gray-300 flex items-center justify-center">
-        <p class="text-4xl font-bold text-gray-800"> 3 </p>
-        <p class="text-lg text-gray-500 ml-2"> videos </p>
-      </div>
-      <div class="px-4 py-2">
-        <h2 class="text-xl font-bold mb-2">Number of videos</h2>
-        <p class="text-gray-700">YTVD has catalogued 3 videos.</p>
-      </div>
-    </div>
   </div>
 
-  </div>
+<div class="flex flex-col items-center">
+    <div class="grid grid-cols-3 gap-8 mb-12">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="h-40 bg-gray-300 flex items-center justify-center">
+            <p class="text-4xl font-bold text-gray-800"> 9 </p>
+            <p class="text-lg text-gray-500 ml-2"> users </p>
+            </div>
+            <div class="px-4 py-2">
+            <h2 class="text-xl font-bold mb-2">Number of users</h2>
+            <p class="text-gray-700">9 users have signed up for YTVD.</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="h-40 bg-gray-300 flex items-center justify-center">
+            <p class="text-4xl font-bold text-gray-800"> 9 </p>
+            <p class="text-lg text-gray-500 ml-2"> channels </p>
+            </div>
+            <div class="px-4 py-2">
+            <h2 class="text-xl font-bold mb-2">Number of channels</h2>
+            <p class="text-gray-700">YTVD has catalogued 3 channels.</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="h-40 bg-gray-300 flex items-center justify-center">
+            <p class="text-4xl font-bold text-gray-800"> 3 </p>
+            <p class="text-lg text-gray-500 ml-2"> videos </p>
+            </div>
+            <div class="px-4 py-2">
+            <h2 class="text-xl font-bold mb-2">Number of videos</h2>
+            <p class="text-gray-700">YTVD has catalogued 3 videos.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
