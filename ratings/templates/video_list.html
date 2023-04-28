@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold my-6">Videos</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for video in videos %}
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <a href="{% url 'video_details' pk=video.pk %}">
+                        <img src="{{ video.thumbnail_url }}" alt="{{ video.title_en }}" class="h-48 w-full object-cover">
+                    </a>
+                    <div class="p-4">
+                        <a href="{% url 'video_details' pk=video.pk %}" class="text-lg font-bold text-gray-900 hover:text-gray-700">{{ video.title_en }}</a>
+                        <p class="text-gray-700">{{ video.channel.last_snapshot.name_en }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="my-6">
+            {% if videos.has_previous %}
+                <a href="?page={{ videos.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Previous</a>
+            {% endif %}
+            {% if videos.has_next %}
+                <a href="?page={{ videos.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Next</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -21,7 +21,7 @@
                 <a href="{% url 'video_rating' pk=video.id %}">
                     <h3 class="font-semibold text-gray-900 mb-2 text-lg">{{ video.last_snapshot.title_en }}</h3>
                 </a>
-                <p class="text-gray-700 text-sm mb-2">{{ video.channel.last_snapshot.name_en }}</p>
+                <a href="{% url 'channel_details' pk=video.channel.id %}" class="text-gray-700 text-sm mb-2">{{ video.channel.last_snapshot.name_en }}</p>
                 <p class="text-gray-700 text-sm mb-2">Average Rating: {{ video.average_rating }}</p>
                 <p class="text-gray-700 text-sm mb-2">{{ video.last_snapshot.count_views }} views</p>
             </div>

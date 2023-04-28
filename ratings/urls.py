@@ -10,9 +10,19 @@ urlpatterns = [
         name="video_rating",
     ),
     path(
+        "channel-list",
+        views.ChannelListView.as_view(),
+        name="channel_list",
+    ),
+    path(
         "video/<int:pk>",
         views.VideoDetailsView.as_view(),
         name="video_details",
+    ),
+    path(
+        "channel/<int:pk>",
+        views.ChannelDetailsView.as_view(),
+        name="channel_details",
     ),
     path(
         "search",

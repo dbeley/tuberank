@@ -4,6 +4,7 @@ from django.db.models import Avg
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
+from rest_framework import pagination, generics
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -11,8 +12,9 @@ from rest_framework.views import APIView
 from ratings.models import Channel, Video, VideoRating, VideoSnapshot
 from ratings.serializers import (
     ChannelSerializer,
-    VideoRatingSerializer,
+    ChannelRatingSerializer,
     VideoSerializer,
+    VideoRatingSerializer,
 )
 
 
@@ -103,5 +105,38 @@ class VideoDetailsView(APIView):
         video = get_object_or_404(Video, pk=pk)
         serializer = VideoSerializer(video)
         ratings = VideoRatingSerializer(video.ratings.all(), many=True)
-        print(serializer.data)
         return Response({"video": serializer.data, "selected_ratings": ratings.data})
+
+
+class ChannelDetailsView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "channel_details.html"
+
+    def get(self, request, pk):
+        channel = get_object_or_404(Channel, pk=pk)
+        videos = Video.objects.filter(channel=channel)
+        paginator = Paginator(videos, 8)
+        page = paginator.get_page(request.GET.get("page", 1))
+        return Response(
+            {
+                "channel": ChannelSerializer(channel).data,
+                "videos": VideoSerializer(page, many=True).data,
+                "page": page,
+            }
+        )
+
+
+class ChannelListView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "channel_list.html"
+
+    def get(self, request):
+        channels = Channel.objects.all()
+        paginator = Paginator(channels, 12)
+        page = paginator.get_page(request.GET.get("page", 1))
+        return Response(
+            {
+                "channels": ChannelSerializer(page, many=True).data,
+                "page": page,
+            }
+        )
