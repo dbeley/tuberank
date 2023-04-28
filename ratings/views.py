@@ -57,17 +57,23 @@ class SearchView(APIView):
         query = request.GET.get("q")
         if not query:
             return redirect("homepage")
-        queryset = Video.objects.filter(
+        video_queryset = Video.objects.filter(
             Q(snapshots__title_en__icontains=query)
-            | Q(channel__snapshots__name_en__icontains=query)
         ).distinct()
-        paginator = Paginator(queryset, 9)
-        page = paginator.get_page(request.GET.get("page", 1))
+        video_paginator = Paginator(video_queryset, 9)
+        video_page = video_paginator.get_page(request.GET.get("page", 1))
+        channel_queryset = Channel.objects.filter(
+            Q(snapshots__name_en__icontains=query)
+        ).distinct()
+        channel_paginator = Paginator(channel_queryset, 4)
+        channel_page = channel_paginator.get_page(request.GET.get("page_c", 1))
         return Response(
             {
-                "videos": VideoSerializer(page, many=True).data,
+                "channels": ChannelSerializer(channel_page, many=True).data,
+                "videos": VideoSerializer(video_page, many=True).data,
                 "query": query,
-                "page": page,
+                "channel_page": channel_page,
+                "video_page": video_page,
             }
         )
 
