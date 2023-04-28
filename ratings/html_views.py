@@ -118,7 +118,7 @@ class VideoRatingDetailView(APIView):
         return redirect("videos_html", pk=video.channel_id)
 
 
-class SubscribeView(APIView):
+class SignupView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = "subscribe.html"
 

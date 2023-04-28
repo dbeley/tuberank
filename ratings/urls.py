@@ -26,8 +26,8 @@ urlpatterns = [
         name="video_rating_html",
     ),
     path(
-        "subscribe",
-        html_views.SubscribeView.as_view(),
-        name="subscribe",
+        "signup",
+        html_views.SignupView.as_view(),
+        name="signup",
     ),
 ]
