@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load humanize %}
+
 {% block title %} {{ video.last_snapshot.title_en }} - {{ video.channel.last_snapshot.name_en }} {% endblock %}
 {% block content %}
 
@@ -15,15 +17,11 @@
                     </tr>
                     <tr>
                         <td class="font-bold text-gray-900 pr-4">Views:</td>
-                        <td class="text-gray-700">{{ video.last_snapshot.count_views }}</td>
+                        <td class="text-gray-700">{{ video.last_snapshot.count_views|intcomma }}</td>
                     </tr>
                     <tr>
                         <td class="font-bold text-gray-900 pr-4">Likes:</td>
-                        <td class="text-gray-700">{{ video.last_snapshot.count_likes }}</td>
-                    </tr>
-                    <tr>
-                        <td class="font-bold text-gray-900 pr-4">Dislikes:</td>
-                        <td class="text-gray-700">{{ video.last_snapshot.count_dislikes }}</td>
+                        <td class="text-gray-700">{{ video.last_snapshot.count_likes|intcomma }}</td>
                     </tr>
                     <tr>
                         <td class="font-bold text-gray-900 pr-4">Uploaded:</td>
@@ -47,6 +45,7 @@
             {% for rating in selected_ratings %}
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col justify-between">
                     <div class="p-4">
+                        <p class="text-gray-700 text-sm mb-2">{{ rating.review_title }}</p>
                         <p class="text-gray-700 text-sm mb-2">{{ rating.review_body }}</p>
                         <p class="text-gray-700 text-sm mb-2">Rating: {{ rating.rating }}</p>
                         <p class="text-gray-700 text-sm mb-2">By: {{ rating.username }}</p>

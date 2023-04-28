@@ -1,18 +1,15 @@
 from datetime import datetime, timezone
 
-from django.db.models import Avg
+from django.db.models import Avg, Q
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect
-from django.shortcuts import render
-from rest_framework import pagination, generics
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ratings.models import Channel, Video, VideoRating, VideoSnapshot
+from ratings.models import Channel, Video, VideoRating
 from ratings.serializers import (
     ChannelSerializer,
-    ChannelRatingSerializer,
     VideoSerializer,
     VideoRatingSerializer,
 )
@@ -44,24 +41,27 @@ class HomepageView(APIView):
         )
 
 
-class VideoSearchView(APIView):
+class SearchView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "search.html"
+
     def get(self, request):
         query = request.GET.get("q")
         if not query:
             return redirect("homepage")
-        queryset = VideoSnapshot.objects.all()
-        video_ids = (
-            queryset.filter(title_en__icontains=query)
-            .values_list("video_id", flat=True)
-            .distinct()
+        queryset = Video.objects.filter(
+            Q(snapshots__title_en__icontains=query)
+            | Q(channel__snapshots__name_en__icontains=query)
+        ).distinct()
+        paginator = Paginator(queryset, 9)
+        page = paginator.get_page(request.GET.get("page", 1))
+        return Response(
+            {
+                "videos": VideoSerializer(page, many=True).data,
+                "query": query,
+                "page": page,
+            }
         )
-        context = {
-            "videos": VideoSerializer(
-                Video.objects.filter(pk__in=video_ids), many=True
-            ).data[:],
-            "query": query,
-        }
-        return render(request, "search.html", context)
 
 
 class VideoRatingDetailView(APIView):

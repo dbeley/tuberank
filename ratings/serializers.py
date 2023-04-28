@@ -36,13 +36,17 @@ class UserSerializer(serializers.ModelSerializer):
 class ChannelSerializer(serializers.ModelSerializer):
     last_snapshot = serializers.SerializerMethodField()
     average_rating = serializers.SerializerMethodField()
+    ratings_count = serializers.SerializerMethodField()
     indexed_videos_count = serializers.SerializerMethodField()
 
-    def get_last_snapshot(self, obj):
+    def get_last_snapshot(self, obj: Channel) -> dict[str, str]:
         return ChannelSnapshotSerializer(obj.last_snapshot).data
 
-    def get_average_rating(self, obj):
+    def get_average_rating(self, obj: Channel) -> float:
         return obj.average_rating
+
+    def get_ratings_count(self, obj: Channel) -> int:
+        return obj.ratings.count()
 
     def get_indexed_videos_count(self, obj):
         return obj.indexed_videos_count
@@ -53,8 +57,10 @@ class ChannelSerializer(serializers.ModelSerializer):
             "id",
             "yt_id",
             "date_creation",
+            "description",
             "last_snapshot",
             "average_rating",
+            "ratings_count",
             "indexed_videos_count",
         ]
 
@@ -93,20 +99,24 @@ class VideoSerializer(serializers.ModelSerializer):
     last_snapshot = serializers.SerializerMethodField()
     title = serializers.SerializerMethodField()
     average_rating = serializers.SerializerMethodField()
+    ratings_count = serializers.SerializerMethodField()
     url = serializers.SerializerMethodField()
     channel = ChannelSerializer(read_only=True)
 
-    def get_last_snapshot(self, obj):
+    def get_last_snapshot(self, obj: Video) -> dict[str, str]:
         return VideoSnapshotSerializer(obj.last_snapshot).data
 
-    def get_title(self, obj):
+    def get_title(self, obj: Video) -> str:
         last_snapshot = obj.last_snapshot
         return last_snapshot.title_en
 
-    def get_average_rating(self, obj):
+    def get_average_rating(self, obj: Video) -> float:
         return obj.average_rating
 
-    def get_url(self, obj):
+    def get_ratings_count(self, obj: Video) -> int:
+        return obj.ratings.count()
+
+    def get_url(self, obj: Video) -> str:
         return obj.url
 
     class Meta:
@@ -118,6 +128,7 @@ class VideoSerializer(serializers.ModelSerializer):
             "title",
             "last_snapshot",
             "average_rating",
+            "ratings_count",
             "url",
             "channel",
         ]

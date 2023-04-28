@@ -20,4 +20,22 @@
             </div>
         {% endif %}
     </div>
+
+    <div class="my-4">
+        <nav class="flex items-center justify-between">
+        {% if page.has_previous %}
+            <a href="?q={{ query }}&page={{ page.previous_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-l">
+            Previous
+            </a>
+        {% endif %}
+        <div class="text-gray-600">
+            Page {{ page.number }} of {{ page.paginator.num_pages }}
+        </div>
+        {% if page.has_next %}
+            <a href="?q={{ query }}&page={{ page.next_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-r">
+            Next
+            </a>
+        {% endif %}
+        </nav>
+    </div>
 {% endblock %}

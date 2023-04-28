@@ -26,7 +26,7 @@ urlpatterns = [
     ),
     path(
         "search",
-        views.VideoSearchView.as_view(),
+        views.SearchView.as_view(),
         name="search",
     ),
 ]
