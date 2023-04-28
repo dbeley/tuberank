@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block page_content %}
+<h1>Latest channels</h1>
+<ul>
+    {% for channel in channels %}
+    <li>
+        <div>
+        <img width="50" src="{{ channel.last_snapshot.thumbnail_url }}"  alt=""/>
+        {{ channel.last_snapshot.name_en }} | {{ channel.yt_id }}
+        <p>
+            {{ channel.indexed_videos_count }} indexed videos |
+            {{ channel.last_snapshot.count_videos }} total videos |
+            Rating: {{ channel.average_rating }}/10
+        </p>
+        <a href="{% url 'channel_rating_html' pk=channel.pk %}">Rate</a>
+        <a href="{% url 'videos_html' pk=channel.pk %}">Videos</a>
+        </div>
+    </li>
+
+    {% endfor %}
+</ul>
+
+<h1>Best videos</h1>
+<ul>
+    {% for video in best_videos %}
+    <li>
+        <div>
+        <img width="50" src="{{ video.last_snapshot.thumbnail_url }}"  alt=""/>
+        {{ video.last_snapshot.title_en }} | {{ video.yt_id }}
+        <p>
+            {{ video.last_snapshot.count_views }} views |
+            Rating: {{ video.average_rating }}/10
+        </p>
+        <a href="{% url 'video_rating_html' pk=video.pk %}">Rate</a>
+        <a href="{{ video.url }}">Watch on Youtube</a>
+        </div>
+    </li>
+
+    {% endfor %}
+</ul>
+{% endblock %}

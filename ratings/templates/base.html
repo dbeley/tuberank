@@ -10,10 +10,13 @@
     <div>
         <ul>
         <li>
-            <a href="{% url 'channels_html' %}">Home</a>
+            <a href="{% url 'homepage' %}">Home</a>
         </li>
         <li>
-            <a href="/api-auth/login/?next=/channels_html">Login</a>
+            <a href="{% url 'subscribe' %}">Subscribe</a>
+        </li>
+        <li>
+            <a href="/api-auth/login/?next=/html">Login</a>
         </li>
         </ul>
     </div>

@@ -1,51 +1,57 @@
-from ratings.models import Channel, Video, ChannelRating, VideoRating
+from datetime import datetime, timezone
+
+from django.db.models import Avg
+from django.shortcuts import get_object_or_404, redirect
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.shortcuts import get_object_or_404
+
+from ratings.models import Channel, ChannelRating, Video, VideoRating
 from ratings.serializers import (
-    ChannelSerializer,
     ChannelRatingSerializer,
-    VideoSerializer,
+    ChannelSerializer,
     VideoRatingSerializer,
+    VideoSerializer,
+    UserSerializer,
 )
-from datetime import datetime, timezone
-from django.shortcuts import redirect
 
 
-class ChannelList(APIView):
+class HomepageView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = "channel_list.html"
+    template_name = "homepage.html"
 
     def get(self, request):
-        queryset = Channel.objects.all()
-        channels = ChannelSerializer(queryset.order_by("-id")[:10], many=True)
-        best_channels = ChannelSerializer(
-            sorted(queryset, key=lambda obj: obj.average_rating, reverse=True)[:10],
+        channels = ChannelSerializer(Channel.objects.order_by("-id")[0:10], many=True)
+        best_videos = VideoSerializer(
+            Video.objects.annotate(avg_rating=Avg("ratings__rating")).order_by(
+                "-avg_rating"
+            )[0:10],
             many=True,
         )
-        most_indexed_channels = ChannelSerializer(
-            sorted(queryset, key=lambda obj: obj.indexed_videos_count, reverse=True)[
-                :10
-            ],
-            many=True,
-        )
+
         return Response(
             {
-                "channels": channels.data[:],
-                "best_channels": best_channels.data[:],
-                "most_indexed_channels": most_indexed_channels.data[:],
+                "channels": channels.data,
+                "best_videos": best_videos.data,
             }
         )
 
 
-class ChannelRatingDetail(APIView):
+class ChannelRatingDetailView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = "channel_rating_detail.html"
 
     def get(self, request, pk):
         channel = get_object_or_404(Channel, pk=pk)
-        channel_rating = ChannelRating(channel=channel, user=request.user)
+        if not ChannelRating.objects.filter(
+            channel=channel,
+            user=request.user,
+        ).exists():
+            channel_rating = ChannelRating(channel=channel, user=request.user)
+        else:
+            channel_rating = ChannelRating.objects.get(
+                channel=channel, user=request.user
+            )
         serializer = ChannelRatingSerializer(channel_rating)
         return Response({"serializer": serializer, "channel": channel})
 
@@ -63,27 +69,35 @@ class ChannelRatingDetail(APIView):
                 **serializer.validated_data,
             },
         )
-        return redirect("channels_html")
+        return redirect("homepage")
 
 
-class VideoList(APIView):
+class VideoListView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = "video_list.html"
 
     def get(self, request, pk):
         channel = get_object_or_404(Channel, pk=pk)
-        queryset = Video.objects.filter(channel=channel).all()
+        queryset = (
+            Video.objects.filter(channel=channel).order_by("-date_publication").all()
+        )
         videos = VideoSerializer(queryset, many=True)
         return Response({"videos": videos.data[:]})
 
 
-class VideoRatingDetail(APIView):
+class VideoRatingDetailView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = "video_rating_detail.html"
 
     def get(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
-        video_rating = VideoRating(video=video, user=request.user)
+        if not VideoRating.objects.filter(
+            video=video,
+            user=request.user,
+        ).exists():
+            video_rating = VideoRating(video=video, user=request.user)
+        else:
+            video_rating = VideoRating.objects.get(video=video, user=request.user)
         serializer = VideoRatingSerializer(video_rating)
         return Response({"serializer": serializer, "video": video})
 
@@ -102,3 +116,19 @@ class VideoRatingDetail(APIView):
             },
         )
         return redirect("videos_html", pk=video.channel_id)
+
+
+class SubscribeView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "subscribe.html"
+
+    def get(self, request):
+        serializer = UserSerializer()
+        return Response({"serializer": serializer})
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response({"serializer": serializer})
+        serializer.save()
+        return redirect("homepage")
