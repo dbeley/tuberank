@@ -19,13 +19,23 @@ class ChannelList(APIView):
 
     def get(self, request):
         queryset = Channel.objects.all()
-        channels = ChannelSerializer(queryset, many=True)
+        channels = ChannelSerializer(queryset.order_by("-id")[:10], many=True)
         best_channels = ChannelSerializer(
-            sorted(queryset, key=lambda obj: obj.average_rating, reverse=True),
+            sorted(queryset, key=lambda obj: obj.average_rating, reverse=True)[:10],
+            many=True,
+        )
+        most_indexed_channels = ChannelSerializer(
+            sorted(queryset, key=lambda obj: obj.indexed_videos_count, reverse=True)[
+                :10
+            ],
             many=True,
         )
         return Response(
-            {"channels": channels.data[:], "best_channels": best_channels.data[:]}
+            {
+                "channels": channels.data[:],
+                "best_channels": best_channels.data[:],
+                "most_indexed_channels": most_indexed_channels.data[:],
+            }
         )
 
 
