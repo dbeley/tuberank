@@ -1,7 +1,3 @@
-<body>
-    <div>
-</body>
-</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,44 +8,39 @@
 </head>
 <body class="bg-gray-200">
 <nav class="bg-gray-900">
-  <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-    <div class="relative flex items-center justify-between h-16">
-      <!-- Logo -->
-      <div class="flex-shrink-0 flex items-center">
-        <a href="/" class="font-bold text-white text-xl">ytvd</a>
+  <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 relative flex items-center justify-between h-16">
+    <!-- Logo -->
+    <div class="flex-shrink-0 flex items-center">
+      <a href="/" class="font-bold text-white text-xl">ytvd</a>
+    </div>
+    <!-- Categories and Channels links -->
+    <div class="hidden sm:block sm:ml-6">
+      <div class="flex space-x-4">
+        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Categories</a>
+        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Channels</a>
       </div>
-      <!-- Categories and Channels links -->
-      <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-        <div class="hidden sm:block sm:ml-6">
-          <div class="flex space-x-4">
-            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Categories</a>
-            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Channels</a>
-          </div>
-        </div>
-      </div>
-      <!-- Search bar -->
-                <div class="flex-1 flex justify-center px-2 lg:ml-6 lg:justify-end">
-                    <div class="max-w-lg w-full lg:max-w-xs">
-                        <label for="search" class="sr-only">Search videos</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.9 13.4l3.7 3.7c.2.2.2.5 0 .7l-1.1 1.1c-.2.2-.5.2-.7 0l-3.7-3.7c-2.1 1.5-4.8 2.3-7.6 2.3C3.4 17.8 0 14.4 0 10s3.4-7.8 7.6-7.8c4 0 7.3 3.1 7.6 7h-2.1c-.3-2.6-2.4-4.6-4.9-4.6-2.7 0-4.9 2.2-4.9 4.9s2.2 4.9 4.9 4.9c1.5 0 2.8-.6 3.8-1.5z"/>
-                                </svg>
-                            </div>
-                            <input id="search" name="search" class="block w-full pl-10 pr-3 py-2 rounded-md text-sm placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Search..." type="text">
-                        </div>
-                    </div>
-                </div>
+    </div>
+    <!-- Search bar -->
+    <div class="flex-1 flex justify-center px-2 lg:ml-6 lg:justify-end">
+      <form class="flex" action="{% url 'search' %}" method="get">
+        <input class="w-full rounded-l-lg py-2 px-4 border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring focus:border-blue-300" name="q" type="text" placeholder="Search">
+        <button type="submit" class="px-4 bg-blue-600 text-white rounded-r-lg hover:bg-blue-500">➜</button>
+      </form>
     </div>
   </div>
 </nav>
-    <div class="container mx-auto px-4 py-8">
-    {% block content %}
-    {% endblock %}
+<div class="container mx-auto px-4 py-8">
+  {% block content %}
+  {% endblock %}
+</div>
+<footer class="bg-gray-900 text-gray-400">
+  <div class="container mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center">
+    <p>&copy; {{ date|date:"Y" }} ytvd</p>
+    <p class="mt-2 sm:mt-0">Made with <a href="https://www.djangoproject.com/" class="text-blue-500 hover:text-blue-400">Django</a> and <a href="https://tailwindcss.com/" class="text-blue-500 hover:text-blue-400">Tailwind CSS</a></p>
   </div>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/tippy.js@6.3.2/dist/tippy-bundle.umd.min.js"></script>
+</footer>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tippy.js@6.3.2/dist/tippy-bundle.umd.min.js"></script>
 </body>
 </html>
