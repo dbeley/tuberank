@@ -20,6 +20,7 @@ class VideoSerializer(serializers.ModelSerializer):
     last_snapshot = serializers.SerializerMethodField()
     title = serializers.SerializerMethodField()
     average_rating = serializers.SerializerMethodField()
+    url = serializers.SerializerMethodField()
 
     def get_last_snapshot(self, obj):
         return VideoSnapshotSerializer(obj.last_snapshot).data
@@ -31,6 +32,9 @@ class VideoSerializer(serializers.ModelSerializer):
     def get_average_rating(self, obj):
         return obj.average_rating
 
+    def get_url(self, obj):
+        return obj.url
+
     class Meta:
         model = Video
         fields = [
@@ -40,6 +44,7 @@ class VideoSerializer(serializers.ModelSerializer):
             "title",
             "last_snapshot",
             "average_rating",
+            "url",
         ]
 
 

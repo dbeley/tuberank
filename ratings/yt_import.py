@@ -1,10 +1,12 @@
-from googleapiclient.discovery import build
 import configparser
+import logging
 import os
 from dataclasses import dataclass
-from datetime import datetime
-from datetime import timezone
-import logging
+from datetime import datetime, timezone
+
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+
 from ratings.models import Channel, ChannelSnapshot, Video, VideoSnapshot
 
 logger = logging.getLogger(__name__)
@@ -47,9 +49,14 @@ class ChannelDataClass:
 
 def _get_channel_response_from_id(channel_id: str):
     with build("youtube", "v3", developerKey=YOUTUBE_DEVELOPER_KEY) as service:
-        response = (
-            service.channels().list(part="snippet,statistics", id=channel_id).execute()
-        )
+        try:
+            response = (
+                service.channels()
+                .list(part="snippet,statistics", id=channel_id)
+                .execute()
+            )
+        except HttpError:
+            return None
         if response.get("pageInfo").get("totalResults") > 1:
             raise TooManyResultException()
         if response.get("pageInfo").get("totalResults") == 0:
@@ -64,12 +71,12 @@ def _get_channel_data_class_from_id(channel_id: str) -> ChannelDataClass:
         title=data["snippet"]["title"],
         description=data["snippet"]["description"],
         date_creation=data["snippet"]["publishedAt"],
-        custom_url=data["snippet"]["customUrl"],
+        custom_url=data["snippet"].get("customUrl", ""),
         yt_id=data["id"],
         count_subscribers=data["statistics"]["subscriberCount"],
         count_views=data["statistics"]["viewCount"],
         count_videos=data["statistics"]["videoCount"],
-        thumbnail_url=data["snippet"]["thumbnails"]["medium"]["url"],
+        thumbnail_url=_get_thumbnail_data(data["snippet"]["thumbnails"]),
     )
 
 
@@ -101,9 +108,12 @@ def create_channel_snapshot(channel_id: str) -> None:
 
 def _get_video_response_from_id(video_id: str):
     with build("youtube", "v3", developerKey=YOUTUBE_DEVELOPER_KEY) as service:
-        response = (
-            service.videos().list(part="snippet,statistics", id=video_id).execute()
-        )
+        try:
+            response = (
+                service.videos().list(part="snippet,statistics", id=video_id).execute()
+            )
+        except HttpError:
+            return None
         if response.get("pageInfo").get("totalResults") > 1:
             raise TooManyResultException()
         if response.get("pageInfo").get("totalResults") == 0:
@@ -132,14 +142,26 @@ def _get_video_data_class_from_id(video_id: str) -> VideoDataClass:
         yt_id=data["id"],
         channel_id=data["snippet"]["channelId"],
         date_publication=data["snippet"]["publishedAt"],
-        count_views=data["statistics"]["viewCount"],
-        count_likes=data["statistics"]["likeCount"],
-        count_comments=data["statistics"]["commentCount"]
-        if "commentCount" in data["statistics"]
-        else None,
+        count_views=data["statistics"].get("viewCount"),
+        count_likes=data["statistics"].get("likeCount"),
+        count_comments=data["statistics"].get("commentCount"),
         description=data["snippet"]["description"],
-        thumbnail_url=data["snippet"]["thumbnails"]["standard"]["url"],
+        thumbnail_url=_get_thumbnail_data(data["snippet"]["thumbnails"]),
     )
+
+
+def _get_thumbnail_data(data: dict) -> str:
+    if thumbnail := data.get("standard"):
+        return thumbnail["url"]
+    elif thumbnail := data.get("medium"):
+        return thumbnail["url"]
+    elif thumbnail := data.get("default"):
+        return thumbnail["url"]
+    elif thumbnail := data.get("high"):
+        return thumbnail["url"]
+    elif thumbnail := data.get("maxres"):
+        return thumbnail["url"]
+    return None
 
 
 def create_video_snapshot_from_url(url: str) -> None:

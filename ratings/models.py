@@ -42,6 +42,10 @@ class Video(models.Model):
     def average_rating(self) -> int:
         return self.ratings.aggregate(avg=Avg("rating"))["avg"] or 0
 
+    @property
+    def url(self) -> str:
+        return f"https://www.youtube.com/watch?v={self.yt_id}"
+
 
 class ChannelSnapshot(models.Model):
     name_en = models.CharField(max_length=20)
@@ -52,7 +56,7 @@ class ChannelSnapshot(models.Model):
     count_views = models.IntegerField(default=0, blank=True, null=True)
     count_videos = models.IntegerField(default=0, blank=True, null=True)
     date_creation = models.DateTimeField("date of snapshot creation")
-    custom_url = models.CharField(max_length=24)
+    custom_url = models.CharField(max_length=24, blank=True)
     description = models.TextField(max_length=5000, blank=True)
     thumbnail_url = models.CharField(max_length=100)
 
@@ -89,7 +93,9 @@ class ChannelRating(models.Model):
     review_body = models.TextField(max_length=5000, blank=True)
 
     def __str__(self):
-        return f"{self.pk} - {self.channel.yt_id} - {self.date_publication}"
+        return (
+            f"{self.pk} - {self.user} - {self.channel.yt_id} - {self.date_publication}"
+        )
 
     class Meta:
         constraints = [
@@ -112,7 +118,7 @@ class VideoRating(models.Model):
     review_body = models.TextField(max_length=5000, blank=True)
 
     def __str__(self):
-        return f"{self.pk} - {self.video.yt_id} - {self.date_publication}"
+        return f"{self.pk} - {self.user} - {self.video.yt_id} - {self.date_publication}"
 
     class Meta:
         constraints = [
