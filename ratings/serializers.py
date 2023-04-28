@@ -50,7 +50,7 @@ class ChannelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Channel
         fields = [
-            "pk",
+            "id",
             "yt_id",
             "date_creation",
             "last_snapshot",
@@ -112,7 +112,7 @@ class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Video
         fields = [
-            "pk",
+            "id",
             "yt_id",
             "date_publication",
             "title",
@@ -140,7 +140,10 @@ class VideoSnapshotSerializer(serializers.ModelSerializer):
 class VideoRatingSerializer(serializers.ModelSerializer):
     date_publication = serializers.DateTimeField(read_only=True)
     video = serializers.PrimaryKeyRelatedField(read_only=True)
-    # video = serializers.PrimaryKeyRelatedField(queryset=Video.objects.all())
+    username = serializers.SerializerMethodField(read_only=True)
+
+    def get_username(self, obj):
+        return obj.user.username
 
     class Meta:
         model = VideoRating
@@ -150,4 +153,5 @@ class VideoRatingSerializer(serializers.ModelSerializer):
             "date_publication",
             "review_title",
             "review_body",
+            "username",
         ]

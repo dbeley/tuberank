@@ -3,39 +3,69 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="flex flex-col items-center">
-    <h1 class="text-4xl font-bold mb-8">Welcome to ytvd!</h1>
-    <p class="text-xl mb-4">ytvd is a platform where you can curate and rate YouTube videos.</p>
-</div>
-
-<h2 class="text-2xl font-bold mb-4">Best Videos</h2>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-    {% for video in best_videos %}
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <a href="{% url 'video_rating_html' pk=video.pk %}">
-            <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}" class="h-48 w-full object-cover">
-        </a>
-        <div class="p-4">
-            <a href="{% url 'video_rating_html' pk=video.pk %}">
-            <h3 class="font-semibold text-gray-900 mb-2 text-lg">{{ video.last_snapshot.title_en }}</h3>
-            </a>
-            <p class="text-gray-700 text-sm mb-2">{{ video.channel.last_snapshot.name_en }}</p>
-            <p class="text-gray-700 text-sm mb-2">Average Rating: {{ video.average_rating }}</p>
-            <p class="text-gray-700 text-sm mb-2">{{ video.count_views }} views</p>
-            <div class="flex">
-            <a href="{{ video.url }}" target="_blank" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Watch on YouTube
-            </a>
-            <a href="{% url 'video_rating_html' pk=video.pk %}" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                Rate this video
-            </a>
-            </div>
-        </div>
-        </div>
-    {% endfor %}
+<div class="container mx-auto px-4 py-8">
+    <div class="flex flex-col items-center">
+        <h1 class="text-4xl font-bold mb-8">Welcome to ytvd!</h1>
+        <p class="text-xl mb-4">ytvd is a platform where you can curate and rate YouTube videos.</p>
     </div>
 
-  </div>
+<h2 class="text-2xl font-bold mb-4">Latest Videos</h2>
+
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    {% for video in latest_videos %}
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col justify-between">
+            <a href="{% url 'video_details' pk=video.id %}">
+                <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}" class="h-48 w-full object-cover">
+            </a>
+            <div class="p-4">
+                <a href="{% url 'video_rating' pk=video.id %}">
+                    <h3 class="font-semibold text-gray-900 mb-2 text-lg">{{ video.last_snapshot.title_en }}</h3>
+                </a>
+                <p class="text-gray-700 text-sm mb-2">{{ video.channel.last_snapshot.name_en }}</p>
+                <p class="text-gray-700 text-sm mb-2">Average Rating: {{ video.average_rating }}</p>
+                <p class="text-gray-700 text-sm mb-2">{{ video.last_snapshot.count_views }} views</p>
+            </div>
+            <div class="flex justify-end p-4">
+                <a href="{{ video.url }}" target="_blank" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Watch on YouTube
+                </a>
+                <a href="{% url 'video_rating' pk=video.id %}" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                    Rate this video
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<h2 class="text-2xl font-bold mb-4 pt-8">Best Videos</h2>
+
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    {% for video in best_videos %}
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col justify-between">
+            <a href="{% url 'video_details' pk=video.id %}">
+                <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}" class="h-48 w-full object-cover">
+            </a>
+            <div class="p-4">
+                <a href="{% url 'video_rating' pk=video.id %}">
+                    <h3 class="font-semibold text-gray-900 mb-2 text-lg">{{ video.last_snapshot.title_en }}</h3>
+                </a>
+                <p class="text-gray-700 text-sm mb-2">{{ video.channel.last_snapshot.name_en }}</p>
+                <p class="text-gray-700 text-sm mb-2">Average Rating: {{ video.average_rating }}</p>
+                <p class="text-gray-700 text-sm mb-2">{{ video.last_snapshot.count_views }} views</p>
+            </div>
+            <div class="flex justify-end p-4">
+                <a href="{{ video.url }}" target="_blank" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Watch on YouTube
+                </a>
+                <a href="{% url 'video_rating' pk=video.id %}" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                    Rate this video
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+</div>
 
 <div class="flex flex-col items-center">
     <div class="grid grid-cols-3 gap-8 mb-12">

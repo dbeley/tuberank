@@ -1,6 +1,7 @@
+from django.urls import path
 from rest_framework import routers
-from django.urls import include, path
-from ratings import views, html_views
+
+from ratings import html_views, views
 
 router = routers.DefaultRouter()
 router.register(r"channels", views.ChannelViewSet, basename="channels")
@@ -10,24 +11,21 @@ router.register(
 )
 router.register(r"video-ratings", views.VideoRatingViewSet, basename="video-ratings")
 urlpatterns = [
-    path("", include(router.urls)),
-    path("html", html_views.HomepageView.as_view(), name="homepage"),
+    # path("", include(router.urls)),
+    path("", html_views.HomepageView.as_view(), name="homepage"),
     path(
-        "videos_html/<int:pk>", html_views.VideoListView.as_view(), name="videos_html"
-    ),
-    path(
-        "channel_rating_html/<int:pk>",
-        html_views.ChannelRatingDetailView.as_view(),
-        name="channel_rating_html",
-    ),
-    path(
-        "video_rating_html/<int:pk>",
+        "video_rating/<int:pk>",
         html_views.VideoRatingDetailView.as_view(),
-        name="video_rating_html",
+        name="video_rating",
     ),
     path(
-        "signup",
-        html_views.SignupView.as_view(),
-        name="signup",
+        "video/<int:pk>",
+        html_views.VideoDetailsView.as_view(),
+        name="video_details",
+    ),
+    path(
+        "search",
+        html_views.VideoSearchView.as_view(),
+        name="search",
     ),
 ]
