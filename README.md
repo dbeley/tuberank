@@ -62,7 +62,7 @@ python manage.py migrate --run-syncdb
 
 ### Charts page
 - Add possibility to create charts
-- Paginated
+- DONE Paginated
 - User tags
 - Sort by best rating, most ratings, etc.
 - Htmx ?
