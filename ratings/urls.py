@@ -42,4 +42,9 @@ urlpatterns = [
         views.PartialVideoSearchView.as_view(),
         name="search-videos",
     ),
+    path(
+        "charts",
+        views.ChartsView.as_view(),
+        name="charts",
+    ),
 ]

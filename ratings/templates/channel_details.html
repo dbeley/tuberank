@@ -16,9 +16,12 @@
         </a>
         <a href="{% url 'video_details' pk=video.id %}" class="block text-lg font-bold text-gray-900">{{ video.last_snapshot.title_en }}</a>
         <p class="text-gray-600">{{ channel.last_snapshot.name_en }}</p>
+        <div class="mt-4 flex justify-between items-center">
+          <div class="text-lg text-gray-900">{{ video.ratings.count }} ratings</div>
+          <div class="text-lg text-gray-900">{{ video.average_rating }}</div>
+        </div>
       </div>
-    {% endfor %}
-  </div>
+    {% endfor %}  </div>
 
   <div class="my-4">
     <nav class="flex items-center justify-between">
