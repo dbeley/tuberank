@@ -33,6 +33,12 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("username", "email", "first_name", "last_name")
+
+
 class ChannelSerializer(serializers.ModelSerializer):
     last_snapshot = serializers.SerializerMethodField()
     average_rating = serializers.SerializerMethodField()

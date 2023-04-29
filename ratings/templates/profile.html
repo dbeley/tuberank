@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="flex justify-center">
+  <div class="max-w-lg bg-white w-full rounded-lg shadow-lg px-6 py-4">
+    <div class="flex justify-center">
+      <img src="{{ user.profile_picture.url }}" class="rounded-full h-24 w-24 object-cover">
+    </div>
+    <h2 class="text-xl font-bold mt-4">{{ user.username }}</h2>
+    <p class="text-gray-600">{{ user.email }}</p>
+    <p class="text-gray-600">{{ user.first_name }}</p>
+    <p class="text-gray-600">{{ user.last_name }}</p>
+    <div class="mt-4">
+      <a href="{% url 'homepage' %}" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg">Edit Profile</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

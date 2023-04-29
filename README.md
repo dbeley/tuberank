@@ -19,6 +19,10 @@ python manage.py migrate --run-syncdb
 
 ### Homepage
 - DONE Display curated selection of Channels / Videos based on ratings
+- Add links to Github in footer
+
+### Search page
+- Add htmx to search page to only updates channel or video parts
 
 ### Channel detail page
 - DONE Display list of all imported videos + ratings
@@ -37,6 +41,7 @@ python manage.py migrate --run-syncdb
 
 ### Video list page
 - Add sorting mechanism
+- Add htmx-aware form to add/modify a rating
 
 ### Channel rating page
 - Create channel rating page
@@ -47,6 +52,15 @@ python manage.py migrate --run-syncdb
 
 ### Profile / Settings
 - Add profile / settings page
+- Add statistics
+- Add "watched" model
 
 ### Import video
 - Add import video feature
+
+### Charts page
+- Add possibility to create charts
+- Paginated
+- User tags
+- Sort by best rating, most ratings, etc.
+- Htmx ?
