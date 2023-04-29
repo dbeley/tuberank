@@ -56,7 +56,7 @@ class HomepageView(APIView):
 
 class SearchView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = "search.html"
+    template_name = "search/search.html"
 
     def get(self, request):
         query = request.GET.get("q")
@@ -78,6 +78,50 @@ class SearchView(APIView):
                 "videos": VideoSerializer(video_page, many=True).data,
                 "query": query,
                 "channel_page": channel_page,
+                "video_page": video_page,
+            }
+        )
+
+
+class PartialChannelSearchView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "search/channel_results.html"
+
+    def get(self, request):
+        query = request.GET.get("q")
+        if not query:
+            return redirect("homepage")
+        channel_queryset = Channel.objects.filter(
+            Q(snapshots__name_en__icontains=query)
+        ).distinct()
+        channel_paginator = Paginator(channel_queryset, 4)
+        channel_page = channel_paginator.get_page(request.GET.get("page_c", 1))
+        return Response(
+            {
+                "channels": ChannelSerializer(channel_page, many=True).data,
+                "query": query,
+                "channel_page": channel_page,
+            }
+        )
+
+
+class PartialVideoSearchView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "search/video_results.html"
+
+    def get(self, request):
+        query = request.GET.get("q")
+        if not query:
+            return redirect("homepage")
+        video_queryset = Video.objects.filter(
+            Q(snapshots__title_en__icontains=query)
+        ).distinct()
+        video_paginator = Paginator(video_queryset, 9)
+        video_page = video_paginator.get_page(request.GET.get("page", 1))
+        return Response(
+            {
+                "videos": VideoSerializer(video_page, many=True).data,
+                "query": query,
                 "video_page": video_page,
             }
         )

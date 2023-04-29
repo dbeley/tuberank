@@ -1,0 +1,30 @@
+<div id="channels" hx-swap="outerHTML" hx-target="#channels">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {% for channel in channels %}
+            <div class="bg-white rounded shadow-sm p-4">
+            <a href="{% url 'channel_details' pk=channel.id %}" class="block mb-2">
+                <img src="{{ channel.last_snapshot.thumbnail_url }}" alt="{{ channel.last_snapshot.name_en }}" class="w-full">
+            </a>
+            <a href="{% url 'channel_details' pk=channel.id %}" class="block text-lg font-bold text-gray-900">{{ channel.last_snapshot.name_en }}</a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="my-4">
+        <nav class="flex items-center justify-between">
+        {% if channel_page.has_previous %}
+            <a hx-get="{% url 'search-channels' %}?q={{ query}}&page_c={{ channel_page.previous_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-l">
+            Previous
+            </a>
+        {% endif %}
+        <div class="text-gray-600">
+            Page {{ channel_page.number }} of {{ channel_page.paginator.num_pages }}
+        </div>
+        {% if channel_page.has_next %}
+            <a hx-get="{% url 'search-channels' %}?q={{ query}}&page_c={{ channel_page.next_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-r">
+            Next
+            </a>
+        {% endif %}
+        </nav>
+    </div>
+</div>

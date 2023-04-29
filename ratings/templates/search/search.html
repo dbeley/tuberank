@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+    {% include "search/channel_results.html" %}
+
+    {% include "search/video_results.html" %}
+{% endblock %}
