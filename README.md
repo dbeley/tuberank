@@ -18,15 +18,35 @@ python manage.py migrate --run-syncdb
 ## TODO
 
 ### Homepage
-- Display curated selection of Channels / Videos based on ratings
+- DONE Display curated selection of Channels / Videos based on ratings
 
 ### Channel detail page
-- Display list of all imported videos + ratings
+- DONE Display list of all imported videos + ratings
 - Display channel ratings + reviews
 - Include link to see the channel on youtube
+- Add sorting mechanism
 
 ### Video detail page
 - Display categories
-- Include link to watch the video (player integration?)
+- DONE Include link to watch the video (player integration?)
 - Display user-generated tags, lists
-- Display video ratings + reviews
+- DONE Display video ratings + reviews
+
+### Channel list page
+- Add sorting mechanism (alphabetical, chronological, popular, indexed, best rated, etc.)
+
+### Video list page
+- Add sorting mechanism
+
+### Channel rating page
+- Create channel rating page
+
+### Categories
+- Add categories page
+- Add categories to videos/channels/snapshots
+
+### Profile / Settings
+- Add profile / settings page
+
+### Import video
+- Add import video feature
