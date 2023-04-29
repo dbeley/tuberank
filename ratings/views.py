@@ -4,10 +4,11 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from django.db.models import Avg, Q
+from django.db.models import Avg, Q, Count
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views import generic
+from django.http import HttpResponseRedirect
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -53,7 +54,7 @@ class SearchView(APIView):
     def get(self, request):
         query = request.GET.get("q")
         if not query:
-            return redirect("homepage")
+            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
         video_queryset = Video.objects.filter(
             Q(snapshots__title_en__icontains=query)
         ).distinct()
@@ -82,7 +83,7 @@ class PartialChannelSearchView(APIView):
     def get(self, request):
         query = request.GET.get("q")
         if not query:
-            return redirect("homepage")
+            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
         channel_queryset = Channel.objects.filter(
             Q(snapshots__name_en__icontains=query)
         ).distinct()
@@ -104,7 +105,7 @@ class PartialVideoSearchView(APIView):
     def get(self, request):
         query = request.GET.get("q")
         if not query:
-            return redirect("homepage")
+            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
         video_queryset = Video.objects.filter(
             Q(snapshots__title_en__icontains=query)
         ).distinct()
@@ -221,3 +222,35 @@ class ProfileView(APIView):
     def get(self, request, username):
         user = User.objects.get(username=username)
         return Response({"user": user})
+
+
+class ChartsView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "charts.html"
+
+    def get(self, request):
+        videos = Video.objects.annotate(num_ratings=Count("ratings")).all()
+        sort_method = request.GET.get("sort_by")
+        if sort_method:
+            if sort_method not in [
+                "newest",
+                "oldest",
+                "views_count",
+                "ratings_count",
+                "rating",
+            ]:
+                return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+            if sort_method == "newest":
+                videos = videos.order_by("date_publication")
+            if sort_method == "oldest":
+                videos = videos.order_by("-date_publication")
+            # if sort_method == "views_count":
+            #     videos = videos.order_by("last_snapshot__count_views")
+            if sort_method == "ratings_count":
+                videos = videos.order_by("-num_ratings")
+            # if sort_method == "rating":
+            #     videos = videos.order_by("average_rating")
+
+        paginator = Paginator(videos, 8)
+        page = paginator.get_page(request.GET.get("page", 1))
+        return Response({"videos": page, "page": page})
