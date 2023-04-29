@@ -6,6 +6,7 @@ in pkgs.mkShell rec {
   name = "YtvdPythonEnv";
   venvDir = "./venv";
   buildInputs = [
+    nodejs
     pythonPackages.python
 
     pythonPackages.pip
