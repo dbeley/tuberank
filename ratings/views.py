@@ -1,20 +1,22 @@
 from datetime import datetime, timezone
 
-from django.db.models import Avg, Q
+from django.contrib.auth import login
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator
+from django.db.models import Avg, Q
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
+from django.views import generic
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.contrib.auth.models import User
-from django.contrib.auth import login
-from django.contrib.auth.forms import AuthenticationForm
 
 from ratings.models import Channel, Video, VideoRating
 from ratings.serializers import (
     ChannelSerializer,
-    VideoSerializer,
     VideoRatingSerializer,
+    VideoSerializer,
 )
 
 
@@ -165,8 +167,14 @@ class LoginView(APIView):
             user = form.get_user()
             login(request, user)
             return redirect("homepage")
-        return render(request, "login.html", {"form": form})
+        return render(request, "registration/login.html", {"form": form})
 
     def get(self, request):
         form = AuthenticationForm()
-        return render(request, "login.html", {"form": form})
+        return render(request, "registration/login.html", {"form": form})
+
+
+class SignUpView(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy("login")
+    template_name = "registration/signup.html"
