@@ -22,9 +22,12 @@
       </div>
     </div>
     <div class="w-full md:w-3/4 lg:w-2/3 xl:w-3/4 px-4 mb-4">
-      <div class="bg-white rounded-lg shadow-lg py-6">
+      <div class="bg-white rounded-lg shadow-lg py-6 mt-4 px-4">
         <h2 class="text-2xl font-bold mb-4">Video Ratings</h2>
         {% if user.video_ratings.exists %}
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 py-8">
+      <canvas id="ratings-chart"></canvas>
+          </div>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for rating in user.video_ratings.all %}
               <div class="bg-gray-100 rounded-lg shadow-lg p-4">
@@ -38,15 +41,22 @@
           <p class="text-gray-600">No video ratings found.</p>
         {% endif %}
       </div>
-      <div class="bg-white rounded-lg shadow-lg py-6 mt-4">
+      <div class="bg-white rounded-lg shadow-lg py-6 mt-4 px-4">
         <h2 class="text-2xl font-bold mb-4">Channel Ratings</h2>
         {% if user.channel_ratings.exists %}
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {% for rating in user.channel_ratings.all %}
-              <div class="bg-gray-100 rounded-lg shadow-lg p-4">
-                <h3 class="text-lg font-bold mb-2">{{ rating.channel.last_snapshot.name_en }}</h3>
-                <p class="text-gray-600 mb-2">{{ rating.channel.category }}</p>
-                <p class="text-gray-600">{{ rating.rating }}</p>
+              <div class="border border-gray-200 rounded-lg overflow-hidden transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-xl">
+                <div class="relative">
+                  <img class="h-64 w-full object-cover" src="{{ rating.channel.thumbnail_url }}" alt="{{ rating.channel.last_snapshot.name_en }}">
+                  <div class="absolute top-0 right-0 bg-blue-600 text-white px-2 py-1 rounded-bl-lg">{{ rating.channel.category }}
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-xl font-bold mb-2">{{ rating.channel.last_snapshot.name_en }}</h3>
+                  <p class="text-gray-600 mb-2">{{ rating.channel.last_snapshot.description_en }}</p>
+                  <p class="text-gray-600">{{ rating.rating }}</p>
+                </div>
               </div>
             {% endfor %}
           </div>
@@ -57,4 +67,29 @@
     </div>
   </div>
 </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js"></script>
+  <script>
+    var ratingsChart = new Chart(document.getElementById('ratings-chart'), {
+        type: 'bar',
+        data: {
+            labels: {{ ratings_labels|safe }},
+            datasets: [{
+                label: 'Number of Ratings',
+                data: {{ ratings_data|safe }},
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+  </script>
 {% endblock %}

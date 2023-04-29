@@ -14,6 +14,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from ratings.models import Channel, ChannelRating, Video, VideoRating
+from ratings.charts import charts
 from ratings.serializers import (
     ChannelSerializer,
     ChannelRatingSerializer,
@@ -28,7 +29,7 @@ class HomepageView(APIView):
     template_name = "homepage.html"
 
     def get(self, request):
-        latest_videos = Video.objects.order_by("id")[0:4]
+        latest_videos = Video.objects.order_by("-id")[0:4]
         best_videos = Video.objects.annotate(
             avg_rating=Avg("ratings__rating")
         ).order_by("-avg_rating")[0:8]
@@ -220,8 +221,18 @@ class ProfileView(APIView):
     template_name = "profile.html"
 
     def get(self, request, username):
-        user = User.objects.get(username=username)
-        return Response({"user": user})
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+        chart_data = charts.get_ratings_chart_for_user(user)
+        return Response(
+            {
+                "user": user,
+                "ratings_labels": chart_data["ratings_labels"],
+                "ratings_data": chart_data["ratings_data"],
+            }
+        )
 
 
 class ChartsView(APIView):

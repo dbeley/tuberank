@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
 from django.db.models import Avg
+from ratings import enums
 
 
 class Channel(models.Model):
@@ -81,7 +82,8 @@ class VideoSnapshot(models.Model):
 
 class ChannelRating(models.Model):
     rating = models.PositiveIntegerField(
-        default=0, validators=[MinValueValidator(0), MaxValueValidator(10)]
+        choices=enums.Rating.choices(),
+        validators=[MinValueValidator(0), MaxValueValidator(10)],
     )
     user = models.ForeignKey(
         User, related_name="channel_ratings", on_delete=models.CASCADE
@@ -108,7 +110,8 @@ class ChannelRating(models.Model):
 
 class VideoRating(models.Model):
     rating = models.PositiveIntegerField(
-        default=0, validators=[MinValueValidator(0), MaxValueValidator(10)]
+        choices=enums.Rating.choices(),
+        validators=[MinValueValidator(0), MaxValueValidator(10)],
     )
     user = models.ForeignKey(
         User, related_name="video_ratings", on_delete=models.CASCADE
