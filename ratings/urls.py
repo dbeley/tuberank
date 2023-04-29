@@ -5,7 +5,7 @@ from ratings import views
 urlpatterns = [
     path("", views.HomepageView.as_view(), name="homepage"),
     path("login", views.LoginView.as_view(), name="login"),
-    path("signup", views.SignUpView.as_view(), name="signup"),
+    path("signup", views.SignupView.as_view(), name="signup"),
     path(
         "video_rating/<int:pk>",
         views.VideoRatingDetailView.as_view(),

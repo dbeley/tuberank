@@ -174,7 +174,7 @@ class LoginView(APIView):
         return render(request, "registration/login.html", {"form": form})
 
 
-class SignUpView(generic.CreateView):
+class SignupView(generic.CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy("login")
     template_name = "registration/signup.html"

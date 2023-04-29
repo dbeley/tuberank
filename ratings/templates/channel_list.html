@@ -3,10 +3,16 @@
 {% block title %}Channels{% endblock %}
 
 {% block content %}
-  <div class="mb-4">
+  <div class="mb-4 flex justify-between items-center">
     <h1 class="text-3xl font-bold">Channels</h1>
+    <div class="relative inline-flex">
+      <select id="sorting" name="sorting" class="form-select px-4 py-2 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        <option value="name_asc">Name (A-Z)</option>
+        <option value="name_desc">Name (Z-A)</option>
+        <option value="latest">Latest</option>
+      </select>
+    </div>
   </div>
-
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
     {% for channel in channels %}
       <div class="bg-white rounded shadow-sm p-4">
