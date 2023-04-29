@@ -2,11 +2,13 @@ from datetime import datetime, timezone
 
 from django.db.models import Avg, Q
 from django.core.paginator import Paginator
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
+from django.contrib.auth import login
+from django.contrib.auth.forms import AuthenticationForm
 
 from ratings.models import Channel, Video, VideoRating
 from ratings.serializers import (
@@ -154,3 +156,17 @@ class ChannelListView(APIView):
                 "page": page,
             }
         )
+
+
+class LoginView(APIView):
+    def post(self, request):
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect("homepage")
+        return render(request, "login.html", {"form": form})
+
+    def get(self, request):
+        form = AuthenticationForm()
+        return render(request, "login.html", {"form": form})
