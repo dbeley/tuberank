@@ -5,3 +5,4 @@ __pycache__/
 .env
 secret.ini
 *.txt
+node_modules/
