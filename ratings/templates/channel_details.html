@@ -15,7 +15,7 @@
           <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}" class="w-full">
         </a>
         <a href="{% url 'video_details' pk=video.id %}" class="block text-lg font-bold text-gray-900">{{ video.last_snapshot.title_en }}</a>
-        <p class="text-gray-600">{{ video.channel.last_snapshot.name_en }}</p>
+        <p class="text-gray-600">{{ channel.last_snapshot.name_en }}</p>
       </div>
     {% endfor %}
   </div>

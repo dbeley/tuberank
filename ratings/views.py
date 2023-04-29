@@ -12,11 +12,12 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ratings.models import Channel, Video, VideoRating
+from ratings.models import Channel, ChannelRating, Video, VideoRating
 from ratings.serializers import (
     ChannelSerializer,
-    VideoRatingSerializer,
+    ChannelRatingSerializer,
     VideoSerializer,
+    VideoRatingSerializer,
     ProfileSerializer,
 )
 
@@ -26,27 +27,18 @@ class HomepageView(APIView):
     template_name = "homepage.html"
 
     def get(self, request):
-        channels = ChannelSerializer(Channel.objects.order_by("-id")[0:8], many=True)
-        latest_videos = VideoSerializer(
-            Video.objects.order_by("-id")[0:4],
-            many=True,
-        )
-        best_videos = VideoSerializer(
-            Video.objects.annotate(avg_rating=Avg("ratings__rating")).order_by(
-                "-avg_rating"
-            )[0:8],
-            many=True,
-        )
-
+        latest_videos = Video.objects.order_by("id")[0:4]
+        best_videos = Video.objects.annotate(
+            avg_rating=Avg("ratings__rating")
+        ).order_by("-avg_rating")[0:8]
         number_of_users = User.objects.count()
         number_of_channels = Channel.objects.count()
         number_of_videos = Video.objects.count()
 
         return Response(
             {
-                "channels": channels.data,
-                "latest_videos": latest_videos.data,
-                "best_videos": best_videos.data,
+                "latest_videos": latest_videos,
+                "best_videos": best_videos,
                 "number_of_users": number_of_users,
                 "number_of_channels": number_of_channels,
                 "number_of_videos": number_of_videos,
@@ -166,9 +158,7 @@ class VideoDetailsView(APIView):
 
     def get(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
-        serializer = VideoSerializer(video)
-        ratings = VideoRatingSerializer(video.ratings.all(), many=True)
-        return Response({"video": serializer.data, "selected_ratings": ratings.data})
+        return Response({"video": video})
 
 
 class ChannelDetailsView(APIView):
@@ -182,8 +172,8 @@ class ChannelDetailsView(APIView):
         page = paginator.get_page(request.GET.get("page", 1))
         return Response(
             {
-                "channel": ChannelSerializer(channel).data,
-                "videos": VideoSerializer(page, many=True).data,
+                "channel": channel,
+                "videos": page,
                 "page": page,
             }
         )
@@ -199,8 +189,7 @@ class ChannelListView(APIView):
         page = paginator.get_page(request.GET.get("page", 1))
         return Response(
             {
-                "channels": ChannelSerializer(page, many=True).data,
-                "page": page,
+                "channels": page,
             }
         )
 
@@ -229,8 +218,6 @@ class ProfileView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = "profile.html"
 
-    def get(self, request):
-        if not request.user.is_authenticated:
-            return redirect("homepage")
-        serializer = ProfileSerializer(request.user)
-        return Response(serializer.data)
+    def get(self, request, username):
+        user = User.objects.get(username=username)
+        return Response({"user": user})
