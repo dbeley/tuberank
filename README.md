@@ -20,9 +20,11 @@ python manage.py migrate --run-syncdb
 ### Homepage
 - DONE Display curated selection of Channels / Videos based on ratings
 - Add links to Github in footer
+- Add Import video feature
 
 ### Search page
-- Add htmx to search page to only updates channel or video parts
+- DONE Add htmx to search page to only updates channel or video parts
+- Add sorting mechanism
 
 ### Channel detail page
 - DONE Display list of all imported videos + ratings

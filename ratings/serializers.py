@@ -10,29 +10,6 @@ from ratings.models import (
 )
 
 
-class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
-
-    class Meta:
-        model = User
-        fields = ("username", "email", "password", "first_name", "last_name")
-
-    def create(self, validated_data):
-        user = super().create(validated_data)
-        user.set_password(validated_data["password"])
-        user.save()
-        return user
-
-    def update(self, instance, validated_data):
-        user = super().update(instance, validated_data)
-        try:
-            user.set_password(validated_data["password"])
-            user.save()
-        except KeyError:
-            pass
-        return user
-
-
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -172,3 +149,50 @@ class VideoRatingSerializer(serializers.ModelSerializer):
             "review_body",
             "username",
         ]
+
+
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+    video_ratings_count = serializers.SerializerMethodField()
+    channel_ratings_count = serializers.SerializerMethodField()
+    video_ratings = VideoRatingSerializer(
+        source="video_ratings", many=True, read_only=True
+    )
+    channel_ratings = ChannelRatingSerializer(
+        source="channel_ratings", many=True, read_only=True
+    )
+
+    def get_video_ratings_count(self, obj: User) -> int:
+        return obj.video_ratings.count()
+
+    def get_channel_ratings_count(self, obj: User) -> int:
+        return obj.channel_ratings.count()
+
+    class Meta:
+        model = User
+        fields = (
+            "username",
+            "email",
+            "password",
+            "first_name",
+            "last_name",
+            "video_ratings_count",
+            "channel_ratings_count",
+            "video_ratings",
+            "channel_ratings",
+        )
+
+    def create(self, validated_data):
+        user = super().create(validated_data)
+        user.set_password(validated_data["password"])
+        user.save()
+        return user
+
+    def update(self, instance, validated_data):
+        user = super().update(instance, validated_data)
+        try:
+            user.set_password(validated_data["password"])
+            user.save()
+        except KeyError:
+            pass
+        return user
