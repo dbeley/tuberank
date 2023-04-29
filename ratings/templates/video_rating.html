@@ -2,6 +2,11 @@
 {% block title %}Rate {{ video.last_snapshot.title_en }} - {{ video.channel.last_snapshot.name_en }}{% endblock %}
 {% block content %}
 
+    <div class="flex items-center w-full mb-8">
+        <a href="{% url 'video_details' pk=video.id %}" class="mr-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+            &#8592; Return to Video
+        </a>
+    </div>
     <h1 class="text-4xl font-bold mb-8">{{ video.last_snapshot.title_en }}</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
@@ -22,7 +27,7 @@
         <label class="block text-gray-700 font-bold mb-2" for="review_title">
             Title
         </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="review_title" type="text" name="review_title" value="{{ serializer.data.review_title }}"  placeholder="Enter the title of your rating" required>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="review_title" type="text" name="review_title" value="{{ serializer.data.review_title }}"  placeholder="Enter the title of your rating">
     </div>
 
     <div class="mb-4">
