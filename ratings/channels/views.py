@@ -28,7 +28,7 @@ class ChannelDetailsView(APIView):
 
 class ChannelListView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = "channel_list.html"
+    template_name = "channels/channel_list.html"
 
     def get(self, request):
         channels = Channel.objects.all()

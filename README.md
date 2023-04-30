@@ -60,13 +60,13 @@ python manage.py migrate --run-syncdb
 
 ### User-generated tags
 - DONE Add tag model
-- Add tag page
-- Add possibility to add tags to videos
+- DONE Add tag page
+- DONE Add possibility to add tags to videos
 
 ### User-generated lists
 - DONE Add list model
-- Create view to add a video to a list
-- Create view to view a list
+- DONE Create view to add a video to a list
+- DONE Create view to view a list
 
 ### Profile / Settings
 - Add profile / settings page
@@ -78,7 +78,7 @@ python manage.py migrate --run-syncdb
 - Add import video feature
 
 ### Charts page
-- Add possibility to create charts
+- DONE Add possibility to create charts
 - DONE Paginated
 - User tags
 - Sort by best rating, most ratings, etc.

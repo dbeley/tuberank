@@ -9,7 +9,7 @@
     <ul>
       {% for video in list.videos.all %}
         <li>
-          <a href="{% url 'video_details' pk=video.pk %}">{{ video.last_snapshot.title_en }}</a>
+          {% include "videos/video_item.html" %}
         </li>
       {% endfor %}
     </ul>

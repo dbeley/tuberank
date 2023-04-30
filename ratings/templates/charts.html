@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load humanize %}
 
 {% block title %}{{ channel.last_snapshot.name_en }} - ytvd{% endblock %}
 
@@ -19,24 +18,22 @@
         <option value="newest">Newest</option>
         <option value="oldest">Oldest</option>
       </select>
+      <label class="block text-gray-700 font-bold mb-2 mr-2" for="sort-by">Filter by tags:</label>
+      <select name="tags_filter" id="tags-filter" class="bg-white border border-gray-400 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+          <option disabled selected value> -- select an option -- </option>
+        {% for tag in tags %}
+          <option value="{{ tag.id }}">{{ tag.name }}</option>
+        {% endfor %}
+      </select>
       <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2">
         Sort
       </button>
     </div>
-  </form>
+</form>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
     {% for video in videos %}
-      <div class="bg-white rounded shadow-sm p-4">
-        <a href="{% url 'video_details' pk=video.id %}" class="block mb-2">
-          <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}" class="w-full">
-        </a>
-        <a href="{% url 'video_details' pk=video.id %}" class="block text-lg font-bold text-gray-900">{{ video.last_snapshot.title_en }}</a>
-        <p class="text-gray-600">{{ channel.last_snapshot.name_en }}</p>
-        <p class="text-gray-600">{{ video.last_snapshot.count_views|intcomma }} views</p>
-        <p class="text-gray-600">{{ video.ratings.count }} ratings</p>
-        <p class="text-gray-600">{{ video.average_rating }}</p>
-      </div>
+    {% include "videos/video_item.html" %}
     {% endfor %}
   </div>
 

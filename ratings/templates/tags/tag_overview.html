@@ -8,13 +8,8 @@
         {% if videos %}
           <ul class="divide-y divide-gray-200">
             {% for video in videos %}
-              <li class="py-4 flex items-center justify-between">
-                <div class="flex items-center">
-                  <div class="ml-3">
-                    <a href="{% url 'video_details' pk=video.pk %}" class="text-lg font-medium text-gray-900">{{ video.last_snapshot.title_en }}</a>
-                    <p class="text-sm text-gray-500">{{ video.last_snapshot.description_en }}</p>
-                  </div>
-                </div>
+              <li class="py-4 items-center justify-between">
+                {% include "videos/video_item.html" %}
               </li>
             {% endfor %}
           </ul>
