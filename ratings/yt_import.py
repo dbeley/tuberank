@@ -1,5 +1,6 @@
 import configparser
 import logging
+import isodate
 import os
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -110,7 +111,9 @@ def _get_video_response_from_id(video_id: str):
     with build("youtube", "v3", developerKey=YOUTUBE_DEVELOPER_KEY) as service:
         try:
             response = (
-                service.videos().list(part="snippet,statistics", id=video_id).execute()
+                service.videos()
+                .list(part="snippet,statistics,contentDetails", id=video_id)
+                .execute()
             )
         except HttpError:
             return None
@@ -132,6 +135,12 @@ class VideoDataClass:
     count_likes: int
     count_comments: int
     thumbnail_url: str
+    category_id: int
+    duration: int
+
+
+def _parse_youtube_duration(duration: str) -> int:
+    return isodate.parse_duration(duration).total_seconds()
 
 
 def _get_video_data_class_from_id(video_id: str) -> VideoDataClass:
@@ -147,6 +156,8 @@ def _get_video_data_class_from_id(video_id: str) -> VideoDataClass:
         count_comments=data["statistics"].get("commentCount"),
         description=data["snippet"]["description"],
         thumbnail_url=_get_thumbnail_data(data["snippet"]["thumbnails"]),
+        category_id=data["snippet"].get("categoryId"),
+        duration=_parse_youtube_duration(data["contentDetails"].get("duration")),
     )
 
 
@@ -198,5 +209,7 @@ def create_video_snapshot(video_id: str) -> None:
         date_creation=datetime.now(timezone.utc),
         description=data.description,
         thumbnail_url=data.thumbnail_url,
+        category=data.category_id,
+        duration=data.duration,
     )
     snapshot.save()

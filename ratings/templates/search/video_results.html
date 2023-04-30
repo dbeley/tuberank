@@ -17,7 +17,7 @@
     <div class="my-4">
         <nav class="flex items-center justify-between">
         {% if video_page.has_previous %}
-            <a hx-get="{% url 'search-videos' %}?q={{ query}}&page={{ video_page.previous_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-l">
+            <a hx-get="{% url 'search_videos' %}?q={{ query}}&page={{ video_page.previous_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-l">
             Previous
             </a>
         {% endif %}
@@ -25,7 +25,7 @@
             Page {{ video_page.number }} of {{ video_page.paginator.num_pages }}
         </div>
         {% if video_page.has_next %}
-            <a hx-get="{% url 'search-videos' %}?q={{ query}}&page={{ video_page.next_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-r">
+            <a hx-get="{% url 'search_videos' %}?q={{ query}}&page={{ video_page.next_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-r">
             Next
             </a>
         {% endif %}

@@ -27,7 +27,7 @@
         <label class="block text-gray-700 font-bold mb-2" for="review_title">
             Title
         </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="review_title" type="text" name="review_title" value="{{ serializer.data.review_title }}"  placeholder="Enter the title of your rating">
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="review_title" type="text" name="review_title" value="{{ serializer.data.review_title }}"  placeholder="Enter the title of your rating" maxlength="100">
     </div>
 
     <div class="mb-4">
@@ -41,7 +41,7 @@
         <label class="block text-gray-700 font-bold mb-2" for="review_body">
             Review
         </label>
-        <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="review_body" name="review_body" rows="5" placeholder="Enter your review">{{ serializer.data.review_body }}</textarea>
+        <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="review_body" name="review_body" rows="5" placeholder="Enter your review maxlength="5000">{{ serializer.data.review_body }}</textarea>
     </div>
 
     <div class="flex justify-start">

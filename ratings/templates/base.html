@@ -18,8 +18,9 @@
     <div class="hidden sm:block sm:ml-6">
       <div class="flex space-x-4">
         <a href="{% url 'channel_list' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">Channels</a>
-        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">Charts</a>
+        <a href="{% url 'charts' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">Charts</a>
         <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">Playlists</a>
+        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">About</a>
       </div>
     </div>
     <!-- Search bar -->
@@ -39,18 +40,18 @@
             <img class="h-8 w-8 rounded-full" src="https://randomuser.me/api/portraits/women/55.jpg" alt="">
           </button>
         </div>
-      {% else %}
-      <!-- Login link -->
-      <a href="{% url 'login' %}" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 mx-4 rounded-lg">Login</a>
-      {% endif %}
         <!-- Dropdown menu, show/hide based on menu state -->
         <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu" id="tooltip" style="display: none;">
           <div class="py-1" role="none">
-            <a href="{% url 'user_profile' username=user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Profile</a>
+            <a href="{% url 'profile' username=user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Profile</a>
             <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Settings</a>
             <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Logout</a>
           </div>
         </div>
+      {% else %}
+      <!-- Login link -->
+      <a href="{% url 'login' %}" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 mx-4 rounded-lg">Login</a>
+      {% endif %}
       </div>
   </div>
 </nav>

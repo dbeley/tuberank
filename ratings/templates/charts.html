@@ -35,6 +35,7 @@
         <p class="text-gray-600">{{ channel.last_snapshot.name_en }}</p>
         <p class="text-gray-600">{{ video.last_snapshot.count_views|intcomma }} views</p>
         <p class="text-gray-600">{{ video.ratings.count }} ratings</p>
+        <p class="text-gray-600">{{ video.average_rating }}</p>
       </div>
     {% endfor %}
   </div>

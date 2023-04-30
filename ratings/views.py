@@ -13,8 +13,9 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ratings.models import Channel, ChannelRating, Video, VideoRating
+from ratings.models import Channel, ChannelRating, Video, VideoRating, VideoViewing
 from ratings.charts import charts
+from ratings.enums import ViewingState
 from ratings.serializers import (
     ChannelSerializer,
     ChannelRatingSerializer,
@@ -141,8 +142,10 @@ class VideoRatingDetailView(APIView):
         video = get_object_or_404(Video, pk=pk)
         video_rating = VideoRating(video=video, user=request.user)
         serializer = VideoRatingSerializer(video_rating, data=request.data)
+        print(serializer.initial_data)
         if not serializer.is_valid():
             return Response({"serializer": serializer, "video": video})
+        print(serializer.data)
         VideoRating.objects.update_or_create(
             video=video,
             user=request.user,
@@ -150,6 +153,31 @@ class VideoRatingDetailView(APIView):
                 "date_publication": datetime.now(timezone.utc),
                 **serializer.validated_data,
             },
+        )
+        return redirect("video_details", pk=video.id)
+
+
+class VideoViewingView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "video_viewing.html"
+
+    def get(self, request, pk):
+        try:
+            video = get_object_or_404(Video, pk=pk)
+        except Video.DoesNotExist:
+            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+        return Response({"video": video})
+
+    def post(self, request, pk):
+        try:
+            video = get_object_or_404(Video, pk=pk)
+        except Video.DoesNotExist:
+            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+        VideoViewing.objects.create(
+            user=request.user,
+            video=video,
+            date_creation=datetime.now(timezone.utc),
+            state=ViewingState.VIEWED,
         )
         return redirect("video_details", pk=video.id)
 
@@ -218,7 +246,7 @@ class SignupView(generic.CreateView):
 
 class ProfileView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = "profile.html"
+    template_name = "profile/profile.html"
 
     def get(self, request, username):
         try:
@@ -226,11 +254,33 @@ class ProfileView(APIView):
         except User.DoesNotExist:
             return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
         chart_data = charts.get_ratings_chart_for_user(user)
+        paginator = Paginator(user.viewings.order_by("-date_creation"), 10)
+        page = paginator.get_page(request.GET.get("page", 1))
         return Response(
             {
                 "user": user,
                 "ratings_labels": chart_data["ratings_labels"],
                 "ratings_data": chart_data["ratings_data"],
+                "viewings": page,
+            }
+        )
+
+
+class PartialProfileView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "profile/profile_timeframe.html"
+
+    def get(self, request, username):
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+        paginator = Paginator(user.viewings.order_by("-date_creation"), 10)
+        page = paginator.get_page(request.GET.get("page", 1))
+        return Response(
+            {
+                "user": user,
+                "viewings": page,
             }
         )
 
