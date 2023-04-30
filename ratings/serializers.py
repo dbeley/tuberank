@@ -8,6 +8,7 @@ from ratings.models import (
     VideoSnapshot,
     VideoRating,
     VideoViewing,
+    UserTag,
 )
 
 
@@ -198,3 +199,12 @@ class UserSerializer(serializers.ModelSerializer):
         except KeyError:
             pass
         return user
+
+
+class UserTagSerializer(serializers.ModelSerializer):
+    video_id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(max_length=50)
+
+    class Meta:
+        model = UserTag
+        fields = ["name", "video_id"]

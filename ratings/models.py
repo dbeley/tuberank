@@ -5,18 +5,11 @@ from django.db.models import Avg
 from ratings import enums
 
 
-class UserTag(models.Model):
-    name = models.CharField(max_length=50)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date_creation = models.DateTimeField(auto_now_add=True)
-    state = models.PositiveIntegerField(choices=enums.TagState.choices())
-
-
 class Channel(models.Model):
     yt_id = models.CharField(max_length=24, unique=True)
     date_creation = models.DateTimeField("date of channel creation")
     description = models.TextField(max_length=5000, blank=True)
-    tags = models.ManyToManyField(UserTag, blank=True)
+    tags = models.ManyToManyField("ratings.UserTag", blank=True)
 
     def __str__(self):
         return f"{self.pk} - {self.yt_id} - {self.date_creation}"
@@ -40,7 +33,7 @@ class Video(models.Model):
         "ratings.Channel", related_name="videos", on_delete=models.CASCADE
     )
     date_publication = models.DateTimeField("date of video publication")
-    tags = models.ManyToManyField(UserTag, blank=True)
+    tags = models.ManyToManyField("ratings.UserTag", blank=True)
 
     def __str__(self):
         return f"{self.pk} - {self.yt_id} - {self.date_publication}"
@@ -180,3 +173,13 @@ class VideoListReaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     liked = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+class UserTag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    date_creation = models.DateTimeField(auto_now_add=True)
+    state = models.PositiveIntegerField(choices=enums.TagState.choices())
+
+    def __str__(self):
+        return f"{self.pk} - {self.name} - {self.user} - {self.state}"
