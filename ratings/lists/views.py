@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db.models import Count, QuerySet
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -51,6 +52,21 @@ class VideoListView(APIView):
             user=request.user,
             **serializer.validated_data,
         )
+        user_lists = _get_user_lists(request.user)
+        popular_lists = _get_popular_lists()[0:8]
+        return Response({"user_lists": user_lists, "popular_lists": popular_lists})
+
+
+class VideoListDeleteView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "lists/lists.html"
+
+    def get(self, request, pk):
+        try:
+            video_list = VideoList.objects.get(pk=pk, user=request.user)
+        except VideoList.DoesNotExist:
+            raise ValidationError("List not found")
+        video_list.delete()
         user_lists = _get_user_lists(request.user)
         popular_lists = _get_popular_lists()[0:8]
         return Response({"user_lists": user_lists, "popular_lists": popular_lists})

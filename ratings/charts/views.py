@@ -15,7 +15,7 @@ class ChartsView(APIView):
     template_name = "charts.html"
 
     def get(self, request):
-        tags = _get_validated_tags()
+        tags = _get_validated_tags().order_by("name")
         videos = Video.objects.annotate(
             num_ratings=Count("ratings"),
             avg_rating=Avg("ratings__rating"),
