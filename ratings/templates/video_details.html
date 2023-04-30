@@ -53,12 +53,8 @@
                         <td class="text-gray-700">{{ video.date_publication }}</td>
                     </tr>
                     <tr>
-                        <td class="font-bold text-gray-900 pr-4">Average:</td>
-                        <td class="text-gray-700">{{ video.average_rating }}</td>
-                    </tr>
-                    <tr>
-                        <td class="font-bold text-gray-900 pr-4">Ratings:</td>
-                        <td class="text-gray-700">{{ video.ratings.count }}</td>
+                        <td class="font-bold text-gray-900 pr-4">Rating:</td>
+                        <td class="text-gray-700">{{ video.average_rating }} from {{ video.ratings.count }} ratings</td>
                     </tr>
                     <tr>
                         <td class="font-bold text-gray-900 pr-4">Description:</td>

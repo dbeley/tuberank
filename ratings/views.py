@@ -150,7 +150,6 @@ class VideoRatingDetailView(APIView):
             video=video,
             user=request.user,
             defaults={
-                "date_publication": datetime.now(timezone.utc),
                 **serializer.validated_data,
             },
         )
@@ -176,7 +175,6 @@ class VideoViewingView(APIView):
         VideoViewing.objects.create(
             user=request.user,
             video=video,
-            date_creation=datetime.now(timezone.utc),
             state=ViewingState.VIEWED,
         )
         return redirect("video_details", pk=video.id)

@@ -43,6 +43,18 @@ class ViewingState(IntEnum):
         ]
 
 
+class TagState(IntEnum):
+    IN_VALIDATION = 0
+    VALIDATED = 1
+
+    @staticmethod
+    def choices():
+        return [
+            ("In validation", TagState.IN_VALIDATION.value),
+            ("Validated", TagState.VALIDATED.value),
+        ]
+
+
 class Category(IntEnum):
     FILM_AND_ANIMATION = 1
     AUTOS_AND_VEHICLES = 2

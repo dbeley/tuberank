@@ -5,10 +5,18 @@ from django.db.models import Avg
 from ratings import enums
 
 
+class UserTag(models.Model):
+    name = models.CharField(max_length=50)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_creation = models.DateTimeField(auto_now_add=True)
+    state = models.PositiveIntegerField(choices=enums.TagState.choices())
+
+
 class Channel(models.Model):
     yt_id = models.CharField(max_length=24, unique=True)
     date_creation = models.DateTimeField("date of channel creation")
     description = models.TextField(max_length=5000, blank=True)
+    tags = models.ManyToManyField(UserTag, blank=True)
 
     def __str__(self):
         return f"{self.pk} - {self.yt_id} - {self.date_creation}"
@@ -29,9 +37,10 @@ class Channel(models.Model):
 class Video(models.Model):
     yt_id = models.CharField(max_length=11, unique=True)
     channel = models.ForeignKey(
-        Channel, related_name="videos", on_delete=models.CASCADE
+        "ratings.Channel", related_name="videos", on_delete=models.CASCADE
     )
     date_publication = models.DateTimeField("date of video publication")
+    tags = models.ManyToManyField(UserTag, blank=True)
 
     def __str__(self):
         return f"{self.pk} - {self.yt_id} - {self.date_publication}"
@@ -52,12 +61,12 @@ class Video(models.Model):
 class ChannelSnapshot(models.Model):
     name_en = models.CharField(max_length=20)
     channel = models.ForeignKey(
-        Channel, related_name="snapshots", on_delete=models.CASCADE
+        "ratings.Channel", related_name="snapshots", on_delete=models.CASCADE
     )
     count_subscribers = models.IntegerField(default=0, blank=True, null=True)
     count_views = models.IntegerField(default=0, blank=True, null=True)
     count_videos = models.IntegerField(default=0, blank=True, null=True)
-    date_creation = models.DateTimeField("date of snapshot creation")
+    date_creation = models.DateTimeField(auto_now_add=True)
     custom_url = models.CharField(max_length=24, blank=True)
     description = models.TextField(max_length=5000, blank=True)
     thumbnail_url = models.CharField(max_length=100)
@@ -68,11 +77,13 @@ class ChannelSnapshot(models.Model):
 
 class VideoSnapshot(models.Model):
     title_en = models.CharField(max_length=100)
-    video = models.ForeignKey(Video, related_name="snapshots", on_delete=models.CASCADE)
+    video = models.ForeignKey(
+        "ratings.Video", related_name="snapshots", on_delete=models.CASCADE
+    )
     count_views = models.IntegerField(default=0, blank=True, null=True)
     count_likes = models.IntegerField(default=0, blank=True, null=True)
     count_comments = models.IntegerField(default=0, blank=True, null=True)
-    date_creation = models.DateTimeField("date of snapshot creation")
+    date_creation = models.DateTimeField(auto_now_add=True)
     description = models.TextField(max_length=5000, blank=True)
     thumbnail_url = models.CharField(max_length=100)
     category = models.PositiveIntegerField(
@@ -87,15 +98,14 @@ class VideoSnapshot(models.Model):
 class ChannelRating(models.Model):
     rating = models.PositiveIntegerField(
         choices=enums.Rating.choices(),
-        validators=[MinValueValidator(0), MaxValueValidator(10)],
     )
     user = models.ForeignKey(
         User, related_name="channel_ratings", on_delete=models.CASCADE
     )
     channel = models.ForeignKey(
-        Channel, related_name="ratings", on_delete=models.CASCADE
+        "ratings.Channel", related_name="ratings", on_delete=models.CASCADE
     )
-    date_publication = models.DateTimeField("date of rating publication")
+    date_creation = models.DateTimeField(auto_now_add=True)
     review_title = models.TextField(max_length=100, blank=True)
     review_body = models.TextField(max_length=5000, blank=True)
 
@@ -115,13 +125,14 @@ class ChannelRating(models.Model):
 class VideoRating(models.Model):
     rating = models.PositiveIntegerField(
         choices=enums.Rating.choices(),
-        validators=[MinValueValidator(0), MaxValueValidator(10)],
     )
     user = models.ForeignKey(
         User, related_name="video_ratings", on_delete=models.CASCADE
     )
-    video = models.ForeignKey(Video, related_name="ratings", on_delete=models.CASCADE)
-    date_publication = models.DateTimeField("date of rating publication")
+    video = models.ForeignKey(
+        "ratings.Video", related_name="ratings", on_delete=models.CASCADE
+    )
+    date_creation = models.DateTimeField(auto_now_add=True)
     review_title = models.TextField(max_length=100, blank=True)
     review_body = models.TextField(max_length=5000, blank=True)
 
@@ -138,13 +149,34 @@ class VideoRating(models.Model):
 
 class VideoViewing(models.Model):
     video = models.ForeignKey(
-        Video, related_name="viewings", on_delete=models.DO_NOTHING
+        "ratings.Video", related_name="viewings", on_delete=models.DO_NOTHING
     )
     user = models.ForeignKey(User, related_name="viewings", on_delete=models.CASCADE)
-    date_creation = models.DateTimeField("date of video viewing creation")
+    date_creation = models.DateTimeField(auto_now_add=True)
     state = models.PositiveIntegerField(
         choices=enums.ViewingState.choices(),
     )
 
     def __str__(self):
         return f"{self.pk} - {self.user} - {self.video.yt_id} - {self.date_creation}"
+
+
+class VideoList(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.TextField(max_length=5000, blank=True)
+    date_creation = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    videos = models.ManyToManyField(Video, through="VideoListItem")
+
+
+class VideoListItem(models.Model):
+    video = models.ForeignKey("ratings.Video", on_delete=models.CASCADE)
+    list = models.ForeignKey("ratings.VideoList", on_delete=models.CASCADE)
+    order = models.PositiveIntegerField()
+
+
+class VideoListReaction(models.Model):
+    list = models.ForeignKey("ratings.VideoList", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    liked = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)

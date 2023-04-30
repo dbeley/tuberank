@@ -41,6 +41,8 @@ python manage.py migrate --run-syncdb
 - DONE Display video ratings + reviews
 - Display number of ratings + rating in a better way (top of the page, stars, separate box)
 - Display duration
+- Display related videos with the same tags
+- Display "list this video is in" with best lists where the video is
 
 ### Channel list page
 - Add sorting mechanism (alphabetical, chronological, popular, indexed, best rated, etc.)
@@ -57,9 +59,14 @@ python manage.py migrate --run-syncdb
 - Add categories to videos/channels/snapshots
 
 ### User-generated tags
-- Add tag model
+- DONE Add tag model
 - Add tag page
 - Add possibility to add tags to videos
+
+### User-generated lists
+- DONE Add list model
+- Create view to add a video to a list
+- Create view to view a list
 
 ### Profile / Settings
 - Add profile / settings page
