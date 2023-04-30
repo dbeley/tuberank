@@ -37,7 +37,7 @@ python manage.py migrate --run-syncdb
 ### Video detail page
 - Display categories
 - DONE Include link to watch the video (player integration?)
-- Display user-generated tags, lists
+- DONE Display user-generated tags, lists
 - DONE Display video ratings + reviews
 - Display number of ratings + rating in a better way (top of the page, stars, separate box)
 - Display duration

@@ -7,3 +7,4 @@ secret.ini
 *.txt
 node_modules/
 temp/
+.idea/

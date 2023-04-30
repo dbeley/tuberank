@@ -26,6 +26,7 @@ from ratings.serializers import (
     VideoSerializer,
     VideoRatingSerializer,
     UserTagSerializer,
+    VideoListSerializer,
 )
 
 
@@ -216,18 +217,19 @@ class VideoListView(APIView):
         ).order_by("-num_ratings")[0:8]
         return Response({"user_lists": user_lists, "popular_lists": popular_lists})
 
-    # def post(self, request, pk):
-    #     video = get_object_or_404(Video, pk=pk)
-    #     video_lists = VideoList.objects.filter(user=request.user)
-    #     serializer = UserTagSerializer(data=request.data)
-    #     if not serializer.is_valid():
-    #         return Response({"video": video})
-    #     tag, created = UserTag.objects.get_or_create(
-    #         name=serializer.validated_data.get("name"),
-    #         defaults={"user": self.request.user, "state": enums.TagState.VALIDATED},
-    #     )
-    #     video.tags.add(tag)
-    #     return Response({"video": video, "video_lists": video_lists})
+    def post(self, request):
+        serializer = VideoListSerializer(data=request.data)
+        if not serializer.is_valid():
+            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+        VideoList.objects.create(
+            user=request.user,
+            **serializer.validated_data,
+        )
+        user_lists = VideoList.objects.filter(user=request.user)
+        popular_lists = VideoList.objects.annotate(
+            num_ratings=Count("ratings")
+        ).order_by("-num_ratings")[0:8]
+        return Response({"user_lists": user_lists, "popular_lists": popular_lists})
 
 
 class UserTagOverviewView(APIView):
@@ -269,6 +271,19 @@ class ChannelListView(APIView):
         return Response(
             {
                 "channels": page,
+            }
+        )
+
+
+class VideoListDetailsView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "list_details.html"
+
+    def get(self, request, pk):
+        list = get_object_or_404(VideoList, pk=pk)
+        return Response(
+            {
+                "list": list,
             }
         )
 

@@ -8,6 +8,7 @@ from ratings.models import (
     VideoSnapshot,
     VideoRating,
     UserTag,
+    VideoList,
 )
 
 
@@ -210,3 +211,12 @@ class UserTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserTag
         fields = ["name", "video_id"]
+
+
+class VideoListSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(max_length=200)
+    description = serializers.CharField(max_length=5000, required=False)
+
+    class Meta:
+        model = VideoList
+        fields = ["name", "description"]
