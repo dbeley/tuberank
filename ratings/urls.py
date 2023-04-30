@@ -60,6 +60,11 @@ urlpatterns = [
         name="list_details",
     ),
     path(
+        "list/<int:pk>/delete",
+        ratings.lists.views.VideoListDeleteView.as_view(),
+        name="list_delete",
+    ),
+    path(
         "tags",
         ratings.tags.views.TagsView.as_view(),
         name="tags",

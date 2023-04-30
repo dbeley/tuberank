@@ -1,4 +1,4 @@
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Count
 from django.shortcuts import get_object_or_404
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
@@ -9,7 +9,7 @@ from ratings.models.tags import UserTag
 
 
 def _get_validated_tags() -> QuerySet[UserTag]:
-    return UserTag.objects.filter(state=enums.TagState.VALIDATED).order_by("name").all()
+    return UserTag.objects.filter(state=enums.TagState.VALIDATED).all()
 
 
 class UserTagOverviewView(APIView):
@@ -27,5 +27,9 @@ class TagsView(APIView):
     template_name = "tags/tags.html"
 
     def get(self, request):
-        tags = _get_validated_tags()
+        tags = (
+            _get_validated_tags()
+            .annotate(num_videos=Count("video"))
+            .order_by("-num_videos")
+        )
         return Response({"tags": tags})
