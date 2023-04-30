@@ -24,6 +24,13 @@ class VideoListItem(models.Model):
     list = models.ForeignKey("ratings.VideoList", on_delete=models.CASCADE)
     order = models.PositiveIntegerField()
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["list", "video"], name="unique_video_in_list"
+            )
+        ]
+
 
 class VideoListRating(models.Model):
     list = models.ForeignKey(
