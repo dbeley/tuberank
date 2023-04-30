@@ -95,7 +95,7 @@
               <form id="add-tag-form" action="{% url 'video_details' video.id %}" method="POST">
                 {% csrf_token %}
                 <div class="flex items-center">
-                  <input type="name" name="tag" id="tag" placeholder="Enter a tag" class="lowercase bg-gray-100 rounded-lg px-4 py-2 w-full mr-2">
+                  <input type="name" name="name" placeholder="Enter a tag" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2" maxlength="50">
                   <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">Add Tag</button>
                 </div>
               </form>
@@ -137,38 +137,5 @@
         </div>
     </div>
 </div>
-
-<script>
-  const form = document.querySelector('#add-tag-form');
-  const csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
-  const video_id = {{ video.pk }};
-
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const tag = document.querySelector('#tag').value;
-    fetch('/api/tags/{{ video.pk }}', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrf_token
-      },
-      body: JSON.stringify({
-        name: tag,
-        video_id: video_id,
-      })
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Add the new tag to the list of tags
-        const tagList = document.querySelector('.tags ul');
-        const newTag = document.createElement('li');
-        newTag.textContent = data.name;
-        tagList.appendChild(newTag);
-
-      // Clear the input field
-      document.querySelector('#tag').value = '';
-    });
-  });
-</script>
 
 {% endblock %}

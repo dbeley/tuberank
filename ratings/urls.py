@@ -6,15 +6,9 @@ from ratings import views, api_views
 
 urlpatterns = [
     path("", views.HomepageView.as_view(), name="homepage"),
-    path("api/tags", api_views.UserTagView.as_view(), name="tags"),
     path(
-        "api/tags/<int:video_pk>",
-        api_views.UserTagVideoView.as_view(),
-        name="tags_video",
-    ),
-    path(
-        "api/tags/<str:name>",
-        api_views.UserTagOverviewView.as_view(),
+        "tags/<str:name>",
+        views.UserTagOverviewView.as_view(),
         name="tags_overview",
     ),
     path("login", views.LoginView.as_view(), name="login"),
