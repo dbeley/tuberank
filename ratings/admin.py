@@ -1,12 +1,6 @@
 from django.contrib import admin
-from ratings.models import (
-    Channel,
-    ChannelRating,
-    ChannelSnapshot,
-    Video,
-    VideoRating,
-    VideoSnapshot,
-)
+from ratings.models.videos import Video, VideoSnapshot, VideoRating
+from ratings.models.channels import Channel, ChannelSnapshot, ChannelRating
 
 admin.site.register(Channel)
 admin.site.register(ChannelRating)

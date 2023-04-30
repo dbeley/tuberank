@@ -3,11 +3,10 @@ from django.shortcuts import get_object_or_404
 from rest_framework import views
 from rest_framework import permissions
 from ratings import enums
-from ratings.serializers import (
-    VideoSerializer,
-    UserTagSerializer,
-)
-from ratings.models import Video, UserTag
+from ratings.tags.serializers import UserTagSerializer
+from ratings.videos.serializers import VideoSerializer
+from ratings.models.tags import UserTag
+from ratings.models.videos import Video
 from rest_framework.response import Response
 
 
