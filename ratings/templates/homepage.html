@@ -23,8 +23,9 @@
                     <h3 class="font-semibold text-gray-900 mb-2 text-lg">{{ video.last_snapshot.title_en }}</h3>
                 </a>
                 <a href="{% url 'channel_details' pk=video.channel.id %}"> <p class="text-gray-700 text-sm mb-2">{{ video.channel.last_snapshot.name_en }}</p></a>
-                <p class="text-gray-700 text-sm mb-2">Average: {{ video.average_rating }}</p>
-                <p class="text-gray-700 text-sm mb-2">Ratings: {{ video.ratings.count }}</p>
+                {% if not video.ratings.count == 0 %}
+                <p class="text-gray-700 text-sm mb-2">Rating: {{ video.average_rating }} from {{ video.ratings.count }} ratings</p>
+                {% endif %}
                 <p class="text-gray-700 text-sm mb-2">{{ video.last_snapshot.count_views|intcomma }} views</p>
             </div>
             <div class="flex justify-end p-4">
@@ -54,8 +55,9 @@
                     <h3 class="font-semibold text-gray-900 mb-2 text-lg">{{ video.last_snapshot.title_en }}</h3>
                 </a>
                 <a href="{% url 'channel_details' pk=video.channel.id %}"> <p class="text-gray-700 text-sm mb-2">{{ video.channel.last_snapshot.name_en }}</p></a>
-                <p class="text-gray-700 text-sm mb-2">Average: {{ video.average_rating }}</p>
-                <p class="text-gray-700 text-sm mb-2">Ratings: {{ video.ratings_count }}</p>
+                {% if not video.ratings.count == 0 %}
+                <p class="text-gray-700 text-sm mb-2">Rating: {{ video.average_rating }} from {{ video.ratings.count }} ratings</p>
+                {% endif %}
                 <p class="text-gray-700 text-sm mb-2">{{ video.last_snapshot.count_views|intcomma }} views</p>
             </div>
             <div class="flex justify-end p-4">
