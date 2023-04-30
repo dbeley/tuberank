@@ -64,4 +64,5 @@ urlpatterns = [
         name="charts",
     ),
     path("lists", views.VideoListView.as_view(), name="lists"),
+    path("list/<int:pk>", views.VideoListDetailsView.as_view(), name="list_details"),
 ]

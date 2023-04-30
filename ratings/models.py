@@ -160,6 +160,13 @@ class VideoList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     videos = models.ManyToManyField(Video, through="VideoListItem")
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "name"], name="unique_user_video_list_by_name"
+            )
+        ]
+
 
 class VideoListItem(models.Model):
     video = models.ForeignKey("ratings.Video", on_delete=models.CASCADE)

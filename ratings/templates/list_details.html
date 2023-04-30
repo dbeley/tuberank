@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ list.name }}</h1>
+  <p>{{ list.description }}</p>
+
+  {% if list.videos.exists %}
+    <h2>Videos in this list:</h2>
+    <ul>
+      {% for video in list.videos.all %}
+        <li>
+          <a href="{% url 'video_details' pk=video.pk %}">{{ video.last_snapshot.title_en }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No videos in this list yet.</p>
+  {% endif %}
+{% endblock %}
