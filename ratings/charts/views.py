@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from ratings.models.videos import Video
+from ratings.tags.views import _get_validated_tags
 
 
 class ChartsView(APIView):
@@ -13,6 +14,7 @@ class ChartsView(APIView):
     template_name = "charts.html"
 
     def get(self, request):
+        tags = _get_validated_tags()
         videos = Video.objects.annotate(num_ratings=Count("ratings")).all()
         sort_method = request.GET.get("sort_by")
         if sort_method:
@@ -37,4 +39,4 @@ class ChartsView(APIView):
 
         paginator = Paginator(videos, 8)
         page = paginator.get_page(request.GET.get("page", 1))
-        return Response({"videos": page, "page": page})
+        return Response({"videos": page, "page": page, "tags": tags})
