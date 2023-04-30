@@ -1,9 +1,22 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 
-from ratings import views
+from ratings import views, api_views
+
 
 urlpatterns = [
     path("", views.HomepageView.as_view(), name="homepage"),
+    path("api/tags", api_views.UserTagView.as_view(), name="tags"),
+    path(
+        "api/tags/<int:video_pk>",
+        api_views.UserTagVideoView.as_view(),
+        name="tags_video",
+    ),
+    path(
+        "api/tags/<str:name>",
+        api_views.UserTagOverviewView.as_view(),
+        name="tags_overview",
+    ),
     path("login", views.LoginView.as_view(), name="login"),
     path("signup", views.SignupView.as_view(), name="signup"),
     path("user/<str:username>", views.ProfileView.as_view(), name="profile"),
