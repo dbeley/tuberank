@@ -54,62 +54,39 @@ class SearchView(APIView):
             Q(snapshots__title_en__icontains=query)
         ).distinct()
         video_paginator = Paginator(video_queryset, 9)
+        if video_page_query_param := request.GET.get("page"):
+            video_page = video_paginator.get_page(video_page_query_param)
+            return Response(
+                {
+                    "videos": VideoSerializer(video_page, many=True).data,
+                    "query": query,
+                    "video_page": video_page,
+                },
+                template_name="search/video_results.html",
+            )
         video_page = video_paginator.get_page(request.GET.get("page", 1))
         channel_queryset = Channel.objects.filter(
             Q(snapshots__name_en__icontains=query)
         ).distinct()
         channel_paginator = Paginator(channel_queryset, 4)
+        if channel_page_query_param := request.GET.get("page_c"):
+            channel_page = channel_paginator.get_page(channel_page_query_param)
+            return Response(
+                {
+                    "channels": ChannelSerializer(channel_page, many=True).data,
+                    "query": query,
+                    "channel_page": channel_page,
+                },
+                template_name="search/channel_results.html",
+            )
         channel_page = channel_paginator.get_page(request.GET.get("page_c", 1))
+        print(channel_page)
         return Response(
             {
                 "channels": ChannelSerializer(channel_page, many=True).data,
                 "videos": VideoSerializer(video_page, many=True).data,
                 "query": query,
                 "channel_page": channel_page,
-                "video_page": video_page,
-            }
-        )
-
-
-class PartialChannelSearchView(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = "search/channel_results.html"
-
-    def get(self, request):
-        query = request.GET.get("q")
-        if not query:
-            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
-        channel_queryset = Channel.objects.filter(
-            Q(snapshots__name_en__icontains=query)
-        ).distinct()
-        channel_paginator = Paginator(channel_queryset, 4)
-        channel_page = channel_paginator.get_page(request.GET.get("page_c", 1))
-        return Response(
-            {
-                "channels": ChannelSerializer(channel_page, many=True).data,
-                "query": query,
-                "channel_page": channel_page,
-            }
-        )
-
-
-class PartialVideoSearchView(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = "search/video_results.html"
-
-    def get(self, request):
-        query = request.GET.get("q")
-        if not query:
-            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
-        video_queryset = Video.objects.filter(
-            Q(snapshots__title_en__icontains=query)
-        ).distinct()
-        video_paginator = Paginator(video_queryset, 9)
-        video_page = video_paginator.get_page(request.GET.get("page", 1))
-        return Response(
-            {
-                "videos": VideoSerializer(video_page, many=True).data,
-                "query": query,
                 "video_page": video_page,
             }
         )
