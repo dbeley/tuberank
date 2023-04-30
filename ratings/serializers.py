@@ -7,6 +7,7 @@ from ratings.models import (
     Video,
     VideoSnapshot,
     VideoRating,
+    VideoViewing,
 )
 
 
@@ -135,6 +136,7 @@ class VideoRatingSerializer(serializers.ModelSerializer):
     date_publication = serializers.DateTimeField(read_only=True)
     video = serializers.PrimaryKeyRelatedField(read_only=True)
     username = serializers.SerializerMethodField(read_only=True)
+    rating = serializers.IntegerField()
 
     def get_username(self, obj):
         return obj.user.username

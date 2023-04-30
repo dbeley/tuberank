@@ -12,6 +12,7 @@ djangorestframework = "^3.14.0"
 django-extensions = "^3.2.1"
 google-api-python-client = "^2.86.0"
 django-tailwind = "^3.5.0"
+isodate = "^0.6.1"
 
 
 [tool.poetry.group.dev.dependencies]

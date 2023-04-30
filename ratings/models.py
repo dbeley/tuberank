@@ -19,7 +19,7 @@ class Channel(models.Model):
 
     @property
     def average_rating(self):
-        return self.ratings.aggregate(avg=Avg("rating"))["avg"] or 0
+        return round(self.ratings.aggregate(avg=Avg("rating"))["avg"] or 0, 2)
 
     @property
     def indexed_videos_count(self):
@@ -42,7 +42,7 @@ class Video(models.Model):
 
     @property
     def average_rating(self) -> int:
-        return self.ratings.aggregate(avg=Avg("rating"))["avg"] or 0
+        return round(self.ratings.aggregate(avg=Avg("rating"))["avg"] or 0, 2)
 
     @property
     def url(self) -> str:
@@ -75,6 +75,10 @@ class VideoSnapshot(models.Model):
     date_creation = models.DateTimeField("date of snapshot creation")
     description = models.TextField(max_length=5000, blank=True)
     thumbnail_url = models.CharField(max_length=100)
+    category = models.PositiveIntegerField(
+        choices=enums.Category.choices(), blank=True, null=True
+    )
+    duration = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.pk} - {self.title_en} - {self.date_creation}"
@@ -130,3 +134,17 @@ class VideoRating(models.Model):
                 fields=["user", "video"], name="unique_user_rating_video"
             )
         ]
+
+
+class VideoViewing(models.Model):
+    video = models.ForeignKey(
+        Video, related_name="viewings", on_delete=models.DO_NOTHING
+    )
+    user = models.ForeignKey(User, related_name="viewings", on_delete=models.CASCADE)
+    date_creation = models.DateTimeField("date of video viewing creation")
+    state = models.PositiveIntegerField(
+        choices=enums.ViewingState.choices(),
+    )
+
+    def __str__(self):
+        return f"{self.pk} - {self.user} - {self.video.yt_id} - {self.date_creation}"

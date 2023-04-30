@@ -64,6 +64,10 @@
           <p class="text-gray-600">No channel ratings found.</p>
         {% endif %}
       </div>
+      {% if user.viewings.exists %}
+          {% include "profile/profile_timeframe.html" %}
+      {% endif %}
+
     </div>
   </div>
 </div>
