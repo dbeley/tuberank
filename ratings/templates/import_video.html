@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="text-2xl font-bold mb-4">Import Video</h1>
+  <p class="mb-2">This feature will add the video in the list of indexed videos by ytvd.</p>
+  <p class="mb-4">The number of videos that can be added is limited to 10,000 per day.</p>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-4">
+      <label class="block text-xl text-gray-700 font-bold mb-2" for="urls">Youtube URLs (one by line):</label>
+      <textarea name="urls" id="urls" class="bg-white border border-gray-400 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"></textarea>
+    </div>
+    <div class="mb-4">
+      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        Import URLs
+      </button>
+    </div>
+  </form>
+  {% if errors %}
+    {% for error in errors %}
+      <p class="mb-2">{{ error }}</p>
+    {% endfor %}
+  {% endif %}
+  {% if success %}
+    {% for success_item in success %}
+      <p class="mb-2">{{ success_item }}</p>
+    {% endfor %}
+  {% endif %}
+{% endblock %}

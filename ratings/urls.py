@@ -74,4 +74,9 @@ urlpatterns = [
         ratings.tags.views.UserTagOverviewView.as_view(),
         name="tags_overview",
     ),
+    path(
+        "import-video",
+        ratings.views.ImportVideoView.as_view(),
+        name="import_video",
+    ),
 ]
