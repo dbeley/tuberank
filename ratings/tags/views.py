@@ -1,3 +1,4 @@
+from django.db.models import QuerySet
 from django.shortcuts import get_object_or_404
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
@@ -5,6 +6,10 @@ from rest_framework.views import APIView
 
 from ratings import enums
 from ratings.models.tags import UserTag
+
+
+def _get_validated_tags() -> QuerySet[UserTag]:
+    return UserTag.objects.filter(state=enums.TagState.VALIDATED).all()
 
 
 class UserTagOverviewView(APIView):
@@ -22,5 +27,5 @@ class TagsView(APIView):
     template_name = "tags/tags.html"
 
     def get(self, request):
-        tags = UserTag.objects.filter(state=enums.TagState.VALIDATED).all()
+        tags = _get_validated_tags()
         return Response({"tags": tags})
