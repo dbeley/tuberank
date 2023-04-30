@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+from django.db.models import QuerySet
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework.renderers import TemplateHTMLRenderer
@@ -6,10 +8,29 @@ from rest_framework.views import APIView
 
 from ratings import enums
 from ratings.models.tags import UserTag
-from ratings.models.lists import VideoList
+from ratings.models.lists import VideoList, VideoListItem
 from ratings.models.videos import Video, VideoRating, VideoViewing
 from ratings.tags.serializers import UserTagSerializer
 from ratings.videos.serializers import VideoRatingSerializer
+
+
+def _add_video_to_list(video_pk: int, list_pk: int):
+    list = VideoList.objects.get(pk=list_pk)
+    video = Video.objects.get(pk=video_pk)
+    VideoListItem.objects.create(list=list, video=video, order=1)
+
+
+def _get_user_lists(user: User) -> QuerySet[VideoList]:
+    return VideoList.objects.filter(user=user)
+
+
+def _get_user_rating_for_video(user: User, video: Video) -> VideoRating | None:
+    if VideoRating.objects.filter(
+        video=video,
+        user=user,
+    ).exists():
+        return VideoRating.objects.get(video=video, user=user)
+    return None
 
 
 class VideoRatingDetailView(APIView):
@@ -18,13 +39,9 @@ class VideoRatingDetailView(APIView):
 
     def get(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
-        if not VideoRating.objects.filter(
-            video=video,
-            user=request.user,
-        ).exists():
+        video_rating = _get_user_rating_for_video(user=request.user, video=video)
+        if not video_rating:
             video_rating = VideoRating(video=video, user=request.user)
-        else:
-            video_rating = VideoRating.objects.get(video=video, user=request.user)
         serializer = VideoRatingSerializer(video_rating)
         return Response({"serializer": serializer, "video": video})
 
@@ -74,18 +91,21 @@ class VideoDetailsView(APIView):
 
     def get(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
-        video_lists = VideoList.objects.filter(user=request.user)
-        return Response({"video": video, "video_lists": video_lists})
+        user_lists = _get_user_lists(request.user)
+        return Response({"video": video, "user_lists": user_lists})
 
     def post(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
-        video_lists = VideoList.objects.filter(user=request.user)
-        serializer = UserTagSerializer(data=request.data)
-        if not serializer.is_valid():
-            return Response({"video": video})
-        tag, created = UserTag.objects.get_or_create(
-            name=serializer.validated_data.get("name"),
-            defaults={"user": self.request.user, "state": enums.TagState.VALIDATED},
-        )
-        video.tags.add(tag)
-        return Response({"video": video, "video_lists": video_lists})
+        user_lists = _get_user_lists(request.user)
+        if "name" in request.data:
+            serializer = UserTagSerializer(data=request.data)
+            if not serializer.is_valid():
+                return Response({"video": video, "user_lists": user_lists})
+            tag, created = UserTag.objects.get_or_create(
+                name=serializer.validated_data.get("name"),
+                defaults={"user": self.request.user, "state": enums.TagState.VALIDATED},
+            )
+            video.tags.add(tag)
+        elif "list_pk" in request.data:
+            _add_video_to_list(video_pk=video.pk, list_pk=request.data.get("list_pk"))
+        return Response({"video": video, "user_lists": user_lists})

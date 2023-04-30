@@ -117,12 +117,12 @@
             </div>
             <div class="px-2">
               <h2 class="text-xl font-bold mb-2">Lists</h2>
-              <form action="{% url 'video_details' video.id %}" method="POST">
+              <form action="{% url 'video_details' pk=video.id %}" method="POST">
                 {% csrf_token %}
                 <div class="flex items-center">
-                  <select name="list" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2">
+                  <select name="list_pk" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2">
                     <option value="" disabled selected>Select a list</option>
-                    {% for list in video_lists.all %}
+                    {% for list in user_lists.all %}
                       <option value="{{ list.id }}">{{ list.name }}</option>
                     {% endfor %}
                   </select>
