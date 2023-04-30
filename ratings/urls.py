@@ -44,16 +44,6 @@ urlpatterns = [
         name="video_details",
     ),
     path(
-        "search/channels",
-        views.PartialChannelSearchView.as_view(),
-        name="search_channels",
-    ),
-    path(
-        "search/videos",
-        views.PartialVideoSearchView.as_view(),
-        name="search_videos",
-    ),
-    path(
         "search",
         views.SearchView.as_view(),
         name="search",
