@@ -19,7 +19,6 @@ python manage.py migrate --run-syncdb
 
 ### Homepage
 - Add links to Github in footer
-- Add Import video feature
 - Add about page
 
 ### Search page
@@ -56,9 +55,6 @@ python manage.py migrate --run-syncdb
 - Add profile / settings page
 - Add statistics
 - Add user-generated lists with ratings
-
-### Import video
-- Add import video feature
 
 ### Localization
 - Add FR language

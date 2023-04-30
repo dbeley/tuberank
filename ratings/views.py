@@ -16,6 +16,11 @@ from ratings.models.channels import Channel
 from ratings.charts import charts
 from ratings.videos.serializers import VideoSerializer
 from ratings.channels.serializers import ChannelSerializer
+from ratings.yt_import import (
+    create_video_snapshot_from_url,
+    TooManyResultException,
+    NoResultException,
+)
 
 
 class HomepageView(APIView):
@@ -151,3 +156,36 @@ class PartialProfileView(APIView):
                 "viewings": page,
             }
         )
+
+
+class ImportVideoView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "import_video.html"
+
+    def get(self, request):
+        print(request.__dict__)
+        return Response()
+
+    def post(self, request):
+        errors = []
+        success = []
+        if urls := request.data.get("urls"):
+            urls_list = urls.split("\n")
+            for url in urls_list:
+                try:
+                    create_video_snapshot_from_url(url)
+                except TooManyResultException:
+                    errors.append(
+                        f"The import for item {url} failed with an error: more than one result found"
+                    )
+                except NoResultException:
+                    errors.append(
+                        f"The import for item {url} failed with an error: no result found"
+                    )
+                except Exception as err:
+                    errors.append(
+                        f"The import for item {url} failed with an error: {str(err)}"
+                    )
+                finally:
+                    success.append(f"The import for item {url} finished successfully.")
+        return Response({"success": success, "errors": errors})
