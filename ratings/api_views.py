@@ -1,19 +1,13 @@
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, views
+from rest_framework import views
 from rest_framework import permissions
 from ratings import enums
 from ratings.serializers import (
-    UserSerializer,
-    ChannelSerializer,
-    ChannelRatingSerializer,
     VideoSerializer,
-    VideoRatingSerializer,
     UserTagSerializer,
 )
-from ratings.models import Channel, Video, ChannelRating, VideoRating, UserTag
-from datetime import datetime, timezone
+from ratings.models import Video, UserTag
 from rest_framework.response import Response
 
 

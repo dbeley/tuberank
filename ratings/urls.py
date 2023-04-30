@@ -1,7 +1,6 @@
-from django.urls import path, include
-from rest_framework import routers
+from django.urls import path
 
-from ratings import views, api_views
+from ratings import views
 
 
 urlpatterns = [
@@ -64,4 +63,5 @@ urlpatterns = [
         views.ChartsView.as_view(),
         name="charts",
     ),
+    path("lists", views.VideoListView.as_view(), name="lists"),
 ]

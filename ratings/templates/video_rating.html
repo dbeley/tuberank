@@ -23,27 +23,24 @@
     </div>
 <form action="{% url 'video_rating' pk=video.pk %}" method="post">
     {% csrf_token %}
-    <div class="mb-4">
-        <label class="block text-gray-700 font-bold mb-2" for="review_title">
-            Title
-        </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="review_title" type="text" name="review_title" value="{{ serializer.data.review_title }}"  placeholder="Enter the title of your rating" maxlength="100">
-    </div>
-
-    <div class="mb-4">
+    <div class="mb-2 mt-2">
         <label class="block text-gray-700 font-bold mb-2" for="rating">
             Rating (0-10)
         </label>
         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="rating" type="number" name="rating" value="{{ serializer.data.rating }}" min="0" max="10" placeholder="Enter your rating" required>
     </div>
-
-    <div class="mb-4">
+    <div class="mb-2">
+        <label class="block text-gray-700 font-bold mb-2" for="review_title">
+            Review title (optional)
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="review_title" type="text" name="review_title" value="{{ serializer.data.review_title }}"  placeholder="Enter the title of your rating" maxlength="100">
+    </div>
+    <div class="mb-2">
         <label class="block text-gray-700 font-bold mb-2" for="review_body">
-            Review
+            Review (optional)
         </label>
         <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="review_body" name="review_body" rows="5" placeholder="Enter your review" maxlength="5000">{{ serializer.data.review_body }}</textarea>
     </div>
-
     <div class="flex justify-start">
         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Submit

@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
 from django.db.models import Avg
 from ratings import enums
@@ -168,8 +167,10 @@ class VideoListItem(models.Model):
     order = models.PositiveIntegerField()
 
 
-class VideoListReaction(models.Model):
-    list = models.ForeignKey("ratings.VideoList", on_delete=models.CASCADE)
+class VideoListRating(models.Model):
+    list = models.ForeignKey(
+        "ratings.VideoList", related_name="ratings", on_delete=models.CASCADE
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     liked = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

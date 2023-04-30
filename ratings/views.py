@@ -1,6 +1,3 @@
-from datetime import datetime, timezone
-from django.core.exceptions import ValidationError
-
 from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
@@ -16,20 +13,18 @@ from rest_framework.views import APIView
 
 from ratings.models import (
     Channel,
-    ChannelRating,
     Video,
     VideoRating,
     VideoViewing,
+    VideoList,
     UserTag,
 )
 from ratings.charts import charts
 from ratings import enums
 from ratings.serializers import (
     ChannelSerializer,
-    ChannelRatingSerializer,
     VideoSerializer,
     VideoRatingSerializer,
-    ProfileSerializer,
     UserTagSerializer,
 )
 
@@ -193,10 +188,12 @@ class VideoDetailsView(APIView):
 
     def get(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
-        return Response({"video": video})
+        video_lists = VideoList.objects.filter(user=request.user)
+        return Response({"video": video, "video_lists": video_lists})
 
     def post(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
+        video_lists = VideoList.objects.filter(user=request.user)
         serializer = UserTagSerializer(data=request.data)
         if not serializer.is_valid():
             return Response({"video": video})
@@ -205,7 +202,32 @@ class VideoDetailsView(APIView):
             defaults={"user": self.request.user, "state": enums.TagState.VALIDATED},
         )
         video.tags.add(tag)
-        return Response({"video": video})
+        return Response({"video": video, "video_lists": video_lists})
+
+
+class VideoListView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "lists.html"
+
+    def get(self, request):
+        user_lists = VideoList.objects.filter(user=request.user)
+        popular_lists = VideoList.objects.annotate(
+            num_ratings=Count("ratings")
+        ).order_by("-num_ratings")[0:8]
+        return Response({"user_lists": user_lists, "popular_lists": popular_lists})
+
+    # def post(self, request, pk):
+    #     video = get_object_or_404(Video, pk=pk)
+    #     video_lists = VideoList.objects.filter(user=request.user)
+    #     serializer = UserTagSerializer(data=request.data)
+    #     if not serializer.is_valid():
+    #         return Response({"video": video})
+    #     tag, created = UserTag.objects.get_or_create(
+    #         name=serializer.validated_data.get("name"),
+    #         defaults={"user": self.request.user, "state": enums.TagState.VALIDATED},
+    #     )
+    #     video.tags.add(tag)
+    #     return Response({"video": video, "video_lists": video_lists})
 
 
 class UserTagOverviewView(APIView):

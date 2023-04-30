@@ -7,7 +7,6 @@ from ratings.models import (
     Video,
     VideoSnapshot,
     VideoRating,
-    VideoViewing,
     UserTag,
 )
 
