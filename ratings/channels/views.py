@@ -10,7 +10,7 @@ from ratings.models.channels import Channel
 
 class ChannelDetailsView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = "channel_details.html"
+    template_name = "channels/channel_details.html"
 
     def get(self, request, pk):
         channel = get_object_or_404(Channel, pk=pk)

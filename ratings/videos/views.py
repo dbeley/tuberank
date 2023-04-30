@@ -1,4 +1,3 @@
-from django.db.models import Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework.renderers import TemplateHTMLRenderer
@@ -9,14 +8,13 @@ from ratings import enums
 from ratings.models.tags import UserTag
 from ratings.models.lists import VideoList
 from ratings.models.videos import Video, VideoRating, VideoViewing
-from ratings.lists.serializers import VideoListSerializer
 from ratings.tags.serializers import UserTagSerializer
 from ratings.videos.serializers import VideoRatingSerializer
 
 
 class VideoRatingDetailView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = "video_rating.html"
+    template_name = "videos/video_rating.html"
 
     def get(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
@@ -48,7 +46,7 @@ class VideoRatingDetailView(APIView):
 
 class VideoViewingView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = "video_viewing.html"
+    template_name = "videos/video_viewing.html"
 
     def get(self, request, pk):
         try:
@@ -72,7 +70,7 @@ class VideoViewingView(APIView):
 
 class VideoDetailsView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = "video_details.html"
+    template_name = "videos/video_details.html"
 
     def get(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
@@ -91,29 +89,3 @@ class VideoDetailsView(APIView):
         )
         video.tags.add(tag)
         return Response({"video": video, "video_lists": video_lists})
-
-
-class VideoListView(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = "lists.html"
-
-    def get(self, request):
-        user_lists = VideoList.objects.filter(user=request.user)
-        popular_lists = VideoList.objects.annotate(
-            num_ratings=Count("ratings")
-        ).order_by("-num_ratings")[0:8]
-        return Response({"user_lists": user_lists, "popular_lists": popular_lists})
-
-    def post(self, request):
-        serializer = VideoListSerializer(data=request.data)
-        if not serializer.is_valid():
-            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
-        VideoList.objects.create(
-            user=request.user,
-            **serializer.validated_data,
-        )
-        user_lists = VideoList.objects.filter(user=request.user)
-        popular_lists = VideoList.objects.annotate(
-            num_ratings=Count("ratings")
-        ).order_by("-num_ratings")[0:8]
-        return Response({"user_lists": user_lists, "popular_lists": popular_lists})

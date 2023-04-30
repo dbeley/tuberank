@@ -10,11 +10,6 @@ from ratings import views
 
 urlpatterns = [
     path("", views.HomepageView.as_view(), name="homepage"),
-    path(
-        "tags/<str:name>",
-        ratings.tags.views.UserTagOverviewView.as_view(),
-        name="tags_overview",
-    ),
     path("login", views.LoginView.as_view(), name="login"),
     path("signup", views.SignupView.as_view(), name="signup"),
     path("user/<str:username>", views.ProfileView.as_view(), name="profile"),
@@ -68,10 +63,20 @@ urlpatterns = [
         ratings.charts.views.ChartsView.as_view(),
         name="charts",
     ),
-    path("lists", ratings.videos.views.VideoListView.as_view(), name="lists"),
+    path("lists", ratings.lists.views.VideoListView.as_view(), name="lists"),
     path(
         "list/<int:pk>",
         ratings.lists.views.VideoListDetailsView.as_view(),
         name="list_details",
+    ),
+    path(
+        "tags",
+        ratings.tags.views.TagsView.as_view(),
+        name="tags",
+    ),
+    path(
+        "tags/<str:name>",
+        ratings.tags.views.UserTagOverviewView.as_view(),
+        name="tags_overview",
     ),
 ]
