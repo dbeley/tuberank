@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">My Lists</h1>
+    <button id="create-list-button" type="button" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">Create New List</button>
+  </div>
+
+  <!-- Modal for creating a new list -->
+  <div id="create-list-modal" class="fixed inset-0 z-50 hidden overflow-y-auto" style="background-color: rgba(0,0,0,0.5);">
+    <div class="flex items-center justify-center min-h-screen px-4">
+      <div class="bg-white rounded-lg overflow-hidden shadow-xl w-full md:max-w-md mx-auto">
+        <div class="bg-gray-100 text-gray-900 font-bold text-lg p-4 border-b">
+          Create New List
+          <button id="close-modal-button" type="button" class="float-right">&times;</button>
+        </div>
+        <form id="create-list-form" action="{% url 'homepage' %}" method="POST" class="p-4">
+          {% csrf_token %}
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="name">
+              Name
+            </label>
+            <input name="name" type="text" class="appearance-none border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter name" required>
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="description">
+              Description
+            </label>
+            <textarea name="description" class="appearance-none border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="3" placeholder="Enter description" required></textarea>
+          </div>
+          <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">Create List</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Display user's lists -->
+  <div class="px-2">
+    {% if user_lists %}
+      <ul>
+        {% for list in user_lists %}
+          <li>
+            <a href="{% url 'homepage' %}">{{ list.name }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No lists found.</p>
+    {% endif %}
+  </div>
+  <h1 class="text-3xl font-bold my-4">Popular Lists</h1>
+  <div class="flex flex-wrap -mx-4">
+    {% if popular_lists %}
+      {% for list in popular_lists %}
+        <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 px-4 mb-4">
+          <a href="{% url 'homepage' %}" class="block bg-gray-100 rounded-lg p-4 hover:bg-gray-200">
+            <h2 class="text-lg font-bold">{{ list.name }}</h2>
+            <p class="text-gray-600">{{ list.videos.count }} Videos</p>
+          </a>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="text-gray-600">No popular lists yet.</p>
+    {% endif %}
+  </div>
+</div>
+
+  <script>
+  const createListForm = document.getElementById('create-list-form');
+  const createListModal = document.getElementById('create-list-modal');
+  const openCreateListModalButton = document.getElementById('create-list-button');
+  const closeCreateListModalButton = document.getElementById('close-modal-button');
+
+  function openCreateListModal() {
+    createListModal.classList.add('block');
+    createListModal.classList.remove('hidden');
+  }
+
+  function closeCreateListModal() {
+    createListModal.classList.add('hidden');
+    createListModal.classList.remove('block');
+  }
+
+  openCreateListModalButton.addEventListener('click', () => {
+    openCreateListModal();
+  });
+
+  closeCreateListModalButton.addEventListener('click', () => {
+    closeCreateListModal();
+  });
+  </script>
+
+{% endblock %}

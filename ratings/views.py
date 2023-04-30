@@ -1,5 +1,3 @@
-from datetime import datetime, timezone
-
 from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
@@ -13,15 +11,21 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ratings.models import Channel, ChannelRating, Video, VideoRating, VideoViewing
+from ratings.models import (
+    Channel,
+    Video,
+    VideoRating,
+    VideoViewing,
+    VideoList,
+    UserTag,
+)
 from ratings.charts import charts
-from ratings.enums import ViewingState
+from ratings import enums
 from ratings.serializers import (
     ChannelSerializer,
-    ChannelRatingSerializer,
     VideoSerializer,
     VideoRatingSerializer,
-    ProfileSerializer,
+    UserTagSerializer,
 )
 
 
@@ -142,15 +146,12 @@ class VideoRatingDetailView(APIView):
         video = get_object_or_404(Video, pk=pk)
         video_rating = VideoRating(video=video, user=request.user)
         serializer = VideoRatingSerializer(video_rating, data=request.data)
-        print(serializer.initial_data)
         if not serializer.is_valid():
             return Response({"serializer": serializer, "video": video})
-        print(serializer.data)
         VideoRating.objects.update_or_create(
             video=video,
             user=request.user,
             defaults={
-                "date_publication": datetime.now(timezone.utc),
                 **serializer.validated_data,
             },
         )
@@ -176,8 +177,7 @@ class VideoViewingView(APIView):
         VideoViewing.objects.create(
             user=request.user,
             video=video,
-            date_creation=datetime.now(timezone.utc),
-            state=ViewingState.VIEWED,
+            state=enums.ViewingState.VIEWED,
         )
         return redirect("video_details", pk=video.id)
 
@@ -188,7 +188,56 @@ class VideoDetailsView(APIView):
 
     def get(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
-        return Response({"video": video})
+        video_lists = VideoList.objects.filter(user=request.user)
+        return Response({"video": video, "video_lists": video_lists})
+
+    def post(self, request, pk):
+        video = get_object_or_404(Video, pk=pk)
+        video_lists = VideoList.objects.filter(user=request.user)
+        serializer = UserTagSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response({"video": video})
+        tag, created = UserTag.objects.get_or_create(
+            name=serializer.validated_data.get("name"),
+            defaults={"user": self.request.user, "state": enums.TagState.VALIDATED},
+        )
+        video.tags.add(tag)
+        return Response({"video": video, "video_lists": video_lists})
+
+
+class VideoListView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "lists.html"
+
+    def get(self, request):
+        user_lists = VideoList.objects.filter(user=request.user)
+        popular_lists = VideoList.objects.annotate(
+            num_ratings=Count("ratings")
+        ).order_by("-num_ratings")[0:8]
+        return Response({"user_lists": user_lists, "popular_lists": popular_lists})
+
+    # def post(self, request, pk):
+    #     video = get_object_or_404(Video, pk=pk)
+    #     video_lists = VideoList.objects.filter(user=request.user)
+    #     serializer = UserTagSerializer(data=request.data)
+    #     if not serializer.is_valid():
+    #         return Response({"video": video})
+    #     tag, created = UserTag.objects.get_or_create(
+    #         name=serializer.validated_data.get("name"),
+    #         defaults={"user": self.request.user, "state": enums.TagState.VALIDATED},
+    #     )
+    #     video.tags.add(tag)
+    #     return Response({"video": video, "video_lists": video_lists})
+
+
+class UserTagOverviewView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "tag_overview.html"
+
+    def get(self, request, name):
+        tag = get_object_or_404(UserTag, name=name)
+        videos = tag.video_set.all()
+        return Response({"tag": tag, "videos": videos})
 
 
 class ChannelDetailsView(APIView):

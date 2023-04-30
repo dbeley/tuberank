@@ -31,7 +31,9 @@ class Command(BaseCommand):
 
         if filename:
             with open(filename, "r") as f:
-                urls = [line for line in f.readlines() if not line.startswith("#")]
+                urls = [
+                    line.strip() for line in f.readlines() if not line.startswith("#")
+                ]
 
         total_urls = len(urls)
         for index, url in enumerate(urls, 1):

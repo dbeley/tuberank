@@ -1,58 +1,52 @@
-from django.contrib.auth.models import User
-from rest_framework import viewsets
+from django.core.exceptions import ValidationError
+from django.shortcuts import get_object_or_404
+from rest_framework import views
 from rest_framework import permissions
+from ratings import enums
 from ratings.serializers import (
-    UserSerializer,
-    ChannelSerializer,
-    ChannelRatingSerializer,
     VideoSerializer,
-    VideoRatingSerializer,
+    UserTagSerializer,
 )
-from ratings.models import Channel, Video, ChannelRating, VideoRating
-from datetime import datetime, timezone
+from ratings.models import Video, UserTag
+from rest_framework.response import Response
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all().order_by("-date_joined")
-    serializer_class = UserSerializer
+class UserTagView(views.APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-
-class ChannelViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Channel.objects.all().order_by("-date_creation")
-    serializer_class = ChannelSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-
-class ChannelRatingViewSet(viewsets.ModelViewSet):
-    serializer_class = ChannelRatingSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        return ChannelRating.objects.filter(user=user).order_by("date_publication")
-
-    def perform_create(self, serializer):
-        serializer.save(
-            user=self.request.user, date_publication=datetime.now(timezone.utc)
+    def get(self, request):
+        return Response(
+            UserTagSerializer(
+                UserTag.objects.filter(state=enums.TagState.VALIDATED), many=True
+            )
         )
 
 
-class VideoViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Video.objects.all().order_by("-date_publication")
-    serializer_class = VideoSerializer
+class UserTagVideoView(views.APIView):
     permission_classes = [permissions.IsAuthenticated]
 
+    def get(self, request, video_pk):
+        video = get_object_or_404(Video.objects.all(), pk=video_pk)
+        return Response(UserTagSerializer(video.tags, many=True))
 
-class VideoRatingViewSet(viewsets.ModelViewSet):
-    serializer_class = VideoRatingSerializer
+    def post(self, request, video_pk):
+        serializer = UserTagSerializer(data=request.data)
+        if not serializer.is_valid():
+            raise ValidationError("Payload invalid")
+        video = get_object_or_404(Video.objects.all(), pk=request.data.get("video_id"))
+        tag, created = UserTag.objects.get_or_create(
+            name=request.data.get("name"),
+            defaults={"user": self.request.user, "state": enums.TagState.VALIDATED},
+        )
+        video.tags.add(tag)
+        return Response(UserTagSerializer(tag).data)
+
+
+class UserTagOverviewView(views.APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self):
-        user = self.request.user
-        return VideoRating.objects.filter(user=user).order_by("date_publication")
-
-    def perform_create(self, serializer):
-        serializer.save(
-            user=self.request.user, date_publication=datetime.now(timezone.utc)
+    def get(self, request, name):
+        tag = get_object_or_404(UserTag.objects.all(), name=name)
+        return Response(
+            VideoSerializer(Video.objects.filter(tags__contains=tag), many=True)
         )

@@ -53,12 +53,8 @@
                         <td class="text-gray-700">{{ video.date_publication }}</td>
                     </tr>
                     <tr>
-                        <td class="font-bold text-gray-900 pr-4">Average:</td>
-                        <td class="text-gray-700">{{ video.average_rating }}</td>
-                    </tr>
-                    <tr>
-                        <td class="font-bold text-gray-900 pr-4">Ratings:</td>
-                        <td class="text-gray-700">{{ video.ratings.count }}</td>
+                        <td class="font-bold text-gray-900 pr-4">Rating:</td>
+                        <td class="text-gray-700">{{ video.average_rating }} from {{ video.ratings.count }} ratings</td>
                     </tr>
                     <tr>
                         <td class="font-bold text-gray-900 pr-4">Description:</td>
@@ -89,6 +85,61 @@
                 </div>
                 {% endif %}
             {% endfor %}
+        </div>
+    </div>
+      <div class="w-full lg:w-3/4 mb-8 mt-8">
+        <div class="bg-white rounded-lg shadow-lg py-2 px-2">
+          <div class="flex flex-wrap -mx-2 mt-4">
+            <div class="px-2">
+              <h2 class="text-xl font-bold mb-2">Tags</h2>
+              <form id="add-tag-form" action="{% url 'video_details' video.id %}" method="POST">
+                {% csrf_token %}
+                <div class="flex items-center">
+                  <input type="name" name="name" placeholder="Enter a tag" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2" maxlength="50">
+                  <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">Add Tag</button>
+                </div>
+              </form>
+              {% if video.tags.exists %}
+                <div class="flex flex-wrap mt-2">
+                  {% for tag in video.tags.all %}
+                        <div class="flex items-center bg-gray-100 rounded-lg px-4 py-2 text-gray-700 mr-2 mb-2 hover:bg-gray-200">
+                        <a href="{% url 'tags_overview' tag.name %}">{{ tag.name }}</a>
+                        <form action="#" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="ml-2"><svg class="h-4 w-4 fill-current text-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M19 4h-4V2h-3v2H8V2H5v2H1a1 1 0 00-1 1v1h20V5a1 1 0 00-1-1zM6 4v-.6a1 1 0 011-1h6a1 1 0 011 1V4h2V3H4v1h2zm8 12a1 1 0 01-1 1H7a1 1 0 01-1-1v-1.6a1 1 0 01.4-.8l2-1.6a1 1 0 011.2 0l2 1.6a1 1 0 01.4.8V16zm-1-5a1 1 0 11-2 0 1 1 0 012 0zm-6 0a1 1 0 11-2 0 1 1 0 012 0z"/></svg></button>
+                        </form>
+                        </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <p class="text-gray-600">No tags yet.</p>
+              {% endif %}
+            </div>
+            <div class="px-2">
+              <h2 class="text-xl font-bold mb-2">Lists</h2>
+              <form action="{% url 'video_details' video.id %}" method="POST">
+                {% csrf_token %}
+                <div class="flex items-center">
+                  <select name="list" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2">
+                    <option value="" disabled selected>Select a list</option>
+                    {% for list in video_lists.all %}
+                      <option value="{{ list.id }}">{{ list.name }}</option>
+                    {% endfor %}
+                  </select>
+                  <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">Add to List</button>
+                </div>
+              </form>
+              {% if video.lists.exists %}
+                <div class="flex flex-wrap mt-2">
+                  {% for list in video.lists.all %}
+                    <a href="{% url 'list_detail' list.slug %}" class="bg-gray-100 rounded-lg px-4 py-2 text-gray-700 mr-2 mb-2 hover:bg-gray-200">{{ list.name }}</a>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <p class="text-gray-600">Not in any lists yet.</p>
+              {% endif %}
+            </div>
+          </div>
         </div>
     </div>
 </div>

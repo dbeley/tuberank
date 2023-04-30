@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mt-10 sm:mt-0">
+      <h1 class="text-3xl font-bold text-gray-900">Videos for Tag "{{ tag.name }}"</h1>
+      <div class="mt-5 border-t border-gray-200">
+        {% if videos %}
+          <ul class="divide-y divide-gray-200">
+            {% for video in videos %}
+              <li class="py-4 flex items-center justify-between">
+                <div class="flex items-center">
+                  <div class="ml-3">
+                    <a href="{% url 'video_details' pk=video.pk %}" class="text-lg font-medium text-gray-900">{{ video.last_snapshot.title_en }}</a>
+                    <p class="text-sm text-gray-500">{{ video.last_snapshot.description_en }}</p>
+                  </div>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="mt-3 text-lg text-gray-500">No videos found for tag "{{ tag.name }}".</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

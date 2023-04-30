@@ -2,8 +2,14 @@ from django.urls import path
 
 from ratings import views
 
+
 urlpatterns = [
     path("", views.HomepageView.as_view(), name="homepage"),
+    path(
+        "tags/<str:name>",
+        views.UserTagOverviewView.as_view(),
+        name="tags_overview",
+    ),
     path("login", views.LoginView.as_view(), name="login"),
     path("signup", views.SignupView.as_view(), name="signup"),
     path("user/<str:username>", views.ProfileView.as_view(), name="profile"),
@@ -57,4 +63,5 @@ urlpatterns = [
         views.ChartsView.as_view(),
         name="charts",
     ),
+    path("lists", views.VideoListView.as_view(), name="lists"),
 ]

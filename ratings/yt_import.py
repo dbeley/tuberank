@@ -3,7 +3,7 @@ import logging
 import isodate
 import os
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -94,7 +94,6 @@ def create_channel_snapshot(channel_id: str) -> None:
     channel = Channel.objects.get(yt_id=channel_id)
 
     snapshot = ChannelSnapshot(
-        date_creation=datetime.now(timezone.utc),
         name_en=data.title,
         channel=channel,
         count_subscribers=data.count_subscribers,
@@ -206,7 +205,6 @@ def create_video_snapshot(video_id: str) -> None:
         count_views=data.count_views,
         count_likes=data.count_likes,
         count_comments=data.count_comments,
-        date_creation=datetime.now(timezone.utc),
         description=data.description,
         thumbnail_url=data.thumbnail_url,
         category=data.category_id,
