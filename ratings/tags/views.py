@@ -9,7 +9,7 @@ from ratings.models.tags import UserTag
 
 
 def _get_validated_tags() -> QuerySet[UserTag]:
-    return UserTag.objects.filter(state=enums.TagState.VALIDATED).all()
+    return UserTag.objects.filter(state=enums.TagState.VALIDATED).order_by("name").all()
 
 
 class UserTagOverviewView(APIView):
