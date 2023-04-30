@@ -1,14 +1,14 @@
-import configparser
 import logging
 import isodate
-import os
 from dataclasses import dataclass
 from datetime import datetime
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-from ratings.models import Channel, ChannelSnapshot, Video, VideoSnapshot
+from core.utils import get_secret, get_base_dir
+from ratings.models.videos import Video, VideoSnapshot
+from ratings.models.channels import Channel, ChannelSnapshot
 
 logger = logging.getLogger(__name__)
 
@@ -21,18 +21,9 @@ class NoResultException(Exception):
     pass
 
 
-def get_secret(BASE_DIR, config_file):
-    try:
-        CONFIG = configparser.RawConfigParser()
-        CONFIG.read(os.path.join(BASE_DIR, config_file))
-        return CONFIG["django"]["YOUTUBE_DEVELOPER_KEY"]
-    except Exception as err:
-        logger.warning("Error with the config file: %s", err)
-        return os.environ.get("YOUTUBE_DEVELOPER_KEY", "")
-
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-YOUTUBE_DEVELOPER_KEY = get_secret(BASE_DIR, "secret.ini")
+YOUTUBE_DEVELOPER_KEY = get_secret(
+    base_dir=get_base_dir(), config_file="secret.ini", key_name="YOUTUBE_DEVELOPER_KEY"
+)
 
 
 @dataclass

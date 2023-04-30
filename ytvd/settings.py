@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
+from core.utils import get_secret, get_base_dir
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-#wxta8_rj@)$l-r=a$=2#bc_!6fr+zsj-p0m^f*3rj0q!yol81"
+SECRET_KEY = get_secret(
+    base_dir=get_base_dir(), config_file="secret.ini", key_name="DJANGO_SECRET_KEY"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
