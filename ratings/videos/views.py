@@ -17,7 +17,8 @@ from ratings.videos.serializers import VideoRatingSerializer
 def _add_video_to_list(video_pk: int, list_pk: int):
     list = VideoList.objects.get(pk=list_pk)
     video = Video.objects.get(pk=video_pk)
-    VideoListItem.objects.create(list=list, video=video, order=1)
+    if video not in list.videos.all():
+        VideoListItem.objects.create(list=list, video=video, order=1)
 
 
 def _get_user_lists(user: User) -> QuerySet[VideoList]:
@@ -92,7 +93,8 @@ class VideoDetailsView(APIView):
     def get(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
         user_lists = _get_user_lists(request.user)
-        return Response({"video": video, "user_lists": user_lists})
+        lists = VideoList.objects.filter(videos__in=[pk])
+        return Response({"video": video, "user_lists": user_lists, "lists": lists})
 
     def post(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
@@ -108,4 +110,5 @@ class VideoDetailsView(APIView):
             video.tags.add(tag)
         elif "list_pk" in request.data:
             _add_video_to_list(video_pk=video.pk, list_pk=request.data.get("list_pk"))
-        return Response({"video": video, "user_lists": user_lists})
+        lists = VideoList.objects.filter(videos__in=[pk])
+        return Response({"video": video, "user_lists": user_lists, "lists": lists})

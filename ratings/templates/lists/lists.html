@@ -60,6 +60,7 @@
           <a href="{% url 'list_details' pk=list.id %}" class="block bg-gray-100 rounded-lg p-4 hover:bg-gray-200">
             <h2 class="text-lg font-bold">{{ list.name }}</h2>
             <p class="text-gray-600">{{ list.videos.count }} Videos</p>
+            <p class="text-gray-600">by {{ list.user.username }}</p>
           </a>
         </div>
       {% endfor %}

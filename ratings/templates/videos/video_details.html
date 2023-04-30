@@ -129,10 +129,10 @@
                   <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">Add to List</button>
                 </div>
               </form>
-              {% if video.lists.exists %}
+              {% if lists.exists %}
                 <div class="flex flex-wrap mt-2">
-                  {% for list in video.lists.all %}
-                    <a href="{% url 'list_detail' list.slug %}" class="bg-gray-100 rounded-lg px-4 py-2 text-gray-700 mr-2 mb-2 hover:bg-gray-200">{{ list.name }}</a>
+                  {% for list in lists.all %}
+                    <a href="{% url 'list_details' pk=list.id %}" class="bg-gray-100 rounded-lg px-4 py-2 text-gray-700 mr-2 mb-2 hover:bg-gray-200">{{ list.name }}</a>
                   {% endfor %}
                 </div>
               {% else %}
