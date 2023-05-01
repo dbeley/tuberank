@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 <div class="container mx-auto py-6">
@@ -13,17 +14,17 @@
         <hr class="my-4">
         <div class="text-center">
           <p class="text-xl font-bold">{{ user.video_ratings.count }}</p>
-          <p class="text-gray-600">Video Ratings</p>
+          <p class="text-gray-600">{% translate "Video Ratings" %}</p>
         </div>
         <div class="text-center mt-4">
           <p class="text-xl font-bold">{{ user.channel_ratings.count }}</p>
-          <p class="text-gray-600">Channel Ratings</p>
+          <p class="text-gray-600">{% translate "Channel Ratings" %}</p>
         </div>
       </div>
     </div>
     <div class="w-full md:w-3/4 lg:w-2/3 xl:w-3/4 px-4 mb-4">
       <div class="bg-white rounded-lg shadow-lg py-6 mt-4 px-4">
-        <h2 class="text-2xl font-bold mb-4">Video Ratings</h2>
+        <h2 class="text-2xl font-bold mb-4">{% translate "Video Ratings" %}</h2>
         {% if user.video_ratings.exists %}
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 py-8">
       <canvas id="ratings-chart"></canvas>
@@ -38,11 +39,11 @@
             {% endfor %}
           </div>
         {% else %}
-          <p class="text-gray-600">No video ratings found.</p>
+          <p class="text-gray-600">{% translate "No video ratings found." %}</p>
         {% endif %}
       </div>
       <div class="bg-white rounded-lg shadow-lg py-6 mt-4 px-4">
-        <h2 class="text-2xl font-bold mb-4">Channel Ratings</h2>
+        <h2 class="text-2xl font-bold mb-4">{% translate "Channel Ratings" %}</h2>
         {% if user.channel_ratings.exists %}
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {% for rating in user.channel_ratings.all %}
@@ -61,7 +62,7 @@
             {% endfor %}
           </div>
         {% else %}
-          <p class="text-gray-600">No channel ratings found.</p>
+          <p class="text-gray-600">{% translate "No channel ratings found." %}</p>
         {% endif %}
       </div>
       {% if user.viewings.exists %}

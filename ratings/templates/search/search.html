@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Search{% endblock %}
+{% block title %}{% translate "Search" %}{% endblock %}
 
 {% block content %}
-    <h2 class="mt-8 mb-4 text-2xl font-bold">Results for "{{ request.GET.q }}"</h2>
+    <h2 class="mt-8 mb-4 text-2xl font-bold">{% blocktranslate with query=request.GET.q %}Results for "{{ query }}"{% endblocktranslate %}</h2>
     {% include "search/channel_results.html" %}
 
     {% include "search/video_results.html" %}

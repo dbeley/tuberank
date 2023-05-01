@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 <div class="container mx-auto px-4">
   <div class="flex justify-between items-center mb-8">
-    <h1 class="text-3xl font-bold">My Lists</h1>
-    <button id="create-list-button" type="button" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">Create New List</button>
+    <h1 class="text-3xl font-bold">{% translate "My Lists" %}</h1>
+    <button id="create-list-button" type="button" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">{% translate "Create List" %}</button>
   </div>
 
   <!-- Modal for creating a new list -->
@@ -12,24 +13,24 @@
     <div class="flex items-center justify-center min-h-screen px-4">
       <div class="bg-white rounded-lg overflow-hidden shadow-xl w-full md:max-w-md mx-auto">
         <div class="bg-gray-100 text-gray-900 font-bold text-lg p-4 border-b">
-          Create New List
+          {% translate "Create List" %}
           <button id="close-modal-button" type="button" class="float-right">&times;</button>
         </div>
         <form id="create-list-form" action="{% url 'lists' %}" method="POST" class="p-4">
           {% csrf_token %}
           <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2" for="name">
-              Name
+              {% translate "Name" %}
             </label>
-            <input name="name" type="text" class="appearance-none border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter name" maxlength="200" required>
+            <input name="name" type="text" class="appearance-none border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="{% blocktranslate %}Enter name{% endblocktranslate %}" maxlength="200" required>
           </div>
           <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2" for="description">
-              Description
+              {% translate "Description" %}
             </label>
-            <textarea name="description" class="appearance-none border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="3" placeholder="Enter description" maxlength="5000"></textarea>
+            <textarea name="description" class="appearance-none border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="3" placeholder="{% blocktranslate %}Enter description{% endblocktranslate %}" maxlength="5000"></textarea>
           </div>
-          <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">Create List</button>
+          <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">{% translate "Create List" %}</button>
         </form>
       </div>
     </div>
@@ -42,36 +43,36 @@
           <div class="w-full px-4 mb-4 flex justify-between items-center bg-gray-100 rounded-lg p-4">
             <a href="{% url 'list_details' pk=list.id %}">
               <h2 class="text-lg font-bold">{{ list.name }}</h2>
-              <p class="text-gray-600">{{ list.videos.count }} Videos</p>
+              <p class="text-gray-600">{% blocktranslate with count=list.videos.count %}{{ count }} Videos{% endblocktranslate %}</p>
             </a>
             <div class="items-right">
               <a href="{% url 'list_delete' pk=list.id %}" class="ml-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-                Edit
+                {% translate "Edit" %}
               </a>
               <a href="{% url 'list_delete' pk=list.id %}" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                Delete
+                {% translate "Delete" %}
               </a>
             </div>
           </div>
         {% endfor %}
     {% else %}
-      <p>No lists found.</p>
+      <p>{% translate "No lists found." %}</p>
     {% endif %}
   </div>
-  <h1 class="text-3xl font-bold my-4">Popular Lists</h1>
+  <h1 class="text-3xl font-bold my-4">{% translate "Popular Lists" %}</h1>
   <div class="flex flex-wrap -mx-4">
     {% if popular_lists %}
       {% for list in popular_lists %}
       <div class="w-full px-4 mb-4 justify-between items-center bg-gray-100 rounded-lg p-4">
         <a href="{% url 'list_details' pk=list.id %}">
           <h2 class="text-lg font-bold">{{ list.name }}</h2>
-          <p class="text-gray-600">{{ list.videos.count }} Videos</p>
-          <p class="text-gray-600">by {{ list.user.username }}</p>
+          <p class="text-gray-600">{% blocktranslate with count=list.videos.count %}{{ count }} Videos{% endblocktranslate %}</p>
+          <p class="text-gray-600">{% blocktranslate with user=list.user.username %}by {{ user }}{% endblocktranslate %}</p>
         </a>
       </div>
       {% endfor %}
     {% else %}
-      <p class="text-gray-600">No popular lists yet.</p>
+      <p class="text-gray-600">{% translate "No popular lists yet." %}</p>
     {% endif %}
   </div>
 </div>
