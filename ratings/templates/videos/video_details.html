@@ -107,10 +107,6 @@
                 {% for tag in video.tags.all %}
                       <div class="flex items-center bg-gray-100 rounded-lg px-4 py-2 text-gray-700 mr-2 mb-2 hover:bg-gray-200">
                       <a href="{% url 'tags_overview' tag.name %}">{{ tag.name }}</a>
-                      <form action="#" method="POST">
-                          {% csrf_token %}
-                          <button type="submit" class="ml-2"><svg class="h-4 w-4 fill-current text-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M19 4h-4V2h-3v2H8V2H5v2H1a1 1 0 00-1 1v1h20V5a1 1 0 00-1-1zM6 4v-.6a1 1 0 011-1h6a1 1 0 011 1V4h2V3H4v1h2zm8 12a1 1 0 01-1 1H7a1 1 0 01-1-1v-1.6a1 1 0 01.4-.8l2-1.6a1 1 0 011.2 0l2 1.6a1 1 0 01.4.8V16zm-1-5a1 1 0 11-2 0 1 1 0 012 0zm-6 0a1 1 0 11-2 0 1 1 0 012 0z"/></svg></button>
-                      </form>
                       </div>
                 {% endfor %}
               </div>

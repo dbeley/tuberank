@@ -69,7 +69,7 @@ class SearchView(APIView):
                 },
                 template_name="search/video_results.html",
             )
-        video_page = video_paginator.get_page(request.GET.get("page", 1))
+        video_page = video_paginator.get_page(1)
         channel_queryset = Channel.objects.filter(
             Q(snapshots__name_en__icontains=query)
         ).distinct()
@@ -84,7 +84,7 @@ class SearchView(APIView):
                 },
                 template_name="search/channel_results.html",
             )
-        channel_page = channel_paginator.get_page(request.GET.get("page_c", 1))
+        channel_page = channel_paginator.get_page(1)
         print(channel_page)
         return Response(
             {
@@ -128,31 +128,21 @@ class ProfileView(APIView):
             return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
         chart_data = charts.get_ratings_chart_for_user(user)
         paginator = Paginator(user.viewings.order_by("-date_creation"), 10)
-        page = paginator.get_page(request.GET.get("page", 1))
+        if page_query_param := request.GET.get("page"):
+            page = paginator.get_page(page_query_param)
+            return Response(
+                {
+                    "user": user,
+                    "viewings": page,
+                },
+                template_name="profile/profile_timeframe.html",
+            )
+        page = paginator.get_page(1)
         return Response(
             {
                 "user": user,
                 "ratings_labels": chart_data["ratings_labels"],
                 "ratings_data": chart_data["ratings_data"],
-                "viewings": page,
-            }
-        )
-
-
-class PartialProfileView(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = "profile/profile_timeframe.html"
-
-    def get(self, request, username):
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
-            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
-        paginator = Paginator(user.viewings.order_by("-date_creation"), 10)
-        page = paginator.get_page(request.GET.get("page", 1))
-        return Response(
-            {
-                "user": user,
                 "viewings": page,
             }
         )

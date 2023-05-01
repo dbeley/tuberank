@@ -13,11 +13,6 @@ urlpatterns = [
     path("signup", views.SignupView.as_view(), name="signup"),
     path("user/<str:username>", views.ProfileView.as_view(), name="profile"),
     path(
-        "user/<str:username>/timeframe",
-        views.PartialProfileView.as_view(),
-        name="profile_timeframe",
-    ),
-    path(
         "channels/list",
         ratings.channels.views.ChannelListView.as_view(),
         name="channel_list",
