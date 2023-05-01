@@ -186,6 +186,6 @@ class ImportVideoView(APIView):
                     errors.append(
                         f"The import for item {url} failed with an error: {str(err)}"
                     )
-                finally:
+                else:
                     success.append(f"The import for item {url} finished successfully.")
         return Response({"success": success, "errors": errors})

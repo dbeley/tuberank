@@ -1,0 +1,114 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-01 03:47+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: templates/base.html:21
+msgid "Channels"
+msgstr "Chaînes"
+
+#: templates/base.html:22
+msgid "Charts"
+msgstr "Classements"
+
+#: templates/base.html:23
+msgid "Lists"
+msgstr "Listes"
+
+#: templates/base.html:24
+msgid "Tags"
+msgstr "Tags"
+
+#: templates/base.html:25
+msgid "About"
+msgstr "À propos"
+
+#: templates/base.html:30
+msgid "Import video"
+msgstr "Importer une vidéo"
+
+#: templates/base.html:32
+msgid "Search"
+msgstr "Recherche"
+
+#: templates/base.html:41
+msgid "Open user menu"
+msgstr "Ouvrir le menu utilisateur"
+
+#: templates/base.html:48
+msgid "Profile"
+msgstr "Profil"
+
+#: templates/base.html:49
+msgid "Settings"
+msgstr "Paramètres"
+
+#: templates/base.html:50
+msgid "Logout"
+msgstr "Se déconnecter"
+
+#: templates/base.html:55
+msgid "Login"
+msgstr "Connexion"
+
+#: templates/charts.html:14
+msgid "Sort by:"
+msgstr "Trier par :"
+
+#: templates/charts.html:16
+msgid "Most rated"
+msgstr "Plus de notes"
+
+#: templates/charts.html:17
+msgid "Most viewed"
+msgstr "Plus de vues"
+
+#: templates/charts.html:18
+msgid "Best rated"
+msgstr "Meilleures notes"
+
+#: templates/charts.html:19
+msgid "Newest"
+msgstr "Plus récents"
+
+#: templates/charts.html:20
+msgid "Oldest"
+msgstr "Plus anciens"
+
+#: templates/charts.html:22
+msgid "Filter by tag:"
+msgstr "Filtrer par tag :"
+
+#: templates/charts.html:24
+msgid " -- Select an option -- "
+msgstr " -- Sélectionnez une option -- "
+
+#: templates/charts.html:45
+msgid "Previous"
+msgstr "Précédent"
+
+#: templates/charts.html:53
+msgid "Next"
+msgstr "Suivant"
+
+#: templates/homepage.html:5
+msgid "Home"
+msgstr "Accueil"
+
+#: templates/homepage.html:10
+msgid "Welcome to ytvd!"
+msgstr "Bienvenue sur ytvd !"

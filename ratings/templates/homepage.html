@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% load humanize %}
+{% load i18n %}
 
-{% block title %}Home{% endblock %}
+{% block title %}{% translate "Home" %}{% endblock %}
 
 {% block content %}
 <div class="container mx-auto px-4 py-8">
     <div class="flex flex-col items-center">
-        <h1 class="text-4xl font-bold mb-8">Welcome to ytvd!</h1>
+        <h1 class="text-4xl font-bold mb-8">{% translate "Welcome to ytvd!" %}</h1>
         <p class="text-xl mb-4">ytvd is a platform where you can curate and rate YouTube videos.</p>
     </div>
 

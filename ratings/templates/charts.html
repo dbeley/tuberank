@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}{{ channel.last_snapshot.name_en }} - ytvd{% endblock %}
 
@@ -10,17 +11,17 @@
 
   <form class="my-4" method="GET">
     <div class="flex flex-wrap items-center justify-between mb-2">
-      <label class="block text-gray-700 font-bold mb-2 mr-2" for="sort-by">Sort by:</label>
+      <label class="block text-gray-700 font-bold mb-2 mr-2" for="sort-by">{% translate "Sort by:" %}</label>
       <select name="sort_by" id="sort-by" class="bg-white border border-gray-400 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-        <option value="ratings_count" {% if request.GET.sort_by == "ratings_count" %}selected{% endif %}>Most rated</option>
-        <option value="views_count" {% if request.GET.sort_by == "views_count" %}selected{% endif %}>Most viewed</option>
-        <option value="rating" {% if request.GET.sort_by == "rating" %}selected{% endif %}>Best rated</option>
-        <option value="newest" {% if request.GET.sort_by == "newest" %}selected{% endif %}>Newest</option>
-        <option value="oldest" {% if request.GET.sort_by == "oldest" %}selected{% endif %}>Oldest</option>
+        <option value="ratings_count" {% if request.GET.sort_by == "ratings_count" %}selected{% endif %}>{% translate "Most rated" %}</option>
+        <option value="views_count" {% if request.GET.sort_by == "views_count" %}selected{% endif %}>{% translate "Most viewed" %}</option>
+        <option value="rating" {% if request.GET.sort_by == "rating" %}selected{% endif %}>{% translate "Best rated" %}</option>
+        <option value="newest" {% if request.GET.sort_by == "newest" %}selected{% endif %}>{% translate "Newest" %}</option>
+        <option value="oldest" {% if request.GET.sort_by == "oldest" %}selected{% endif %}>{% translate "Oldest" %}</option>
       </select>
-      <label class="block text-gray-700 font-bold mb-2 mr-2" for="sort-by">Filter by tag:</label>
+      <label class="block text-gray-700 font-bold mb-2 mr-2" for="sort-by">{% translate "Filter by tag:" %}</label>
       <select name="tag" id="tag-filter" class="bg-white border border-gray-400 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-          <option disabled selected value> -- select an option -- </option>
+          <option disabled selected value>{% translate " -- Select an option -- " %}</option>
         {% for tag in tags %}
           <option value="{{ tag.name }}" {% if request.GET.tag == tag.name %}selected{% endif %}>{{ tag.name }}</option>
         {% endfor %}
@@ -41,7 +42,7 @@
     <nav class="flex items-center justify-between">
       {% if page.has_previous %}
         <a href="?page={{ page.previous_page_number }}{% if request.GET.sort_by %}&sort_by={{ request.GET.sort_by }}{% endif %}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-l">
-          Previous
+          {% translate "Previous" %}
         </a>
       {% endif %}
       <div class="text-gray-600">
@@ -49,7 +50,7 @@
       </div>
       {% if page.has_next %}
         <a href="?page={{ page.next_page_number }}{% if request.GET.sort_by %}&sort_by={{ request.GET.sort_by }}{% endif %}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-r">
-          Next
+          {% translate "Next" %}
         </a>
       {% endif %}
     </nav>
