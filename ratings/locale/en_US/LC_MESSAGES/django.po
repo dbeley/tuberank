@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-01 19:33+0200\n"
+"POT-Creation-Date: 2023-05-01 19:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -238,6 +238,10 @@ msgstr ""
 #: templates/homepage.html:63
 #, python-format
 msgid "ytvd has catalogued %(number_of_videos)s videos"
+msgstr ""
+
+#: templates/homepage.html:69
+msgid "Popular Videos on ytvd"
 msgstr ""
 
 #: templates/import_video.html:5
