@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=$POSTGRES_DB_NAME
+      - POSTGRES_USER=$POSTGRES_DB_USER
+      - POSTGRES_PASSWORD=$POSTGRES_DB_PASSWORD
+  web:
+    container_name: ytvd_django
+    build: .
+    restart: always
+    command: bash -c "python manage.py migrate && gunicorn ytvd_django.wsgi --bind 0.0.0.0:8000 --timeout 600"
+    volumes:
+      - .:/app
+    environment:
+      - POSTGRES_NAME=$POSTGRES_DB_NAME
+      - POSTGRES_USER=$POSTGRES_DB_USER
+      - POSTGRES_PASSWORD=$POSTGRES_DB_PASSWORD
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ytvd_django.entrypoints=secure"
+      - "traefik.http.routers.ytvd_django.rule=Host(`$DOMAIN`)"
+      - "traefik.http.services.ytvd_django.loadbalancer.server.port=8000"
+      - "traefik.http.routers.ytvd_django.tls.certresolver=le"
+
+networks:
+    default:
+        name: $DEFAULT_NETWORK
