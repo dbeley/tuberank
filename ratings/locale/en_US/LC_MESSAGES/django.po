@@ -301,16 +301,12 @@ msgid "Enter name"
 msgstr ""
 
 #: templates/lists/lists.html:31 templates/videos/video_details.html:62
-#, fuzzy
-#| msgid "homepage.description"
 msgid "Description"
-msgstr "ytvd is a platform where you can curate and rate YouTube videos."
+msgstr ""
 
 #: templates/lists/lists.html:33
-#, fuzzy
-#| msgid "homepage.description"
 msgid "Enter description"
-msgstr "ytvd is a platform where you can curate and rate YouTube videos."
+msgstr ""
 
 #: templates/lists/lists.html:49 templates/lists/lists.html:73
 #: templates/tags/tags.html:13

@@ -1,31 +1,41 @@
 version: '3'
 
+x-app: &default-app
+  build:
+    context: "."
+  volumes:
+    - .:/app
+  restart: "unless-stopped"
+
 services:
   db:
     image: postgres
-    volumes:
-      - ./data/db:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=$POSTGRES_DB_NAME
       - POSTGRES_USER=$POSTGRES_DB_USER
       - POSTGRES_PASSWORD=$POSTGRES_DB_PASSWORD
   web:
-    container_name: ytvd_django
-    build: .
-    restart: always
-    command: bash -c "python manage.py migrate && gunicorn ytvd_django.wsgi --bind 0.0.0.0:8000 --timeout 600"
-    volumes:
-      - .:/app
+    <<: *default-app
+    command: bash -c "poetry run python manage.py migrate && poetry run gunicorn ytvd.wsgi --bind 0.0.0.0:8000 --timeout 600"
+    ports:
+      - "8000:8000"
     environment:
       - POSTGRES_NAME=$POSTGRES_DB_NAME
       - POSTGRES_USER=$POSTGRES_DB_USER
       - POSTGRES_PASSWORD=$POSTGRES_DB_PASSWORD
+      - DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.ytvd_django.entrypoints=secure"
-      - "traefik.http.routers.ytvd_django.rule=Host(`$DOMAIN`)"
-      - "traefik.http.services.ytvd_django.loadbalancer.server.port=8000"
-      - "traefik.http.routers.ytvd_django.tls.certresolver=le"
+      - "traefik.http.routers.ytvd.entrypoints=secure"
+      - "traefik.http.routers.ytvd.rule=Host(`ytvd.$DOMAIN`)"
+      - "traefik.http.services.ytvd.loadbalancer.server.port=8000"
+      - "traefik.http.routers.ytvd.tls.certresolver=le"
+        # tailwind:
+        #   <<: *default-app
+        #   command: bash -c "poetry run python manage.py tailwind start"
+        #   # Without tty, no stdin, and tailwind watcher aborts
+        #   # https://github.com/tailwindlabs/tailwindcss/issues/5324
+        #   tty: true
 
 networks:
     default:
