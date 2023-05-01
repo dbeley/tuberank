@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-01 19:03+0200\n"
+"POT-Creation-Date: 2023-05-01 19:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,7 +95,40 @@ msgstr ""
 msgid "Channel Rating: %(rating)s from %(count)s ratings"
 msgstr ""
 
-#: templates/channels/channel_details.html:50
+#: templates/channels/channel_details.html:43
+#: templates/channels/channel_list.html:11 templates/charts.html:14
+msgid "Sort by:"
+msgstr ""
+
+#: templates/channels/channel_details.html:45 templates/charts.html:20
+msgid "Newest"
+msgstr ""
+
+#: templates/channels/channel_details.html:46 templates/charts.html:21
+msgid "Oldest"
+msgstr ""
+
+#: templates/channels/channel_details.html:47 templates/charts.html:16
+msgid "Best rated"
+msgstr ""
+
+#: templates/channels/channel_details.html:48 templates/charts.html:17
+msgid "Most rated"
+msgstr ""
+
+#: templates/channels/channel_details.html:49 templates/charts.html:18
+msgid "Most viewed"
+msgstr ""
+
+#: templates/channels/channel_details.html:50 templates/charts.html:19
+msgid "Least viewed"
+msgstr ""
+
+#: templates/channels/channel_details.html:53 templates/charts.html:31
+msgid "Filter"
+msgstr ""
+
+#: templates/channels/channel_details.html:68
 #: templates/channels/channel_list.html:38 templates/charts.html:46
 #: templates/profile/profile_timeframe.html:28
 #: templates/search/channel_results.html:18
@@ -103,7 +136,7 @@ msgstr ""
 msgid "Previous"
 msgstr ""
 
-#: templates/channels/channel_details.html:54
+#: templates/channels/channel_details.html:72
 #: templates/channels/channel_list.html:42
 #: templates/profile/profile_timeframe.html:32
 #: templates/search/channel_results.html:22
@@ -112,16 +145,12 @@ msgstr ""
 msgid "Page %(page_number)s of %(total_page_number)s"
 msgstr ""
 
-#: templates/channels/channel_details.html:58
+#: templates/channels/channel_details.html:76
 #: templates/channels/channel_list.html:46 templates/charts.html:54
 #: templates/profile/profile_timeframe.html:36
 #: templates/search/channel_results.html:26
 #: templates/search/video_results.html:30
 msgid "Next"
-msgstr ""
-
-#: templates/channels/channel_list.html:11 templates/charts.html:14
-msgid "Sort by:"
 msgstr ""
 
 #: templates/channels/channel_list.html:13
@@ -142,30 +171,6 @@ msgstr ""
 
 #: templates/channels/channel_list.html:17
 msgid "Latest Indexed"
-msgstr ""
-
-#: templates/charts.html:16
-msgid "Best rated"
-msgstr ""
-
-#: templates/charts.html:17
-msgid "Most rated"
-msgstr ""
-
-#: templates/charts.html:18
-msgid "Most viewed"
-msgstr ""
-
-#: templates/charts.html:19
-msgid "Least viewed"
-msgstr ""
-
-#: templates/charts.html:20
-msgid "Newest"
-msgstr ""
-
-#: templates/charts.html:21
-msgid "Oldest"
 msgstr ""
 
 #: templates/charts.html:23
@@ -241,7 +246,9 @@ msgstr ""
 
 #: templates/import_video.html:6
 msgid "import_video.description.1"
-msgstr "This feature will add the video in the list of indexed videos by ytvd."
+msgstr ""
+"YouTube videos are not automatically indexed by ytvd. This page allows the "
+"manually indexation of videos into ytvd."
 
 #: templates/import_video.html:7
 msgid "import_video.description.2"
@@ -487,7 +494,7 @@ msgid "Channel:"
 msgstr ""
 
 #: templates/videos/video_rating.html:30
-msgid "Rating (0-10)"
+msgid "Rating (0-5)"
 msgstr ""
 
 #: templates/videos/video_rating.html:32

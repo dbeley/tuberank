@@ -38,10 +38,28 @@
   </div>
 </div>
 
+<form class="my-4" method="GET">
+  <div class="flex flex-wrap items-center justify-left mb-2">
+    <label class="block text-gray-700 font-bold mb-2 mr-2" for="sort-by">{% translate "Sort by:" %}</label>
+    <select name="sort_by" id="sort-by" class="bg-white border border-gray-400 rounded-lg py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+      <option value="newest" {% if request.GET.sort_by == "newest" %}selected{% endif %}>{% translate "Newest" %}</option>
+      <option value="oldest" {% if request.GET.sort_by == "oldest" %}selected{% endif %}>{% translate "Oldest" %}</option>
+      <option value="rating" {% if request.GET.sort_by == "rating" %}selected{% endif %}>{% translate "Best rated" %}</option>
+      <option value="ratings_count" {% if request.GET.sort_by == "ratings_count" %}selected{% endif %}>{% translate "Most rated" %}</option>
+      <option value="views_count" {% if request.GET.sort_by == "views_count" %}selected{% endif %}>{% translate "Most viewed" %}</option>
+      <option value="views_count_desc" {% if request.GET.sort_by == "views_count_desc" %}selected{% endif %}>{% translate "Least viewed" %}</option>
+    </select>
+    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2">
+      {% translate "Filter" %}
+    </button>
+  </div>
+</form>
+
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-4">
     {% for video in videos %}
-    {% include "videos/video_item.html" %}
-    {% endfor %}  </div>
+      {% include "videos/video_item.html" %}
+    {% endfor %}
+  </div>
 
   <div class="my-4">
     <nav class="flex items-center justify-between">
