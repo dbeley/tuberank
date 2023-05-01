@@ -33,7 +33,7 @@
   <div class="flex items-center justify-between">
     <h2 class="text-xl font-bold">{% translate "ytvd Stats" %}</h2>
     <div class="text-gray-600">
-      <span class="ml-2">{% blocktranslate with rating=channel.average_rating count=channel.ratings.count %}Rating: {{ rating }} from {{ count }} ratings{% endblocktranslate %}</span>
+      <span class="ml-2">{% blocktranslate with rating=channel.average_rating count=channel.ratings.count %}Channel Rating: {{ rating }} from {{ count }} ratings{% endblocktranslate %}</span>
     </div>
   </div>
 </div>

@@ -13,9 +13,6 @@ class Video(models.Model):
     date_publication = models.DateTimeField("date of video publication")
     tags = models.ManyToManyField("ratings.UserTag", blank=True)
 
-    def __str__(self):
-        return f"{self.pk} - {self.yt_id} - {self.date_publication}"
-
     @property
     def last_snapshot(self):
         return self.snapshots.last()
@@ -45,9 +42,6 @@ class VideoSnapshot(models.Model):
     )
     duration = models.IntegerField(blank=True, null=True)
 
-    def __str__(self):
-        return f"{self.pk} - {self.title_en} - {self.date_creation}"
-
 
 class VideoRating(models.Model):
     rating = models.PositiveIntegerField(
@@ -62,9 +56,6 @@ class VideoRating(models.Model):
     date_creation = models.DateTimeField(auto_now_add=True)
     review_title = models.TextField(max_length=100, blank=True)
     review_body = models.TextField(max_length=5000, blank=True)
-
-    def __str__(self):
-        return f"{self.pk} - {self.user} - {self.video.yt_id} - {self.date_publication}"
 
     class Meta:
         constraints = [
@@ -83,6 +74,3 @@ class VideoViewing(models.Model):
     state = models.PositiveIntegerField(
         choices=enums.ViewingState.choices(),
     )
-
-    def __str__(self):
-        return f"{self.pk} - {self.user} - {self.video.yt_id} - {self.date_creation}"
