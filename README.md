@@ -55,7 +55,3 @@ python manage.py migrate --run-syncdb
 - Add profile / settings page
 - Add statistics
 - Add user-generated lists with ratings
-
-### Localization
-- Add FR language
-- Add EN language
