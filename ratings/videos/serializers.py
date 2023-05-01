@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from ratings.channels.serializers import ChannelSerializer
-from ratings.models.videos import Video, VideoSnapshot, VideoRating
+from ratings.models.videos import Video, VideoRating, VideoSnapshot
 
 
 class VideoSerializer(serializers.ModelSerializer):

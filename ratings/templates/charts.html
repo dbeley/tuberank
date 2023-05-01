@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{{ channel.last_snapshot.name_en }} - ytvd{% endblock %}
+{% block title %}{{ channel.last_snapshot.name_en }} - ytvd{% endblock title %}
 
 {% block content %}
   <div class="mb-4">
@@ -55,4 +55,4 @@
       {% endif %}
     </nav>
   </div>
-{% endblock %}
+{% endblock content %}

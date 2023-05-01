@@ -12,8 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
-from core.utils import get_secret, get_base_dir
 from django.utils.translation import gettext_lazy as _
+
+from core.utils import get_base_dir, get_secret
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

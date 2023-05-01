@@ -1,7 +1,7 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% translate "Log In" %}{% endblock %}
+{% block title %}{% translate "Log In" %}{% endblock title %}
 
 {% block content %}
   <div class="flex justify-center items-center h-screen">
@@ -24,4 +24,4 @@
       <p class="mt-6 text-gray-700">{% translate "Don't have an account?" %} <a href="{% url 'signup' %}" class="font-semibold text-blue-500 hover:text-blue-700">{% translate "Create one" %}</a>.</p>
     </div>
   </div>
-{% endblock %}
+{% endblock content %}

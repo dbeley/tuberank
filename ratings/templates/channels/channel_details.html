@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load humanize %}
 
-{% block title %}{{ channel.last_snapshot.name_en }} - ytvd{% endblock %}
+{% block title %}{{ channel.last_snapshot.name_en }} - ytvd{% endblock title %}
 
 {% block content %}
   <div class="mb-4 bg-gray-100 p-4 rounded-lg">
@@ -38,7 +38,6 @@
   </div>
 </div>
 
-
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-4">
     {% for video in videos %}
     {% include "videos/video_item.html" %}
@@ -62,5 +61,4 @@
     </nav>
   </div>
 
-
-{% endblock %}
+{% endblock content %}

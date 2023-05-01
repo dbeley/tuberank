@@ -7,7 +7,6 @@ import ratings.tags.views
 import ratings.videos.views
 from ratings import views
 
-
 urlpatterns = [
     path("", views.HomepageView.as_view(), name="homepage"),
     path("login", views.LoginView.as_view(), name="login"),

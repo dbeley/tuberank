@@ -2,7 +2,7 @@
 {% load humanize %}
 {% load i18n %}
 
-{% block title %} {{ video.last_snapshot.title_en }} - {{ video.channel.last_snapshot.name_en }} {% endblock %}
+{% block title %} {{ video.last_snapshot.title_en }} - {{ video.channel.last_snapshot.name_en }} {% endblock title %}
 {% block content %}
 
 <div class="flex flex-col">
@@ -147,4 +147,4 @@
     </div>
 </div>
 
-{% endblock %}
+{% endblock content %}

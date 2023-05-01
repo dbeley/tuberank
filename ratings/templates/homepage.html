@@ -1,8 +1,8 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load humanize %}
 {% load i18n %}
 
-{% block title %}{% translate "Home" %}{% endblock %}
+{% block title %}{% translate "Home" %}{% endblock title %}
 
 {% block content %}
 <div class="container mx-auto px-4 py-8">
@@ -67,4 +67,4 @@
     </div>
 </div>
 
-{% endblock %}
+{% endblock content %}

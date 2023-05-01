@@ -1,13 +1,13 @@
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
-from rest_framework import views
-from rest_framework import permissions
+from rest_framework import permissions, views
+from rest_framework.response import Response
+
 from ratings import enums
-from ratings.tags.serializers import UserTagSerializer
-from ratings.videos.serializers import VideoSerializer
 from ratings.models.tags import UserTag
 from ratings.models.videos import Video
-from rest_framework.response import Response
+from ratings.tags.serializers import UserTagSerializer
+from ratings.videos.serializers import VideoSerializer
 
 
 class UserTagView(views.APIView):

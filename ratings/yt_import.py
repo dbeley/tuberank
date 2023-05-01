@@ -1,14 +1,14 @@
 import logging
-import isodate
 from dataclasses import dataclass
 from datetime import datetime
 
+import isodate
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-from core.utils import get_secret, get_base_dir
-from ratings.models.videos import Video, VideoSnapshot
+from core.utils import get_base_dir, get_secret
 from ratings.models.channels import Channel, ChannelSnapshot
+from ratings.models.videos import Video, VideoSnapshot
 
 logger = logging.getLogger(__name__)
 

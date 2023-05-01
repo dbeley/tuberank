@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator
-from django.db.models import Count, Avg, Max
+from django.db.models import Avg, Count, Max
 from django.http import HttpResponseRedirect
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response

@@ -3,23 +3,23 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.db.models import Avg, Q
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import generic
-from django.http import HttpResponseRedirect
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ratings.models.videos import Video
-from ratings.models.channels import Channel
-from ratings.charts import charts
-from ratings.videos.serializers import VideoSerializer
 from ratings.channels.serializers import ChannelSerializer
+from ratings.charts import charts
+from ratings.models.channels import Channel
+from ratings.models.videos import Video
+from ratings.videos.serializers import VideoSerializer
 from ratings.yt_import import (
-    create_video_snapshot_from_url,
-    TooManyResultException,
     NoResultException,
+    TooManyResultException,
+    create_video_snapshot_from_url,
 )
 
 

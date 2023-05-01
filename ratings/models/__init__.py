@@ -1,4 +1,4 @@
-from .channels import Channel, ChannelSnapshot, ChannelRating
+from .channels import Channel, ChannelRating, ChannelSnapshot
 from .lists import VideoList, VideoListItem, VideoListRating
 from .tags import UserTag
-from .videos import Video, VideoSnapshot, VideoRating, VideoViewing
+from .videos import Video, VideoRating, VideoSnapshot, VideoViewing
