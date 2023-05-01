@@ -12,7 +12,7 @@
   <form class="my-4" method="GET">
     <div class="flex flex-wrap items-center justify-between mb-2">
       <label class="block text-gray-700 font-bold mb-2 mr-2" for="sort-by">{% translate "Sort by:" %}</label>
-      <select name="sort_by" id="sort-by" class="bg-white border border-gray-400 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+      <select name="sort_by" id="sort-by" class="bg-white border border-gray-400 rounded-lg py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
         <option value="rating" {% if request.GET.sort_by == "rating" %}selected{% endif %}>{% translate "Best rated" %}</option>
         <option value="ratings_count" {% if request.GET.sort_by == "ratings_count" %}selected{% endif %}>{% translate "Most rated" %}</option>
         <option value="newest" {% if request.GET.sort_by == "newest" %}selected{% endif %}>{% translate "Newest" %}</option>
@@ -20,7 +20,7 @@
         <option value="views_count" {% if request.GET.sort_by == "views_count" %}selected{% endif %}>{% translate "Most viewed" %}</option>
       </select>
       <label class="block text-gray-700 font-bold mb-2 mr-2" for="sort-by">{% translate "Filter by tag:" %}</label>
-      <select name="tag" id="tag-filter" class="bg-white border border-gray-400 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+      <select name="tag" id="tag-filter" class="bg-white border border-gray-400 rounded-lg py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
           <option disabled selected value>{% translate " -- Select an option -- " %}</option>
         {% for tag in tags %}
           <option value="{{ tag.name }}" {% if request.GET.tag == tag.name %}selected{% endif %}>{{ tag.name }}</option>

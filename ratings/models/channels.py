@@ -12,7 +12,7 @@ class Channel(models.Model):
     description = models.TextField(max_length=5000, blank=True)
     tags = models.ManyToManyField("ratings.UserTag", blank=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.pk} - {self.yt_id} - {self.date_creation}"
 
     @property
@@ -20,12 +20,19 @@ class Channel(models.Model):
         return self.snapshots.last()
 
     @property
-    def average_rating(self):
+    def average_rating(self) -> float:
         return round(self.ratings.aggregate(avg=Avg("rating"))["avg"] or 0, 2)
 
     @property
-    def indexed_videos_count(self):
+    def indexed_videos_count(self) -> int:
         return Video.objects.filter(channel=self).count()
+
+    @property
+    def url(self) -> str:
+        if last_snapshot := self.last_snapshot:
+            if custom_url := last_snapshot.custom_url:
+                return f"https://www.youtube.com/{custom_url}"
+        return ""
 
 
 class ChannelSnapshot(models.Model):
@@ -41,7 +48,7 @@ class ChannelSnapshot(models.Model):
     description = models.TextField(max_length=5000, blank=True)
     thumbnail_url = models.CharField(max_length=100)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.pk} - {self.name_en} - {self.date_creation}"
 
 
@@ -59,7 +66,7 @@ class ChannelRating(models.Model):
     review_title = models.TextField(max_length=100, blank=True)
     review_body = models.TextField(max_length=5000, blank=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (
             f"{self.pk} - {self.user} - {self.channel.yt_id} - {self.date_publication}"
         )

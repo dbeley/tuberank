@@ -30,17 +30,17 @@ class ChartsView(APIView):
                 "rating",
             ]:
                 return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
-            if sort_method == "newest":
+            elif sort_method == "newest":
                 videos = videos.order_by("-date_publication")
-            if sort_method == "oldest":
+            elif sort_method == "oldest":
                 videos = videos.order_by("date_publication")
-            if sort_method == "views_count":
+            elif sort_method == "views_count":
                 videos = videos.order_by("-count_views")
-            if sort_method == "ratings_count":
+            elif sort_method == "ratings_count":
                 # default sorting mechanism
                 # videos = videos.order_by("-num_ratings")
                 pass
-            if sort_method == "rating":
+            elif sort_method == "rating":
                 videos = videos.order_by("-avg_rating")
         if selected_tag := request.GET.get("tag"):
             tag = UserTag.objects.get(name=selected_tag)

@@ -1,4 +1,6 @@
 from django.core.paginator import Paginator
+from django.db.models import Max, F
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
@@ -31,11 +33,37 @@ class ChannelListView(APIView):
     template_name = "channels/channel_list.html"
 
     def get(self, request):
-        channels = Channel.objects.all()
+        channels = Channel.objects.annotate(
+            name=F("snapshots__name_en"),
+            count_subscribers=Max("snapshots__count_subscribers"),
+            count_views=Max("snapshots__count_views"),
+        ).order_by("-count_subscribers")
+        if sort_method := request.GET.get("sort_by"):
+            if sort_method not in [
+                "most_subscribers",
+                "name_asc",
+                "name_desc",
+                "views_count",
+                "latest_indexed",
+            ]:
+                return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+            if sort_method == "most_subscribers":
+                # default sorting mechanism
+                # channels = channels.order_by("-count_subscribers")
+                pass
+            elif sort_method == "name_asc":
+                channels = channels.order_by("name")
+            elif sort_method == "name_desc":
+                channels = channels.order_by("-name")
+            elif sort_method == "views_count":
+                channels = channels.order_by("-count_views")
+            elif sort_method == "latest_indexed":
+                channels = channels.order_by("-id")
         paginator = Paginator(channels, 12)
         page = paginator.get_page(request.GET.get("page", 1))
         return Response(
             {
                 "channels": page,
+                "selected_sort_method": sort_method,
             }
         )

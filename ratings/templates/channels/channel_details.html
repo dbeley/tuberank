@@ -1,15 +1,45 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load humanize %}
 
 {% block title %}{{ channel.last_snapshot.name_en }} - ytvd{% endblock %}
 
 {% block content %}
-  <div class="mb-4">
+  <div class="mb-4 bg-gray-100 p-4 rounded-lg">
+    <div class="flex flex-wrap items-center justify-between py-4">
     <h1 class="text-3xl font-bold">{{ channel.last_snapshot.name_en }}</h1>
+    <a href="{{ channel.url }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      {% translate "Watch on YouTube" %}
+    </a>
+    </div>
     <p class="text-gray-600">{{ channel.last_snapshot.description | safe | linebreaks }}</p>
-  </div>
+    <div class="flex items-center justify-between mt-4">
+      <div class="flex items-center">
+        <i class="fas fa-users mr-2"></i>
+        <p class="text-gray-600">{% blocktranslate with count=channel.last_snapshot.count_subscribers|intcomma %}{{ count }} subscribers{% endblocktranslate %}</p>
+      </div>
+      <div class="flex items-center">
+        <i class="far fa-eye mr-2"></i>
+        <p class="text-gray-600">{% blocktranslate with count=channel.last_snapshot.count_views|intcomma %}{{ count }} views{% endblocktranslate %}</p>
+      </div>
+      <div class="flex items-center">
+        <i class="far fa-calendar-alt mr-2"></i>
+        <p class="text-gray-600">{% blocktranslate with date=channel.date_creation %}Created on {{ date }}{% endblocktranslate %}</p>
+      </div>
+    </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+  </div>
+<div class="bg-gray-100 p-4 rounded-lg mt-8">
+  <div class="flex items-center justify-between">
+    <h2 class="text-xl font-bold">{% translate "ytvd Stats" %}</h2>
+    <div class="text-gray-600">
+      <span class="ml-2">{% blocktranslate with rating=channel.average_rating count=channel.ratings.count %}Rating: {{ rating }} from {{ count }} ratings{% endblocktranslate %}</span>
+    </div>
+  </div>
+</div>
+
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-4">
     {% for video in videos %}
     {% include "videos/video_item.html" %}
     {% endfor %}  </div>
@@ -31,4 +61,6 @@
       {% endif %}
     </nav>
   </div>
+
+
 {% endblock %}
