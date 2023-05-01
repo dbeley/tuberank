@@ -1,4 +1,5 @@
 {% load humanize %}
+{% load i18n %}
 
 <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col justify-between">
     <a href="{% url 'video_details' pk=video.id %}">
@@ -10,17 +11,17 @@
         </a>
         <a href="{% url 'channel_details' pk=video.channel.id %}"> <p class="text-gray-700 text-sm mb-2">{{ video.channel.last_snapshot.name_en }}</p></a>
         {% if not video.ratings.count == 0 %}
-        <p class="text-gray-700 text-sm mb-2">Rating: {{ video.average_rating }} from {{ video.ratings.count }} ratings</p>
+        <p class="text-gray-700 text-sm mb-2">{% blocktranslate with rating=video.average_rating count=video.ratings.count %}Rating: {{ rating }} from {{ count }} ratings{% endblocktranslate %}</p>
         {% endif %}
-        <p class="text-gray-700 text-sm mb-2">{{ video.last_snapshot.count_views|intcomma }} views</p>
+        <p class="text-gray-700 text-sm mb-2">{% blocktranslate with count=video.last_snapshot.count_views|intcomma %}{{ count }} views{% endblocktranslate %}</p>
     </div>
     <div class="flex justify-end p-4">
         <a href="{{ video.url }}" target="_blank" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Watch on YouTube
+            {% translate "Watch on YouTube" %}
         </a>
         {% if user.is_authenticated %}
         <a href="{% url 'video_rating' pk=video.id %}" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-            Rate this video
+            {% translate "Rate this video" %}
         </a>
         {% endif %}
     </div>

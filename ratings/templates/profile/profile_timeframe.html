@@ -1,5 +1,7 @@
+{% load i18n %}
+
 <div class="bg-white rounded-lg shadow-lg py-6 mt-4 px-4" id="viewings" hx-swap="outerHTML" hx-target="#viewings">
-    <h2 class="text-2xl font-bold mb-4">Recently Watched Videos</h2>
+    <h2 class="text-2xl font-bold mb-4">{% translate "Recently Watched Videos" %}</h2>
     <ul class="space-y-4">
         {% for viewing in viewings %}
         <li class="flex items-center space-x-4">
@@ -20,15 +22,15 @@
         <nav class="flex items-center justify-between">
         {% if viewings.has_previous %}
             <a hx-get="{% url 'profile_timeframe' username=user.username %}?page={{ viewings.previous_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-l">
-            Previous
+            {% translate "Previous" %}
             </a>
         {% endif %}
         <div class="text-gray-600">
-            Page {{ viewings.number }} of {{ viewings.paginator.num_pages }}
+            {% blocktranslate with page_number=viewings.number total_page_number=viewings.paginator.num_pages %}Page {{ page_number }} of {{ total_page_number }}{% endblocktranslate %}
         </div>
         {% if viewings.has_next %}
             <a hx-get="{% url 'profile_timeframe' username=user.username %}?page={{ viewings.next_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-r">
-            Next
+            {% translate "Next" %}
             </a>
         {% endif %}
         </nav>

@@ -8,4 +8,4 @@ secret.ini
 node_modules/
 temp/
 .idea/
-*.mo/
+*.mo

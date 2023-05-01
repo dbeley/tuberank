@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load humanize %}
+{% load i18n %}
 
 {% block title %} {{ video.last_snapshot.title_en }} - {{ video.channel.last_snapshot.name_en }} {% endblock %}
 {% block content %}
@@ -8,7 +9,7 @@
 
     <div class="flex w-full mb-8">
         <a href="{% url 'channel_details' pk=video.channel.id %}" class="mr-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-            &#8592; Return to Channel
+            {% translate "&#8592; Return to Channel" %}
         </a>
     </div>
     <h1 class="text-4xl font-bold mb-8">{{ video.last_snapshot.title_en }}</h1>
@@ -17,14 +18,14 @@
         <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}" class="h-full w-full object-cover mr-4">
             <div class="flex justify-start pt-4">
                 <a href="{{ video.url }}" target="_blank" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Watch on YouTube
+                    {% translate "Watch on YouTube" %}
                 </a>
                 {% if user.is_authenticated %}
                 <a href="{% url 'video_rating' pk=video.id %}" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                    Rate this video
+                    {% translate "Rate this video" %}
                 </a>
                 <a href="{% url 'video_viewing' pk=video.id %}" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                    I'm watching this video
+                    {% translate "I'm watching this video" %}
                 </a>
                 {% endif %}
             </div>
@@ -33,31 +34,31 @@
         <table class="table-auto">
                 <tbody>
                     <tr>
-                        <td class="font-bold text-gray-900 pr-4">Channel:</td>
+                        <td class="font-bold text-gray-900 pr-4">{% translate "Channel" %}</td>
                         <td class="text-gray-700">{{ video.channel.last_snapshot.name_en }}</td>
                     </tr>
                     <tr>
-                        <td class="font-bold text-gray-900 pr-4">Views:</td>
+                        <td class="font-bold text-gray-900 pr-4">{% translate "Views" %}</td>
                         <td class="text-gray-700">{{ video.last_snapshot.count_views|intcomma }}</td>
                     </tr>
                     <tr>
-                        <td class="font-bold text-gray-900 pr-4">Likes:</td>
+                        <td class="font-bold text-gray-900 pr-4">{% translate "Likes" %}</td>
                         <td class="text-gray-700">{{ video.last_snapshot.count_likes|intcomma }}</td>
                     </tr>
                     <tr>
-                        <td class="font-bold text-gray-900 pr-4">Comments:</td>
+                        <td class="font-bold text-gray-900 pr-4">{% translate "Comments" %}</td>
                         <td class="text-gray-700">{{ video.last_snapshot.count_comments|intcomma }}</td>
                     </tr>
                     <tr>
-                        <td class="font-bold text-gray-900 pr-4">Uploaded:</td>
+                        <td class="font-bold text-gray-900 pr-4">{% translate "Uploaded" %}</td>
                         <td class="text-gray-700">{{ video.date_publication }}</td>
                     </tr>
                     <tr>
-                        <td class="font-bold text-gray-900 pr-4">Rating:</td>
+                        <td class="font-bold text-gray-900 pr-4">{% translate "Rating" %}</td>
                         <td class="text-gray-700">{{ video.average_rating }} from {{ video.ratings.count }} ratings</td>
                     </tr>
                     <tr>
-                        <td class="font-bold text-gray-900 pr-4">Description:</td>
+                        <td class="font-bold text-gray-900 pr-4">{% translate "Description" %}</td>
                         <td class="text-gray-700">{{ video.last_snapshot.description | safe | linebreaks }}</td>
                     </tr>
                 </tbody>
@@ -65,8 +66,9 @@
 
         </div>
     </div>
+    {% if video.ratings.exists %}
     <div class="mt-8">
-        <h2 class="text-2xl font-bold mb-4">Reviews</h2>
+        <h2 class="text-2xl font-bold mb-4">{% translate "Reviews" %}</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {% for rating in video.ratings.all %}
                 {% if rating.review_body and rating.review_title %}
@@ -75,10 +77,10 @@
                         <p class="text-gray-700 text-lg font-bold mb-2">{{ rating.review_title | truncatechars:75 }}</p>
                         <p class="text-gray-700 text-base mb-2">{{ rating.review_body | truncatechars:250 | safe | linebreaks }}</p>
                         <div class="flex justify-between items-center text-gray-700 text-base mb-2 pt-4">
-                            <p class="mr-4">Rating: <span class="font-bold">{{ rating.rating }}</span></p>
-                            <p>By: <span class="font-bold">{{ rating.user.username }}</span></p>
+                            <p class="mr-4">{% blocktranslate with rating=rating.rating %}Rating: <span class="font-bold">{{ rating }}</span>{% endblocktranslate %}</p>
+                            <p>{% blocktranslate with username=rating.user.username %}By: <span class="font-bold">{{ username }}</span>{% endblocktranslate %}</p>
                             <a href="#" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                                Read the review
+                                {% translate "Read the review" %}
                             </a>
                         </div>
                     </div>
@@ -87,60 +89,61 @@
             {% endfor %}
         </div>
     </div>
-      <div class="w-full lg:w-3/4 mb-8 mt-8">
-        <div class="bg-white rounded-lg shadow-lg py-2 px-2">
-          <div class="flex flex-wrap -mx-2 mt-4">
-            <div class="px-2">
-              <h2 class="text-xl font-bold mb-2">Tags</h2>
-              <form id="add-tag-form" action="{% url 'video_details' video.id %}" method="POST">
-                {% csrf_token %}
-                <div class="flex items-center">
-                  <input type="name" name="name" placeholder="Enter a tag" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2" maxlength="50">
-                  <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">Add Tag</button>
-                </div>
-              </form>
-              {% if video.tags.exists %}
-                <div class="flex flex-wrap mt-2">
-                  {% for tag in video.tags.all %}
-                        <div class="flex items-center bg-gray-100 rounded-lg px-4 py-2 text-gray-700 mr-2 mb-2 hover:bg-gray-200">
-                        <a href="{% url 'tags_overview' tag.name %}">{{ tag.name }}</a>
-                        <form action="#" method="POST">
-                            {% csrf_token %}
-                            <button type="submit" class="ml-2"><svg class="h-4 w-4 fill-current text-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M19 4h-4V2h-3v2H8V2H5v2H1a1 1 0 00-1 1v1h20V5a1 1 0 00-1-1zM6 4v-.6a1 1 0 011-1h6a1 1 0 011 1V4h2V3H4v1h2zm8 12a1 1 0 01-1 1H7a1 1 0 01-1-1v-1.6a1 1 0 01.4-.8l2-1.6a1 1 0 011.2 0l2 1.6a1 1 0 01.4.8V16zm-1-5a1 1 0 11-2 0 1 1 0 012 0zm-6 0a1 1 0 11-2 0 1 1 0 012 0z"/></svg></button>
-                        </form>
-                        </div>
+    {% endif %}
+    <div class="w-full lg:w-3/4 mb-8 mt-8">
+      <div class="bg-white rounded-lg shadow-lg py-2 px-2">
+        <div class="flex flex-wrap -mx-2 mt-4">
+          <div class="px-2">
+            <h2 class="text-xl font-bold mb-2">{% translate "Tags" %}</h2>
+            <form id="add-tag-form" action="{% url 'video_details' video.id %}" method="POST">
+              {% csrf_token %}
+              <div class="flex items-center">
+                <input type="name" name="name" placeholder="Enter a tag" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2" maxlength="50">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">{% translate "Add Tag" %}</button>
+              </div>
+            </form>
+            {% if video.tags.exists %}
+              <div class="flex flex-wrap mt-2">
+                {% for tag in video.tags.all %}
+                      <div class="flex items-center bg-gray-100 rounded-lg px-4 py-2 text-gray-700 mr-2 mb-2 hover:bg-gray-200">
+                      <a href="{% url 'tags_overview' tag.name %}">{{ tag.name }}</a>
+                      <form action="#" method="POST">
+                          {% csrf_token %}
+                          <button type="submit" class="ml-2"><svg class="h-4 w-4 fill-current text-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M19 4h-4V2h-3v2H8V2H5v2H1a1 1 0 00-1 1v1h20V5a1 1 0 00-1-1zM6 4v-.6a1 1 0 011-1h6a1 1 0 011 1V4h2V3H4v1h2zm8 12a1 1 0 01-1 1H7a1 1 0 01-1-1v-1.6a1 1 0 01.4-.8l2-1.6a1 1 0 011.2 0l2 1.6a1 1 0 01.4.8V16zm-1-5a1 1 0 11-2 0 1 1 0 012 0zm-6 0a1 1 0 11-2 0 1 1 0 012 0z"/></svg></button>
+                      </form>
+                      </div>
+                {% endfor %}
+              </div>
+            {% else %}
+              <p class="text-gray-600">{% translate "No tags yet." %}</p>
+            {% endif %}
+          </div>
+          <div class="px-2">
+            <h2 class="text-xl font-bold mb-2">{% translate "Lists" %}</h2>
+            <form action="{% url 'video_details' pk=video.id %}" method="POST">
+              {% csrf_token %}
+              <div class="flex items-center">
+                <select name="list_pk" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2">
+                  <option value="" disabled selected>{% translate "Select a list" %}</option>
+                  {% for list in user_lists.all %}
+                    <option value="{{ list.id }}">{{ list.name }}</option>
                   {% endfor %}
-                </div>
-              {% else %}
-                <p class="text-gray-600">No tags yet.</p>
-              {% endif %}
-            </div>
-            <div class="px-2">
-              <h2 class="text-xl font-bold mb-2">Lists</h2>
-              <form action="{% url 'video_details' pk=video.id %}" method="POST">
-                {% csrf_token %}
-                <div class="flex items-center">
-                  <select name="list_pk" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2">
-                    <option value="" disabled selected>Select a list</option>
-                    {% for list in user_lists.all %}
-                      <option value="{{ list.id }}">{{ list.name }}</option>
-                    {% endfor %}
-                  </select>
-                  <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">Add to List</button>
-                </div>
-              </form>
-              {% if lists.exists %}
-                <div class="flex flex-wrap mt-2">
-                  {% for list in lists.all %}
-                    <a href="{% url 'list_details' pk=list.id %}" class="bg-gray-100 rounded-lg px-4 py-2 text-gray-700 mr-2 mb-2 hover:bg-gray-200">{{ list.name }}</a>
-                  {% endfor %}
-                </div>
-              {% else %}
-                <p class="text-gray-600">Not in any lists yet.</p>
-              {% endif %}
-            </div>
+                </select>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">{% translate "Add to List" %}</button>
+              </div>
+            </form>
+            {% if lists.exists %}
+              <div class="flex flex-wrap mt-2">
+                {% for list in lists.all %}
+                  <a href="{% url 'list_details' pk=list.id %}" class="bg-gray-100 rounded-lg px-4 py-2 text-gray-700 mr-2 mb-2 hover:bg-gray-200">{{ list.name }}</a>
+                {% endfor %}
+              </div>
+            {% else %}
+              <p class="text-gray-600">{% translate "Not in any lists yet." %}</p>
+            {% endif %}
           </div>
         </div>
+      </div>
     </div>
 </div>
 

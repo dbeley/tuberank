@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -6,7 +7,7 @@
     <p class="text-lg mb-6">{{ list.description }}</p>
 
   {% if list.videos.exists %}
-    <h2>Videos in this list:</h2>
+    <h2>{% translate "Videos in this list:" %}</h2>
     <ul id="video-list">
       {% for video in list.videos.all %}
         <li class="draggable-item" data-video-id="{{ video.id }}">
@@ -15,7 +16,7 @@
       {% endfor %}
     </ul>
   {% else %}
-    <p>No videos in this list yet.</p>
+    <p>{% translate "No videos in this list yet." %}</p>
   {% endif %}
   </div>
 

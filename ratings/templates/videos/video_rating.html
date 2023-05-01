@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% block title %}Rate {{ video.last_snapshot.title_en }} - {{ video.channel.last_snapshot.name_en }}{% endblock %}
 {% block content %}
+{% load i18n %}
 
     <div class="flex items-center w-full mb-8">
         <a href="{% url 'video_details' pk=video.id %}" class="mr-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-            &#8592; Return to Video
+            {% translate "&#8592; Return to Video" %}
         </a>
     </div>
     <h1 class="text-4xl font-bold mb-8">{{ video.last_snapshot.title_en }}</h1>
@@ -14,7 +15,7 @@
             <table class="table-auto">
                 <tbody>
                     <tr>
-                        <td class="font-bold text-gray-900 pr-4">Channel:</td>
+                        <td class="font-bold text-gray-900 pr-4">{% translate "Channel:" %}</td>
                         <td class="text-gray-700">{{ video.channel.last_snapshot.name_en }}</td>
                     </tr>
                 </tbody>
@@ -25,25 +26,25 @@
     {% csrf_token %}
     <div class="mb-2 mt-2">
         <label class="block text-gray-700 font-bold mb-2" for="rating">
-            Rating (0-10)
+            {% translate "Rating (0-10)" %}
         </label>
         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="rating" type="number" name="rating" value="{{ serializer.data.rating }}" min="0" max="10" placeholder="Enter your rating" required>
     </div>
     <div class="mb-2">
         <label class="block text-gray-700 font-bold mb-2" for="review_title">
-            Review title (optional)
+            {% translate "Review title (optional)" %}
         </label>
         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="review_title" type="text" name="review_title" value="{{ serializer.data.review_title }}"  placeholder="Enter the title of your rating" maxlength="100">
     </div>
     <div class="mb-2">
         <label class="block text-gray-700 font-bold mb-2" for="review_body">
-            Review (optional)
+            {% translate "Review (optional)" %}
         </label>
         <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="review_body" name="review_body" rows="5" placeholder="Enter your review" maxlength="5000">{{ serializer.data.review_body }}</textarea>
     </div>
     <div class="flex justify-start">
         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Submit
+            {% translate "Submit" %}
         </button>
     </div>
 </form>
