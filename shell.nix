@@ -12,6 +12,7 @@ in pkgs.mkShell rec {
     pythonPackages.pip
     ruff
     gettext
+    postgresql
   ];
 
 }
