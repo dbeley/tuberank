@@ -17,7 +17,6 @@ services:
   web:
     <<: *default-app
     command: bash -c "poetry run python manage.py migrate && poetry run gunicorn ytvd.wsgi --bind 0.0.0.0:8000 --timeout 600"
-    user: python
     ports:
       - "8000:8000"
     environment:
@@ -31,13 +30,12 @@ services:
       - "traefik.http.routers.ytvd.rule=Host(`ytvd.$DOMAIN`)"
       - "traefik.http.services.ytvd.loadbalancer.server.port=8000"
       - "traefik.http.routers.ytvd.tls.certresolver=le"
-  tailwind:
-    <<: *default-app
-    command: bash -c "poetry run python manage.py tailwind start"
-    user: python
-    # Without tty, no stdin, and tailwind watcher aborts
-    # https://github.com/tailwindlabs/tailwindcss/issues/5324
-    tty: true
+        # tailwind:
+        #   <<: *default-app
+        #   command: bash -c "poetry run python manage.py tailwind start"
+        #   # Without tty, no stdin, and tailwind watcher aborts
+        #   # https://github.com/tailwindlabs/tailwindcss/issues/5324
+        #   tty: true
 
 networks:
     default:
