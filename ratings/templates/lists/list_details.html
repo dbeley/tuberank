@@ -3,14 +3,20 @@
 
 {% block content %}
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-bold mb-6">{{ list.name }}</h1>
-    <p class="text-lg mb-6">{{ list.description }}</p>
+    <div class="flex justify-right">
+    <h1 class="text-3xl font-bold mb-6 w-full">{{ list.name }}</h1>
+      <a href="{% url 'list_delete' pk=list.id %}" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+        {% translate "Delete" %}
+      </a>
+    </div>
+    <p class="text-lg mb-6">{% blocktranslate with username=list.user.username %}By: <span class="font-bold">{{ username }}</span>{% endblocktranslate %}</p>
+    <p class="text-lg mb-6 w-full">{{ list.description }}</p>
 
   {% if list.videos.exists %}
     <h2>{% translate "Videos in this list:" %}</h2>
     <ul id="video-list">
       {% for video in list.videos.all %}
-        <li class="draggable-item" data-video-id="{{ video.id }}">
+        <li class="flex-justify-right">
           {% include "videos/video_item.html" %}
         </li>
       {% endfor %}
@@ -19,31 +25,4 @@
     <p>{% translate "No videos in this list yet." %}</p>
   {% endif %}
   </div>
-
-  <script>
-    $(document).ready(function() {
-      $('#video-list').sortable({
-        update: function(event, ui) {
-          // Get the new order of the videos
-          var videoIds = [];
-          $('#video-list .draggable-item').each(function() {
-            videoIds.push($(this).data('video-id'));
-          });
-
-          // Update the server with the new order
-          $.ajax({
-            url: "{% url 'homepage' %}",
-            type: "POST",
-            data: {
-              video_ids: videoIds
-            },
-            success: function(response) {
-              // Reload the page to update the list
-              location.reload();
-            }
-          });
-        }
-      });
-    });
-  </script>
 {% endblock content %}

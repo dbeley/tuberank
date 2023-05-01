@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from ratings.lists.serializers import VideoListSerializer
+from ratings.models import Video
 from ratings.models.lists import VideoList
 
 
@@ -69,3 +70,18 @@ class VideoListDeleteView(APIView):
         user_lists = _get_user_lists(request.user)
         popular_lists = _get_popular_lists()[0:8]
         return Response({"user_lists": user_lists, "popular_lists": popular_lists})
+
+
+class VideoListDeleteItemView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "lists/list_details.html"
+
+    def get(self, request, list_pk, video_pk):
+        video_list = get_object_or_404(VideoList, pk=list_pk, user=request.user)
+        video = get_object_or_404(Video, pk=video_pk)
+        video_list.videos.remove(video)
+        return Response(
+            {
+                "list": video_list,
+            }
+        )
