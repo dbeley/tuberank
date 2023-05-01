@@ -26,6 +26,7 @@ class ChartsView(APIView):
                 "newest",
                 "oldest",
                 "views_count",
+                "views_count_desc",
                 "ratings_count",
                 "rating",
             ]:
@@ -36,6 +37,8 @@ class ChartsView(APIView):
                 videos = videos.order_by("date_publication")
             elif sort_method == "views_count":
                 videos = videos.order_by("-count_views")
+            elif sort_method == "views_count_desc":
+                videos = videos.order_by("count_views")
             elif sort_method == "ratings_count":
                 videos = videos.order_by("-num_ratings")
             elif sort_method == "rating":
