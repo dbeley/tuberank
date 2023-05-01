@@ -8,7 +8,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from ratings.lists.serializers import VideoListSerializer
-
 from ratings.models.lists import VideoList
 
 

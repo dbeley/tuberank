@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ratings.models.channels import Channel, ChannelSnapshot, ChannelRating
+from ratings.models.channels import Channel, ChannelRating, ChannelSnapshot
 
 
 class ChannelSerializer(serializers.ModelSerializer):

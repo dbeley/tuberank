@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from ratings.channels.serializers import ChannelSerializer
-from ratings.models.videos import Video, VideoSnapshot, VideoRating
+from ratings.models.videos import Video, VideoRating, VideoSnapshot
 
 
 class VideoSerializer(serializers.ModelSerializer):
@@ -57,11 +57,19 @@ class VideoSnapshotSerializer(serializers.ModelSerializer):
         ]
 
 
+class CustomRatingField(serializers.CharField):
+    def to_representation(self, value: int) -> str:
+        return str(value / 2)
+
+    def to_internal_value(self, data: str) -> int:
+        return int(float(data) * 2)
+
+
 class VideoRatingSerializer(serializers.ModelSerializer):
-    date_publication = serializers.DateTimeField(read_only=True)
+    date_creation = serializers.DateTimeField(read_only=True)
     video = serializers.PrimaryKeyRelatedField(read_only=True)
     username = serializers.SerializerMethodField(read_only=True)
-    rating = serializers.IntegerField()
+    rating = CustomRatingField()
 
     def get_username(self, obj):
         return obj.user.username
@@ -71,7 +79,7 @@ class VideoRatingSerializer(serializers.ModelSerializer):
         fields = [
             "rating",
             "video",
-            "date_publication",
+            "date_creation",
             "review_title",
             "review_body",
             "username",

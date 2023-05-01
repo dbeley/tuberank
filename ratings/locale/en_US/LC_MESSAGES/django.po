@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-01 12:52+0200\n"
+"POT-Creation-Date: 2023-05-01 17:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,56 +17,56 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: templates/base.html:21
+#: templates/base.html:22
 msgid "Charts"
 msgstr ""
 
-#: templates/base.html:22 templates/videos/video_details.html:122
+#: templates/base.html:23 templates/videos/video_details.html:119
 msgid "Lists"
 msgstr ""
 
-#: templates/base.html:23 templates/videos/video_details.html:97
+#: templates/base.html:24 templates/videos/video_details.html:98
 msgid "Tags"
 msgstr ""
 
-#: templates/base.html:24 templates/channels/channel_list.html:8
+#: templates/base.html:25 templates/channels/channel_list.html:8
 msgid "Channels"
 msgstr ""
 
-#: templates/base.html:25
+#: templates/base.html:26
 msgid "About"
 msgstr ""
 
-#: templates/base.html:30
+#: templates/base.html:31
 msgid "Import video"
 msgstr ""
 
-#: templates/base.html:32 templates/search/search.html:4
+#: templates/base.html:33 templates/search/search.html:4
 msgid "Search"
 msgstr ""
 
-#: templates/base.html:41
+#: templates/base.html:42
 msgid "Open user menu"
 msgstr ""
 
-#: templates/base.html:48
+#: templates/base.html:49
 msgid "Profile"
 msgstr ""
 
-#: templates/base.html:49
+#: templates/base.html:50
 msgid "Settings"
 msgstr ""
 
-#: templates/base.html:50
+#: templates/base.html:51
 msgid "Logout"
 msgstr ""
 
-#: templates/base.html:55
+#: templates/base.html:56
 msgid "Login"
 msgstr ""
 
 #: templates/channels/channel_details.html:12
-#: templates/videos/video_details.html:21 templates/videos/video_item.html:20
+#: templates/videos/video_details.html:22 templates/videos/video_item.html:21
 msgid "Watch on YouTube"
 msgstr ""
 
@@ -76,7 +76,7 @@ msgid "%(count)s subscribers"
 msgstr ""
 
 #: templates/channels/channel_details.html:23
-#: templates/videos/video_item.html:16
+#: templates/videos/video_item.html:17
 #, python-format
 msgid "%(count)s views"
 msgstr ""
@@ -91,31 +91,30 @@ msgid "ytvd Stats"
 msgstr ""
 
 #: templates/channels/channel_details.html:36
-#: templates/videos/video_item.html:14
 #, python-format
-msgid "Rating: %(rating)s from %(count)s ratings"
+msgid "Channel Rating: %(rating)s from %(count)s ratings"
 msgstr ""
 
-#: templates/channels/channel_details.html:51
+#: templates/channels/channel_details.html:50
 #: templates/channels/channel_list.html:38 templates/charts.html:45
-#: templates/profile/profile_timeframe.html:25
+#: templates/profile/profile_timeframe.html:28
 #: templates/search/channel_results.html:18
 #: templates/search/video_results.html:22
 msgid "Previous"
 msgstr ""
 
-#: templates/channels/channel_details.html:55
+#: templates/channels/channel_details.html:54
 #: templates/channels/channel_list.html:42
-#: templates/profile/profile_timeframe.html:29
+#: templates/profile/profile_timeframe.html:32
 #: templates/search/channel_results.html:22
 #: templates/search/video_results.html:26
 #, python-format
 msgid "Page %(page_number)s of %(total_page_number)s"
 msgstr ""
 
-#: templates/channels/channel_details.html:59
+#: templates/channels/channel_details.html:58
 #: templates/channels/channel_list.html:46 templates/charts.html:53
-#: templates/profile/profile_timeframe.html:33
+#: templates/profile/profile_timeframe.html:36
 #: templates/search/channel_results.html:26
 #: templates/search/video_results.html:30
 msgid "Next"
@@ -185,49 +184,49 @@ msgstr ""
 msgid "homepage.description"
 msgstr "ytvd is a platform where you can curate and rate YouTube videos."
 
-#: templates/homepage.html:15
+#: templates/homepage.html:14
 msgid "Last Indexed Videos"
 msgstr ""
 
-#: templates/homepage.html:23
+#: templates/homepage.html:22
 msgid "Best Videos"
 msgstr ""
 
-#: templates/homepage.html:38
+#: templates/homepage.html:37
 msgid "users"
 msgstr ""
 
-#: templates/homepage.html:41
+#: templates/homepage.html:40
 msgid "Number of users"
 msgstr ""
 
-#: templates/homepage.html:42
+#: templates/homepage.html:41
 #, python-format
 msgid "%(number_of_users)s users have signed up for ytvd"
 msgstr ""
 
-#: templates/homepage.html:49
+#: templates/homepage.html:48
 msgid "channels"
 msgstr ""
 
-#: templates/homepage.html:52
+#: templates/homepage.html:51
 msgid "Number of channels"
 msgstr ""
 
-#: templates/homepage.html:53
+#: templates/homepage.html:52
 #, python-format
 msgid "ytvd has catalogued %(number_of_channels)s channels"
 msgstr ""
 
-#: templates/homepage.html:60
+#: templates/homepage.html:59
 msgid "videos"
 msgstr ""
 
-#: templates/homepage.html:63
+#: templates/homepage.html:62
 msgid "Number of videos"
 msgstr ""
 
-#: templates/homepage.html:64
+#: templates/homepage.html:63
 #, python-format
 msgid "ytvd has catalogued %(number_of_videos)s videos"
 msgstr ""
@@ -277,7 +276,7 @@ msgstr ""
 msgid "Enter name"
 msgstr ""
 
-#: templates/lists/lists.html:29 templates/videos/video_details.html:61
+#: templates/lists/lists.html:29 templates/videos/video_details.html:62
 #, fuzzy
 #| msgid "homepage.description"
 msgid "Description"
@@ -320,23 +319,27 @@ msgstr ""
 msgid "No popular lists yet."
 msgstr ""
 
-#: templates/profile/profile.html:17 templates/profile/profile.html:27
+#: templates/profile/profile.html:18 templates/profile/profile.html:28
 msgid "Video Ratings"
 msgstr ""
 
-#: templates/profile/profile.html:21 templates/profile/profile.html:46
+#: templates/profile/profile.html:22 templates/profile/profile.html:56
 msgid "Channel Ratings"
 msgstr ""
 
-#: templates/profile/profile.html:42
+#: templates/profile/profile.html:41
+msgid "Rating:"
+msgstr ""
+
+#: templates/profile/profile.html:52
 msgid "No video ratings found."
 msgstr ""
 
-#: templates/profile/profile.html:65
+#: templates/profile/profile.html:75
 msgid "No channel ratings found."
 msgstr ""
 
-#: templates/profile/profile_timeframe.html:4
+#: templates/profile/profile_timeframe.html:5
 msgid "Recently Watched Videos"
 msgstr ""
 
@@ -388,100 +391,127 @@ msgstr ""
 msgid "All tags"
 msgstr ""
 
-#: templates/tags/tags.html:18 templates/videos/video_details.html:118
+#: templates/tags/tags.html:18 templates/videos/video_details.html:115
 msgid "No tags yet."
 msgstr ""
 
-#: templates/videos/video_details.html:12
+#: templates/videos/video_details.html:13
 msgid "&#8592; Return to Channel"
 msgstr ""
 
-#: templates/videos/video_details.html:25 templates/videos/video_item.html:24
+#: templates/videos/video_details.html:26 templates/videos/video_item.html:25
 msgid "Rate this video"
 msgstr ""
 
-#: templates/videos/video_details.html:28
+#: templates/videos/video_details.html:29
 msgid "I'm watching this video"
 msgstr ""
 
-#: templates/videos/video_details.html:37
+#: templates/videos/video_details.html:38
 msgid "Channel"
 msgstr ""
 
-#: templates/videos/video_details.html:41
+#: templates/videos/video_details.html:42
 msgid "Views"
 msgstr ""
 
-#: templates/videos/video_details.html:45
+#: templates/videos/video_details.html:46
 msgid "Likes"
 msgstr ""
 
-#: templates/videos/video_details.html:49
+#: templates/videos/video_details.html:50
 msgid "Comments"
 msgstr ""
 
-#: templates/videos/video_details.html:53
+#: templates/videos/video_details.html:54
 msgid "Uploaded"
 msgstr ""
 
-#: templates/videos/video_details.html:57
+#: templates/videos/video_details.html:58
 msgid "Rating"
 msgstr ""
 
-#: templates/videos/video_details.html:71
+#: templates/videos/video_details.html:72
 msgid "Reviews"
-msgstr ""
-
-#: templates/videos/video_details.html:80
-#, python-format
-msgid "Rating: <span class=\"font-bold\">%(rating)s</span>"
 msgstr ""
 
 #: templates/videos/video_details.html:81
 #, python-format
+msgid "Rating: <span class=\"font-bold\">%(rating)s</span>"
+msgstr ""
+
+#: templates/videos/video_details.html:82
+#, python-format
 msgid "By: <span class=\"font-bold\">%(username)s</span>"
 msgstr ""
 
-#: templates/videos/video_details.html:83
+#: templates/videos/video_details.html:84
 msgid "Read the review"
 msgstr ""
 
-#: templates/videos/video_details.html:102
+#: templates/videos/video_details.html:103
 msgid "Add Tag"
 msgstr ""
 
-#: templates/videos/video_details.html:127
+#: templates/videos/video_details.html:124
 msgid "Select a list"
 msgstr ""
 
-#: templates/videos/video_details.html:132
+#: templates/videos/video_details.html:129
 msgid "Add to List"
 msgstr ""
 
-#: templates/videos/video_details.html:142
+#: templates/videos/video_details.html:139
 msgid "Not in any lists yet."
 msgstr ""
 
-#: templates/videos/video_rating.html:8 templates/videos/video_viewing.html:8
+#: templates/videos/video_item.html:15
+#, python-format
+msgid "Rating: %(rating)s from %(count)s ratings"
+msgstr ""
+
+#: templates/videos/video_rating.html:9 templates/videos/video_viewing.html:8
 msgid "&#8592; Return to Video"
 msgstr ""
 
-#: templates/videos/video_rating.html:18 templates/videos/video_viewing.html:18
+#: templates/videos/video_rating.html:19 templates/videos/video_viewing.html:18
 msgid "Channel:"
 msgstr ""
 
-#: templates/videos/video_rating.html:29
+#: templates/videos/video_rating.html:30
 msgid "Rating (0-10)"
 msgstr ""
 
-#: templates/videos/video_rating.html:35
+#: templates/videos/video_rating.html:32
+msgid "Enter your rating"
+msgstr ""
+
+#: templates/videos/video_rating.html:36
 msgid "Review title (optional)"
 msgstr ""
 
-#: templates/videos/video_rating.html:41
+#: templates/videos/video_rating.html:38
+msgid "Enter the title of your review"
+msgstr ""
+
+#: templates/videos/video_rating.html:42
 msgid "Review (optional)"
 msgstr ""
 
-#: templates/videos/video_rating.html:47 templates/videos/video_viewing.html:29
+#: templates/videos/video_rating.html:44
+msgid "Enter your review"
+msgstr ""
+
+#: templates/videos/video_rating.html:48 templates/videos/video_viewing.html:29
 msgid "Submit"
+msgstr ""
+
+#: templatetags/ratings_extras.py:13
+#, python-format
+msgid "%(hours)sH %(minutes)sm %(seconds)ss"
+msgstr ""
+
+#: templatetags/ratings_extras.py:18
+#, python-format
+msgid "%(minutes)sm %(seconds)ss"
 msgstr ""

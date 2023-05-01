@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% load humanize %}
 {% load i18n %}
+{% load ratings_extras %}
 
-{% block title %} {{ video.last_snapshot.title_en }} - {{ video.channel.last_snapshot.name_en }} {% endblock %}
+{% block title %} {{ video.last_snapshot.title_en }} - {{ video.channel.last_snapshot.name_en }} {% endblock title %}
 {% block content %}
 
 <div class="flex flex-col">
@@ -55,7 +56,7 @@
                     </tr>
                     <tr>
                         <td class="font-bold text-gray-900 pr-4">{% translate "Rating" %}</td>
-                        <td class="text-gray-700">{{ video.average_rating }} from {{ video.ratings.count }} ratings</td>
+                        <td class="text-gray-700">{{ video.average_rating|custom_rating }} from {{ video.ratings.count }} ratings</td>
                     </tr>
                     <tr>
                         <td class="font-bold text-gray-900 pr-4">{% translate "Description" %}</td>
@@ -77,7 +78,7 @@
                         <p class="text-gray-700 text-lg font-bold mb-2">{{ rating.review_title | truncatechars:75 }}</p>
                         <p class="text-gray-700 text-base mb-2">{{ rating.review_body | truncatechars:250 | safe | linebreaks }}</p>
                         <div class="flex justify-between items-center text-gray-700 text-base mb-2 pt-4">
-                            <p class="mr-4">{% blocktranslate with rating=rating.rating %}Rating: <span class="font-bold">{{ rating }}</span>{% endblocktranslate %}</p>
+                            <p class="mr-4">{% blocktranslate with rating=rating.rating|custom_rating %}Rating: <span class="font-bold">{{ rating }}</span>{% endblocktranslate %}</p>
                             <p>{% blocktranslate with username=rating.user.username %}By: <span class="font-bold">{{ username }}</span>{% endblocktranslate %}</p>
                             <a href="#" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                                 {% translate "Read the review" %}
@@ -107,10 +108,6 @@
                 {% for tag in video.tags.all %}
                       <div class="flex items-center bg-gray-100 rounded-lg px-4 py-2 text-gray-700 mr-2 mb-2 hover:bg-gray-200">
                       <a href="{% url 'tags_overview' tag.name %}">{{ tag.name }}</a>
-                      <form action="#" method="POST">
-                          {% csrf_token %}
-                          <button type="submit" class="ml-2"><svg class="h-4 w-4 fill-current text-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M19 4h-4V2h-3v2H8V2H5v2H1a1 1 0 00-1 1v1h20V5a1 1 0 00-1-1zM6 4v-.6a1 1 0 011-1h6a1 1 0 011 1V4h2V3H4v1h2zm8 12a1 1 0 01-1 1H7a1 1 0 01-1-1v-1.6a1 1 0 01.4-.8l2-1.6a1 1 0 011.2 0l2 1.6a1 1 0 01.4.8V16zm-1-5a1 1 0 11-2 0 1 1 0 012 0zm-6 0a1 1 0 11-2 0 1 1 0 012 0z"/></svg></button>
-                      </form>
                       </div>
                 {% endfor %}
               </div>
@@ -147,4 +144,4 @@
     </div>
 </div>
 
-{% endblock %}
+{% endblock content %}

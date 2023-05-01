@@ -7,8 +7,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from ratings import enums
-from ratings.models.tags import UserTag
 from ratings.models.lists import VideoList, VideoListItem
+from ratings.models.tags import UserTag
 from ratings.models.videos import Video, VideoRating, VideoViewing
 from ratings.tags.serializers import UserTagSerializer
 from ratings.videos.serializers import VideoRatingSerializer

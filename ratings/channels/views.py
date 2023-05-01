@@ -1,13 +1,13 @@
 from django.core.paginator import Paginator
-from django.db.models import Max, F
+from django.db.models import F, Max
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ratings.models.videos import Video
 from ratings.models.channels import Channel
+from ratings.models.videos import Video
 
 
 class ChannelDetailsView(APIView):

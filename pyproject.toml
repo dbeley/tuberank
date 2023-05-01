@@ -28,3 +28,13 @@ mypy = "^1.2.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "django"
+combine_as_imports = true
+include_trailing_comma = true
+line_length = 120
+
+[tool.djlint]
+profile="django"
+ignore = "H031,H023,H006,H030,D018,H021,H029"

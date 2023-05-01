@@ -3,23 +3,23 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.db.models import Avg, Q
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import generic
-from django.http import HttpResponseRedirect
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ratings.models.videos import Video
-from ratings.models.channels import Channel
-from ratings.charts import charts
-from ratings.videos.serializers import VideoSerializer
 from ratings.channels.serializers import ChannelSerializer
+from ratings.charts import charts
+from ratings.models.channels import Channel
+from ratings.models.videos import Video
+from ratings.videos.serializers import VideoSerializer
 from ratings.yt_import import (
-    create_video_snapshot_from_url,
-    TooManyResultException,
     NoResultException,
+    TooManyResultException,
+    create_video_snapshot_from_url,
 )
 
 
@@ -69,7 +69,7 @@ class SearchView(APIView):
                 },
                 template_name="search/video_results.html",
             )
-        video_page = video_paginator.get_page(request.GET.get("page", 1))
+        video_page = video_paginator.get_page(1)
         channel_queryset = Channel.objects.filter(
             Q(snapshots__name_en__icontains=query)
         ).distinct()
@@ -84,8 +84,7 @@ class SearchView(APIView):
                 },
                 template_name="search/channel_results.html",
             )
-        channel_page = channel_paginator.get_page(request.GET.get("page_c", 1))
-        print(channel_page)
+        channel_page = channel_paginator.get_page(1)
         return Response(
             {
                 "channels": ChannelSerializer(channel_page, many=True).data,
@@ -128,7 +127,16 @@ class ProfileView(APIView):
             return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
         chart_data = charts.get_ratings_chart_for_user(user)
         paginator = Paginator(user.viewings.order_by("-date_creation"), 10)
-        page = paginator.get_page(request.GET.get("page", 1))
+        if page_query_param := request.GET.get("page"):
+            page = paginator.get_page(page_query_param)
+            return Response(
+                {
+                    "user": user,
+                    "viewings": page,
+                },
+                template_name="profile/profile_timeframe.html",
+            )
+        page = paginator.get_page(1)
         return Response(
             {
                 "user": user,
@@ -139,31 +147,11 @@ class ProfileView(APIView):
         )
 
 
-class PartialProfileView(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = "profile/profile_timeframe.html"
-
-    def get(self, request, username):
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
-            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
-        paginator = Paginator(user.viewings.order_by("-date_creation"), 10)
-        page = paginator.get_page(request.GET.get("page", 1))
-        return Response(
-            {
-                "user": user,
-                "viewings": page,
-            }
-        )
-
-
 class ImportVideoView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = "import_video.html"
 
     def get(self, request):
-        print(request.__dict__)
         return Response()
 
     def post(self, request):
