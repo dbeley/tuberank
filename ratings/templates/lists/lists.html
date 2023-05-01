@@ -3,10 +3,12 @@
 
 {% block content %}
 <div class="container mx-auto px-4">
+  {% if user.is_authenticated %}
   <div class="flex justify-between items-center mb-8">
     <h1 class="text-3xl font-bold">{% translate "My Lists" %}</h1>
     <button id="create-list-button" type="button" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">{% translate "Create List" %}</button>
   </div>
+  {% endif %}
 
   <!-- Modal for creating a new list -->
   <div id="create-list-modal" class="fixed inset-0 z-50 hidden overflow-y-auto" style="background-color: rgba(0,0,0,0.5);">
@@ -38,6 +40,7 @@
 
   <!-- Display user's lists -->
   <div class="px-2">
+    {% if user.is_authenticated %}
     {% if user_lists %}
         {% for list in user_lists %}
           <div class="w-full px-4 mb-4 flex justify-between items-center bg-gray-100 rounded-lg p-4">
@@ -57,6 +60,7 @@
         {% endfor %}
     {% else %}
       <p>{% translate "No lists found." %}</p>
+    {% endif %}
     {% endif %}
   </div>
   <h1 class="text-3xl font-bold my-4">{% translate "Popular Lists" %}</h1>

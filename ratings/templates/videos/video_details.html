@@ -98,18 +98,20 @@
         <div class="flex flex-wrap -mx-2 mt-4">
           <div class="px-2">
             <h2 class="text-xl font-bold mb-2">{% translate "Tags" %}</h2>
-            <form id="add-tag-form" action="{% url 'video_details' video.id %}" method="POST">
-              {% csrf_token %}
-              <div class="flex items-center">
-                <input type="name" name="name" placeholder="Enter a tag" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2" maxlength="50">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">{% translate "Add Tag" %}</button>
-              </div>
-            </form>
+              {% if user.is_authenticated %}
+                <form id="add-tag-form" action="{% url 'video_details' video.id %}" method="POST">
+                  {% csrf_token %}
+                  <div class="flex items-center">
+                    <input type="name" name="name" placeholder="Enter a tag" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2" maxlength="50">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">{% translate "Add Tag" %}</button>
+                  </div>
+                </form>
+              {% endif %}
             {% if video.tags.exists %}
               <div class="flex flex-wrap mt-2">
                 {% for tag in video.tags.all %}
                       <div class="flex items-center bg-gray-100 rounded-lg px-4 py-2 text-gray-700 mr-2 mb-2 hover:bg-gray-200">
-                      <a href="{% url 'tags_overview' tag.name %}">{{ tag.name }}</a>
+                      <a href="{% url 'tag_overview' tag.name %}">{{ tag.name }}</a>
                       </div>
                 {% endfor %}
               </div>
@@ -119,18 +121,20 @@
           </div>
           <div class="px-2">
             <h2 class="text-xl font-bold mb-2">{% translate "Lists" %}</h2>
-            <form action="{% url 'video_details' pk=video.id %}" method="POST">
-              {% csrf_token %}
-              <div class="flex items-center">
-                <select name="list_pk" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2">
-                  <option value="" disabled selected>{% translate "Select a list" %}</option>
-                  {% for list in user_lists.all %}
-                    <option value="{{ list.id }}">{{ list.name }}</option>
-                  {% endfor %}
-                </select>
-                <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">{% translate "Add to List" %}</button>
-              </div>
-            </form>
+              {% if user.is_authenticated %}
+                <form action="{% url 'video_details' pk=video.id %}" method="POST">
+                  {% csrf_token %}
+                  <div class="flex items-center">
+                    <select name="list_pk" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2">
+                      <option value="" disabled selected>{% translate "Select a list" %}</option>
+                      {% for list in user_lists.all %}
+                        <option value="{{ list.id }}">{{ list.name }}</option>
+                      {% endfor %}
+                    </select>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">{% translate "Add to List" %}</button>
+                  </div>
+                </form>
+              {% endif %}
             {% if lists.exists %}
               <div class="flex flex-wrap mt-2">
                 {% for list in lists.all %}

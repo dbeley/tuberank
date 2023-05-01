@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from ratings import enums
+from ratings.models import Video
 from ratings.models.tags import UserTag
 
 
@@ -33,3 +34,14 @@ class TagsView(APIView):
             .order_by("-num_videos")
         )
         return Response({"tags": tags})
+
+
+class UserTagDeleteItemView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "tags/tag_overview.html"
+
+    def get(self, request, tag_name, video_pk):
+        tag = get_object_or_404(UserTag, name=tag_name)
+        video = get_object_or_404(Video, pk=video_pk)
+        tag.video_set.remove(video)
+        return Response({"tag": tag, "videos": tag.video_set.all()})

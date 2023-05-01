@@ -40,7 +40,9 @@ class VideoListView(APIView):
     template_name = "lists/lists.html"
 
     def get(self, request):
-        user_lists = _get_user_lists(request.user)
+        user_lists = None
+        if request.user.is_authenticated:
+            user_lists = _get_user_lists(request.user)
         popular_lists = _get_popular_lists()[0:8]
         return Response({"user_lists": user_lists, "popular_lists": popular_lists})
 

@@ -24,11 +24,16 @@
         <a href="{% url 'video_rating' pk=video.id %}" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white text-sm font-bold py-2 px-4 rounded">
             {% translate "Rate this video" %}
         </a>
-        {% endif %}
         {% if list %}
         <a href="{% url 'list_delete_item' list_pk=list.id video_pk=video.id %}" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white text-sm font-bold py-2 px-4 rounded">
             {% translate "Delete item from list" %}
         </a>
+        {% endif %}
+        {% if tag %}
+        <a href="{% url 'tag_delete_item' tag_name=tag.name video_pk=video.id %}" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white text-sm font-bold py-2 px-4 rounded">
+            {% translate "Delete tag from list" %}
+        </a>
+        {% endif %}
         {% endif %}
     </div>
 </div>
