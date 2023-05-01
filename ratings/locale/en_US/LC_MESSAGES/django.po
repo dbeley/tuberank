@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-01 17:26+0200\n"
+"POT-Creation-Date: 2023-05-01 19:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,11 +21,11 @@ msgstr ""
 msgid "Charts"
 msgstr ""
 
-#: templates/base.html:23 templates/videos/video_details.html:119
+#: templates/base.html:23 templates/videos/video_details.html:123
 msgid "Lists"
 msgstr ""
 
-#: templates/base.html:24 templates/videos/video_details.html:98
+#: templates/base.html:24 templates/videos/video_details.html:100
 msgid "Tags"
 msgstr ""
 
@@ -37,31 +37,31 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: templates/base.html:31
+#: templates/base.html:32
 msgid "Import video"
 msgstr ""
 
-#: templates/base.html:33 templates/search/search.html:4
+#: templates/base.html:35 templates/search/search.html:4
 msgid "Search"
 msgstr ""
 
-#: templates/base.html:42
+#: templates/base.html:44
 msgid "Open user menu"
 msgstr ""
 
-#: templates/base.html:49
+#: templates/base.html:51
 msgid "Profile"
 msgstr ""
 
-#: templates/base.html:50
+#: templates/base.html:52
 msgid "Settings"
 msgstr ""
 
-#: templates/base.html:51
+#: templates/base.html:53
 msgid "Logout"
 msgstr ""
 
-#: templates/base.html:56
+#: templates/base.html:58
 msgid "Login"
 msgstr ""
 
@@ -96,7 +96,7 @@ msgid "Channel Rating: %(rating)s from %(count)s ratings"
 msgstr ""
 
 #: templates/channels/channel_details.html:50
-#: templates/channels/channel_list.html:38 templates/charts.html:45
+#: templates/channels/channel_list.html:38 templates/charts.html:46
 #: templates/profile/profile_timeframe.html:28
 #: templates/search/channel_results.html:18
 #: templates/search/video_results.html:22
@@ -113,7 +113,7 @@ msgid "Page %(page_number)s of %(total_page_number)s"
 msgstr ""
 
 #: templates/channels/channel_details.html:58
-#: templates/channels/channel_list.html:46 templates/charts.html:53
+#: templates/channels/channel_list.html:46 templates/charts.html:54
 #: templates/profile/profile_timeframe.html:36
 #: templates/search/channel_results.html:26
 #: templates/search/video_results.html:30
@@ -153,22 +153,26 @@ msgid "Most rated"
 msgstr ""
 
 #: templates/charts.html:18
-msgid "Newest"
-msgstr ""
-
-#: templates/charts.html:19
-msgid "Oldest"
-msgstr ""
-
-#: templates/charts.html:20
 msgid "Most viewed"
 msgstr ""
 
-#: templates/charts.html:22
+#: templates/charts.html:19
+msgid "Least viewed"
+msgstr ""
+
+#: templates/charts.html:20
+msgid "Newest"
+msgstr ""
+
+#: templates/charts.html:21
+msgid "Oldest"
+msgstr ""
+
+#: templates/charts.html:23
 msgid "Filter by tag:"
 msgstr ""
 
-#: templates/charts.html:24
+#: templates/charts.html:25
 msgid " -- Select an option -- "
 msgstr ""
 
@@ -251,71 +255,72 @@ msgstr ""
 msgid "Import URLs"
 msgstr ""
 
-#: templates/lists/list_details.html:10
+#: templates/lists/list_details.html:10 templates/lists/lists.html:56
+msgid "Delete"
+msgstr ""
+
+#: templates/lists/list_details.html:14 templates/videos/video_details.html:83
+#, python-format
+msgid "By: <span class=\"font-bold\">%(username)s</span>"
+msgstr ""
+
+#: templates/lists/list_details.html:18
 msgid "Videos in this list:"
 msgstr ""
 
-#: templates/lists/list_details.html:19
+#: templates/lists/list_details.html:27
 msgid "No videos in this list yet."
 msgstr ""
 
-#: templates/lists/lists.html:7
+#: templates/lists/lists.html:8
 msgid "My Lists"
 msgstr ""
 
-#: templates/lists/lists.html:8 templates/lists/lists.html:16
-#: templates/lists/lists.html:33
+#: templates/lists/lists.html:9 templates/lists/lists.html:18
+#: templates/lists/lists.html:35
 msgid "Create List"
 msgstr ""
 
-#: templates/lists/lists.html:23
+#: templates/lists/lists.html:25
 msgid "Name"
 msgstr ""
 
-#: templates/lists/lists.html:25
+#: templates/lists/lists.html:27
 msgid "Enter name"
 msgstr ""
 
-#: templates/lists/lists.html:29 templates/videos/video_details.html:62
+#: templates/lists/lists.html:31 templates/videos/video_details.html:62
 #, fuzzy
 #| msgid "homepage.description"
 msgid "Description"
 msgstr "ytvd is a platform where you can curate and rate YouTube videos."
 
-#: templates/lists/lists.html:31
+#: templates/lists/lists.html:33
 #, fuzzy
 #| msgid "homepage.description"
 msgid "Enter description"
 msgstr "ytvd is a platform where you can curate and rate YouTube videos."
 
-#: templates/lists/lists.html:46 templates/lists/lists.html:69
+#: templates/lists/lists.html:49 templates/lists/lists.html:73
 #: templates/tags/tags.html:13
 #, python-format
 msgid "%(count)s Videos"
 msgstr ""
 
-#: templates/lists/lists.html:50
-msgid "Edit"
-msgstr ""
-
-#: templates/lists/lists.html:53
-msgid "Delete"
-msgstr ""
-
-#: templates/lists/lists.html:59
+#: templates/lists/lists.html:62
 msgid "No lists found."
 msgstr ""
 
-#: templates/lists/lists.html:62
+#: templates/lists/lists.html:66
 msgid "Popular Lists"
 msgstr ""
 
-#: templates/lists/lists.html:70
+#: templates/lists/lists.html:74
 #, python-format
 msgid "by %(user)s"
 msgstr ""
 
-#: templates/lists/lists.html:75
+#: templates/lists/lists.html:79
 msgid "No popular lists yet."
 msgstr ""
 
@@ -391,7 +396,7 @@ msgstr ""
 msgid "All tags"
 msgstr ""
 
-#: templates/tags/tags.html:18 templates/videos/video_details.html:115
+#: templates/tags/tags.html:18 templates/videos/video_details.html:119
 msgid "No tags yet."
 msgstr ""
 
@@ -440,34 +445,37 @@ msgstr ""
 msgid "Rating: <span class=\"font-bold\">%(rating)s</span>"
 msgstr ""
 
-#: templates/videos/video_details.html:82
-#, python-format
-msgid "By: <span class=\"font-bold\">%(username)s</span>"
-msgstr ""
-
-#: templates/videos/video_details.html:84
+#: templates/videos/video_details.html:86
 msgid "Read the review"
 msgstr ""
 
-#: templates/videos/video_details.html:103
+#: templates/videos/video_details.html:106
 msgid "Add Tag"
 msgstr ""
 
-#: templates/videos/video_details.html:124
+#: templates/videos/video_details.html:129
 msgid "Select a list"
 msgstr ""
 
-#: templates/videos/video_details.html:129
+#: templates/videos/video_details.html:134
 msgid "Add to List"
 msgstr ""
 
-#: templates/videos/video_details.html:139
+#: templates/videos/video_details.html:145
 msgid "Not in any lists yet."
 msgstr ""
 
 #: templates/videos/video_item.html:15
 #, python-format
 msgid "Rating: %(rating)s from %(count)s ratings"
+msgstr ""
+
+#: templates/videos/video_item.html:29
+msgid "Delete item from list"
+msgstr ""
+
+#: templates/videos/video_item.html:34
+msgid "Delete tag from video"
 msgstr ""
 
 #: templates/videos/video_rating.html:9 templates/videos/video_viewing.html:8
