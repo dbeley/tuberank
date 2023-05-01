@@ -34,6 +34,6 @@ COPY --chown=python:python . .
 
 RUN SECRET_KEY=nothing poetry run python manage.py tailwind install --no-input;
 RUN SECRET_KEY=nothing poetry run python manage.py tailwind build --no-input;
-# RUN SECRET_KEY=nothing poetry run python manage.py collectstatic --no-input;
+RUN SECRET_KEY=nothing poetry run python manage.py collectstatic --no-input;
 
 EXPOSE 8000
