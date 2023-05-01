@@ -8,7 +8,7 @@
     {% if tags %}
       {% for tag in tags %}
         <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 px-4 mb-4">
-          <a href="{% url 'tags_overview' name=tag.name %}" class="block bg-gray-100 rounded-lg p-4 hover:bg-gray-200">
+          <a href="{% url 'tag_overview' name=tag.name %}" class="block bg-gray-100 rounded-lg p-4 hover:bg-gray-200">
             <h2 class="text-lg font-bold">{{ tag.name }}</h2>
             <p class="text-gray-600">{% blocktranslate with count=tag.video_set.count %}{{ count }} Videos{% endblocktranslate %}</p>
           </a>

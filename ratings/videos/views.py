@@ -92,13 +92,17 @@ class VideoDetailsView(APIView):
 
     def get(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
-        user_lists = _get_user_lists(request.user)
+        user_lists = None
+        if request.user.is_authenticated:
+            user_lists = _get_user_lists(request.user)
         lists = VideoList.objects.filter(videos__in=[pk])
         return Response({"video": video, "user_lists": user_lists, "lists": lists})
 
     def post(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
-        user_lists = _get_user_lists(request.user)
+        user_lists = None
+        if request.user.is_authenticated:
+            user_lists = _get_user_lists(request.user)
         if "name" in request.data:
             serializer = UserTagSerializer(data=request.data)
             if not serializer.is_valid():

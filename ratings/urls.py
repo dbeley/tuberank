@@ -71,7 +71,12 @@ urlpatterns = [
     path(
         "tags/<str:name>",
         ratings.tags.views.UserTagOverviewView.as_view(),
-        name="tags_overview",
+        name="tag_overview",
+    ),
+    path(
+        "tags/<str:tag_name>/delete/<int:video_pk>",
+        ratings.tags.views.UserTagDeleteItemView.as_view(),
+        name="tag_delete_item",
     ),
     path(
         "import-video",
