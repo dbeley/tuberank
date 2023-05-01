@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-01 19:01+0200\n"
+"POT-Creation-Date: 2023-05-01 19:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,7 +95,40 @@ msgstr "Statistiques ytvd"
 msgid "Channel Rating: %(rating)s from %(count)s ratings"
 msgstr "Note de la chaîne : %(rating)s d'après %(count)s notes"
 
-#: templates/channels/channel_details.html:50
+#: templates/channels/channel_details.html:43
+#: templates/channels/channel_list.html:11 templates/charts.html:14
+msgid "Sort by:"
+msgstr "Trier par :"
+
+#: templates/channels/channel_details.html:45 templates/charts.html:20
+msgid "Newest"
+msgstr "Les plus récentes"
+
+#: templates/channels/channel_details.html:46 templates/charts.html:21
+msgid "Oldest"
+msgstr "Les plus anciennes"
+
+#: templates/channels/channel_details.html:47 templates/charts.html:16
+msgid "Best rated"
+msgstr "Les mieux notées"
+
+#: templates/channels/channel_details.html:48 templates/charts.html:17
+msgid "Most rated"
+msgstr "Les plus notées"
+
+#: templates/channels/channel_details.html:49 templates/charts.html:18
+msgid "Most viewed"
+msgstr "Les plus vues"
+
+#: templates/channels/channel_details.html:50 templates/charts.html:19
+msgid "Least viewed"
+msgstr "Les moins vues"
+
+#: templates/channels/channel_details.html:53 templates/charts.html:31
+msgid "Filter"
+msgstr "Filtrer"
+
+#: templates/channels/channel_details.html:68
 #: templates/channels/channel_list.html:38 templates/charts.html:46
 #: templates/profile/profile_timeframe.html:28
 #: templates/search/channel_results.html:18
@@ -103,7 +136,7 @@ msgstr "Note de la chaîne : %(rating)s d'après %(count)s notes"
 msgid "Previous"
 msgstr "Précédent"
 
-#: templates/channels/channel_details.html:54
+#: templates/channels/channel_details.html:72
 #: templates/channels/channel_list.html:42
 #: templates/profile/profile_timeframe.html:32
 #: templates/search/channel_results.html:22
@@ -112,17 +145,13 @@ msgstr "Précédent"
 msgid "Page %(page_number)s of %(total_page_number)s"
 msgstr "Page %(page_number)s sur %(total_page_number)s"
 
-#: templates/channels/channel_details.html:58
+#: templates/channels/channel_details.html:76
 #: templates/channels/channel_list.html:46 templates/charts.html:54
 #: templates/profile/profile_timeframe.html:36
 #: templates/search/channel_results.html:26
 #: templates/search/video_results.html:30
 msgid "Next"
 msgstr "Suivant"
-
-#: templates/channels/channel_list.html:11 templates/charts.html:14
-msgid "Sort by:"
-msgstr "Trier par :"
 
 #: templates/channels/channel_list.html:13
 msgid "Most Subscribers"
@@ -143,30 +172,6 @@ msgstr "Les plus vues"
 #: templates/channels/channel_list.html:17
 msgid "Latest Indexed"
 msgstr "Dernières vidéos indexées"
-
-#: templates/charts.html:16
-msgid "Best rated"
-msgstr "Les mieux notées"
-
-#: templates/charts.html:17
-msgid "Most rated"
-msgstr "Les plus notées"
-
-#: templates/charts.html:18
-msgid "Most viewed"
-msgstr "Les plus vues"
-
-#: templates/charts.html:19
-msgid "Least viewed"
-msgstr "Les moins vues"
-
-#: templates/charts.html:20
-msgid "Newest"
-msgstr "Les plus récentes"
-
-#: templates/charts.html:21
-msgid "Oldest"
-msgstr "Les plus anciennes"
 
 #: templates/charts.html:23
 msgid "Filter by tag:"
@@ -243,7 +248,9 @@ msgstr "Importer une vidéo"
 
 #: templates/import_video.html:6
 msgid "import_video.description.1"
-msgstr "Cette page permet d'indexer des vidéos sur ytvd."
+msgstr ""
+"Les vidéos YouTube ne sont pour le moment pas automatiquement indexées par "
+"ytvd. Cette page permet d'ajouter manuellement des vidéos sur ytvd."
 
 #: templates/import_video.html:7
 msgid "import_video.description.2"
@@ -485,12 +492,12 @@ msgid "Channel:"
 msgstr "Chaîne :"
 
 #: templates/videos/video_rating.html:30
-msgid "Rating (0-10)"
-msgstr "Note (0-10)"
+msgid "Rating (0-5)"
+msgstr "Note (0-5)"
 
 #: templates/videos/video_rating.html:32
 msgid "Enter your rating"
-msgstr ""
+msgstr "Note"
 
 #: templates/videos/video_rating.html:36
 msgid "Review title (optional)"

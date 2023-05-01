@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator
-from django.db.models import F, Max
+from django.db.models import F, Max, Count, Avg
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from rest_framework.renderers import TemplateHTMLRenderer
@@ -16,7 +16,39 @@ class ChannelDetailsView(APIView):
 
     def get(self, request, pk):
         channel = get_object_or_404(Channel, pk=pk)
-        videos = Video.objects.filter(channel=channel)
+        videos = (
+            Video.objects.filter(channel=channel)
+            .annotate(
+                num_ratings=Count("ratings"),
+                avg_rating=Avg("ratings__rating"),
+                count_views=Max("snapshots__count_views"),
+            )
+            .order_by("-date_publication")
+        )
+        if sort_method := request.GET.get("sort_by"):
+            if sort_method not in [
+                "newest",
+                "oldest",
+                "views_count",
+                "views_count_desc",
+                "ratings_count",
+                "rating",
+            ]:
+                return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+            elif sort_method == "newest":
+                # default sorting mechanism
+                # videos = videos.order_by("-date_publication")
+                pass
+            elif sort_method == "oldest":
+                videos = videos.order_by("date_publication")
+            elif sort_method == "views_count":
+                videos = videos.order_by("-count_views")
+            elif sort_method == "views_count_desc":
+                videos = videos.order_by("count_views")
+            elif sort_method == "ratings_count":
+                videos = videos.order_by("-num_ratings")
+            elif sort_method == "rating":
+                videos = videos.order_by("-avg_rating")
         paginator = Paginator(videos, 8)
         page = paginator.get_page(request.GET.get("page", 1))
         return Response(
