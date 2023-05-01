@@ -85,7 +85,6 @@ class SearchView(APIView):
                 template_name="search/channel_results.html",
             )
         channel_page = channel_paginator.get_page(1)
-        print(channel_page)
         return Response(
             {
                 "channels": ChannelSerializer(channel_page, many=True).data,
@@ -153,7 +152,6 @@ class ImportVideoView(APIView):
     template_name = "import_video.html"
 
     def get(self, request):
-        print(request.__dict__)
         return Response()
 
     def post(self, request):
