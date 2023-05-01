@@ -2,7 +2,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from django.db.models import Avg, Q
+from django.db.models import Avg, Q, Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
@@ -29,9 +29,11 @@ class HomepageView(APIView):
 
     def get(self, request):
         latest_videos = Video.objects.order_by("-id")[0:4]
-        best_videos = Video.objects.annotate(
-            avg_rating=Avg("ratings__rating")
-        ).order_by("-avg_rating")[0:8]
+        videos = Video.objects.annotate(
+            avg_rating=Avg("ratings__rating"), num_ratings=Count("ratings")
+        )
+        best_videos = videos.order_by("-avg_rating")[0:8]
+        popular_videos = videos.order_by("-num_ratings")[0:4]
         number_of_users = User.objects.count()
         number_of_channels = Channel.objects.count()
         number_of_videos = Video.objects.count()
@@ -40,6 +42,7 @@ class HomepageView(APIView):
             {
                 "latest_videos": latest_videos,
                 "best_videos": best_videos,
+                "popular_videos": popular_videos,
                 "number_of_users": number_of_users,
                 "number_of_channels": number_of_channels,
                 "number_of_videos": number_of_videos,

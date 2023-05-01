@@ -15,6 +15,12 @@ poetry install
 python manage.py migrate --run-syncdb
 ```
 
+### Get all video urls of a YouTube channel
+
+```
+yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.youtube.com/watch?v=_'
+```
+
 ## TODO
 
 ### Homepage
@@ -48,7 +54,6 @@ python manage.py migrate --run-syncdb
 ### Channel list
 - Add channel rating feature
 - Display all channel reviews
-- Add sorting mechanism (alphabetical, chronological, popular, indexed, best rated, etc.)
 - Display duration
 
 ### URL mapping
