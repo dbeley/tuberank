@@ -15,6 +15,13 @@ poetry install
 python manage.py migrate --run-syncdb
 ```
 
+## Deployment
+
+- Add domain to `tuberank.settings.ALLOWED_HOSTS`
+- Add domain to `tuberank.settings.CSRF_TRUSTED_ORIGINS`
+- Check that `tuberank.settings.DEBUG` is `False`
+- Check that `tuberank.settings.DATABASES` default backend is `postgresql`
+
 ### Get all video urls of a YouTube channel
 
 ```
@@ -26,7 +33,7 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 ### Homepage
 - Add links to Github in footer
 - Add about page
-- Add 404 page
+- Remove copyright mention in footer
 
 ### Video detail page
 - Display categories
@@ -65,7 +72,3 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 - Feature to delete a tag from a video
 - Feature to delete a tag when no video attached to it
 - Feature to reorder a list
-
-### Deployment
-- Fix nodejs deployment for static tailwind files
-- Remove copyright mention in footer
