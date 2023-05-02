@@ -33,7 +33,8 @@ SECRET_KEY = get_secret(
 # DEBUG = True
 DEBUG = False
 
-ALLOWED_HOSTS = ["localhost", os.environ.get("DOMAIN")]
+ALLOWED_HOSTS = ["localhost"]
+CSRF_TRUSTED_ORIGINS = []
 
 
 # Application definition

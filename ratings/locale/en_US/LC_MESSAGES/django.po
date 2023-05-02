@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-02 12:50+0200\n"
+"POT-Creation-Date: 2023-05-03 06:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,51 +17,101 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: templates/base.html:20
+#: templates/400.html:4
+msgid "Validation Error"
+msgstr ""
+
+#: templates/400.html:9 templates/403.html:9 templates/404.html:9
+#: templates/500.html:9
+msgid "Oops!"
+msgstr ""
+
+#: templates/400.html:10
+msgid "There was an error with your request."
+msgstr ""
+
+#: templates/400.html:11
+msgid "Please check the information you submitted and try again."
+msgstr ""
+
+#: templates/400.html:12 templates/403.html:11 templates/404.html:11
+#: templates/500.html:12
+msgid "Go to Home"
+msgstr ""
+
+#: templates/403.html:4
+msgid "Forbidden"
+msgstr ""
+
+#: templates/403.html:10
+msgid "You do not have permission to access this page."
+msgstr ""
+
+#: templates/404.html:4
+msgid "Page Not Found"
+msgstr ""
+
+#: templates/404.html:10
+msgid "We couldn't find the page you were looking for."
+msgstr ""
+
+#: templates/500.html:4
+msgid "Server Error"
+msgstr ""
+
+#: templates/500.html:10
+msgid "Something went wrong on our end."
+msgstr ""
+
+#: templates/500.html:11
+msgid "Please try again later."
+msgstr ""
+
+#: templates/base.html:21
 msgid "Charts"
 msgstr ""
 
-#: templates/base.html:21 templates/videos/video_details.html:123
+#: templates/base.html:22 templates/videos/video_details.html:123
 msgid "Lists"
 msgstr ""
 
-#: templates/base.html:22 templates/videos/video_details.html:100
+#: templates/base.html:23 templates/videos/video_details.html:100
 msgid "Tags"
 msgstr ""
 
-#: templates/base.html:23 templates/channels/channel_list.html:8
+#: templates/base.html:24 templates/channels/channel_list.html:8
 msgid "Channels"
 msgstr ""
 
-#: templates/base.html:24
+#: templates/base.html:25
 msgid "About"
 msgstr ""
 
-#: templates/base.html:30
+#: templates/base.html:31
 msgid "Import video"
 msgstr ""
 
-#: templates/base.html:33 templates/search/search.html:4
+#: templates/base.html:34 templates/search/search.html:4
 msgid "Search"
 msgstr ""
 
-#: templates/base.html:42
+#: templates/base.html:43
 msgid "Open user menu"
 msgstr ""
 
-#: templates/base.html:49
+#: templates/base.html:50
 msgid "Profile"
 msgstr ""
 
-#: templates/base.html:50
+#: templates/base.html:51
 msgid "Settings"
 msgstr ""
 
-#: templates/base.html:51
+#: templates/base.html:52
 msgid "Logout"
 msgstr ""
 
-#: templates/base.html:56
+#: templates/base.html:57
 msgid "Login"
 msgstr ""
 
@@ -356,6 +406,7 @@ msgid "Recently Watched Videos"
 msgstr ""
 
 #: templates/registration/login.html:4 templates/registration/login.html:9
+#: templates/registration/login.html:21
 msgid "Log In"
 msgstr ""
 
