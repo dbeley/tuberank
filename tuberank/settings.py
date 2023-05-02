@@ -30,16 +30,16 @@ SECRET_KEY = get_secret(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = get_secret(
-    base_dir=get_base_dir(), config_file="secret.ini", key_name="DJANGO_DEBUG"
-)
+# DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", os.environ.get("DOMAIN")]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "whitenoise.runserver_nostatic",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -56,6 +56,7 @@ INTERNAL_IPS = ["127.0.0.1"]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -148,7 +149,7 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
-STATIC_ROOT = "/var/www/tuberank.org/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -162,3 +163,9 @@ REST_FRAMEWORK = {
 
 LOGOUT_REDIRECT_URL = "/"
 LOGIN_REDIRECT_URL = "/"
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
