@@ -1,5 +1,5 @@
 """
-WSGI config for ytvd project.
+WSGI config for tuberank project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ytvd.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tuberank.settings")
 
 application = get_wsgi_application()

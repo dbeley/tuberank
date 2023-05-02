@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "ytvd"
+name = "tuberank"
 version = "0.1.0"
 description = ""
 authors = ["dbeley <6568955+dbeley@users.noreply.github.com>"]

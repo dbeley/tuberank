@@ -16,7 +16,7 @@ services:
       - POSTGRES_PASSWORD=$POSTGRES_DB_PASSWORD
   web:
     <<: *default-app
-    command: bash -c "poetry run python manage.py migrate && poetry run gunicorn ytvd.wsgi --bind 0.0.0.0:8000 --timeout 600"
+    command: bash -c "poetry run python manage.py migrate && poetry run gunicorn tuberank.wsgi --bind 0.0.0.0:8000 --timeout 600"
     ports:
       - "8000:8000"
     environment:
@@ -26,10 +26,10 @@ services:
       - DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.ytvd.entrypoints=secure"
-      - "traefik.http.routers.ytvd.rule=Host(`ytvd.$DOMAIN`)"
-      - "traefik.http.services.ytvd.loadbalancer.server.port=8000"
-      - "traefik.http.routers.ytvd.tls.certresolver=le"
+      - "traefik.http.routers.tuberank.entrypoints=secure"
+      - "traefik.http.routers.tuberank.rule=Host(`tuberank.$DOMAIN`)"
+      - "traefik.http.services.tuberank.loadbalancer.server.port=8000"
+      - "traefik.http.routers.tuberank.tls.certresolver=le"
         # tailwind:
         #   <<: *default-app
         #   command: bash -c "poetry run python manage.py tailwind start"

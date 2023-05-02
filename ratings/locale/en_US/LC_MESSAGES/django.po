@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-01 19:41+0200\n"
+"POT-Creation-Date: 2023-05-02 12:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,51 +17,51 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: templates/base.html:22
+#: templates/base.html:20
 msgid "Charts"
 msgstr ""
 
-#: templates/base.html:23 templates/videos/video_details.html:123
+#: templates/base.html:21 templates/videos/video_details.html:123
 msgid "Lists"
 msgstr ""
 
-#: templates/base.html:24 templates/videos/video_details.html:100
+#: templates/base.html:22 templates/videos/video_details.html:100
 msgid "Tags"
 msgstr ""
 
-#: templates/base.html:25 templates/channels/channel_list.html:8
+#: templates/base.html:23 templates/channels/channel_list.html:8
 msgid "Channels"
 msgstr ""
 
-#: templates/base.html:26
+#: templates/base.html:24
 msgid "About"
 msgstr ""
 
-#: templates/base.html:32
+#: templates/base.html:30
 msgid "Import video"
 msgstr ""
 
-#: templates/base.html:35 templates/search/search.html:4
+#: templates/base.html:33 templates/search/search.html:4
 msgid "Search"
 msgstr ""
 
-#: templates/base.html:44
+#: templates/base.html:42
 msgid "Open user menu"
 msgstr ""
 
-#: templates/base.html:51
+#: templates/base.html:49
 msgid "Profile"
 msgstr ""
 
-#: templates/base.html:52
+#: templates/base.html:50
 msgid "Settings"
 msgstr ""
 
-#: templates/base.html:53
+#: templates/base.html:51
 msgid "Logout"
 msgstr ""
 
-#: templates/base.html:58
+#: templates/base.html:56
 msgid "Login"
 msgstr ""
 
@@ -87,7 +87,7 @@ msgid "Created on %(date)s"
 msgstr ""
 
 #: templates/channels/channel_details.html:34
-msgid "ytvd Stats"
+msgid "TubeRank Stats"
 msgstr ""
 
 #: templates/channels/channel_details.html:36
@@ -186,12 +186,12 @@ msgid "Home"
 msgstr ""
 
 #: templates/homepage.html:10
-msgid "Welcome to ytvd!"
+msgid "Welcome to TubeRank!"
 msgstr ""
 
 #: templates/homepage.html:11
 msgid "homepage.description"
-msgstr "ytvd is a platform where you can curate and rate YouTube videos."
+msgstr "TubeRank is a platform where you can curate and rate YouTube videos."
 
 #: templates/homepage.html:14
 msgid "Last Indexed Videos"
@@ -211,7 +211,7 @@ msgstr ""
 
 #: templates/homepage.html:41
 #, python-format
-msgid "%(number_of_users)s users have signed up for ytvd"
+msgid "%(number_of_users)s users have signed up for TubeRank"
 msgstr ""
 
 #: templates/homepage.html:48
@@ -224,7 +224,7 @@ msgstr ""
 
 #: templates/homepage.html:52
 #, python-format
-msgid "ytvd has catalogued %(number_of_channels)s channels"
+msgid "TubeRank has catalogued %(number_of_channels)s channels"
 msgstr ""
 
 #: templates/homepage.html:59
@@ -237,11 +237,11 @@ msgstr ""
 
 #: templates/homepage.html:63
 #, python-format
-msgid "ytvd has catalogued %(number_of_videos)s videos"
+msgid "TubeRank has catalogued %(number_of_videos)s videos"
 msgstr ""
 
 #: templates/homepage.html:69
-msgid "Popular Videos on ytvd"
+msgid "Popular Videos on TubeRank"
 msgstr ""
 
 #: templates/import_video.html:5
@@ -251,8 +251,8 @@ msgstr ""
 #: templates/import_video.html:6
 msgid "import_video.description.1"
 msgstr ""
-"YouTube videos are not automatically indexed by ytvd. This page allows the "
-"manually indexation of videos into ytvd."
+"YouTube videos are not automatically indexed by TubeRank. This page allows "
+"the manually indexation of videos into TubeRank."
 
 #: templates/import_video.html:7
 msgid "import_video.description.2"
