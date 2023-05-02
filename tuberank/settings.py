@@ -50,12 +50,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "ratings.apps.RatingsConfig",
     "django.contrib.humanize",
-    "tailwind",
-    "theme",
-    "django_browser_reload",
 ]
-
-TAILWIND_APP_NAME = "theme"
 
 INTERNAL_IPS = ["127.0.0.1"]
 
@@ -67,7 +62,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
     "django.middleware.locale.LocaleMiddleware",
 ]
 
@@ -150,7 +144,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type

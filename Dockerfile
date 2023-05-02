@@ -27,9 +27,6 @@ RUN poetry install --without=dev
 
 COPY . .
 
-# RUN SECRET_KEY=nothing poetry run python manage.py tailwind install --no-input;
-# RUN SECRET_KEY=nothing poetry run python manage.py tailwind build --no-input;
-# RUN SECRET_KEY=nothing poetry run python manage.py collectstatic --no-input;
 RUN poetry run django-admin compilemessages
 
 EXPOSE 8000
