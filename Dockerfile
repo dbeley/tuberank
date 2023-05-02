@@ -24,6 +24,7 @@ RUN apt-get update \
   && apt-get clean
 
 COPY package*.json ./
+COPY input.css ./
 RUN npm install -D tailwindcss
 RUN npm run tailwind-build
 

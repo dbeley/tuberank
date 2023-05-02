@@ -13,6 +13,7 @@ in pkgs.mkShell rec {
     ruff
     gettext
     postgresql
+    libpqxx
   ];
 
 }

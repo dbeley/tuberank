@@ -26,6 +26,7 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 ### Homepage
 - Add links to Github in footer
 - Add about page
+- Add 404 page
 
 ### Video detail page
 - Display categories
