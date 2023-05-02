@@ -60,6 +60,11 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 - Add slug for videos, channels
 
 ### Tag / Lists
+- Better display of tags and lists (critical feature)
 - Feature to delete a tag from a video
 - Feature to delete a tag when no video attached to it
 - Feature to reorder a list
+
+### Deployment
+- Fix nodejs deployment for static tailwind files
+- Remove copyright mention in footer
