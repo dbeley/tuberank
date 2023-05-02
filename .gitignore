@@ -10,3 +10,4 @@ temp/
 *.mo
 staticfiles/
 static/
+node_modules/
