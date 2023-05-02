@@ -65,7 +65,7 @@ msgstr "Veuillez réessayer plus tard."
 
 #: templates/base.html:21
 msgid "Charts"
-msgstr "Classements"
+msgstr "Tops"
 
 #: templates/base.html:22 templates/videos/video_details.html:123
 msgid "Lists"
