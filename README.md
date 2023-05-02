@@ -1,4 +1,4 @@
-# ytvd (YouTube Video Database)
+# TubeRank
 
 A community website to rate and discover youtube videos.
 
