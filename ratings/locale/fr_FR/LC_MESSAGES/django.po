@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-02 23:32+0200\n"
+"POT-Creation-Date: 2023-05-03 06:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,49 +17,53 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: templates/400.html:8 templates/403.html:8 templates/404.html:8
-#: templates/500.html:8
+#: templates/400.html:4
+msgid "Validation Error"
+msgstr "Erreur de validation"
+
+#: templates/400.html:9 templates/403.html:9 templates/404.html:9
+#: templates/500.html:9
 msgid "Oops!"
 msgstr "Oups !"
 
-#: templates/400.html:9
+#: templates/400.html:10
 msgid "There was an error with your request."
 msgstr "Il y a eu une erreur avec votre requête."
 
-#: templates/400.html:10
+#: templates/400.html:11
 msgid "Please check the information you submitted and try again."
 msgstr "Veuillez réessayer."
 
-#: templates/400.html:11 templates/403.html:10 templates/404.html:10
-#: templates/500.html:11
+#: templates/400.html:12 templates/403.html:11 templates/404.html:11
+#: templates/500.html:12
 msgid "Go to Home"
 msgstr "Retourner à la page d'accueil."
 
-#: templates/403.html:3
+#: templates/403.html:4
 msgid "Forbidden"
 msgstr "Interdit"
 
-#: templates/403.html:9
+#: templates/403.html:10
 msgid "You do not have permission to access this page."
 msgstr "Vous n'avez pas l'autorisation d'accéder à cette page."
 
-#: templates/404.html:3
+#: templates/404.html:4
 msgid "Page Not Found"
 msgstr "Page non trouvée"
 
-#: templates/404.html:9
+#: templates/404.html:10
 msgid "We couldn't find the page you were looking for."
 msgstr "Nous n'avons pas pu trouver cette page."
 
-#: templates/500.html:3
+#: templates/500.html:4
 msgid "Server Error"
 msgstr "Erreur du serveur"
 
-#: templates/500.html:9
+#: templates/500.html:10
 msgid "Something went wrong on our end."
 msgstr "Quelque chose s'est mal passé."
 
-#: templates/500.html:10
+#: templates/500.html:11
 msgid "Please try again later."
 msgstr "Veuillez réessayer plus tard."
 
