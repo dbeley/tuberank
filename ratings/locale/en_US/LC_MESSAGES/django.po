@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-03 06:22+0200\n"
+"POT-Creation-Date: 2023-05-03 06:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -406,6 +406,7 @@ msgid "Recently Watched Videos"
 msgstr ""
 
 #: templates/registration/login.html:4 templates/registration/login.html:9
+#: templates/registration/login.html:21
 msgid "Log In"
 msgstr ""
 
