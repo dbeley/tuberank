@@ -11,3 +11,4 @@ temp/
 staticfiles/
 static/
 node_modules/
+postgres-data/
