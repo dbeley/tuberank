@@ -54,34 +54,33 @@
                 </table>
             </div>
         <table class="table-auto">
-                <tbody>
-                    <tr>
-                        <td class="font-bold text-gray-900 pr-4">{% translate "Views" %}</td>
-                        <td class="text-gray-700">{{ video.last_snapshot.count_views|intcomma }}</td>
-                    </tr>
-                    <tr>
-                        <td class="font-bold text-gray-900 pr-4">{% translate "Likes" %}</td>
-                        <td class="text-gray-700">{{ video.last_snapshot.count_likes|intcomma }}</td>
-                    </tr>
-                    <tr>
-                        <td class="font-bold text-gray-900 pr-4">{% translate "Comments" %}</td>
-                        <td class="text-gray-700">{{ video.last_snapshot.count_comments|intcomma }}</td>
-                    </tr>
-                    <tr>
-                        <td class="font-bold text-gray-900 pr-4">{% translate "Uploaded" %}</td>
-                        <td class="text-gray-700">{{ video.date_publication }}</td>
-                    </tr>
-                    <tr>
-                        <td class="font-bold text-gray-900 pr-4">{% translate "Description" %}</td>
-                        <td class="text-gray-700">{{ video.last_snapshot.description | safe | linebreaks }}</td>
-                    </tr>
-                    <tr>
-                        <td class="font-bold text-gray-900 pr-4">{% translate "Duration" %}</td>
-                        <td class="text-gray-700">{{ video.last_snapshot.duration|duration }}</td>
-                    </tr>
-                </tbody>
-            </table>
-
+            <tbody>
+                <tr>
+                    <td class="font-bold text-gray-900 pr-4">{% translate "Views" %}</td>
+                    <td class="text-gray-700">{{ video.last_snapshot.count_views|intcomma }}</td>
+                </tr>
+                <tr>
+                    <td class="font-bold text-gray-900 pr-4">{% translate "Likes" %}</td>
+                    <td class="text-gray-700">{{ video.last_snapshot.count_likes|intcomma }}</td>
+                </tr>
+                <tr>
+                    <td class="font-bold text-gray-900 pr-4">{% translate "Comments" %}</td>
+                    <td class="text-gray-700">{{ video.last_snapshot.count_comments|intcomma }}</td>
+                </tr>
+                <tr>
+                    <td class="font-bold text-gray-900 pr-4">{% translate "Uploaded" %}</td>
+                    <td class="text-gray-700">{{ video.date_publication }}</td>
+                </tr>
+                <tr>
+                    <td class="font-bold text-gray-900 pr-4">{% translate "Description" %}</td>
+                    <td class="text-gray-700">{{ video.last_snapshot.description | safe | linebreaks }}</td>
+                </tr>
+                <tr>
+                    <td class="font-bold text-gray-900 pr-4">{% translate "Duration" %}</td>
+                    <td class="text-gray-700">{{ video.last_snapshot.duration|duration }}</td>
+                </tr>
+            </tbody>
+        </table>
         </div>
     </div>
     {% if video.ratings.exists %}

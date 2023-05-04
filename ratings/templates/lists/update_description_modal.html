@@ -1,0 +1,27 @@
+{% load i18n %}
+<div id="update-description-modal{{ index }}" class="fixed inset-0 z-50 hidden overflow-y-auto" style="background-color: rgba(0,0,0,0.5);">
+<div class="flex items-center justify-center min-h-screen px-4">
+  <div class="bg-white rounded-lg overflow-hidden shadow-xl sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline" id="edit-modal{{ index }}">
+    <div class="bg-gray-100 text-gray-900 font-bold text-lg p-4 border-b">
+      {% translate "Update Description" %}
+      <button id="close-modal-button{{ index }}" type="button" class="float-right">&times;</button>
+    </div>
+    <form id="edit-form{{ index }}" method="POST" class="p-4">
+      {% csrf_token %}
+      <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="description">
+          {% translate "Description" %}
+        </label>
+        <div class="flex justify-end">
+            <textarea name="description" rows="3" id="item-description{{ index }}" class="block text-gray-700 border rounded-md shadow-sm focus:border-indigo-500 flex-grow" placeholder="{% blocktranslate %}Enter description{% endblocktranslate %}" maxlength="5000">
+              {{ serializer.data.description }}
+            </textarea>
+        </div>
+      </div>
+      <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>

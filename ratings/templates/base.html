@@ -1,6 +1,6 @@
+<!DOCTYPE html>
 {% load static %}
 {% load i18n %}
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -87,6 +87,13 @@
       </select>
       <input class="ml-2" type="submit" value="Go">
     </form>
+    <div class="flex space-x-4">
+      <a href="{% url 'charts' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Charts" %}</a>
+      <a href="{% url 'lists' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Lists" %}</a>
+      <a href="{% url 'tags' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Tags" %}</a>
+      <a href="{% url 'channel_list' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Channels" %}</a>
+      <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "About" %}</a>
+    </div>
   </div>
 </footer>
   <script src="https://unpkg.com/htmx.org@1.9.1"></script>

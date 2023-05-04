@@ -10,10 +10,10 @@
   </div>
   {% endif %}
 
-  <!-- Modal for creating a new list -->
+  <!-- Modal for updating the list description -->
   <div id="create-list-modal" class="fixed inset-0 z-50 hidden overflow-y-auto" style="background-color: rgba(0,0,0,0.5);">
     <div class="flex items-center justify-center min-h-screen px-4">
-      <div class="bg-white rounded-lg overflow-hidden shadow-xl w-full md:max-w-md mx-auto">
+      <div class="bg-white rounded-lg overflow-hidden shadow-xl sm:max-w-lg sm:w-full">
         <div class="bg-gray-100 text-gray-900 font-bold text-lg p-4 border-b">
           {% translate "Create List" %}
           <button id="close-modal-button" type="button" class="float-right">&times;</button>
@@ -24,13 +24,13 @@
             <label class="block text-gray-700 font-bold mb-2" for="name">
               {% translate "Name" %}
             </label>
-            <input name="name" type="text" class="appearance-none border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="{% blocktranslate %}Enter name{% endblocktranslate %}" maxlength="200" required>
+            <input name="name" type="text" class="border rounded-lg py-2 px-3 text-gray-700 leading-tight w-full" placeholder="{% blocktranslate %}Enter name{% endblocktranslate %}" maxlength="200" required>
           </div>
           <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2" for="description">
               {% translate "Description" %}
             </label>
-            <textarea name="description" class="appearance-none border rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="3" placeholder="{% blocktranslate %}Enter description{% endblocktranslate %}" maxlength="5000"></textarea>
+            <textarea name="description" class="border rounded-lg py-2 px-3 text-gray-700 leading-tight w-full" rows="3" placeholder="{% blocktranslate %}Enter description{% endblocktranslate %}" maxlength="5000"></textarea>
           </div>
           <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">{% translate "Create List" %}</button>
         </form>
@@ -82,7 +82,6 @@
 </div>
 
   <script>
-  const createListForm = document.getElementById('create-list-form');
   const createListModal = document.getElementById('create-list-modal');
   const openCreateListModalButton = document.getElementById('create-list-button');
   const closeCreateListModalButton = document.getElementById('close-modal-button');
