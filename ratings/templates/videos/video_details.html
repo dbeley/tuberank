@@ -20,7 +20,7 @@
     </div>
     <h1 class="text-4xl font-bold mb-8">{{ video.last_snapshot.title_en }}</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="bg-white shadow-md rounded-lg p-4" >
+        <div class="bg-white shadow-md rounded-lg p-4">
         <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}" class="h-80 w-full object-cover mr-4">
             <div class="flex justify-start pt-4">
                 <a href="{{ video.url }}" target="_blank" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -37,12 +37,24 @@
             </div>
         </div>
         <div class="bg-white shadow-md rounded-lg p-4" >
-        <table class="table-auto">
-                <tbody>
+            <div class="text-lg bg-gray-100 rounded-lg p-4 mb-4">
+                <table class="table-auto">
+                    <tbody>
+                    <tr>
+                        <td class="font-bold text-gray-900 pr-4">{% translate "Rating" %}</td>
+                        <td class="text-gray-700">{% blocktranslate with rating=video.average_rating|custom_rating count=video.ratings.count %}{{ rating }} from {{ count }} ratings{% endblocktranslate %}</td>
+                    </tr>
                     <tr>
                         <td class="font-bold text-gray-900 pr-4">{% translate "Channel" %}</td>
-                        <td class="text-gray-700">{{ video.channel.last_snapshot.name_en }}</td>
+                        <td class="text-gray-700">
+                            <a href="{% url 'channel_details' pk=video.channel.id %}" class="block font-bold">{{ video.channel.last_snapshot.name_en }}</a>
+                        </td>
                     </tr>
+                    </tbody>
+                </table>
+            </div>
+        <table class="table-auto">
+                <tbody>
                     <tr>
                         <td class="font-bold text-gray-900 pr-4">{% translate "Views" %}</td>
                         <td class="text-gray-700">{{ video.last_snapshot.count_views|intcomma }}</td>
@@ -60,12 +72,12 @@
                         <td class="text-gray-700">{{ video.date_publication }}</td>
                     </tr>
                     <tr>
-                        <td class="font-bold text-gray-900 pr-4">{% translate "Rating" %}</td>
-                        <td class="text-gray-700">{{ video.average_rating|custom_rating }} from {{ video.ratings.count }} ratings</td>
-                    </tr>
-                    <tr>
                         <td class="font-bold text-gray-900 pr-4">{% translate "Description" %}</td>
                         <td class="text-gray-700">{{ video.last_snapshot.description | safe | linebreaks }}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold text-gray-900 pr-4">{% translate "Duration" %}</td>
+                        <td class="text-gray-700">{{ video.last_snapshot.duration|duration }}</td>
                     </tr>
                 </tbody>
             </table>
