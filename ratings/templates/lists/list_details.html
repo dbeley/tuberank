@@ -15,14 +15,32 @@
     <p class="text-lg mb-6 w-full">{{ list.description }}</p>
 
   {% if list.videos.exists %}
-    <h2>{% translate "Videos in this list:" %}</h2>
-    <ul id="video-list">
-      {% for video in list.videos.all %}
-        <li class="flex-justify-right">
-          {% include "videos/video_item.html" %}
-        </li>
-      {% endfor %}
-    </ul>
+      <h2>{% translate "Videos in this list:" %}</h2>
+      <div class="flex flex-col gap-8">
+          {% for video in list.videos.all %}
+              <div class="border border-gray-200 rounded-md shadow-md p-4">
+                  <div class="flex items-center gap-4">
+                      <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}" class="w-24 h-16 object-cover rounded">
+                      <div>
+                          <h3 class="font-bold text-gray-900 text-lg">{{ video.last_snapshot.title_en }}</h3>
+                          <p class="text-gray-700">{{ video.channel.last_snapshot.name_en }}</p>
+                      </div>
+                  </div>
+                  <p class="text-gray-700 mt-2">{{ video.last_snapshot.description }}</p>
+                  <div class="flex items-center gap-4 mt-4">
+                      <span class="text-gray-700 font-bold">#{{ forloop.counter }}</span>
+                      <div class="flex items-center gap-2">
+                              <svg class="w-6 h-6 text-yellow-400 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                  <path d="M10 13.333l-4.72 2.563 1.134-5.27-3.586-3.11 4.718-.408L10 3.333l1.754 4.014 4.718.408-3.586 3.11 1.134 5.27z" />
+                              </svg>
+                              <svg class="w-6 h-6 text-gray-400 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                  <path d="M10 13.333l-4.72 2.563 1.134-5.27-3.586-3.11 4.718-.408L10 3.333l1.754 4.014 4.718.408-3.586 3.11 1.134 5.27z" />
+                              </svg>
+                      </div>
+                  </div>
+              </div>
+          {% endfor %}
+      </div>
   {% else %}
     <p>{% translate "No videos in this list yet." %}</p>
   {% endif %}
