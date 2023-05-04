@@ -83,7 +83,6 @@ def create_channel_snapshot(channel_id: str) -> None:
         channel.save()
 
     channel = Channel.objects.get(yt_id=channel_id)
-
     snapshot = ChannelSnapshot(
         name_en=data.title,
         channel=channel,
@@ -177,28 +176,27 @@ def create_video_snapshot(video_id: str) -> None:
     """
     data = _get_video_data_class_from_id(video_id)
 
-    if not Channel.objects.filter(yt_id=data.channel_id).exists():
-        logger.warning("Channel %s not found. Creating it.", data.channel_id)
-        create_channel_snapshot(data.channel_id)
+    create_channel_snapshot(data.channel_id)
     channel = Channel.objects.get(yt_id=data.channel_id)
+    
+    if channel:
+        if not Video.objects.filter(yt_id=video_id).exists():
+            logger.warning("Video %s not found. Creating it.", video_id)
+            video = Video(
+                yt_id=data.yt_id, date_publication=data.date_publication, channel=channel
+            )
+            video.save()
+        video = Video.objects.get(yt_id=video_id)
 
-    if not Video.objects.filter(yt_id=video_id).exists():
-        logger.warning("Video %s not found. Creating it.", video_id)
-        video = Video(
-            yt_id=data.yt_id, date_publication=data.date_publication, channel=channel
+        snapshot = VideoSnapshot(
+            title_en=data.title,
+            video=video,
+            count_views=data.count_views,
+            count_likes=data.count_likes,
+            count_comments=data.count_comments,
+            description=data.description,
+            thumbnail_url=data.thumbnail_url,
+            category=data.category_id,
+            duration=data.duration,
         )
-        video.save()
-    video = Video.objects.get(yt_id=video_id)
-
-    snapshot = VideoSnapshot(
-        title_en=data.title,
-        video=video,
-        count_views=data.count_views,
-        count_likes=data.count_likes,
-        count_comments=data.count_comments,
-        description=data.description,
-        thumbnail_url=data.thumbnail_url,
-        category=data.category_id,
-        duration=data.duration,
-    )
-    snapshot.save()
+        snapshot.save()
