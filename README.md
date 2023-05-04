@@ -45,10 +45,7 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 
 ### Video detail page
 - Display categories
-- Display number of ratings + rating in a better way (top of the page, stars, separate box)
-- Display duration
 - Display related videos with the same tags
-- Display "list this video is in" with best lists where the video is
 
 ### Video list page
 - Add sorting mechanism
