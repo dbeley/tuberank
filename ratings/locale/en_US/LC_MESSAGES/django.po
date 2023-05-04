@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-03 06:45+0200\n"
+"POT-Creation-Date: 2023-05-04 20:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -308,11 +308,18 @@ msgstr ""
 msgid "import_video.description.2"
 msgstr "The number of new indexed videos is limited to 10,000 per day."
 
-#: templates/import_video.html:11
+#: templates/import_video.html:8
+msgid "import_video.description.3"
+msgstr "The supported URL formats are the following:<br>"
+"- https://www.youtube.com/watch?v={VIDEO_ID}<br>"
+"- https://m.youtube.com/watch?v={VIDEO_ID}<br>"
+"- https://www.youtube.com/watch?v={VIDEO_ID}&pp={TRACKING_PARAM}<br>"
+
+#: templates/import_video.html:12
 msgid "YouTube URLs (one by line):"
 msgstr ""
 
-#: templates/import_video.html:16
+#: templates/import_video.html:17
 msgid "Import URLs"
 msgstr ""
 
