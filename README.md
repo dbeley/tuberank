@@ -2,6 +2,13 @@
 
 A community website to rate and discover youtube videos.
 
+## Dependencies
+
+- python
+- nodejs
+- npm
+- gettext
+
 ## Development
 
 ```
@@ -12,6 +19,8 @@ poetry install
 ```
 
 ```
+npm install -D tailwindcss
+npm run tailwind-watch
 python manage.py migrate --run-syncdb
 ```
 

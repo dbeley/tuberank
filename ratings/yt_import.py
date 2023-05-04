@@ -165,7 +165,13 @@ def _get_thumbnail_data(data: dict) -> str:
 
 
 def create_video_snapshot_from_url(url: str) -> None:
-    video_id = url.strip().split("https://www.youtube.com/watch?v=")[-1]
+    """
+    Supported urls:
+    - normal URL: https://www.youtube.com/watch?v=$VIDEO_ID
+    - mobile URL: https://m.youtube.com/watch?v=$VIDEO_ID
+    - search result URL: https://www.youtube.com/watch?v=$VIDEO_ID&pp=$TRACKING_QUERY_PARAM
+    """
+    video_id = url.strip().split("youtube.com/watch?v=")[-1].rsplit("&pp=")[0]
     logger.info("Creating video snapshot for video id %s", video_id)
     create_video_snapshot(video_id)
 
