@@ -66,6 +66,7 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 - Add more statistics
 - Add user-generated lists with ratings
 - Re-arrange review body
+- Remove/improve display of profile picture
 
 ### Channel list
 - Add channel rating feature
@@ -80,7 +81,6 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 - Feature to delete a tag from a video
 - Feature to delete a tag when no video attached to it
 - Feature to reorder a list
-- Improve modal to create a new list
 
 ### Import function
 - add channel batch import feature

@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.db.models import Count, QuerySet
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -47,6 +48,8 @@ class VideoListView(APIView):
         return Response({"user_lists": user_lists, "popular_lists": popular_lists})
 
     def post(self, request):
+        if not request.user.is_authenticated:
+            raise PermissionDenied()
         serializer = VideoListSerializer(data=request.data)
         if not serializer.is_valid():
             return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
@@ -64,6 +67,8 @@ class VideoListDeleteView(APIView):
     template_name = "lists/lists.html"
 
     def get(self, request, pk):
+        if not request.user.is_authenticated:
+            raise PermissionDenied()
         try:
             video_list = VideoList.objects.get(pk=pk, user=request.user)
         except VideoList.DoesNotExist:
@@ -79,6 +84,8 @@ class VideoListDeleteItemView(APIView):
     template_name = "lists/list_details.html"
 
     def get(self, request, list_pk, video_pk):
+        if not request.user.is_authenticated:
+            raise PermissionDenied()
         video_list = get_object_or_404(VideoList, pk=list_pk, user=request.user)
         video = get_object_or_404(Video, pk=video_pk)
         video_list.videos.remove(video)
