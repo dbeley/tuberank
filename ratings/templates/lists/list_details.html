@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block content %}
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 bg-gray-100 rounded-lg py-8">
     <div class="flex justify-right">
     <h1 class="text-3xl font-bold mb-6 w-full">{{ list.name }}</h1>
       {% if request.user == list.user %}
@@ -12,37 +12,89 @@
       {% endif %}
     </div>
     <p class="text-lg mb-6">{% blocktranslate with username=list.user.username %}By: <span class="font-bold">{{ username }}</span>{% endblocktranslate %}</p>
-    <p class="text-lg mb-6 w-full">{{ list.description }}</p>
+    <div class="flex items-center gap-4 my-4">
+      <div class="gap-2 mr-auto">
+        <p class="text-lg">{{ list.description }}</p>
+      </div>
+        <button id="update-description-button" class="bg-gray-200 hover:bg-gray-300 px-4 mx-2 py-1 rounded-md font-medium">{% translate "Edit" %}</button>
+    </div>
 
   {% if list.videos.exists %}
-      <h2>{% translate "Videos in this list:" %}</h2>
-      <div class="flex flex-col gap-8">
-          {% for video in list.videos.all %}
-              <div class="border border-gray-200 rounded-md shadow-md p-4">
-                  <div class="flex items-center gap-4">
-                      <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}" class="w-24 h-16 object-cover rounded">
-                      <div>
-                          <h3 class="font-bold text-gray-900 text-lg">{{ video.last_snapshot.title_en }}</h3>
-                          <p class="text-gray-700">{{ video.channel.last_snapshot.name_en }}</p>
-                      </div>
-                  </div>
-                  <p class="text-gray-700 mt-2">{{ video.last_snapshot.description }}</p>
-                  <div class="flex items-center gap-4 mt-4">
-                      <span class="text-gray-700 font-bold">#{{ forloop.counter }}</span>
-                      <div class="flex items-center gap-2">
-                              <svg class="w-6 h-6 text-yellow-400 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                  <path d="M10 13.333l-4.72 2.563 1.134-5.27-3.586-3.11 4.718-.408L10 3.333l1.754 4.014 4.718.408-3.586 3.11 1.134 5.27z" />
-                              </svg>
-                              <svg class="w-6 h-6 text-gray-400 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                  <path d="M10 13.333l-4.72 2.563 1.134-5.27-3.586-3.11 4.718-.408L10 3.333l1.754 4.014 4.718.408-3.586 3.11 1.134 5.27z" />
-                              </svg>
-                      </div>
-                  </div>
-              </div>
-          {% endfor %}
-      </div>
+      {% include "lists/update_description_modal.html" %}
+    <h2>{% translate "Videos in this list:" %}</h2>
+    <div class="flex flex-col gap-8">
+        {% for video in list.videos.all %}
+        {% include "lists/update_description_modal.html" with index=forloop.counter %}
+            <div class="border bg-white border-gray-200 rounded-md shadow-md p-4">
+                <div class="flex items-center gap-4">
+                    <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}" class="w-24 h-16 object-cover rounded">
+                    <div>
+                        <h3 class="font-bold text-gray-900 text-lg">{{ video.last_snapshot.title_en }}</h3>
+                        <p class="text-gray-700">{{ video.channel.last_snapshot.name_en }}</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 mt-2">{{ video.last_snapshot.description | truncatechars:240 }}</p>
+                <div class="flex items-center gap-4 mt-4">
+                    <span class="text-gray-700 font-bold">#{{ forloop.counter }}</span>
+                    <div class="gap-2 justify-left mr-auto">
+                        <p>video.item.description</p>
+                    </div>
+                    <button id="update-description-button{{ forloop.counter }}" class="bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-md font-medium">{% translate "Edit" %}</button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
   {% else %}
     <p>{% translate "No videos in this list yet." %}</p>
   {% endif %}
   </div>
+<script>
+  const createListModal = document.getElementById('update-description-modal');
+  const updateDescriptionModalButton = document.getElementById('update-description-button');
+  const closeCreateListModalButton = document.getElementById('close-modal-button');
+
+  function openCreateListModal() {
+    createListModal.classList.add('block');
+    createListModal.classList.remove('hidden');
+  }
+
+  function closeCreateListModal() {
+    createListModal.classList.add('hidden');
+    createListModal.classList.remove('block');
+  }
+
+  updateDescriptionModalButton.addEventListener('click', () => {
+    openCreateListModal();
+  });
+
+  closeCreateListModalButton.addEventListener('click', () => {
+    closeCreateListModal();
+  });
+
+  // Get the buttons and modals by ID
+  {% for item in item_list %}
+  const createListModal{{ forloop.counter }} = document.getElementById('update-description-modal{{ forloop.counter }}');
+  const updateDescriptionModalButton{{ forloop.counter }} = document.getElementById('update-description-button{{ forloop.counter }}');
+  const closeCreateListModalButton{{ forloop.counter }} = document.getElementById('close-modal-button{{ forloop.counter }}');
+
+  function openCreateListModal{{ forloop.counter }}() {
+    createListModal{{ forloop.counter }}.classList.add('block');
+    createListModal{{ forloop.counter }}.classList.remove('hidden');
+  }
+
+  function closeCreateListModal{{ forloop.counter }}() {
+    createListModal{{ forloop.counter }}.classList.add('hidden');
+    createListModal{{ forloop.counter }}.classList.remove('block');
+  }
+
+  updateDescriptionModalButton{{ forloop.counter }}.addEventListener('click', () => {
+    openCreateListModal{{ forloop.counter }}();
+  });
+
+  closeCreateListModalButton{{ forloop.counter }}.addEventListener('click', () => {
+    closeCreateListModal{{ forloop.counter }}();
+  });
+  {% endfor %}
+
+</script>
 {% endblock content %}
