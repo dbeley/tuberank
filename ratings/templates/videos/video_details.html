@@ -7,6 +7,11 @@
 {% block content %}
 
 <div class="flex flex-col">
+    {% if notification %}
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+        <span class="block sm:inline">{{ notification.message }}</span>
+    </div>
+    {% endif %}
 
     <div class="flex w-full mb-8">
         <a href="{% url 'channel_details' pk=video.channel.id %}" class="mr-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
@@ -137,9 +142,16 @@
               {% endif %}
             {% if lists.exists %}
               <div class="flex flex-wrap mt-2">
+              <ul>
                 {% for list in lists.all %}
-                  <a href="{% url 'list_details' pk=list.id %}" class="bg-gray-100 rounded-lg px-4 py-2 text-gray-700 mr-2 mb-2 hover:bg-gray-200">{{ list.name }}</a>
+                  <li class="py-2 items-center justify-between">
+                    <div class="bg-gray-100 rounded-lg px-4 text-gray-700 mr-2 mb-2 hover:bg-gray-200">
+                    <a href="{% url 'list_details' pk=list.id %}" class="font-medium">{{ list.name }}</a>
+                    <span class="text-sm text-gray-500 ml-2">{% blocktranslate with user=list.user.username %}by {{ user }}{% endblocktranslate %}</span>
+                    </div>
+                  </li>
                 {% endfor %}
+              </ul>
               </div>
             {% else %}
               <p class="text-gray-600">{% translate "Not in any lists yet." %}</p>

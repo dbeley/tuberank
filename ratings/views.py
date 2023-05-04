@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import generic
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -155,9 +156,13 @@ class ImportVideoView(APIView):
     template_name = "import_video.html"
 
     def get(self, request):
+        if not request.user.is_authenticated:
+            raise PermissionDenied()
         return Response()
 
     def post(self, request):
+        if not request.user.is_authenticated:
+            raise PermissionDenied()
         errors = []
         success = []
         if urls := request.data.get("urls"):
