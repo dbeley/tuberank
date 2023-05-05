@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-05 17:38+0200\n"
+"POT-Creation-Date: 2023-05-05 23:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,78 +71,78 @@ msgstr ""
 msgid "Open user menu"
 msgstr ""
 
-#: templates/base.html:32 templates/base_backup.html:52
+#: templates/base.html:28 templates/base_backup.html:52
 msgid "Profile"
 msgstr ""
 
-#: templates/base.html:35 templates/base_backup.html:53
-msgid "Settings"
-msgstr ""
-
-#: templates/base.html:38 templates/base_backup.html:54
+#: templates/base.html:37 templates/base_backup.html:54
 msgid "Logout"
 msgstr ""
 
-#: templates/base.html:45 templates/base_backup.html:59
+#: templates/base.html:44 templates/base_backup.html:59
 msgid "Login"
 msgstr ""
 
-#: templates/base.html:56 templates/base_backup.html:36
+#: templates/base.html:55 templates/base_backup.html:36
 #: templates/search/search.html:4
 msgid "Search"
 msgstr ""
 
-#: templates/base.html:77
+#: templates/base.html:76
 msgid "Open menu"
 msgstr ""
 
-#: templates/base.html:107 templates/homepage.html:5
+#: templates/base.html:106 templates/homepage.html:5
 msgid "Home"
 msgstr ""
 
-#: templates/base.html:109 templates/base_backup.html:21
+#: templates/base.html:108 templates/base_backup.html:21
 #: templates/base_backup.html:91
 msgid "Charts"
 msgstr ""
 
-#: templates/base.html:112 templates/base_backup.html:22
-#: templates/base_backup.html:92 templates/videos/video_details.html:139
+#: templates/base.html:111 templates/base_backup.html:22
+#: templates/base_backup.html:92 templates/videos/video_details.html:143
 msgid "Lists"
 msgstr ""
 
-#: templates/base.html:115 templates/base_backup.html:23
-#: templates/base_backup.html:93 templates/videos/video_details.html:116
+#: templates/base.html:114 templates/base_backup.html:23
+#: templates/base_backup.html:93 templates/videos/video_details.html:120
 msgid "Tags"
 msgstr ""
 
-#: templates/base.html:118 templates/base_backup.html:24
+#: templates/base.html:117 templates/base_backup.html:24
 #: templates/base_backup.html:94 templates/channels/channel_list.html:8
 msgid "Channels"
 msgstr ""
 
-#: templates/base.html:121 templates/import_video.html:5
+#: templates/base.html:120 templates/import_video.html:5
 msgid "Import Video"
 msgstr ""
 
-#: templates/base.html:124 templates/base_backup.html:25
+#: templates/base.html:136 templates/base_backup.html:25
 #: templates/base_backup.html:95
 msgid "About"
 msgstr ""
 
-#: templates/base.html:148
+#: templates/base.html:146
 msgid "Source Code"
 msgstr ""
 
-#: templates/base.html:192 templates/base.html:218
+#: templates/base.html:180 templates/base.html:206
 msgid "English"
 msgstr ""
 
-#: templates/base.html:233
+#: templates/base.html:221
 msgid "French"
 msgstr ""
 
 #: templates/base_backup.html:32
 msgid "Import video"
+msgstr ""
+
+#: templates/base_backup.html:53
+msgid "Settings"
 msgstr ""
 
 #: templates/channels/channel_details.html:12
@@ -156,7 +156,7 @@ msgid "%(count)s subscribers"
 msgstr ""
 
 #: templates/channels/channel_details.html:23
-#: templates/videos/video_item.html:18
+#: templates/lists/list_details.html:43 templates/videos/video_item.html:18
 #, python-format
 msgid "%(count)s views"
 msgstr ""
@@ -333,32 +333,43 @@ msgstr "The number of new indexed videos is limited to 10,000 per day."
 #: templates/import_video.html:8
 msgid "import_video.description.3"
 msgstr ""
-"The supported URL formats are the following:<br>- https://www.youtube.com/"
-"watch?v={VIDEO_ID}<br>- https://m.youtube.com/watch?v={VIDEO_ID}<br>- "
-"https://www.youtube.com/watch?v={VIDEO_ID}&pp={TRACKING_PARAM}<br>"
+"The supported URL formats are the following:\n"
+"- https://www.youtube.com/watch?v={VIDEO_ID}\n"
+"- https://m.youtube.com/watch?v={VIDEO_ID}\n"
+"- https://www.youtube.com/watch?v={VIDEO_ID}&pp={TRACKING_PARAM}"
 
-#: templates/import_video.html:12
+#: templates/import_video.html:9
+msgid "import_video.description.4"
+msgstr "Importing all the videos from a channel is not supported at the moment."
+
+#: templates/import_video.html:13
 msgid "YouTube URLs (one by line):"
 msgstr ""
 
-#: templates/import_video.html:17
+#: templates/import_video.html:18
 msgid "Import URLs"
 msgstr ""
 
-#: templates/lists/list_details.html:9 templates/videos/video_details.html:99
+#: templates/lists/list_details.html:12 templates/videos/video_details.html:103
 #, python-format
 msgid "By: <span class=\"font-bold\">%(username)s</span>"
 msgstr ""
 
-#: templates/lists/list_details.html:16 templates/lists/list_details.html:42
+#: templates/lists/list_details.html:20 templates/lists/list_details.html:54
 msgid "Edit"
 msgstr ""
 
-#: templates/lists/list_details.html:18 templates/lists/lists.html:53
+#: templates/lists/list_details.html:22 templates/lists/list_details.html:56
+#: templates/lists/lists.html:53
 msgid "Delete"
 msgstr ""
 
-#: templates/lists/list_details.html:49
+#: templates/lists/list_details.html:41 templates/videos/video_item.html:16
+#, python-format
+msgid "Rating: %(rating)s from %(count)s ratings"
+msgstr ""
+
+#: templates/lists/list_details.html:64
 msgid "No videos in this list yet."
 msgstr ""
 
@@ -381,7 +392,7 @@ msgstr ""
 
 #: templates/lists/lists.html:31
 #: templates/lists/update_description_modal.html:13
-#: templates/videos/video_details.html:75
+#: templates/videos/video_details.html:83
 msgid "Description"
 msgstr ""
 
@@ -404,7 +415,7 @@ msgstr ""
 msgid "Popular Lists"
 msgstr ""
 
-#: templates/lists/lists.html:71 templates/videos/video_details.html:161
+#: templates/lists/lists.html:71 templates/videos/video_details.html:165
 #, python-format
 msgid "by %(user)s"
 msgstr ""
@@ -492,7 +503,7 @@ msgstr ""
 msgid "All tags"
 msgstr ""
 
-#: templates/tags/tags.html:18 templates/videos/video_details.html:135
+#: templates/tags/tags.html:18 templates/videos/video_details.html:139
 msgid "No tags yet."
 msgstr ""
 
@@ -508,78 +519,69 @@ msgstr ""
 msgid "I'm watching this video"
 msgstr ""
 
-#: templates/videos/video_details.html:44
-msgid "Rating"
+#: templates/videos/video_details.html:41
+msgid "Views"
 msgstr ""
 
 #: templates/videos/video_details.html:45
+msgid "Likes"
+msgstr ""
+
+#: templates/videos/video_details.html:49
+msgid "Comments"
+msgstr ""
+
+#: templates/videos/video_details.html:53
+msgid "Uploaded"
+msgstr ""
+
+#: templates/videos/video_details.html:57
+msgid "Duration"
+msgstr ""
+
+#: templates/videos/video_details.html:68
+msgid "Rating"
+msgstr ""
+
+#: templates/videos/video_details.html:69
 #, python-format
 msgid "%(rating)s from %(count)s ratings"
 msgstr ""
 
-#: templates/videos/video_details.html:48
+#: templates/videos/video_details.html:72
 msgid "Channel"
 msgstr ""
 
-#: templates/videos/video_details.html:59
-msgid "Views"
-msgstr ""
-
-#: templates/videos/video_details.html:63
-msgid "Likes"
-msgstr ""
-
-#: templates/videos/video_details.html:67
-msgid "Comments"
-msgstr ""
-
-#: templates/videos/video_details.html:71
-msgid "Uploaded"
-msgstr ""
-
-#: templates/videos/video_details.html:79
-msgid "Duration"
-msgstr ""
-
-#: templates/videos/video_details.html:88
+#: templates/videos/video_details.html:92
 msgid "Reviews"
 msgstr ""
 
-#: templates/videos/video_details.html:97
+#: templates/videos/video_details.html:101
 #, python-format
 msgid "Rating: <span class=\"font-bold\">%(rating)s</span>"
 msgstr ""
 
-#: templates/videos/video_details.html:102
+#: templates/videos/video_details.html:106
 msgid "Read the review"
 msgstr ""
 
-#: templates/videos/video_details.html:122
+#: templates/videos/video_details.html:126
 msgid "Add Tag"
 msgstr ""
 
-#: templates/videos/video_details.html:145
+#: templates/videos/video_details.html:149
 msgid "Select a list"
 msgstr ""
 
-#: templates/videos/video_details.html:150
+#: templates/videos/video_details.html:154
 msgid "Add to List"
 msgstr ""
 
-#: templates/videos/video_details.html:168
+#: templates/videos/video_details.html:172
 msgid "Not in any lists yet."
 msgstr ""
 
-#: templates/videos/video_item.html:16
-#, python-format
-msgid "Rating: %(rating)s from %(count)s ratings"
-msgstr ""
-
 #: templates/videos/video_item.html:30
-msgid "Delete item from list"
-msgstr ""
-
-#: templates/videos/video_item.html:35
 msgid "Delete tag from video"
 msgstr ""
 
