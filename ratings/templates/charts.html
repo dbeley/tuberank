@@ -6,7 +6,7 @@
 {% block content %}
 <div class="mb-4">
   <h1 class="text-3xl font-bold">{{ channel.last_snapshot.name_en }}</h1>
-  <p class="text-gray-600">{{ channel.last_snapshot.description | safe | linebreaks }}</p>
+  <p class="text-gray-600">{{ channel.last_snapshot.description | linebreaks }}</p>
 </div>
 
 <form class="my-4" method="GET">

@@ -12,7 +12,7 @@
       {% translate "Watch on YouTube" %}
     </a>
   </div>
-  <p class="text-gray-600">{{ channel.last_snapshot.description | safe | linebreaks }}</p>
+  <p class="text-gray-600">{{ channel.last_snapshot.description | linebreaks }}</p>
   <div class="flex items-center justify-between mt-4">
     <div class="flex items-center">
       <i class="fas fa-users mr-2"></i>
