@@ -42,46 +42,43 @@
   <div class="px-2">
     {% if user.is_authenticated %}
     {% if user_lists %}
-        {% for list in user_lists %}
-          <div class="w-full px-4 mb-4 flex justify-between items-center bg-gray-100 rounded-lg p-4">
-            <a href="{% url 'list_details' pk=list.id %}">
-              <h2 class="text-lg font-bold">{{ list.name }}</h2>
-              <p class="text-gray-600">{% blocktranslate with count=list.videos.count %}{{ count }} Videos{% endblocktranslate %}</p>
-            </a>
-            <div class="items-right">
-              {# <a href="{% url 'list_delete' pk=list.id %}" class="ml-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"> #}
-                {# {% translate "Edit" %} #}
-              {# </a> #}
-              <a href="{% url 'list_delete' pk=list.id %}" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                {% translate "Delete" %}
-              </a>
-            </div>
-          </div>
-        {% endfor %}
+    {% for list in user_lists %}
+    <div class="w-full px-4 mb-4 flex justify-between items-center bg-gray-100 rounded-lg p-4">
+      <a href="{% url 'list_details' pk=list.id %}">
+        <h2 class="text-lg font-bold">{{ list.name }}</h2>
+        <p class="text-gray-600">{% blocktranslate with count=list.videos.count %}{{ count }} Videos{% endblocktranslate %}</p>
+      </a>
+      <div class="items-right">
+        <a href="{% url 'list_delete' pk=list.id %}" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+          {% translate "Delete" %}
+        </a>
+      </div>
+    </div>
+    {% endfor %}
     {% else %}
-      <p>{% translate "No lists found." %}</p>
+    <p>{% translate "No lists found." %}</p>
     {% endif %}
     {% endif %}
   </div>
   <h1 class="text-3xl font-bold my-4">{% translate "Popular Lists" %}</h1>
   <div class="px-2">
     {% if popular_lists %}
-      {% for list in popular_lists %}
-      <div class="w-full px-4 mb-4 justify-between items-center bg-gray-100 rounded-lg p-4">
-        <a href="{% url 'list_details' pk=list.id %}">
-          <h2 class="text-lg font-bold">{{ list.name }}</h2>
-          <p class="text-gray-600">{% blocktranslate with count=list.videos.count %}{{ count }} Videos{% endblocktranslate %}</p>
-          <p class="text-gray-600">{% blocktranslate with user=list.user.username %}by {{ user }}{% endblocktranslate %}</p>
-        </a>
-      </div>
-      {% endfor %}
+    {% for list in popular_lists %}
+    <div class="w-full px-4 mb-4 justify-between items-center bg-gray-100 rounded-lg p-4">
+      <a href="{% url 'list_details' pk=list.id %}">
+        <h2 class="text-lg font-bold">{{ list.name }}</h2>
+        <p class="text-gray-600">{% blocktranslate with count=list.videos.count %}{{ count }} Videos{% endblocktranslate %}</p>
+        <p class="text-gray-600">{% blocktranslate with user=list.user.username %}by {{ user }}{% endblocktranslate %}</p>
+      </a>
+    </div>
+    {% endfor %}
     {% else %}
-      <p class="text-gray-600">{% translate "No popular lists yet." %}</p>
+    <p class="text-gray-600">{% translate "No popular lists yet." %}</p>
     {% endif %}
   </div>
 </div>
 
-  <script>
+<script>
   const createListModal = document.getElementById('create-list-modal');
   const openCreateListModalButton = document.getElementById('create-list-button');
   const closeCreateListModalButton = document.getElementById('close-modal-button');
@@ -103,6 +100,7 @@
   closeCreateListModalButton.addEventListener('click', () => {
     closeCreateListModal();
   });
-  </script>
+
+</script>
 
 {% endblock content %}

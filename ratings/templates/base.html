@@ -11,13 +11,42 @@
 <body class="bg-gray-200" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 <nav class="bg-gray-900 border-gray-200">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-    <a href="/" class="flex items-center">
-      {# <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="Flowbite Logo"/> #}
+    <a href="{% url 'homepage' %}" class="flex items-center">
       <span class="self-center text-white text-2xl font-semibold whitespace-nowrap">TubeRank</span>
     </a>
     <div class="flex md:order-2">
+      <div class="flex items-center md:order-2 text-white">
+        {% if user.is_authenticated %}
+        <button type="button" class="ml-4 flex mr-3 text-sm bg-gray-300 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+          <span class="sr-only">{% translate "Open user menu" %}</span>
+          <img class="w-8 h-8 rounded-full" src="{% static 'sample_user_icon.png' %}" alt="user photo">
+        </button>
+        <!-- Dropdown menu -->
+        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow" id="user-dropdown">
+          <div class="px-4 py-3">
+            <span class="block text-sm text-gray-900">Bonnie Green</span>
+            <span class="block text-sm  text-gray-500 truncate">name@flowbite.com</span>
+          </div>
+          <ul class="py-2" aria-labelledby="user-menu-button">
+            <li>
+              <a href="{% url 'profile' username=user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{% translate "Profile" %}</a>
+            </li>
+            <li>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{% translate "Settings" %}</a>
+            </li>
+            <li>
+              <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{% translate "Logout" %}</a>
+            </li>
+          </ul>
+        </div>
+        {% else %}
+        <a href="{% url 'login' %}"
+           class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-300 md:p-0 ml-4"
+           aria-current="page">{% translate "Login" %}</a>
+        {% endif %}
+      </div>
       <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false"
-              class="md:hidden text-gray-300 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-lg text-sm p-2.5 mr-1">
+              class="md:hidden text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 rounded-lg text-sm p-2.5 mr-1">
         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
              xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd"
@@ -37,13 +66,13 @@
             </svg>
           </div>
           <input type="text" id="search-navbar" name="q"
-                 class="block w-full p-2 pl-10 text-sm text-gray-300 border border-gray-300 rounded-l-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
+                 class="block w-full p-2 pl-10 text-sm text-gray-800 border border-gray-300 rounded-l-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
                  placeholder="{{ blocktranslate }}Search...{{ endblocktranslate }}">
           <button type="submit" class="px-4 bg-blue-600 text-white rounded-r-lg hover:bg-blue-500">➜</button>
         </form>
       </div>
       <button data-collapse-toggle="navbar-search" type="button"
-              class="inline-flex items-center p-2 text-sm text-gray-300 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 "
+              class="inline-flex items-center p-2 text-sm text-gray-300 rounded-lg md:hidden hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 "
               aria-controls="navbar-search" aria-expanded="false">
         <span class="sr-only">{% translate "Open menu" %}</span>
         <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
@@ -66,31 +95,34 @@
             </svg>
           </div>
           <input type="text" id="search-navbar" name="q"
-                 class="block w-full p-2 pl-10 text-sm text-gray-300 border border-gray-300 rounded-l-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
+                 class="block w-full p-2 pl-10 text-sm text-gray-800 border border-gray-300 rounded-l-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
                  placeholder="{{ blocktranslate }}Search...{{ endblocktranslate }}">
           <button type="submit" class="px-4 bg-blue-600 text-white rounded-r-lg hover:bg-blue-500">➜</button>
         </form>
       </div>
       <ul
         class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 ">
-        <li><a href="#"
+        <li><a href="{% url 'homepage' %}"
                class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-300 md:p-0"
                aria-current="page">{% translate "Home" %}</a></li>
         <li><a href="{% url 'charts' %}"
-               class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-300 md:p-0 ">{%
-          translate "Charts" %}</a></li>
+               class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-300 md:p-0 ">{% translate "Charts" %}</a>
+        </li>
         <li><a href="{% url 'lists' %}"
-               class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-300 md:p-0">{%
-          translate "Lists" %}</a></li>
+               class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-300 md:p-0">{% translate "Lists" %}</a>
+        </li>
         <li><a href="{% url 'tags' %}"
-               class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-300 md:p-0">{%
-          translate "Tags" %}</a></li>
+               class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-300 md:p-0">{% translate "Tags" %}</a>
+        </li>
         <li><a href="{% url 'channel_list' %}"
-               class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-300 md:p-0">{%
-          translate "Channels" %}</a></li>
+               class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-300 md:p-0">{% translate "Channels" %}</a>
+        </li>
+        <li><a href="{% url 'import_video' %}"
+               class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-300 md:p-0">{% translate "Import Video" %}</a>
+        </li>
         <li><a href="#"
-               class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-300 md:p-0">{%
-          translate "About" %}</a></li>
+               class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-300 md:p-0">{% translate "About" %}</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -204,17 +236,6 @@
               </li>
             </ul>
           </div>
-          <button data-collapse-toggle="mobile-menu-language-select" type="button"
-                  class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-                  aria-controls="mobile-menu-language-select" aria-expanded="false">
-            <span class="sr-only">Open main menu</span>
-            <svg class="w-6 h-6" fill="currentColor" aria-hidden="true" viewBox="0 0 20 20"
-                 xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd"
-                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                    clip-rule="evenodd"></path>
-            </svg>
-          </button>
         </div>
       </div>
     </div>

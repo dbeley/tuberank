@@ -3,31 +3,31 @@
 {% block content %}
 {% load i18n %}
 
-    <div class="flex items-center w-full mb-8">
-        <a href="{% url 'video_details' pk=video.id %}" class="mr-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-            {% translate "&#8592; Return to Video" %}
-        </a>
-    </div>
-    <h1 class="text-4xl font-bold mb-8">{{ video.last_snapshot.title_en }}</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div>
-            <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}" class="h-60 w-full object-cover mb-4">
-            <table class="table-auto">
-                <tbody>
-                    <tr>
-                        <td class="font-bold text-gray-900 pr-4">{% translate "Channel:" %}</td>
-                        <td class="text-gray-700">{{ video.channel.last_snapshot.name_en }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+<div class="flex items-center w-full mb-8">
+  <a href="{% url 'video_details' pk=video.id %}" class="mr-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+    {% translate "&#8592; Return to Video" %}
+  </a>
+</div>
+<h1 class="text-4xl font-bold mb-8">{{ video.last_snapshot.title_en }}</h1>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+  <div>
+    <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}" class="h-60 w-full object-cover mb-4">
+    <table class="table-auto">
+      <tbody>
+      <tr>
+        <td class="font-bold text-gray-900 pr-4">{% translate "Channel:" %}</td>
+        <td class="text-gray-700">{{ video.channel.last_snapshot.name_en }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 <form action="{% url 'video_viewing' pk=video.pk %}" method="post">
-    {% csrf_token %}
-    <div class="flex justify-start">
-        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            {% translate "Submit" %}
-        </button>
-    </div>
+  {% csrf_token %}
+  <div class="flex justify-start">
+    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+      {% translate "Submit" %}
+    </button>
+  </div>
 </form>
 {% endblock content %}
