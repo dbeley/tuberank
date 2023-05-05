@@ -2,60 +2,53 @@
 {% load i18n %}
 
 {% block content %}
-<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 bg-gray-100 rounded-lg py-8">
-  <div class="flex justify-right">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 bg-gray-100 rounded-lg py-8">
+    <div class="flex justify-right">
     <h1 class="text-3xl font-bold mb-6 w-full">{{ list.name }}</h1>
-  </div>
-  <p class="text-lg mb-6">{% blocktranslate with username=list.user.username %}By: <span class="font-bold">{{ username }}</span>{%
-    endblocktranslate %}</p>
-  <div class="flex items-center gap-4 my-4">
-    <div class="gap-2 mr-auto">
-      <p class="text-lg">{{ list.description }}</p>
     </div>
-    {% if request.user == list.user %}
-    {% include "lists/update_description_modal.html" with item=list %}
-    <button id="update-description-button" class="bg-gray-200 hover:bg-gray-300 px-4 mx-2 py-2 rounded-md font-medium">
-      {% translate "Edit" %}
-    </button>
-    <a href="{% url 'list_delete' pk=list.id %}"
-       class="mx-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md">
-      {% translate "Delete" %}
-    </a>
-    {% endif %}
-  </div>
+    <p class="text-lg mb-6">{% blocktranslate with username=list.user.username %}By: <span class="font-bold">{{ username }}</span>{% endblocktranslate %}</p>
+    <div class="flex items-center gap-4 my-4">
+      <div class="gap-2 mr-auto">
+        <p class="text-lg">{{ list.description }}</p>
+      </div>
+        {% if request.user == list.user %}
+        {% include "lists/update_description_modal.html" with item=list %}
+        <button id="update-description-button" class="bg-gray-200 hover:bg-gray-300 px-4 mx-2 py-2 rounded-md font-medium">{% translate "Edit" %}</button>
+        <a href="{% url 'list_delete' pk=list.id %}" class="mx-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md">
+            {% translate "Delete" %}
+        </a>
+        {% endif %}
+    </div>
 
   {% if list.videos.exists %}
-  <div class="flex flex-col gap-8">
-    {% for item in list.items.all %}
-    <div class="border bg-white border-gray-200 rounded-md shadow-md p-4">
-      <div class="flex items-center gap-4">
-        <img src="{{ item.video.last_snapshot.thumbnail_url }}" alt="{{ item.video.last_snapshot.title_en }}"
-             class="w-24 h-16 object-cover rounded">
-        <div>
-          <h3 class="font-bold text-gray-900 text-lg">{{ item.video.last_snapshot.title_en }}</h3>
-          <p class="text-gray-700">{{ item.video.channel.last_snapshot.name_en }}</p>
-        </div>
-      </div>
-      <p class="text-gray-700 mt-2">{{ item.video.last_snapshot.description | truncatechars:240 }}</p>
-      <div class="flex items-center gap-4 mt-4">
-        <span class="text-gray-700 font-bold">#{{ forloop.counter }}</span>
-        <div class="gap-2 justify-left mr-auto">
-          <p>{{ item.description }}</p>
-        </div>
-        {% if request.user == list.user %}
-        {% include "lists/update_description_modal.html" with index=forloop.counter item=item %}
-        <button id="update-description-button{{ forloop.counter }}"
-                class="bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-md font-medium">{% translate "Edit" %}
-        </button>
-        {% endif %}
-      </div>
+    <div class="flex flex-col gap-8">
+        {% for item in list.items.all %}
+            <div class="border bg-white border-gray-200 rounded-md shadow-md p-4">
+                <div class="flex items-center gap-4">
+                    <img src="{{ item.video.last_snapshot.thumbnail_url }}" alt="{{ item.video.last_snapshot.title_en }}" class="w-24 h-16 object-cover rounded">
+                    <div>
+                        <h3 class="font-bold text-gray-900 text-lg">{{ item.video.last_snapshot.title_en }}</h3>
+                        <p class="text-gray-700">{{ item.video.channel.last_snapshot.name_en }}</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 mt-2">{{ item.video.last_snapshot.description | truncatechars:240 }}</p>
+                <div class="flex items-center gap-4 mt-4">
+                    <span class="text-gray-700 font-bold">#{{ forloop.counter }}</span>
+                    <div class="gap-2 justify-left mr-auto">
+                        <p>{{ item.description }}</p>
+                    </div>
+                    {% if request.user == list.user %}
+                    {% include "lists/update_description_modal.html" with index=forloop.counter item=item %}
+                    <button id="update-description-button{{ forloop.counter }}" class="bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-md font-medium">{% translate "Edit" %}</button>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-  </div>
   {% else %}
-  <p>{% translate "No videos in this list yet." %}</p>
+    <p>{% translate "No videos in this list yet." %}</p>
   {% endif %}
-</div>
+  </div>
 <script>
   const createListModal = document.getElementById('update-description-modal');
   const updateDescriptionModalButton = document.getElementById('update-description-button');
@@ -103,7 +96,6 @@
     closeCreateListModal{{ forloop.counter }}();
   });
   {% endfor %}
-
 
 </script>
 {% endblock content %}
