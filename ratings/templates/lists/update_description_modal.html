@@ -13,9 +13,7 @@
           {% translate "Description" %}
         </label>
         <div class="flex justify-end">
-            <textarea name="description" rows="3" id="item-description{{ index }}" class="block text-gray-700 border rounded-md shadow-sm focus:border-indigo-500 flex-grow" placeholder="{% blocktranslate %}Enter description{% endblocktranslate %}" maxlength="5000">
-              {{ serializer.data.description }}
-            </textarea>
+            <textarea name="description{{ index }}" rows="3" id="item-description{{ index }}" class="block text-gray-700 border rounded-md shadow-sm focus:border-indigo-500 flex-grow" placeholder="{% blocktranslate %}Enter description{% endblocktranslate %}" maxlength="5000">{{ item.description }}</textarea>
         </div>
       </div>
       <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">

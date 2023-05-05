@@ -9,108 +9,218 @@
   <link href="{% static 'css/tailwind.css' %}" rel="stylesheet">
 </head>
 <body class="bg-gray-200" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-<nav class="bg-gray-900">
-  <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 relative flex items-center justify-between h-16">
-    <!-- Logo -->
-    <div class="flex-shrink-0 flex items-center">
-      <a href="/" class="font-bold text-white text-xl">TubeRank</a>
-    </div>
-    <!-- Categories and Channels links -->
-    <div class="hidden sm:block sm:ml-6">
-      <div class="flex space-x-4">
-        <a href="{% url 'charts' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Charts" %}</a>
-        <a href="{% url 'lists' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Lists" %}</a>
-        <a href="{% url 'tags' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Tags" %}</a>
-        <a href="{% url 'channel_list' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Channels" %}</a>
-        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "About" %}</a>
-      </div>
-    </div>
-    <!-- Search bar -->
-    <div class="flex-1 flex justify-center px-2 lg:ml-6 lg:justify-end">
-      {% if user.is_authenticated %}
-      <div class="flex-shrink-0 pt-2">
-        <a href="{% url 'import_video' %}" class="truncate bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 mx-4 rounded-lg">{% translate "Import video" %}</a>
-      </div>
-      {% endif %}
+<nav class="bg-gray-900 border-gray-200">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <a href="/" class="flex items-center">
+      {# <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="Flowbite Logo"/> #}
+      <span class="self-center text-white text-2xl font-semibold whitespace-nowrap">TubeRank</span>
+    </a>
+    <div class="flex md:order-2">
+      <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false"
+              class="md:hidden text-gray-300 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-lg text-sm p-2.5 mr-1">
+        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+             xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd"
+                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                clip-rule="evenodd"></path>
+        </svg>
+        <span class="sr-only">{% translate "Search" %}</span>
+      </button>
+      <div class="relative hidden md:block">
         <form class="flex" action="{% url 'search' %}" method="get">
-          <input class="w-full rounded-l-lg py-2 px-4 border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring focus:border-blue-300 overflow-hidden" name="q" type="text" placeholder="{% blocktranslate %}Search{% endblocktranslate %}" style="text-overflow: ellipsis;">
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <svg class="w-5 h-5 text-gray-300" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                    clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <input type="text" id="search-navbar" name="q"
+                 class="block w-full p-2 pl-10 text-sm text-gray-300 border border-gray-300 rounded-l-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
+                 placeholder="{{ blocktranslate }}Search...{{ endblocktranslate }}">
           <button type="submit" class="px-4 bg-blue-600 text-white rounded-r-lg hover:bg-blue-500">➜</button>
         </form>
-    </div>
-      <!-- Profile tooltip -->
-      {% if user.is_authenticated %}
-      <div class="ml-4 relative">
-        <div>
-          <button type="button" class="bg-gray-800 rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" id="user-menu" aria-expanded="false" aria-haspopup="true">
-            <span class="sr-only">{% translate "Open user menu" %}</span>
-            <img class="h-8 w-8 rounded-full" src="https://randomuser.me/api/portraits/women/55.jpg" alt="">
-          </button>
-        </div>
-        <!-- Dropdown menu, show/hide based on menu state -->
-        <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu" id="tooltip" style="display: none;">
-          <div class="py-1" role="none">
-            <a href="{% url 'profile' username=user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">{% translate "Profile" %}</a>
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">{% translate "Settings" %}</a>
-            <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">{% translate "Logout" %}</a>
-          </div>
-        </div>
-      {% else %}
-      <!-- Login link -->
-      <a href="{% url 'login' %}" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 mx-4 rounded-lg">{% translate "Login" %}</a>
-      {% endif %}
       </div>
+      <button data-collapse-toggle="navbar-search" type="button"
+              class="inline-flex items-center p-2 text-sm text-gray-300 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 "
+              aria-controls="navbar-search" aria-expanded="false">
+        <span class="sr-only">{% translate "Open menu" %}</span>
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+             xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd"
+                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                clip-rule="evenodd"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-search">
+      <div class="relative mt-3 md:hidden">
+        <form class="flex" action="{% url 'search' %}" method="get">
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <svg class="w-5 h-5 text-gray-300" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                    clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <input type="text" id="search-navbar" name="q"
+                 class="block w-full p-2 pl-10 text-sm text-gray-300 border border-gray-300 rounded-l-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
+                 placeholder="{{ blocktranslate }}Search...{{ endblocktranslate }}">
+          <button type="submit" class="px-4 bg-blue-600 text-white rounded-r-lg hover:bg-blue-500">➜</button>
+        </form>
+      </div>
+      <ul
+        class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 ">
+        <li><a href="#"
+               class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-300 md:p-0"
+               aria-current="page">{% translate "Home" %}</a></li>
+        <li><a href="{% url 'charts' %}"
+               class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-300 md:p-0 ">{%
+          translate "Charts" %}</a></li>
+        <li><a href="{% url 'lists' %}"
+               class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-300 md:p-0">{%
+          translate "Lists" %}</a></li>
+        <li><a href="{% url 'tags' %}"
+               class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-300 md:p-0">{%
+          translate "Tags" %}</a></li>
+        <li><a href="{% url 'channel_list' %}"
+               class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-300 md:p-0">{%
+          translate "Channels" %}</a></li>
+        <li><a href="#"
+               class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-300 md:p-0">{%
+          translate "About" %}</a></li>
+      </ul>
+    </div>
   </div>
 </nav>
-<div class="container mx-auto px-4 py-8">
+<div class="container mx-auto mt-4 pb-8">
   {% block content %}
   {% endblock content %}
 </div>
 <footer class="bg-gray-900 text-gray-400">
-
-  <div class="container mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center">
-    <a href="https://github.com/your-github-repo" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-400 mx-4 flex items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-        <span class="ml-2">TubeRank</span>
-    </a>
-    <p class="mt-2 sm:mt-0">Made with <a href="https://www.djangoproject.com/" class="text-blue-500 hover:text-blue-400">Django</a> and <a href="https://tailwindcss.com/" class="text-blue-500 hover:text-blue-400">Tailwind CSS</a></p>
-    <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
-      <input name="next" type="hidden" value="{{ redirect_to }}">
-      <select name="language" id="language" class="bg-gray-800 text-gray-400 pr-4 rounded-lg">
-        {% get_current_language as LANGUAGE_CODE %}
-        {% get_available_languages as LANGUAGES %}
-        {% get_language_info_list for LANGUAGES as languages %}
-        {% for language in languages %}
-        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-          {{ language.name_local }} ({{ language.code }})
-        </option>
-        {% endfor %}
-      </select>
-      <input class="ml-2" type="submit" value="Go">
-    </form>
-    <div class="flex space-x-4">
-      <a href="{% url 'charts' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Charts" %}</a>
-      <a href="{% url 'lists' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Lists" %}</a>
-      <a href="{% url 'tags' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Tags" %}</a>
-      <a href="{% url 'channel_list' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Channels" %}</a>
-      <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "About" %}</a>
+  <div class="mx-auto w-full max-w-screen-xl">
+    <div class="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-3">
+      <div>
+        <h2 class="mb-6 text-sm font-semibold uppercase">TubeRank</h2>
+        <ul class="font-medium">
+          <li class="mb-4">
+            <a href="#" class="hover:text-gray-200">
+              <div class="inline-flex items-center">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill-rule="evenodd"
+                        d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                        clip-rule="evenodd"/>
+                </svg>
+                <span class="px-2">{% translate "Source Code" %}</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="mb-6 text-sm font-semibold uppercase">Legal</h2>
+        <ul class="font-medium">
+          <li class="mb-4">
+            <a href="#" class="hover:text-gray-200">Privacy Policy</a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <div class="flex items-center md:order-2">
+          <button type="button" data-dropdown-toggle="language-dropdown-menu"
+                  class="inline-flex items-center font-medium justify-center px-4 py-2 text-gray-900 text-sm rounded-lg cursor-pointer bg-gray-200 hover:bg-blue-200">
+            <svg class="w-5 h-5 mr-2 rounded-full" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 3900 3900">
+              <path fill="#b22234" d="M0 0h7410v3900H0z"/>
+              <path d="M0 450h7410m0 600H0m0 600h7410m0 600H0m0 600h7410m0 600H0" stroke="#fff" stroke-width="300"/>
+              <path fill="#3c3b6e" d="M0 0h2964v2100H0z"/>
+              <g fill="#fff">
+                <g id="d">
+                  <g id="c">
+                    <g id="e">
+                      <g id="b">
+                        <path id="a" d="M247 90l70.534 217.082-184.66-134.164h228.253L176.466 307.082z"/>
+                        <use xlink:href="#a" y="420"/>
+                        <use xlink:href="#a" y="840"/>
+                        <use xlink:href="#a" y="1260"/>
+                      </g>
+                      <use xlink:href="#a" y="1680"/>
+                    </g>
+                    <use xlink:href="#b" x="247" y="210"/>
+                  </g>
+                  <use xlink:href="#c" x="494"/>
+                </g>
+                <use xlink:href="#d" x="988"/>
+                <use xlink:href="#c" x="1976"/>
+                <use xlink:href="#e" x="2470"/>
+              </g>
+            </svg>
+            {% translate "English" %}
+          </button>
+          <!-- Dropdown -->
+          <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
+               id="language-dropdown-menu">
+            <ul class="py-2 font-medium" role="none">
+              <li>
+                <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                  <div class="inline-flex items-center">
+                    <svg aria-hidden="true" class="h-3.5 w-3.5 rounded-full mr-2" xmlns="http://www.w3.org/2000/svg"
+                         id="flag-icon-css-us" viewBox="0 0 512 512">
+                      <g fill-rule="evenodd">
+                        <g stroke-width="1pt">
+                          <path fill="#bd3d44"
+                                d="M0 0h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0z"
+                                transform="scale(3.9385)"/>
+                          <path fill="#fff"
+                                d="M0 10h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0z"
+                                transform="scale(3.9385)"/>
+                        </g>
+                        <path fill="#192f5d" d="M0 0h98.8v70H0z" transform="scale(3.9385)"/>
+                        <path fill="#fff"
+                              d="M8.2 3l1 2.8H12L9.7 7.5l.9 2.7-2.4-1.7L6 10.2l.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7L74 8.5l-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 7.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 24.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 21.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 38.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 35.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 52.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 49.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 66.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 63.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9z"
+                              transform="scale(3.9385)"/>
+                      </g>
+                    </svg>
+                    {% translate "English" %}
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="/fr" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                  <div class="inline-flex items-center">
+                    <svg class="h-3.5 w-3.5 rounded-full mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                         id="flag-icon-css-it" viewBox="0 0 512 512">
+                      <g fill-rule="evenodd" stroke-width="1pt">
+                        <path fill="#fff" d="M0 0h512v512H0z"/>
+                        <path fill="#002654" d="M0 0h170.7v512H0z"/>
+                        <path fill="#ed2939" d="M341.3 0H512v512H341.3z"/>
+                      </g>
+                    </svg>
+                    {% translate "French" %}
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <button data-collapse-toggle="mobile-menu-language-select" type="button"
+                  class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                  aria-controls="mobile-menu-language-select" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-6 h-6" fill="currentColor" aria-hidden="true" viewBox="0 0 20 20"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                    clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </footer>
-  <script src="https://unpkg.com/htmx.org@1.9.1"></script>
-  <script>
-    // Get the button element and the tooltip element
-    const button = document.getElementById("user-menu");
-    const tooltip = document.getElementById("tooltip");
-
-    // Add a "click" event listener to the button
-    button.addEventListener("click", function() {
-      // Toggle the display of the tooltip
-      if (tooltip.style.display === "none") {
-        tooltip.style.display = "block";
-      } else {
-        tooltip.style.display = "none";
-      }
-    });
-  </script>
+<script src="https://unpkg.com/htmx.org@1.9.1"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 </body>
 </html>

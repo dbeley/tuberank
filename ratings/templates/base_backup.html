@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+{% load static %}
+{% load i18n %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}{% endblock title %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="{% static 'css/tailwind.css' %}" rel="stylesheet">
+</head>
+<body class="bg-gray-200" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+<nav class="bg-gray-900">
+  <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 relative flex items-center justify-between h-16">
+    <!-- Logo -->
+    <div class="flex-shrink-0 flex items-center">
+      <a href="/" class="font-bold text-white text-xl">TubeRank</a>
+    </div>
+    <!-- Categories and Channels links -->
+    <div class="hidden sm:block sm:ml-6">
+      <div class="flex space-x-4">
+        <a href="{% url 'charts' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Charts" %}</a>
+        <a href="{% url 'lists' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Lists" %}</a>
+        <a href="{% url 'tags' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Tags" %}</a>
+        <a href="{% url 'channel_list' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Channels" %}</a>
+        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "About" %}</a>
+      </div>
+    </div>
+    <!-- Search bar -->
+    <div class="flex-1 flex justify-center px-2 lg:ml-6 lg:justify-end">
+      {% if user.is_authenticated %}
+      <div class="flex-shrink-0 pt-2">
+        <a href="{% url 'import_video' %}" class="truncate bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 mx-4 rounded-lg">{% translate "Import video" %}</a>
+      </div>
+      {% endif %}
+        <form class="flex" action="{% url 'search' %}" method="get">
+          <input class="w-full rounded-l-lg py-2 px-4 border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring focus:border-blue-300 overflow-hidden" name="q" type="text" placeholder="{% blocktranslate %}Search{% endblocktranslate %}" style="text-overflow: ellipsis;">
+          <button type="submit" class="px-4 bg-blue-600 text-white rounded-r-lg hover:bg-blue-500">➜</button>
+        </form>
+    </div>
+      <!-- Profile tooltip -->
+      {% if user.is_authenticated %}
+      <div class="ml-4 relative">
+        <div>
+          <button type="button" class="bg-gray-800 rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" id="user-menu" aria-expanded="false" aria-haspopup="true">
+            <span class="sr-only">{% translate "Open user menu" %}</span>
+            <img class="h-8 w-8 rounded-full" src="https://randomuser.me/api/portraits/women/55.jpg" alt="">
+          </button>
+        </div>
+        <!-- Dropdown menu, show/hide based on menu state -->
+        <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu" id="tooltip" style="display: none;">
+          <div class="py-1" role="none">
+            <a href="{% url 'profile' username=user.username %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">{% translate "Profile" %}</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">{% translate "Settings" %}</a>
+            <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">{% translate "Logout" %}</a>
+          </div>
+        </div>
+      {% else %}
+      <!-- Login link -->
+      <a href="{% url 'login' %}" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 mx-4 rounded-lg">{% translate "Login" %}</a>
+      {% endif %}
+      </div>
+  </div>
+</nav>
+<div class="container mx-auto px-4 py-8">
+  {% block content %}
+  {% endblock content %}
+</div>
+<footer class="bg-gray-900 text-gray-400">
+
+  <div class="container mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center">
+    <a href="https://github.com/your-github-repo" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-400 mx-4 flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        <span class="ml-2">TubeRank</span>
+    </a>
+    <p class="mt-2 sm:mt-0">Made with <a href="https://www.djangoproject.com/" class="text-blue-500 hover:text-blue-400">Django</a> and <a href="https://tailwindcss.com/" class="text-blue-500 hover:text-blue-400">Tailwind CSS</a></p>
+    <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+      <input name="next" type="hidden" value="{{ redirect_to }}">
+      <select name="language" id="language" class="bg-gray-800 text-gray-400 pr-4 rounded-lg">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% for language in languages %}
+        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+          {{ language.name_local }} ({{ language.code }})
+        </option>
+        {% endfor %}
+      </select>
+      <input class="ml-2" type="submit" value="Go">
+    </form>
+    <div class="flex space-x-4">
+      <a href="{% url 'charts' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Charts" %}</a>
+      <a href="{% url 'lists' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Lists" %}</a>
+      <a href="{% url 'tags' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Tags" %}</a>
+      <a href="{% url 'channel_list' %}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "Channels" %}</a>
+      <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md font-medium">{% translate "About" %}</a>
+    </div>
+  </div>
+</footer>
+  <script src="https://unpkg.com/htmx.org@1.9.1"></script>
+  <script>
+    // Get the button element and the tooltip element
+    const button = document.getElementById("user-menu");
+    const tooltip = document.getElementById("tooltip");
+
+    // Add a "click" event listener to the button
+    button.addEventListener("click", function() {
+      // Toggle the display of the tooltip
+      if (tooltip.style.display === "none") {
+        tooltip.style.display = "block";
+      } else {
+        tooltip.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>

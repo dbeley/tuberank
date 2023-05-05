@@ -28,18 +28,28 @@ class VideoListDetailsView(APIView):
     template_name = "lists/list_details.html"
 
     def get(self, request, pk):
-        list = get_object_or_404(VideoList, pk=pk)
+        video_list = get_object_or_404(VideoList, pk=pk)
         return Response(
             {
-                "list": list,
+                "list": video_list,
             }
         )
 
     def post(self, request, pk):
-        list = get_object_or_404(VideoList, pk=pk)
+        if not request.user.is_authenticated:
+            raise PermissionDenied()
+        video_list = get_object_or_404(VideoList, pk=pk, user=request.user)
+        if "description" in request.data:
+            video_list.description = request.data.get("description")
+            video_list.save()
+        else:
+            for item in video_list.items.all():
+                if f"description{item.rank}" in request.data:
+                    item.description = request.data[f"description{item.rank}"]
+                    item.save()
         return Response(
             {
-                "list": list,
+                "list": video_list,
             }
         )
 
