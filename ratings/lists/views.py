@@ -35,6 +35,14 @@ class VideoListDetailsView(APIView):
             }
         )
 
+    def post(self, request, pk):
+        list = get_object_or_404(VideoList, pk=pk)
+        return Response(
+            {
+                "list": list,
+            }
+        )
+
 
 class VideoListView(APIView):
     renderer_classes = [TemplateHTMLRenderer]

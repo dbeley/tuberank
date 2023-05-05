@@ -113,17 +113,32 @@ class VideoDetailsView(APIView):
         if request.user.is_authenticated:
             user_lists = _get_user_lists(request.user)
             if "list_pk" in request.data:
-                success = _add_video_to_list(video_pk=video.pk, list_pk=request.data.get("list_pk"))
+                success = _add_video_to_list(
+                    video_pk=video.pk, list_pk=request.data.get("list_pk")
+                )
                 if success:
-                    notification = {"title": "test", "message": _("The video was successfully added to the list")}
+                    notification = {
+                        "title": "test",
+                        "message": _("The video was successfully added to the list"),
+                    }
             if "name" in request.data:
                 serializer = UserTagSerializer(data=request.data)
                 if not serializer.is_valid():
                     return Response({"video": video, "user_lists": user_lists})
                 tag, created = UserTag.objects.get_or_create(
                     name=serializer.validated_data.get("name"),
-                    defaults={"user": self.request.user, "state": enums.TagState.VALIDATED},
+                    defaults={
+                        "user": self.request.user,
+                        "state": enums.TagState.VALIDATED,
+                    },
                 )
-            video.tags.add(tag)
+                video.tags.add(tag)
         lists = VideoList.objects.filter(videos__in=[pk])
-        return Response({"video": video, "user_lists": user_lists, "lists": lists, "notification": notification})
+        return Response(
+            {
+                "video": video,
+                "user_lists": user_lists,
+                "lists": lists,
+                "notification": notification,
+            }
+        )

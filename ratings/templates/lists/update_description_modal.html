@@ -3,7 +3,7 @@
 <div class="flex items-center justify-center min-h-screen px-4">
   <div class="bg-white rounded-lg overflow-hidden shadow-xl sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline" id="edit-modal{{ index }}">
     <div class="bg-gray-100 text-gray-900 font-bold text-lg p-4 border-b">
-      {% translate "Update List Description" %}
+      {% translate "Update Description" %}
       <button id="close-modal-button{{ index }}" type="button" class="float-right">&times;</button>
     </div>
     <form id="edit-form{{ index }}" method="POST" class="p-4">
@@ -14,6 +14,7 @@
         </label>
         <div class="flex justify-end">
             <textarea name="description" rows="3" id="item-description{{ index }}" class="block text-gray-700 border rounded-md shadow-sm focus:border-indigo-500 flex-grow" placeholder="{% blocktranslate %}Enter description{% endblocktranslate %}" maxlength="5000">
+              {{ serializer.data.description }}
             </textarea>
         </div>
       </div>

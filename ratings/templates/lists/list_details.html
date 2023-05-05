@@ -5,26 +5,24 @@
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 bg-gray-100 rounded-lg py-8">
     <div class="flex justify-right">
     <h1 class="text-3xl font-bold mb-6 w-full">{{ list.name }}</h1>
-      {% if request.user == list.user %}
-      <a href="{% url 'list_delete' pk=list.id %}" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-        {% translate "Delete" %}
-      </a>
-      {% endif %}
     </div>
     <p class="text-lg mb-6">{% blocktranslate with username=list.user.username %}By: <span class="font-bold">{{ username }}</span>{% endblocktranslate %}</p>
     <div class="flex items-center gap-4 my-4">
       <div class="gap-2 mr-auto">
         <p class="text-lg">{{ list.description }}</p>
       </div>
-        <button id="update-description-button" class="bg-gray-200 hover:bg-gray-300 px-4 mx-2 py-1 rounded-md font-medium">{% translate "Edit" %}</button>
+        {% if request.user == list.user %}
+        {% include "lists/update_description_modal.html" with serializer=list_serializer %}
+        <button id="update-description-button" class="bg-gray-200 hover:bg-gray-300 px-4 mx-2 py-2 rounded-md font-medium">{% translate "Edit" %}</button>
+        <a href="{% url 'list_delete' pk=list.id %}" class="mx-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md">
+            {% translate "Delete" %}
+        </a>
+        {% endif %}
     </div>
 
   {% if list.videos.exists %}
-      {% include "lists/update_description_modal.html" %}
-    <h2>{% translate "Videos in this list:" %}</h2>
     <div class="flex flex-col gap-8">
         {% for video in list.videos.all %}
-        {% include "lists/update_description_modal.html" with index=forloop.counter %}
             <div class="border bg-white border-gray-200 rounded-md shadow-md p-4">
                 <div class="flex items-center gap-4">
                     <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}" class="w-24 h-16 object-cover rounded">
@@ -39,7 +37,10 @@
                     <div class="gap-2 justify-left mr-auto">
                         <p>video.item.description</p>
                     </div>
+                    {% if request.user == list.user %}
+                    {% include "lists/update_description_modal.html" with index=forloop.counter item=video serializer=list_serializer %}
                     <button id="update-description-button{{ forloop.counter }}" class="bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-md font-medium">{% translate "Edit" %}</button>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
@@ -72,7 +73,7 @@
   });
 
   // Get the buttons and modals by ID
-  {% for item in item_list %}
+    {% for video in list.videos.all %}
   const createListModal{{ forloop.counter }} = document.getElementById('update-description-modal{{ forloop.counter }}');
   const updateDescriptionModalButton{{ forloop.counter }} = document.getElementById('update-description-button{{ forloop.counter }}');
   const closeCreateListModalButton{{ forloop.counter }} = document.getElementById('close-modal-button{{ forloop.counter }}');
