@@ -340,8 +340,7 @@ msgstr ""
 
 #: templates/import_video.html:9
 msgid "import_video.description.4"
-msgstr ""
-"Importing all the videos from a channel is not supported at the moment."
+msgstr "Importing all the videos from a channel is not supported at the moment."
 
 #: templates/import_video.html:13
 msgid "YouTube URLs (one by line):"
