@@ -4,48 +4,57 @@
 {% block title %}Channels{% endblock title %}
 
 {% block content %}
-  <div class="mb-4 flex justify-between items-center">
-    <h1 class="text-3xl font-bold">{% translate "Channels" %}</h1>
-    <form method="GET">
+<div class="mb-4 flex justify-between items-center">
+  <h1 class="text-3xl font-bold">{% translate "Channels" %}</h1>
+  <form method="GET">
     <div class="flex flex-wrap items-center justify-between mb-2">
       <label class="block text-gray-700 font-bold mb-2 mr-2" for="sort-by">{% translate "Sort by:" %}</label>
-      <select name="sort_by" id="sort-by" class="bg-white border border-gray-400 rounded-lg py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" onchange="this.form.submit()">
-        <option value="most_subscribers" {% if request.GET.sort_by == "most_subscribers" %}selected{% endif %}>{% translate "Most Subscribers" %}</option>
-        <option value="name_asc" {% if request.GET.sort_by == "name_asc" %}selected{% endif %}>{% translate "Name (A-Z)" %}</option>
-        <option value="name_desc" {% if request.GET.sort_by == "name_desc" %}selected{% endif %}>{% translate "Name (Z-A)" %}</option>
-        <option value="views_count" {% if request.GET.sort_by == "views_count" %}selected{% endif %}>{% translate "Most Viewed" %}</option>
-        <option value="latest_indexed" {% if request.GET.sort_by == "latest_indexed" %}selected{% endif %}>{% translate "Latest Indexed" %}</option>
+      <select name="sort_by" id="sort-by"
+              class="bg-white border border-gray-400 rounded-lg py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              onchange="this.form.submit()">
+        <option value="most_subscribers" {% if request.GET.sort_by==
+        "most_subscribers" %}selected{% endif %}>{% translate "Most Subscribers" %}</option>
+        <option value="name_asc" {% if request.GET.sort_by==
+        "name_asc" %}selected{% endif %}>{% translate "Name (A-Z)" %}</option>
+        <option value="name_desc" {% if request.GET.sort_by==
+        "name_desc" %}selected{% endif %}>{% translate "Name (Z-A)" %}</option>
+        <option value="views_count" {% if request.GET.sort_by==
+        "views_count" %}selected{% endif %}>{% translate "Most Viewed" %}</option>
+        <option value="latest_indexed" {% if request.GET.sort_by==
+        "latest_indexed" %}selected{% endif %}>{% translate "Latest Indexed" %}</option>
       </select>
     </div>
-    </form>
-  </div>
+  </form>
+</div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-    {% for channel in channels %}
-      <div class="bg-white rounded shadow-sm p-4">
-        <a href="{% url 'channel_details' pk=channel.id %}" class="block mb-2">
-          <img src="{{ channel.last_snapshot.thumbnail_url }}" alt="{{ channel.last_snapshot.name_en }}" class="w-full">
-        </a>
-        <a href="{% url 'channel_details' pk=channel.id %}" class="block text-lg font-bold text-gray-900">{{ channel.last_snapshot.name_en }}</a>
-      </div>
-    {% endfor %}
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+  {% for channel in channels %}
+  <div class="bg-white rounded shadow-sm p-4">
+    <a href="{% url 'channel_details' pk=channel.id %}" class="block mb-2">
+      <img src="{{ channel.last_snapshot.thumbnail_url }}" alt="{{ channel.last_snapshot.name_en }}" class="w-full">
+    </a>
+    <a href="{% url 'channel_details' pk=channel.id %}" class="block text-lg font-bold text-gray-900">{{
+      channel.last_snapshot.name_en }}</a>
   </div>
+  {% endfor %}
+</div>
 
-  <div class="my-4">
-    <nav class="flex items-center justify-between">
-      {% if channels.has_previous %}
-        <a href="?page={{ channels.previous_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-l">
-          {% translate "Previous" %}
-        </a>
-      {% endif %}
-      <div class="text-gray-600">
-        {% blocktranslate with page_number=channels.number total_page_number=channels.paginator.num_pages %}Page {{ page_number }} of {{ total_page_number }}{% endblocktranslate %}
-      </div>
-      {% if channels.has_next %}
-        <a href="?page={{ channels.next_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-r">
-          {% translate "Next" %}
-        </a>
-      {% endif %}
-    </nav>
-  </div>
+<div class="my-4">
+  <nav class="flex items-center justify-between">
+    {% if channels.has_previous %}
+    <a href="?page={{ channels.previous_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-l">
+      {% translate "Previous" %}
+    </a>
+    {% endif %}
+    <div class="text-gray-600">
+      {% blocktranslate with page_number=channels.number total_page_number=channels.paginator.num_pages %}Page {{
+      page_number }} of {{ total_page_number }}{% endblocktranslate %}
+    </div>
+    {% if channels.has_next %}
+    <a href="?page={{ channels.next_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-r">
+      {% translate "Next" %}
+    </a>
+    {% endif %}
+  </nav>
+</div>
 {% endblock content %}

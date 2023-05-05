@@ -1,36 +1,42 @@
 {% load i18n %}
 <div id="videos" hx-swap="outerHTML" hx-target="#videos">
-    {% if videos %}
-    <div class="flex flex-col items-center">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {% for video in videos %}
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col justify-between">
-                        <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}" class="h-48 w-full object-cover">
-                        <div class="p-4">
-                            <h3 class="text-lg font-bold mb-2">{{ video.last_snapshot.title_en }}</h3>
-                            <p class="text-gray-700 text-sm mb-2">Channel: {{ video.channel.last_snapshot.name_en }}</p>
-                            <a href="{% url 'video_details' pk=video.id %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{% translate "View Details" %}</a>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-    </div>
-    <div class="my-4">
-        <nav class="flex items-center justify-between">
-        {% if video_page.has_previous %}
-            <a hx-get="{% url 'search' %}?q={{ query }}&page={{ video_page.previous_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-l">
-            {% translate "Previous" %}
-            </a>
-        {% endif %}
-        <div class="text-gray-600">
-            {% blocktranslate with page_number=video_page.number total_page_number=video_page.paginator.num_pages %}Page {{ page_number }} of {{ total_page_number }}{% endblocktranslate %}
+  {% if videos %}
+  <div class="flex flex-col items-center">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {% for video in videos %}
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col justify-between">
+        <img src="{{ video.last_snapshot.thumbnail_url }}" alt="{{ video.last_snapshot.title_en }}"
+             class="h-48 w-full object-cover">
+        <div class="p-4">
+          <h3 class="text-lg font-bold mb-2">{{ video.last_snapshot.title_en }}</h3>
+          <p class="text-gray-700 text-sm mb-2">Channel: {{ video.channel.last_snapshot.name_en }}</p>
+          <a href="{% url 'video_details' pk=video.id %}"
+             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{% translate "View Details"
+            %}</a>
         </div>
-        {% if video_page.has_next %}
-            <a hx-get="{% url 'search' %}?q={{ query }}&page={{ video_page.next_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-r">
-            {% translate "Next" %}
-            </a>
-        {% endif %}
-        </nav>
+      </div>
+      {% endfor %}
     </div>
-    {% endif %}
+  </div>
+  <div class="my-4">
+    <nav class="flex items-center justify-between">
+      {% if video_page.has_previous %}
+      <a hx-get="{% url 'search' %}?q={{ query }}&page={{ video_page.previous_page_number }}"
+         class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-l">
+        {% translate "Previous" %}
+      </a>
+      {% endif %}
+      <div class="text-gray-600">
+        {% blocktranslate with page_number=video_page.number total_page_number=video_page.paginator.num_pages %}Page {{
+        page_number }} of {{ total_page_number }}{% endblocktranslate %}
+      </div>
+      {% if video_page.has_next %}
+      <a hx-get="{% url 'search' %}?q={{ query }}&page={{ video_page.next_page_number }}"
+         class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-r">
+        {% translate "Next" %}
+      </a>
+      {% endif %}
+    </nav>
+  </div>
+  {% endif %}
 </div>
