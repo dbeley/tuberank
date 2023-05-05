@@ -6,8 +6,7 @@
   <div class="flex justify-right">
     <h1 class="text-3xl font-bold mb-6 w-full">{{ list.name }}</h1>
   </div>
-  <p class="text-lg mb-6">{% blocktranslate with username=list.user.username %}By:
-    <span class="font-bold">{{ username }}</span>{% endblocktranslate %}</p>
+  <p class="text-lg mb-6">{% blocktranslate with username=list.user.username %}By: <span class="font-bold">{{ username }}</span>{% endblocktranslate %}</p>
   <div class="flex items-center gap-4 my-4">
     <div class="gap-2 mr-auto">
       <p class="text-lg">{{ list.description }}</p>
