@@ -38,9 +38,7 @@ class VideoListDetailsView(APIView):
     def post(self, request, pk):
         if not request.user.is_authenticated:
             raise PermissionDenied()
-        video_list = get_object_or_404(VideoList, pk=pk)
-        if video_list.user != request.user:
-            raise PermissionDenied()
+        video_list = get_object_or_404(VideoList, pk=pk, user=request.user)
         if "description" in request.data:
             video_list.description = request.data.get("description")
             video_list.save()
