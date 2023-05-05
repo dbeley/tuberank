@@ -49,9 +49,6 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 - Display related videos with the same tags
 - Add htmx-aware form to add/modify a rating
 
-### Channel rating page
-- Create channel rating page
-
 ### Categories
 - Add categories page
 - Add categories to videos/channels/snapshots
@@ -72,7 +69,7 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 - Add slug for videos, channels
 
 ### Tag / Lists
-- Better display of tags and lists (critical feature)
+- Better display of tags
 - Feature to delete a tag from a video
 - Feature to delete a tag when no video attached to it
 - Feature to reorder a list
