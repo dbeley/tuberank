@@ -17,10 +17,16 @@ from ratings.videos.serializers import VideoRatingSerializer
 
 
 def _add_video_to_list(video_pk: int, list_pk: int) -> bool:
-    list = VideoList.objects.get(pk=list_pk)
+    video_list = VideoList.objects.get(pk=list_pk)
     video = Video.objects.get(pk=video_pk)
-    if video not in list.videos.all():
-        VideoListItem.objects.create(list=list, video=video, order=1)
+    if video not in video_list.videos.all():
+        first_available_rank = 1
+        if video_list.items.exists():
+            ranks = list(video_list.items.values_list("rank", flat=True))
+            first_available_rank = min(set(range(1, max(ranks) + 2)) - set(ranks))
+        VideoListItem.objects.create(
+            list=video_list, video=video, rank=first_available_rank, description=""
+        )
         return True
     return False
 
