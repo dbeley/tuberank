@@ -9,6 +9,6 @@ temp/
 .idea/
 *.mo
 staticfiles/
-static/
+static/css
 node_modules/
 postgres-data/
