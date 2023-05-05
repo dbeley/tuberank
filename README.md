@@ -20,6 +20,7 @@ poetry install
 
 ```
 npm install -D tailwindcss
+npm install flowbite
 npm run tailwind-watch
 python manage.py migrate --run-syncdb
 ```
@@ -46,9 +47,6 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 ### Video detail page
 - Display categories
 - Display related videos with the same tags
-
-### Video list page
-- Add sorting mechanism
 - Add htmx-aware form to add/modify a rating
 
 ### Channel rating page
