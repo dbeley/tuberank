@@ -25,6 +25,4 @@ urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
 ]
 
-urlpatterns += i18n_patterns(
-    path("", include("ratings.urls")), prefix_default_language=False
-)
+urlpatterns += i18n_patterns(path("", include("ratings.urls")))
