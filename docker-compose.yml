@@ -18,7 +18,7 @@ services:
       - POSTGRES_PASSWORD=$POSTGRES_DB_PASSWORD
   web:
     <<: *default-app
-    command: bash -c "poetry run python manage.py migrate && poetry run gunicorn tuberank.wsgi --bind 0.0.0.0:8000 --timeout 600"
+    command: bash -c "npm run tailwind-build && poetry run python manage.py migrate && poetry run gunicorn tuberank.wsgi --bind 0.0.0.0:8000 --timeout 600"
     ports:
       - "8000:8000"
     environment:

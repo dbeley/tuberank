@@ -44,7 +44,7 @@ class VideoListDetailsView(APIView):
             video_list.save()
         else:
             for item in video_list.items.all():
-                if f"description{item.rank}" in request.data:
+                if request.data.get(f"description{item.rank}"):
                     item.description = request.data[f"description{item.rank}"]
                     item.save()
         return Response(
