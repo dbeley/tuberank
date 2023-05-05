@@ -3,6 +3,8 @@ version: '3'
 x-app: &default-app
   build:
     context: "."
+    args:
+      DOCKER_BUILDKIT: 1
   volumes:
     - .:/app
   restart: "unless-stopped"
@@ -11,7 +13,7 @@ services:
   db:
     image: postgres
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
+      - /opt/tuberank/postgres-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=$POSTGRES_DB_NAME
       - POSTGRES_USER=$POSTGRES_DB_USER
@@ -26,13 +28,13 @@ services:
       - POSTGRES_USER=$POSTGRES_DB_USER
       - POSTGRES_PASSWORD=$POSTGRES_DB_PASSWORD
       - DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY
-#   labels:
-#     - "traefik.enable=true"
-#     - "traefik.http.routers.tuberank.entrypoints=secure"
-#     - "traefik.http.routers.tuberank.rule=Host(`tuberank.$DOMAIN`)"
-#     - "traefik.http.services.tuberank.loadbalancer.server.port=8000"
-#     - "traefik.http.routers.tuberank.tls.certresolver=le"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tuberank.entrypoints=secure"
+      - "traefik.http.routers.tuberank.rule=Host(`tuberank.$DOMAIN`)"
+      - "traefik.http.services.tuberank.loadbalancer.server.port=8000"
+      - "traefik.http.routers.tuberank.tls.certresolver=le"
 
-#etworks:
-#   default:
-#       name: $DEFAULT_NETWORK
+networks:
+    default:
+        name: $DEFAULT_NETWORK
