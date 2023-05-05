@@ -25,8 +25,7 @@ RUN apt-get update \
 
 COPY package*.json ./
 COPY input.css ./
-RUN npm install -D tailwindcss
-RUN npm install flowbite
+RUN npm install tailwindcss flowbite
 RUN npm run tailwind-build
 
 COPY poetry.lock pyproject.toml ./
