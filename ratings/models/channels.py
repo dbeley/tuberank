@@ -41,7 +41,7 @@ class ChannelSnapshot(models.Model):
         "ratings.Channel", related_name="snapshots", on_delete=models.CASCADE
     )
     count_subscribers = models.IntegerField(default=0, blank=True, null=True)
-    count_views = models.IntegerField(default=0, blank=True, null=True)
+    count_views = models.BigIntegerField(default=0, blank=True, null=True)
     count_videos = models.IntegerField(default=0, blank=True, null=True)
     date_creation = models.DateTimeField(auto_now_add=True)
     custom_url = models.CharField(max_length=24, blank=True)

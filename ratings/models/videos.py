@@ -31,7 +31,7 @@ class VideoSnapshot(models.Model):
     video = models.ForeignKey(
         "ratings.Video", related_name="snapshots", on_delete=models.CASCADE
     )
-    count_views = models.IntegerField(default=0, blank=True, null=True)
+    count_views = models.BigIntegerField(default=0, blank=True, null=True)
     count_likes = models.IntegerField(default=0, blank=True, null=True)
     count_comments = models.IntegerField(default=0, blank=True, null=True)
     date_creation = models.DateTimeField(auto_now_add=True)
