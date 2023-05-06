@@ -168,8 +168,14 @@ def create_video_snapshot_from_url(url: str) -> None:
     - normal URL: https://www.youtube.com/watch?v=$VIDEO_ID
     - mobile URL: https://m.youtube.com/watch?v=$VIDEO_ID
     - search result URL: https://www.youtube.com/watch?v=$VIDEO_ID&pp=$TRACKING_QUERY_PARAM
+    - list item URL: https://www.youtube.com/watch?v=$VIDEO_ID&list=$LIST_ID&index=$INDEX&pp=$TRACKING_QUERY_PARAM
     """
-    video_id = url.strip().split("youtube.com/watch?v=")[-1].rsplit("&pp=")[0]
+    video_id = (
+        url.strip()
+        .split("youtube.com/watch?v=")[-1]
+        .rsplit("&list=")[0]
+        .rsplit("&pp=")[0]
+    )
     logger.info("Creating video snapshot for video id %s", video_id)
     create_video_snapshot(video_id)
 
