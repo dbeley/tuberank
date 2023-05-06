@@ -145,7 +145,7 @@ def _get_video_data_class_from_id(video_id: str) -> VideoDataClass:
         count_comments=data["statistics"].get("commentCount"),
         description=data["snippet"]["description"],
         thumbnail_url=_get_thumbnail_data(data["snippet"]["thumbnails"]),
-        category_id=data["snippet"].get("categoryId"),
+        category_id=int(data["snippet"].get("categoryId")),
         duration=_parse_youtube_duration(data["contentDetails"].get("duration")),
     )
 
