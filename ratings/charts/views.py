@@ -55,7 +55,6 @@ class ChartsView(APIView):
         page = paginator.get_page(request.GET.get("page", 1))
         return Response(
             {
-                "videos": page,
                 "page": page,
                 "tags": tags,
                 "selected_sort_method": sort_method,
