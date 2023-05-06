@@ -22,7 +22,7 @@
     </select>
     <label class="block text-gray-700 font-bold mb-2 mr-2" for="sort-by">{% translate "Filter by tag:" %}</label>
     <select name="tag" id="tag-filter" class="bg-white border border-gray-400 rounded-lg py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-      <option disabled selected value>{% translate " -- Select an option -- " %}</option>
+      <option selected value>{% translate " -- Select an option -- " %}</option>
       {% for tag in tags %}
       <option value="{{ tag.name }}" {% if request.GET.tag == tag.name %}selected{% endif %}>{{ tag.name }}</option>
       {% endfor %}

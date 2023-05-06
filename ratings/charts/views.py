@@ -20,7 +20,7 @@ class ChartsView(APIView):
             num_ratings=Count("ratings"),
             avg_rating=Avg("ratings__rating"),
             count_views=Max("snapshots__count_views"),
-        ).order_by("-avg_rating")
+        )
         if sort_method := request.GET.get("sort_by"):
             if sort_method not in [
                 "newest",
@@ -42,9 +42,11 @@ class ChartsView(APIView):
             elif sort_method == "ratings_count":
                 videos = videos.order_by("-num_ratings")
             elif sort_method == "rating":
-                # default sorting mechanism
-                # videos = videos.order_by("-avg_rating")
-                pass
+                videos = videos.order_by("-avg_rating")
+        else:
+            # default
+            videos = videos.order_by("-avg_rating")
+
         if selected_tag := request.GET.get("tag"):
             tag = UserTag.objects.get(name=selected_tag)
             videos = videos.filter(tags__in=[tag])
