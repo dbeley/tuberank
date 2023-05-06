@@ -87,6 +87,8 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 - Feature to delete a tag from a video
 - Feature to delete a tag when no video attached to it
 - Feature to reorder a list
+- Make tags have distinct names, no spaces but dashes
 
 ### Import function
 - add channel batch import feature
+- Add search by url + importing it automatically
