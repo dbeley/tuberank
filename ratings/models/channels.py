@@ -36,7 +36,7 @@ class Channel(models.Model):
 
 
 class ChannelSnapshot(models.Model):
-    name_en = models.CharField(max_length=20)
+    name_en = models.CharField(max_length=50)
     channel = models.ForeignKey(
         "ratings.Channel", related_name="snapshots", on_delete=models.CASCADE
     )
