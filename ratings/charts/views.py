@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator
-from django.db.models import Avg, Count, Max
+from django.db.models import Avg, Count, Max, F
 from django.http import HttpResponseRedirect
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
@@ -18,8 +18,8 @@ class ChartsView(APIView):
         tags = _get_validated_tags().order_by("name")
         videos = Video.objects.annotate(
             num_ratings=Count("ratings"),
-            avg_rating=Avg("ratings__rating"),
-            count_views=Max("snapshots__count_views"),
+            avg_rating=Avg(F("ratings__rating")),
+            count_views=Max(F("snapshots__count_views")),
         )
         if sort_method := request.GET.get("sort_by"):
             if sort_method not in [
