@@ -17,17 +17,17 @@ class Rating(IntEnum):
     @staticmethod
     def choices():
         return [
-            ("0", Rating.ZERO_STAR.value),
-            ("0.5", Rating.ZERO_STAR_AND_HALF.value),
-            ("1", Rating.ONE_STAR.value),
-            ("1.5", Rating.ONE_STAR_AND_HALF.value),
-            ("2", Rating.TWO_STARS.value),
-            ("2.5", Rating.TWO_STARS_AND_HALF.value),
-            ("3", Rating.THREE_STARS.value),
-            ("3.5", Rating.THREE_STARS_AND_HALF.value),
-            ("4", Rating.FOUR_STARS.value),
-            ("4.5", Rating.FOUR_STARS_AND_HALF.value),
-            ("5", Rating.FIVE_STARS.value),
+            (Rating.ZERO_STAR.value, "0"),
+            (Rating.ZERO_STAR_AND_HALF.value, "0.5"),
+            (Rating.ONE_STAR.value, "1"),
+            (Rating.ONE_STAR_AND_HALF.value, "1.5"),
+            (Rating.TWO_STARS.value, "2"),
+            (Rating.TWO_STARS_AND_HALF.value, "2.5"),
+            (Rating.THREE_STARS.value, "3"),
+            (Rating.THREE_STARS_AND_HALF.value, "3.5"),
+            (Rating.FOUR_STARS.value, "4"),
+            (Rating.FOUR_STARS_AND_HALF.value, "4.5"),
+            (Rating.FIVE_STARS.value, "5"),
         ]
 
 
@@ -38,8 +38,8 @@ class ViewingState(IntEnum):
     @staticmethod
     def choices():
         return [
-            ("Watching", ViewingState.WATCHING.value),
-            ("Viewed", ViewingState.VIEWED.value),
+            (ViewingState.WATCHING.value, "Watching"),
+            (ViewingState.VIEWED.value, "Viewed"),
         ]
 
 
@@ -50,8 +50,8 @@ class TagState(IntEnum):
     @staticmethod
     def choices():
         return [
-            ("In validation", TagState.IN_VALIDATION.value),
-            ("Validated", TagState.VALIDATED.value),
+            (TagState.IN_VALIDATION.value, "In validation"),
+            (TagState.VALIDATED.value, "Validated"),
         ]
 
 
@@ -75,19 +75,19 @@ class Category(IntEnum):
     @staticmethod
     def choices():
         return [
-            ("Film & Animation", Category.FILM_AND_ANIMATION.value),
-            ("Autos & Vehicles", Category.AUTOS_AND_VEHICLES.value),
-            ("Music", Category.MUSIC.value),
-            ("Pets & Animals", Category.PETS_AND_ANIMALS.value),
-            ("Sports", Category.SPORTS.value),
-            ("Travel & Events", Category.TRAVEL_AND_EVENTS.value),
-            ("Gaming", Category.GAMING.value),
-            ("People & Blogs", Category.PEOPLE_AND_BLOGS.value),
-            ("Comedy", Category.COMEDY.value),
-            ("Entertainment", Category.ENTERTAINMENT.value),
-            ("News & Politics", Category.NEWS_AND_POLITICS.value),
-            ("How-to & Styles", Category.HOWTO_AND_STYLE.value),
-            ("Education", Category.EDUCATION.value),
-            ("Science & Technology", Category.SCIENCE_AND_TECHNOLOGY.value),
-            ("Non-profits & Activism", Category.NONPROFITS_AND_ACTIVISM.value),
+            (Category.FILM_AND_ANIMATION.value, "Film & Animation"),
+            (Category.AUTOS_AND_VEHICLES.value, "Autos & Vehicles"),
+            (Category.MUSIC.value, "Music"),
+            (Category.PETS_AND_ANIMALS.value, "Pets & Animals"),
+            (Category.SPORTS.value, "Sports"),
+            (Category.TRAVEL_AND_EVENTS.value, "Travel & Events"),
+            (Category.GAMING.value, "Gaming"),
+            (Category.PEOPLE_AND_BLOGS.value, "People & Blogs"),
+            (Category.COMEDY.value, "Comedy"),
+            (Category.ENTERTAINMENT.value, "Entertainment"),
+            (Category.NEWS_AND_POLITICS.value, "News & Politics"),
+            (Category.HOWTO_AND_STYLE.value, "How-to & Styles"),
+            (Category.EDUCATION.value, "Education"),
+            (Category.SCIENCE_AND_TECHNOLOGY.value, "Science & Technology"),
+            (Category.NONPROFITS_AND_ACTIVISM.value, "Non-profits & Activism"),
         ]
