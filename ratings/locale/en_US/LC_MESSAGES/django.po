@@ -336,7 +336,8 @@ msgstr ""
 "The supported URL formats are the following:\n"
 "- https://www.youtube.com/watch?v={VIDEO_ID}\n"
 "- https://m.youtube.com/watch?v={VIDEO_ID}\n"
-"- https://www.youtube.com/watch?v={VIDEO_ID}&pp={TRACKING_PARAM}"
+"- https://www.youtube.com/watch?v={VIDEO_ID}&pp={TRACKING_PARAM}\n"
+"- https://www.youtube.com/watch?v={VIDEO_ID}&list={LIST_ID}..."
 
 #: templates/import_video.html:9
 msgid "import_video.description.4"
