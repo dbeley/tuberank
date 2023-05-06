@@ -1,0 +1,30 @@
+# fly.toml app configuration file generated for tuberank on 2023-05-06T12:12:54+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "tuberank"
+primary_region = "cdg"
+
+[env]
+  PORT = "8000"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+
+[checks]
+  [checks.alive]
+    type = "tcp"
+    interval = "15s"
+    timeout = "2s"
+    grace_period = "5s"
+
+[[statics]]
+  guest_path = "/code/static"
+  url_prefix = "/static/"
+
+[deploy]
+  release_command = "python /code/manage.py migrate"

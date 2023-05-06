@@ -1,3 +1,4 @@
+import os
 import logging
 from dataclasses import dataclass
 from datetime import datetime
@@ -6,7 +7,6 @@ import isodate
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-from core.utils import get_base_dir, get_secret
 from ratings.models.channels import Channel, ChannelSnapshot
 from ratings.models.videos import Video, VideoSnapshot
 
@@ -21,9 +21,7 @@ class NoResultException(Exception):
     pass
 
 
-YOUTUBE_DEVELOPER_KEY = get_secret(
-    base_dir=get_base_dir(), config_file="secret.ini", key_name="YOUTUBE_DEVELOPER_KEY"
-)
+YOUTUBE_DEVELOPER_KEY = os.environ.get("YOUTUBE_DEVELOPER_KEY")
 
 
 @dataclass
@@ -184,12 +182,14 @@ def create_video_snapshot(video_id: str) -> None:
 
     create_channel_snapshot(data.channel_id)
     channel = Channel.objects.get(yt_id=data.channel_id)
-    
+
     if channel:
         if not Video.objects.filter(yt_id=video_id).exists():
             logger.warning("Video %s not found. Creating it.", video_id)
             video = Video(
-                yt_id=data.yt_id, date_publication=data.date_publication, channel=channel
+                yt_id=data.yt_id,
+                date_publication=data.date_publication,
+                channel=channel,
             )
             video.save()
         video = Video.objects.get(yt_id=video_id)

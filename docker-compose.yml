@@ -10,24 +10,18 @@ x-app: &default-app
   restart: "unless-stopped"
 
 services:
-  db:
-    image: postgres
-    volumes:
-      - /opt/tuberank/postgres-data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=$POSTGRES_DB_NAME
-      - POSTGRES_USER=$POSTGRES_DB_USER
-      - POSTGRES_PASSWORD=$POSTGRES_DB_PASSWORD
   web:
     <<: *default-app
     command: bash -c "npm run tailwind-build && poetry run python manage.py migrate && poetry run gunicorn tuberank.wsgi --bind 0.0.0.0:8000 --timeout 600"
     ports:
       - "8000:8000"
     environment:
-      - POSTGRES_NAME=$POSTGRES_DB_NAME
-      - POSTGRES_USER=$POSTGRES_DB_USER
-      - POSTGRES_PASSWORD=$POSTGRES_DB_PASSWORD
+      - DATABASE_URL=$DATABASE_URL
+      - YOUTUBE_DEVELOPER_KEY=$YOUTUBE_DEVELOPER_KEY
       - DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY
+      - DEBUG=$DEBUG
+      - ALLOWED_HOSTS=$ALLOWED_HOSTS
+      - CSRF_TRUSTED_ORIGINS=$CSRF_TRUSTED_ORIGINS
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.tuberank.entrypoints=secure"

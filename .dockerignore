@@ -1,3 +1,4 @@
+fly.toml
 .git/
 __pycache__/
-postgres_data/
+*.sqlite3
