@@ -8,7 +8,7 @@ def get_ratings_chart_for_user(user: User) -> dict[str, list]:
 
     ratings_counts: dict = {}
     for rating_choice in Rating.choices():
-        ratings_counts[rating_choice[1]] = 0
+        ratings_counts[rating_choice[0]] = 0
 
     for rating in ratings:
         ratings_counts[rating] += 1
