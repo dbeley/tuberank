@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-05 23:43+0200\n"
+"POT-Creation-Date: 2023-05-06 20:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -102,12 +102,12 @@ msgid "Charts"
 msgstr ""
 
 #: templates/base.html:111 templates/base_backup.html:22
-#: templates/base_backup.html:92 templates/videos/video_details.html:143
+#: templates/base_backup.html:92 templates/videos/video_details.html:141
 msgid "Lists"
 msgstr ""
 
 #: templates/base.html:114 templates/base_backup.html:23
-#: templates/base_backup.html:93 templates/videos/video_details.html:120
+#: templates/base_backup.html:93 templates/videos/video_details.html:118
 msgid "Tags"
 msgstr ""
 
@@ -341,7 +341,8 @@ msgstr ""
 
 #: templates/import_video.html:9
 msgid "import_video.description.4"
-msgstr "Importing all the videos from a channel is not supported at the moment."
+msgstr ""
+"Importing all the videos from a channel is not supported at the moment."
 
 #: templates/import_video.html:13
 msgid "YouTube URLs (one by line):"
@@ -351,7 +352,7 @@ msgstr ""
 msgid "Import URLs"
 msgstr ""
 
-#: templates/lists/list_details.html:12 templates/videos/video_details.html:103
+#: templates/lists/list_details.html:12 templates/videos/video_details.html:101
 #, python-format
 msgid "By: <span class=\"font-bold\">%(username)s</span>"
 msgstr ""
@@ -393,7 +394,7 @@ msgstr ""
 
 #: templates/lists/lists.html:31
 #: templates/lists/update_description_modal.html:13
-#: templates/videos/video_details.html:83
+#: templates/videos/video_details.html:81
 msgid "Description"
 msgstr ""
 
@@ -416,7 +417,7 @@ msgstr ""
 msgid "Popular Lists"
 msgstr ""
 
-#: templates/lists/lists.html:71 templates/videos/video_details.html:165
+#: templates/lists/lists.html:71 templates/videos/video_details.html:163
 #, python-format
 msgid "by %(user)s"
 msgstr ""
@@ -431,23 +432,27 @@ msgstr ""
 msgid "Update Description"
 msgstr "TubeRank is a platform where you can curate and rate YouTube videos."
 
-#: templates/profile/profile.html:18 templates/profile/profile.html:28
+#: templates/profile/profile.html:17 templates/profile/profile.html:31
 msgid "Video Ratings"
 msgstr ""
 
-#: templates/profile/profile.html:22 templates/profile/profile.html:56
+#: templates/profile/profile.html:21 templates/profile/profile.html:59
 msgid "Channel Ratings"
 msgstr ""
 
-#: templates/profile/profile.html:41
+#: templates/profile/profile.html:25
+msgid "Date Joined"
+msgstr ""
+
+#: templates/profile/profile.html:44
 msgid "Rating:"
 msgstr ""
 
-#: templates/profile/profile.html:52
+#: templates/profile/profile.html:55
 msgid "No video ratings found."
 msgstr ""
 
-#: templates/profile/profile.html:75
+#: templates/profile/profile.html:78
 msgid "No channel ratings found."
 msgstr ""
 
@@ -504,7 +509,7 @@ msgstr ""
 msgid "All tags"
 msgstr ""
 
-#: templates/tags/tags.html:18 templates/videos/video_details.html:139
+#: templates/tags/tags.html:18 templates/videos/video_details.html:137
 msgid "No tags yet."
 msgstr ""
 
@@ -521,64 +526,60 @@ msgid "I'm watching this video"
 msgstr ""
 
 #: templates/videos/video_details.html:41
-msgid "Views"
-msgstr ""
-
-#: templates/videos/video_details.html:45
-msgid "Likes"
-msgstr ""
-
-#: templates/videos/video_details.html:49
-msgid "Comments"
-msgstr ""
-
-#: templates/videos/video_details.html:53
-msgid "Uploaded"
-msgstr ""
-
-#: templates/videos/video_details.html:57
-msgid "Duration"
-msgstr ""
-
-#: templates/videos/video_details.html:68
-msgid "Rating"
-msgstr ""
-
-#: templates/videos/video_details.html:69
-#, python-format
-msgid "%(rating)s from %(count)s ratings"
-msgstr ""
-
-#: templates/videos/video_details.html:72
 msgid "Channel"
 msgstr ""
 
-#: templates/videos/video_details.html:92
+#: templates/videos/video_details.html:47
+msgid "Views"
+msgstr ""
+
+#: templates/videos/video_details.html:51
+msgid "Likes"
+msgstr ""
+
+#: templates/videos/video_details.html:55
+msgid "Comments"
+msgstr ""
+
+#: templates/videos/video_details.html:59
+msgid "Uploaded"
+msgstr ""
+
+#: templates/videos/video_details.html:63
+msgid "Duration"
+msgstr ""
+
+#: templates/videos/video_details.html:75
+#, python-format
+msgid "%(count)s ratings"
+msgstr ""
+
+#: templates/videos/video_details.html:90
 msgid "Reviews"
 msgstr ""
 
-#: templates/videos/video_details.html:101
+#: templates/videos/video_details.html:99
 #, python-format
 msgid "Rating: <span class=\"font-bold\">%(rating)s</span>"
 msgstr ""
 
-#: templates/videos/video_details.html:106
+#: templates/videos/video_details.html:104
 msgid "Read the review"
 msgstr ""
 
-#: templates/videos/video_details.html:126
+#: templates/videos/video_details.html:124
 msgid "Add Tag"
 msgstr ""
 
-#: templates/videos/video_details.html:149
+#: templates/videos/video_details.html:147
 msgid "Select a list"
 msgstr ""
 
-#: templates/videos/video_details.html:154
+#: templates/videos/video_details.html:152
 msgid "Add to List"
 msgstr ""
 
-#: templates/videos/video_details.html:172
+#: templates/videos/video_details.html:170
 msgid "Not in any lists yet."
 msgstr ""
 

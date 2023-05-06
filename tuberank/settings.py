@@ -96,7 +96,7 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     },
 }
-DATABASES["default"] = DATABASES["local" if DEBUG else "production"]
+DATABASES["default"] = DATABASES["production" if not DEBUG else "local"]
 
 
 # Password validation

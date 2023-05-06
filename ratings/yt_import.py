@@ -78,6 +78,7 @@ def create_channel_snapshot(channel_id: str) -> None:
     if not Channel.objects.filter(yt_id=channel_id).exists():
         logger.warning("Channel %s not found. Creating it.", channel_id)
         channel = Channel(yt_id=data.yt_id, date_creation=data.date_creation)
+        channel.full_clean()
         channel.save()
 
     channel = Channel.objects.get(yt_id=channel_id)
@@ -91,6 +92,7 @@ def create_channel_snapshot(channel_id: str) -> None:
         description=data.description,
         thumbnail_url=data.thumbnail_url,
     )
+    snapshot.full_clean()
     snapshot.save()
 
 
@@ -202,6 +204,7 @@ def create_video_snapshot(video_id: str) -> None:
                 date_publication=data.date_publication,
                 channel=channel,
             )
+            video.full_clean()
             video.save()
         video = Video.objects.get(yt_id=video_id)
 
@@ -216,4 +219,5 @@ def create_video_snapshot(video_id: str) -> None:
             category=data.category_id,
             duration=data.duration,
         )
+        snapshot.full_clean()
         snapshot.save()
