@@ -46,7 +46,7 @@ class ChannelSnapshot(models.Model):
     date_creation = models.DateTimeField(auto_now_add=True)
     custom_url = models.CharField(max_length=24, blank=True)
     description = models.TextField(max_length=5000, blank=True)
-    thumbnail_url = models.CharField(max_length=100)
+    thumbnail_url = models.CharField(max_length=200)
 
     def __str__(self) -> str:
         return f"{self.pk} - {self.name_en} - {self.date_creation}"
