@@ -179,12 +179,7 @@ def create_video_snapshot_from_url(url: str) -> None:
         .rsplit("&pp=")[0]
     )
     logger.info("Creating video snapshot for video id %s", video_id)
-    try:
-        create_video_snapshot(video_id)
-    except Exception as err:
-        logger.warning(
-            "Couldn't create video snapshot for url %s: %s", url, err, exc_info=True
-        )
+    create_video_snapshot(video_id)
 
 
 def create_video_snapshot(video_id: str) -> None:
