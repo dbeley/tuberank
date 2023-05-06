@@ -148,6 +148,8 @@
       </li>
       <li>
         <div class="flex items-center md:order-2">
+          {% get_current_language as LANGUAGE_CODE %}
+          {% if LANGUAGE_CODE == 'en' %}
           <button type="button" data-dropdown-toggle="language-dropdown-menu"
                   class="inline-flex items-center font-medium justify-center px-4 py-2 text-gray-900 text-sm rounded-lg cursor-pointer bg-gray-200 hover:bg-blue-200">
             <svg class="w-5 h-5 mr-2 rounded-full" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -178,6 +180,20 @@
             </svg>
             {% translate "English" %}
           </button>
+          {% else %}
+          <button type="button" data-dropdown-toggle="language-dropdown-menu"
+                  class="inline-flex items-center font-medium justify-center px-4 py-2 text-gray-900 text-sm rounded-lg cursor-pointer bg-gray-200 hover:bg-blue-200">
+            <svg class="h-3.5 w-3.5 rounded-full mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                 id="flag-icon-css-it" viewBox="0 0 512 512">
+              <g fill-rule="evenodd" stroke-width="1pt">
+                <path fill="#fff" d="M0 0h512v512H0z"/>
+                <path fill="#002654" d="M0 0h170.7v512H0z"/>
+                <path fill="#ed2939" d="M341.3 0H512v512H341.3z"/>
+              </g>
+            </svg>
+            {% translate "French" %}
+          </button>
+          {% endif %}
           <!-- Dropdown -->
           <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
                id="language-dropdown-menu">
