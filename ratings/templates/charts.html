@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{{ channel.last_snapshot.name_en }} - TubeRank{% endblock title %}
+{% block title %}{% translate "Charts" %} - TubeRank{% endblock title %}
 
 {% block content %}
 <div class="mb-4">
@@ -9,32 +9,36 @@
   <p class="text-gray-600">{{ channel.last_snapshot.description | linebreaks }}</p>
 </div>
 
-<form class="my-4" method="GET">
-  <div class="flex flex-wrap items-center justify-between mb-2">
-    <label class="block text-gray-700 font-bold mb-2 mr-2" for="sort-by">{% translate "Sort by:" %}</label>
-    <select name="sort_by" id="sort-by" class="bg-white border border-gray-400 rounded-lg py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-      <option value="rating" {% if request.GET.sort_by == "rating" %}selected{% endif %}>{% translate "Best rated" %}</option>
-      <option value="ratings_count" {% if request.GET.sort_by == "ratings_count" %}selected{% endif %}>{% translate "Most rated" %}</option>
-      <option value="views_count" {% if request.GET.sort_by == "views_count" %}selected{% endif %}>{% translate "Most viewed" %}</option>
-      <option value="views_count_desc" {% if request.GET.sort_by == "views_count_desc" %}selected{% endif %}>{% translate "Least viewed" %}</option>
-      <option value="newest" {% if request.GET.sort_by == "newest" %}selected{% endif %}>{% translate "Newest" %}</option>
-      <option value="oldest" {% if request.GET.sort_by == "oldest" %}selected{% endif %}>{% translate "Oldest" %}</option>
-    </select>
-    <label class="block text-gray-700 font-bold mb-2 mr-2" for="sort-by">{% translate "Filter by tag:" %}</label>
-    <select name="tag" id="tag-filter" class="bg-white border border-gray-400 rounded-lg py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-      <option disabled selected value>{% translate " -- Select an option -- " %}</option>
-      {% for tag in tags %}
-      <option value="{{ tag.name }}" {% if request.GET.tag == tag.name %}selected{% endif %}>{{ tag.name }}</option>
-      {% endfor %}
-    </select>
-    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2">
-      {% translate "Filter" %}
-    </button>
-  </div>
+<form class="my-4">
+    <div class="grid gap-6 mb-6 md:grid-cols-2">
+        <div>
+            <label for="sort-by" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{% translate "Sort by:" %}</label>
+          <select name="sort_by" id="sort-by" class="bg-gray-50 border border-gray-400 rounded-lg py-2 px-4 leading-tight focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <option value="rating" {% if request.GET.sort_by == "rating" %}selected{% endif %}>{% translate "Best rated" %}</option>
+            <option value="ratings_count" {% if request.GET.sort_by == "ratings_count" %}selected{% endif %}>{% translate "Most rated" %}</option>
+            <option value="views_count" {% if request.GET.sort_by == "views_count" %}selected{% endif %}>{% translate "Most viewed" %}</option>
+            <option value="views_count_desc" {% if request.GET.sort_by == "views_count_desc" %}selected{% endif %}>{% translate "Least viewed" %}</option>
+            <option value="newest" {% if request.GET.sort_by == "newest" %}selected{% endif %}>{% translate "Newest" %}</option>
+            <option value="oldest" {% if request.GET.sort_by == "oldest" %}selected{% endif %}>{% translate "Oldest" %}</option>
+          </select>
+        </div>
+        <div>
+            <label for="tag-filter" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{% translate "Filter by tag:" %}</label>
+          <select name="tag" id="tag-filter" class="bg-gray-50 border border-gray-400 rounded-lg py-2 px-4 leading-tight focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <option selected value>{% translate " -- Select an option -- " %}</option>
+            {% for tag in tags %}
+            <option value="{{ tag.name }}" {% if request.GET.tag == tag.name %}selected{% endif %}>{{ tag.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+    </div>
+  <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2">
+    {% translate "Filter" %}
+  </button>
 </form>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-  {% for video in videos %}
+  {% for video in page %}
   {% include "videos/video_item.html" %}
   {% endfor %}
 </div>
