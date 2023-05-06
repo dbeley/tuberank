@@ -36,7 +36,7 @@ class VideoSnapshot(models.Model):
     count_comments = models.IntegerField(default=0, blank=True, null=True)
     date_creation = models.DateTimeField(auto_now_add=True)
     description = models.TextField(max_length=5000, blank=True)
-    thumbnail_url = models.CharField(max_length=100)
+    thumbnail_url = models.CharField(max_length=200)
     category = models.PositiveIntegerField(
         choices=enums.Category.choices(), blank=True, null=True
     )
