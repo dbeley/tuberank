@@ -14,6 +14,8 @@ in pkgs.mkShell rec {
     gettext
     postgresql
     libpqxx
+
+    flyctl
   ];
 
 }

@@ -25,13 +25,23 @@ npm run tailwind-watch
 python manage.py migrate --run-syncdb
 ```
 
+## Local Deployment
+
+- Create `.env` with the required secrets (see `.env.example` for an example)
+
 ## Deployment
 
-- Create `secret.ini` with the required secrets (see `secret.ini.example` for an example)
-- Add domain to `tuberank.settings.ALLOWED_HOSTS`
-- Add domain to `tuberank.settings.CSRF_TRUSTED_ORIGINS`
-- Check that `tuberank.settings.DEBUG` is `False`
-- Check that `tuberank.settings.DATABASES` default backend is `postgresql`
+fly.io cheatsheet
+
+```
+fly deploy
+fly secrets list
+fly secrets set DEBUG="0"
+fly logs
+fly ssh console
+fly ssh console --pty -C 'python /code/manage.py migrate'
+fly ssh console --pty -C 'python /code/manage.py createsuperuser'
+```
 
 ### Get all video urls of a YouTube channel
 
@@ -52,6 +62,10 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 ### Categories
 - Add categories page
 - Add categories to videos/channels/snapshots
+
+### Login / Registration
+- Update registration template
+- Display login errors
 
 ### Profile / Settings
 - Add profile / settings page
