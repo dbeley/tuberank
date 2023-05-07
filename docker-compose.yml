@@ -12,7 +12,7 @@ x-app: &default-app
 services:
   web:
     <<: *default-app
-    command: bash -c "npm run tailwind-build && poetry run python manage.py migrate && poetry run gunicorn tuberank.wsgi --bind 0.0.0.0:8000 --timeout 600"
+    command: sh -c "npm run tailwind-build && python /code/manage.py migrate && gunicorn --bind :8000 --workers 2 tuberank.wsgi"
     ports:
       - "8000:8000"
     environment:
@@ -20,6 +20,7 @@ services:
       - YOUTUBE_DEVELOPER_KEY=$YOUTUBE_DEVELOPER_KEY
       - DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY
       - DEBUG=$DEBUG
+      - LOCAL_DEPLOY=$LOCAL_DEPLOY
       - ALLOWED_HOSTS=$ALLOWED_HOSTS
       - CSRF_TRUSTED_ORIGINS=$CSRF_TRUSTED_ORIGINS
     labels:
