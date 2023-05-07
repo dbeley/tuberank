@@ -35,20 +35,7 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {% for rating in user.video_ratings.all %}
-          <div class="bg-gray-100 rounded-lg shadow-lg p-4">
-            <div class="flex-grow">
-            </div>
-            <div class="text-lg font-bold">
-              <p class="text-gray-600">{{ rating.review_title }}</p>
-              <p class="text-gray-600">{{ rating.review_body }}</p>
-              <p class="text-black">{% translate "Rating:" %} {{ rating.rating|custom_rating }}</p>
-            </div>
-            <img class="h-24 w-full object-cover py-4" src="{{ rating.video.last_snapshot.thumbnail_url }}" alt="{{ rating.video.last_snapshot.name_en }}">
-            <a href="{% url 'video_details' pk=rating.video.id %}">
-              <h3 class=" mb-2">{{ rating.video.last_snapshot.title_en }}</h3>
-            </a>
-            <p class="text-gray-600">{{ rating.video.channel.last_snapshot.name_en }} &bull; {{ rating.video.last_snapshot.duration|duration }}</p>
-          </div>
+            {% include "profile/profile_video_rating.html" %}
           {% endfor %}
         </div>
         {% else %}
