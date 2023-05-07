@@ -241,7 +241,7 @@ msgid "Most Viewed"
 msgstr ""
 
 #: templates/channels/channel_list.html:17
-msgid "Latest Indexed"
+msgid "Last Indexed"
 msgstr ""
 
 #: templates/charts.html:26

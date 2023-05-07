@@ -14,7 +14,7 @@
         <option value="name_asc" {% if request.GET.sort_by == "name_asc" %}selected{% endif %}>{% translate "Name (A-Z)" %}</option>
         <option value="name_desc" {% if request.GET.sort_by == "name_desc" %}selected{% endif %}>{% translate "Name (Z-A)" %}</option>
         <option value="views_count" {% if request.GET.sort_by == "views_count" %}selected{% endif %}>{% translate "Most Viewed" %}</option>
-        <option value="latest_indexed" {% if request.GET.sort_by == "latest_indexed" %}selected{% endif %}>{% translate "Latest Indexed" %}</option>
+        <option value="latest_indexed" {% if request.GET.sort_by == "latest_indexed" %}selected{% endif %}>{% translate "Last Indexed" %}</option>
       </select>
     </div>
   </form>
