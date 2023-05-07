@@ -106,7 +106,7 @@
           <form id="add-tag-form" action="{% url 'video_details' video.id %}" method="POST">
             {% csrf_token %}
             <div class="flex items-center">
-              <input type="name" name="name" placeholder="Enter a tag" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2" maxlength="50">
+              <input pattern="[a-zA-Z0-9 -]+" type="name" name="name" placeholder="Enter a tag" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2" minlength="3" maxlength="50">
               <button type="submit" class="bg-blue-700 hover:bg-blue-800 rounded-lg text-white px-4 py-2">{% translate "Add Tag" %}</button>
             </div>
           </form>
