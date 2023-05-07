@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM alpine
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -12,30 +12,24 @@ ENV POETRY_NO_INTERACTIONS=1
 RUN mkdir -p /code
 WORKDIR /code
 
-
-RUN apt update \
-  && apt install -y build-essential curl gettext \
-  && curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-  && apt install -y nodejs --no-install-recommends \
-  && rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/man \
-  && apt clean
+RUN apk add --update build-base nodejs npm python3 gettext py3-pip libpq
 
 COPY package*.json input.css /code/
 RUN npm install tailwindcss flowbite \
-    npm run tailwind-build
+    && npm run tailwind-build
 
-RUN pip install pip setuptools \
-	pip install poetry==${POETRY_VERSION}
+RUN pip install --no-cache-dir pip setuptools tzdata \
+	&& pip install --no-cache-dir poetry==${POETRY_VERSION}
 
 ENV PATH="${PATH}:${POETRY_HOME}/bin"
 
 COPY poetry.lock pyproject.toml /code/
 RUN poetry config virtualenvs.create false \
-    poetry install --without=dev --no-interaction
+    && poetry install --without=dev --no-interaction
 
 COPY . /code
 RUN django-admin compilemessages \
-    python manage.py collectstatic --noinput
+    && python manage.py collectstatic --noinput
 
 EXPOSE 8000
 
