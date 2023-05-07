@@ -2,6 +2,8 @@
 
 A community website to rate and discover youtube videos.
 
+Built with Django (django-rest-framework, whitenoise), Tailwind (Flowbite) and htmx. Deployed on fly.io.
+
 ## Dependencies
 
 - python
@@ -90,5 +92,12 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 - Make tags have distinct names, no spaces but dashes
 
 ### Import function
-- add channel batch import feature
+- Add channel batch import feature
 - Add search by url + importing it automatically
+- Add api to import videos + rate + view
+
+### Charts
+- Fix average rating sort with postgresql
+
+### Responsiveness
+- Fix buttons in video item
