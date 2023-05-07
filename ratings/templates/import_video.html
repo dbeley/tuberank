@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block title %}{% translate "Import Video" %}{% endblock title %}
+
 {% block content %}
 <h1 class="text-2xl font-bold mb-4">{% translate "Import Video" %}</h1>
 <p class="mb-2">{% translate "import_video.description.1"|safe|linebreaks %}</p>

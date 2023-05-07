@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-06 20:25+0200\n"
+"POT-Creation-Date: 2023-05-07 14:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,24 +67,31 @@ msgstr ""
 msgid "Please try again later."
 msgstr ""
 
-#: templates/base.html:21 templates/base_backup.html:45
+#: templates/about.html:4 templates/about.html:10 templates/base.html:136
+msgid "About"
+msgstr ""
+
+#: templates/about.html:11 templates/homepage.html:11
+msgid "homepage.description"
+msgstr "TubeRank is a platform where you can curate and rate YouTube videos."
+
+#: templates/base.html:21
 msgid "Open user menu"
 msgstr ""
 
-#: templates/base.html:28 templates/base_backup.html:52
+#: templates/base.html:28
 msgid "Profile"
 msgstr ""
 
-#: templates/base.html:37 templates/base_backup.html:54
+#: templates/base.html:37
 msgid "Logout"
 msgstr ""
 
-#: templates/base.html:44 templates/base_backup.html:59
+#: templates/base.html:44
 msgid "Login"
 msgstr ""
 
-#: templates/base.html:55 templates/base_backup.html:36
-#: templates/search/search.html:4
+#: templates/base.html:55 templates/search/search.html:4
 msgid "Search"
 msgstr ""
 
@@ -96,53 +103,33 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: templates/base.html:108 templates/base_backup.html:21
-#: templates/base_backup.html:91
+#: templates/base.html:108 templates/charts.html:4
 msgid "Charts"
 msgstr ""
 
-#: templates/base.html:111 templates/base_backup.html:22
-#: templates/base_backup.html:92 templates/videos/video_details.html:141
+#: templates/base.html:111 templates/videos/video_details.html:141
 msgid "Lists"
 msgstr ""
 
-#: templates/base.html:114 templates/base_backup.html:23
-#: templates/base_backup.html:93 templates/videos/video_details.html:118
+#: templates/base.html:114 templates/videos/video_details.html:118
 msgid "Tags"
 msgstr ""
 
-#: templates/base.html:117 templates/base_backup.html:24
-#: templates/base_backup.html:94 templates/channels/channel_list.html:8
+#: templates/base.html:117 templates/channels/channel_list.html:8
 msgid "Channels"
 msgstr ""
 
-#: templates/base.html:120 templates/import_video.html:5
+#: templates/base.html:120 templates/import_video.html:4
+#: templates/import_video.html:7
 msgid "Import Video"
 msgstr ""
 
-#: templates/base.html:136 templates/base_backup.html:25
-#: templates/base_backup.html:95
-msgid "About"
-msgstr ""
-
-#: templates/base.html:146
-msgid "Source Code"
-msgstr ""
-
-#: templates/base.html:180 templates/base.html:206
+#: templates/base.html:184 templates/base.html:224
 msgid "English"
 msgstr ""
 
-#: templates/base.html:221
+#: templates/base.html:197 templates/base.html:239
 msgid "French"
-msgstr ""
-
-#: templates/base_backup.html:32
-msgid "Import video"
-msgstr ""
-
-#: templates/base_backup.html:53
-msgid "Settings"
 msgstr ""
 
 #: templates/channels/channel_details.html:12
@@ -176,40 +163,40 @@ msgid "Channel Rating: %(rating)s from %(count)s ratings"
 msgstr ""
 
 #: templates/channels/channel_details.html:43
-#: templates/channels/channel_list.html:11 templates/charts.html:14
+#: templates/channels/channel_list.html:11 templates/charts.html:15
 msgid "Sort by:"
 msgstr ""
 
-#: templates/channels/channel_details.html:45 templates/charts.html:20
+#: templates/channels/channel_details.html:45 templates/charts.html:21
 msgid "Newest"
 msgstr ""
 
-#: templates/channels/channel_details.html:46 templates/charts.html:21
+#: templates/channels/channel_details.html:46 templates/charts.html:22
 msgid "Oldest"
 msgstr ""
 
-#: templates/channels/channel_details.html:47 templates/charts.html:16
+#: templates/channels/channel_details.html:47 templates/charts.html:17
 msgid "Best rated"
 msgstr ""
 
-#: templates/channels/channel_details.html:48 templates/charts.html:17
+#: templates/channels/channel_details.html:48 templates/charts.html:18
 msgid "Most rated"
 msgstr ""
 
-#: templates/channels/channel_details.html:49 templates/charts.html:18
+#: templates/channels/channel_details.html:49 templates/charts.html:19
 msgid "Most viewed"
 msgstr ""
 
-#: templates/channels/channel_details.html:50 templates/charts.html:19
+#: templates/channels/channel_details.html:50 templates/charts.html:20
 msgid "Least viewed"
 msgstr ""
 
-#: templates/channels/channel_details.html:53 templates/charts.html:31
+#: templates/channels/channel_details.html:53 templates/charts.html:36
 msgid "Filter"
 msgstr ""
 
 #: templates/channels/channel_details.html:68
-#: templates/channels/channel_list.html:38 templates/charts.html:46
+#: templates/channels/channel_list.html:38 templates/charts.html:50
 #: templates/profile/profile_timeframe.html:28
 #: templates/search/channel_results.html:18
 #: templates/search/video_results.html:22
@@ -226,7 +213,7 @@ msgid "Page %(page_number)s of %(total_page_number)s"
 msgstr ""
 
 #: templates/channels/channel_details.html:76
-#: templates/channels/channel_list.html:46 templates/charts.html:54
+#: templates/channels/channel_list.html:46 templates/charts.html:58
 #: templates/profile/profile_timeframe.html:36
 #: templates/search/channel_results.html:26
 #: templates/search/video_results.html:30
@@ -253,21 +240,17 @@ msgstr ""
 msgid "Latest Indexed"
 msgstr ""
 
-#: templates/charts.html:23
+#: templates/charts.html:26
 msgid "Filter by tag:"
 msgstr ""
 
-#: templates/charts.html:25
+#: templates/charts.html:28
 msgid " -- Select an option -- "
 msgstr ""
 
 #: templates/homepage.html:10
 msgid "Welcome to TubeRank!"
 msgstr ""
-
-#: templates/homepage.html:11
-msgid "homepage.description"
-msgstr "TubeRank is a platform where you can curate and rate YouTube videos."
 
 #: templates/homepage.html:14
 msgid "Last Indexed Videos"
@@ -320,17 +303,17 @@ msgstr ""
 msgid "Popular Videos on TubeRank"
 msgstr ""
 
-#: templates/import_video.html:6
+#: templates/import_video.html:8
 msgid "import_video.description.1"
 msgstr ""
 "YouTube videos are not automatically indexed by TubeRank. This page allows "
 "the manually indexation of videos into TubeRank."
 
-#: templates/import_video.html:7
+#: templates/import_video.html:9
 msgid "import_video.description.2"
 msgstr "The number of new indexed videos is limited to 10,000 per day."
 
-#: templates/import_video.html:8
+#: templates/import_video.html:10
 msgid "import_video.description.3"
 msgstr ""
 "The supported URL formats are the following:\n"
@@ -339,16 +322,16 @@ msgstr ""
 "- https://www.youtube.com/watch?v={VIDEO_ID}&pp={TRACKING_PARAM}\n"
 "- https://www.youtube.com/watch?v={VIDEO_ID}&list={LIST_ID}..."
 
-#: templates/import_video.html:9
+#: templates/import_video.html:11
 msgid "import_video.description.4"
 msgstr ""
 "Importing all the videos from a channel is not supported at the moment."
 
-#: templates/import_video.html:13
+#: templates/import_video.html:15
 msgid "YouTube URLs (one by line):"
 msgstr ""
 
-#: templates/import_video.html:18
+#: templates/import_video.html:20
 msgid "Import URLs"
 msgstr ""
 
@@ -427,10 +410,8 @@ msgid "No popular lists yet."
 msgstr ""
 
 #: templates/lists/update_description_modal.html:6
-#, fuzzy
-#| msgid "homepage.description"
 msgid "Update Description"
-msgstr "TubeRank is a platform where you can curate and rate YouTube videos."
+msgstr ""
 
 #: templates/profile/profile.html:17 templates/profile/profile.html:31
 msgid "Video Ratings"
@@ -636,3 +617,6 @@ msgstr ""
 #: videos/views.py:128
 msgid "The video was successfully added to the list"
 msgstr ""
+
+#~ msgid "about.description.1"
+#~ msgstr "TubeRank"
