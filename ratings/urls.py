@@ -83,4 +83,5 @@ urlpatterns = [
         ratings.views.ImportVideoView.as_view(),
         name="import_video",
     ),
+    path("about", ratings.views.AboutView.as_view(), name="about"),
 ]
