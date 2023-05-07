@@ -53,9 +53,6 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 
 ## TODO
 
-### Homepage
-- Add about page
-
 ### Video detail page
 - Display categories
 - Display related videos with the same tags
@@ -74,7 +71,6 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 - Add more statistics
 - Add user-generated lists with ratings
 - Re-arrange review body
-- Remove/improve display of profile picture
 
 ### Channel list
 - Add channel rating feature

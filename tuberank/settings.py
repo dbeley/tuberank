@@ -85,6 +85,7 @@ WSGI_APPLICATION = "tuberank.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+LOCAL_DEPLOY = os.environ.get("LOCAL_DEPLOY", "0").lower() in ["true", "t", "1"]
 DATABASES = {
     "production": dj_database_url.config(
         default=os.environ.get("DATABASE_URL"),
@@ -96,7 +97,7 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     },
 }
-DATABASES["default"] = DATABASES["production" if not DEBUG else "local"]
+DATABASES["default"] = DATABASES["local" if LOCAL_DEPLOY else "production"]
 
 
 # Password validation
