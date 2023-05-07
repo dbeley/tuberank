@@ -21,8 +21,8 @@ RUN apt update \
   && apt clean
 
 COPY package*.json input.css /code/
-RUN npm install tailwindcss flowbite
-RUN npm run tailwind-build
+RUN npm install tailwindcss flowbite \
+    npm run tailwind-build
 
 RUN pip install pip setuptools \
 	pip install poetry==${POETRY_VERSION}
@@ -30,13 +30,12 @@ RUN pip install pip setuptools \
 ENV PATH="${PATH}:${POETRY_HOME}/bin"
 
 COPY poetry.lock pyproject.toml /code/
-RUN poetry config virtualenvs.create false
-RUN poetry install --without=dev --no-interaction
+RUN poetry config virtualenvs.create false \
+    poetry install --without=dev --no-interaction
 
 COPY . /code
-
-RUN django-admin compilemessages
-RUN python manage.py collectstatic --noinput
+RUN django-admin compilemessages \
+    python manage.py collectstatic --noinput
 
 EXPOSE 8000
 

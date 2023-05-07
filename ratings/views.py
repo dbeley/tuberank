@@ -185,3 +185,11 @@ class ImportVideoView(APIView):
                 else:
                     success.append(f"The import for item {url} finished successfully.")
         return Response({"success": success, "errors": errors})
+
+
+class AboutView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "about.html"
+
+    def get(self, request):
+        return Response()

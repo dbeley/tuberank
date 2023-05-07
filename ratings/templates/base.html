@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="{% static 'css/tailwind.css' %}" rel="stylesheet">
 </head>
-<body class="bg-gray-200" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+<body class="flex flex-col h-screen justify-between bg-gray-200" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 <nav class="bg-gray-900 border-gray-200">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
     <a href="{% url 'homepage' %}" class="flex items-center">
@@ -122,19 +122,19 @@
     </div>
   </div>
 </nav>
-<div class="container mx-auto mt-4 pb-8">
+<div class="grow container mx-auto mt-4 pb-8 px-2 max-w-screen-2xl">
   {% block content %}
   {% endblock content %}
 </div>
 <footer class="bg-gray-900 text-gray-400">
   <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-      <span class="text-sm sm:text-center"><a href="https://flowbite.com/" class="hover:text-gray-200">TubeRank</a>
+      <span class="text-sm sm:text-center"><a href="https://tuberank.org/" class="hover:text-gray-200">TubeRank</a>
     </span>
     <ul class="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
       <li>
-        <a href="#" class="mr-4 hover:text-gray-200 md:mr-6 px-2">{% translate "About" %}</a>
+        <a href="{% url 'about' %}" class="mr-4 hover:text-gray-200 md:mr-6 px-2">{% translate "About" %}</a>
       </li>
-      <li>
+      {% comment %}<li>
         <a href="https://www.github.com" class="mr-4 hover:text-gray-200 md:mr-6 pt-4">
           <div class="inline-flex items-center mt-1">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -146,6 +146,7 @@
           </div>
         </a>
       </li>
+      {% endcomment %}
       <li>
         <div class="flex items-center md:order-2">
           {% get_current_language as LANGUAGE_CODE %}

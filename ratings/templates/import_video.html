@@ -1,32 +1,46 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block title %}{% translate "Import Video" %}{% endblock title %}
+
 {% block content %}
-<h1 class="text-2xl font-bold mb-4">{% translate "Import Video" %}</h1>
-<p class="mb-2">{% translate "import_video.description.1"|safe|linebreaks %}</p>
-<p class="mb-4">{% translate "import_video.description.2"|safe|linebreaks %}</p>
-<p class="mb-4">{% translate "import_video.description.3"|safe|linebreaks %}</p>
-<p class="mb-4">{% translate "import_video.description.4"|safe|linebreaks %}</p>
-<form method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  <div class="my-4">
-    <label class="block text-xl text-gray-700 font-bold mb-2" for="urls">{% translate "YouTube URLs (one by line):" %}</label>
-    <textarea name="urls" id="urls" rows="8" cols="50" class="bg-white border border-gray-400 rounded py-2 px-4 resize focus:outline-none focus:bg-white focus:border-gray-500"></textarea>
-  </div>
-  <div class="mb-4">
-    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-      {% translate "Import URLs" %}
-    </button>
-  </div>
-</form>
-{% if errors %}
-{% for error in errors %}
-<p class="mb-2">{{ error }}</p>
-{% endfor %}
-{% endif %}
-{% if success %}
-{% for success_item in success %}
-<p class="mb-2">{{ success_item }}</p>
-{% endfor %}
-{% endif %}
+
+<div class="flex justify-between mx-auto max-w-screen-xl bg-white rounded-lg pt-8 pb-16 lg:pt-16 lg:pb-24">
+    <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue">
+        <h1 class="text-2xl font-bold mb-4">{% translate "Import Video" %}</h1>
+        <p class="mb-2">{% translate "import_video.description.1"|safe|linebreaks %}</p>
+        <p class="mb-4">{% translate "import_video.description.2"|safe|linebreaks %}</p>
+        <p class="mb-4">{% translate "import_video.description.3"|safe|linebreaks %}</p>
+        <pre><code class="language-bash">- https://www.youtube.com/watch?v={VIDEO_ID}
+- https://m.youtube.com/watch?v={VIDEO_ID}
+- https://www.youtube.com/watch?v={VIDEO_ID}&pp={TRACKING_PARAM}
+- https://www.youtube.com/watch?v={VIDEO_ID}&list={LIST_ID}...
+</code></pre>
+        <p class="mb-4">{% translate "import_video.description.4"|safe|linebreaks %}</p>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="my-4">
+                <label class="block text-xl text-gray-700 font-bold mb-2" for="urls">{% translate "YouTube URLs (one by line):" %}</label>
+                <textarea name="urls" id="urls" rows="8" cols="35"
+                          class="bg-white border border-gray-400 rounded py-2 px-4 resize focus:outline-none focus:bg-white focus:border-gray-500"></textarea>
+            </div>
+            <div class="mb-4">
+                <button type="submit"
+                        class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    {% translate "Import URLs" %}
+                </button>
+            </div>
+        </form>
+        {% if errors %}
+        {% for error in errors %}
+        <p class="mb-2">{{ error }}</p>
+        {% endfor %}
+        {% endif %}
+        {% if success %}
+        {% for success_item in success %}
+        <p class="mb-2">{{ success_item }}</p>
+        {% endfor %}
+        {% endif %}
+    </article>
+</div>
 {% endblock content %}
