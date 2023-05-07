@@ -2,40 +2,44 @@
 {% load ratings_extras %}
 
 <div class="bg-white rounded-lg shadow-lg py-6 mt-4 px-4" id="viewings" hx-swap="outerHTML" hx-target="#viewings">
-  <h2 class="text-2xl font-bold mb-4">{% translate "Recently Watched Videos" %}</h2>
-  <ul class="space-y-4">
-    {% for viewing in viewings %}
-    <li class="flex items-center space-x-4">
-      <div class="flex-shrink-0">
-        <img src="{{ viewing.video.last_snapshot.thumbnail_url }}" alt="{{ viewing.video.last_snapshot.title_en }}" class="h-20 w-36 object-cover rounded-lg shadow-md">
-      </div>
-      <div class="flex-grow">
-        <a href="{% url 'video_details' pk=viewing.video.id %}">
-          <h3 class="text-lg font-bold">{{ viewing.video.last_snapshot.title_en }}</h3>
-        </a>
-        <p class="text-gray-600">{{ viewing.video.channel.last_snapshot.name_en }} &bull; {{ viewing.video.last_snapshot.duration|duration }}</p>
-      </div>
-      <div class="flex-shrink-0">
-        <p class="text-gray-500 text-sm">{{ viewing.date_creation }}</p>
-      </div>
-    </li>
-    {% endfor %}
-  </ul>
-  <div class="my-4">
-    <nav class="flex items-center justify-between">
-      {% if viewings.has_previous %}
-      <a hx-get="{% url 'profile' username=user.username %}?page={{ viewings.previous_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-l">
-        {% translate "Previous" %}
-      </a>
-      {% endif %}
-      <div class="text-gray-600">
-        {% blocktranslate with page_number=viewings.number total_page_number=viewings.paginator.num_pages %}Page {{ page_number }} of {{ total_page_number }}{% endblocktranslate %}
-      </div>
-      {% if viewings.has_next %}
-      <a hx-get="{% url 'profile' username=user.username %}?page={{ viewings.next_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-r">
-        {% translate "Next" %}
-      </a>
-      {% endif %}
-    </nav>
-  </div>
+    <h2 class="text-2xl font-bold mb-4">{% translate "Recently Watched Videos" %}</h2>
+    <ul class="space-y-4">
+        {% for viewing in viewings %}
+        <li class="flex items-center space-x-4">
+            <div class="flex-shrink-0">
+                <img src="{{ viewing.video.last_snapshot.thumbnail_url }}"
+                     alt="{{ viewing.video.last_snapshot.title_en }}"
+                     class="h-20 w-36 object-cover rounded-lg shadow-md">
+            </div>
+            <div class="flex-grow">
+                <a href="{% url 'video_details' pk=viewing.video.id %}">
+                    <h3 class="text-lg font-bold">{{ viewing.video.last_snapshot.title_en }}</h3>
+                </a>
+                <p class="text-gray-600">{{ viewing.video.channel.last_snapshot.name_en }} &bull; {{ viewing.video.last_snapshot.duration|duration }}</p>
+            </div>
+            <div class="flex-shrink-0">
+                <p class="text-gray-500 text-sm">{{ viewing.date_creation }}</p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="my-4">
+        <nav class="flex items-center justify-between">
+            {% if viewings.has_previous %}
+            <a hx-get="{% url 'profile' username=user.username %}?page={{ viewings.previous_page_number }}"
+               class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-l">
+                {% translate "Previous" %}
+            </a>
+            {% endif %}
+            <div class="text-gray-600">
+                {% blocktranslate with page_number=viewings.number total_page_number=viewings.paginator.num_pages %}Page {{ page_number }} of {{ total_page_number }}{% endblocktranslate %}
+            </div>
+            {% if viewings.has_next %}
+            <a hx-get="{% url 'profile' username=user.username %}?page={{ viewings.next_page_number }}"
+               class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-r">
+                {% translate "Next" %}
+            </a>
+            {% endif %}
+        </nav>
+    </div>
 </div>

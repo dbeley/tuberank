@@ -22,9 +22,11 @@
     </table>
   </div>
 </div>
+{% url 'profile' username=user.get_username as url_profile %}
+{% blocktranslate with url=url_profile %}<p>Find you viewing history on your <a class="font-bold" href={{ url }}>profile page</a>.</p>{% endblocktranslate %}
 <form action="{% url 'video_viewing' pk=video.pk %}" method="post">
   {% csrf_token %}
-  <div class="flex justify-start">
+  <div class="mt-2 flex justify-start">
     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
       {% translate "Submit" %}
     </button>

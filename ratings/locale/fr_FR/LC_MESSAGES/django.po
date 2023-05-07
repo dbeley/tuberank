@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-07 14:32+0200\n"
+"POT-Creation-Date: 2023-05-07 16:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,11 +109,11 @@ msgstr "Accueil"
 msgid "Charts"
 msgstr "Tops"
 
-#: templates/base.html:111 templates/videos/video_details.html:141
+#: templates/base.html:111 templates/videos/video_details.html:127
 msgid "Lists"
 msgstr "Listes"
 
-#: templates/base.html:114 templates/videos/video_details.html:118
+#: templates/base.html:114 templates/videos/video_details.html:104
 msgid "Tags"
 msgstr "Tags"
 
@@ -199,7 +199,7 @@ msgstr "Filtrer"
 
 #: templates/channels/channel_details.html:68
 #: templates/channels/channel_list.html:38 templates/charts.html:50
-#: templates/profile/profile_timeframe.html:28
+#: templates/profile/profile_timeframe.html:31
 #: templates/search/channel_results.html:18
 #: templates/search/video_results.html:22
 msgid "Previous"
@@ -207,7 +207,7 @@ msgstr "Précédent"
 
 #: templates/channels/channel_details.html:72
 #: templates/channels/channel_list.html:42
-#: templates/profile/profile_timeframe.html:32
+#: templates/profile/profile_timeframe.html:35
 #: templates/search/channel_results.html:22
 #: templates/search/video_results.html:26
 #, python-format
@@ -216,7 +216,7 @@ msgstr "Page %(page_number)s sur %(total_page_number)s"
 
 #: templates/channels/channel_details.html:76
 #: templates/channels/channel_list.html:46 templates/charts.html:58
-#: templates/profile/profile_timeframe.html:36
+#: templates/profile/profile_timeframe.html:40
 #: templates/search/channel_results.html:26
 #: templates/search/video_results.html:30
 msgid "Next"
@@ -338,7 +338,8 @@ msgstr "URLs YouTube (une par ligne) :"
 msgid "Import URLs"
 msgstr "Importer URLs"
 
-#: templates/lists/list_details.html:12 templates/videos/video_details.html:101
+#: templates/lists/list_details.html:12
+#: templates/videos/video_details_ratings.html:35
 #, python-format
 msgid "By: <span class=\"font-bold\">%(username)s</span>"
 msgstr "Par : <span class=\"font-bold\">%(username)s</span>"
@@ -403,7 +404,7 @@ msgstr "Pas de listes."
 msgid "Popular Lists"
 msgstr "Listes populaires"
 
-#: templates/lists/lists.html:71 templates/videos/video_details.html:163
+#: templates/lists/lists.html:71 templates/videos/video_details.html:149
 #, python-format
 msgid "by %(user)s"
 msgstr "par %(user)s"
@@ -416,11 +417,11 @@ msgstr "Pas de listes populaires."
 msgid "Update Description"
 msgstr "Modifier description"
 
-#: templates/profile/profile.html:17 templates/profile/profile.html:31
+#: templates/profile/profile.html:17 templates/profile/profile.html:34
 msgid "Video Ratings"
 msgstr "Vidéos notées"
 
-#: templates/profile/profile.html:21 templates/profile/profile.html:59
+#: templates/profile/profile.html:21 templates/profile/profile.html:49
 msgid "Channel Ratings"
 msgstr "Chaînes notées"
 
@@ -428,21 +429,25 @@ msgstr "Chaînes notées"
 msgid "Date Joined"
 msgstr "Date d'inscription"
 
-#: templates/profile/profile.html:44
-msgid "Rating:"
-msgstr "Note :"
-
-#: templates/profile/profile.html:55
+#: templates/profile/profile.html:45
 msgid "No video ratings found."
 msgstr "Pas de notes trouvées."
 
-#: templates/profile/profile.html:78
+#: templates/profile/profile.html:68
 msgid "No channel ratings found."
 msgstr "Pas de notes trouvées."
+
+#: templates/profile/profile.html:81
+msgid "Number of Ratings"
+msgstr "Nombre de notes"
 
 #: templates/profile/profile_timeframe.html:5
 msgid "Recently Watched Videos"
 msgstr "Vidéos vues récemment"
+
+#: templates/profile/profile_video_rating.html:6
+msgid "Rating:"
+msgstr "Note :"
 
 #: templates/registration/login.html:4 templates/registration/login.html:9
 #: templates/registration/login.html:21
@@ -493,7 +498,7 @@ msgstr "Pas de vidéos trouvées pour le tag \"%(tag_name)s\"."
 msgid "All tags"
 msgstr "Tous les tags"
 
-#: templates/tags/tags.html:18 templates/videos/video_details.html:137
+#: templates/tags/tags.html:18 templates/videos/video_details.html:123
 msgid "No tags yet."
 msgstr "Pas de tags."
 
@@ -542,30 +547,34 @@ msgstr "%(count)s notes"
 msgid "Reviews"
 msgstr "Critiques"
 
-#: templates/videos/video_details.html:99
+#: templates/videos/video_details.html:110
+msgid "Add Tag"
+msgstr "Ajouter un tag"
+
+#: templates/videos/video_details.html:133
+msgid "Select a list"
+msgstr "Sélectionner une liste"
+
+#: templates/videos/video_details.html:138
+msgid "Add to List"
+msgstr "Ajouter à la liste"
+
+#: templates/videos/video_details.html:156
+msgid "Not in any lists yet."
+msgstr "Présent dans aucune liste."
+
+#: templates/videos/video_details_ratings.html:17
+msgid "Close"
+msgstr "Fermer"
+
+#: templates/videos/video_details_ratings.html:33
 #, python-format
 msgid "Rating: <span class=\"font-bold\">%(rating)s</span>"
 msgstr "Note : <span class=\"font-bold\">%(rating)s</span>"
 
-#: templates/videos/video_details.html:104
+#: templates/videos/video_details_ratings.html:39
 msgid "Read the review"
 msgstr "Lire la critique"
-
-#: templates/videos/video_details.html:124
-msgid "Add Tag"
-msgstr "Ajouter un tag"
-
-#: templates/videos/video_details.html:147
-msgid "Select a list"
-msgstr "Sélectionner une liste"
-
-#: templates/videos/video_details.html:152
-msgid "Add to List"
-msgstr "Ajouter à la liste"
-
-#: templates/videos/video_details.html:170
-msgid "Not in any lists yet."
-msgstr "Présent dans aucune liste."
 
 #: templates/videos/video_item.html:30
 msgid "Delete tag from video"
@@ -603,9 +612,18 @@ msgstr "Texte (optionnel)"
 msgid "Enter your review"
 msgstr "Texte"
 
-#: templates/videos/video_rating.html:48 templates/videos/video_viewing.html:29
+#: templates/videos/video_rating.html:48 templates/videos/video_viewing.html:31
 msgid "Submit"
 msgstr "Envoyer"
+
+#: templates/videos/video_viewing.html:26
+#, python-format
+msgid ""
+"<p>Find you viewing history on your <a class=\"font-bold\" href="
+"%(url)s>profile page</a>.</p>"
+msgstr ""
+"<p>Retrouvez votre historique de visionnage sur votre <a class=\"font-bold\" href="
+"%(url)s>page profil</a>.</p>"
 
 #: templatetags/ratings_extras.py:13
 #, python-format

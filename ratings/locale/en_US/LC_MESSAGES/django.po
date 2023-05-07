@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-07 14:32+0200\n"
+"POT-Creation-Date: 2023-05-07 16:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -107,11 +107,11 @@ msgstr ""
 msgid "Charts"
 msgstr ""
 
-#: templates/base.html:111 templates/videos/video_details.html:141
+#: templates/base.html:111 templates/videos/video_details.html:127
 msgid "Lists"
 msgstr ""
 
-#: templates/base.html:114 templates/videos/video_details.html:118
+#: templates/base.html:114 templates/videos/video_details.html:104
 msgid "Tags"
 msgstr ""
 
@@ -197,7 +197,7 @@ msgstr ""
 
 #: templates/channels/channel_details.html:68
 #: templates/channels/channel_list.html:38 templates/charts.html:50
-#: templates/profile/profile_timeframe.html:28
+#: templates/profile/profile_timeframe.html:31
 #: templates/search/channel_results.html:18
 #: templates/search/video_results.html:22
 msgid "Previous"
@@ -205,7 +205,7 @@ msgstr ""
 
 #: templates/channels/channel_details.html:72
 #: templates/channels/channel_list.html:42
-#: templates/profile/profile_timeframe.html:32
+#: templates/profile/profile_timeframe.html:35
 #: templates/search/channel_results.html:22
 #: templates/search/video_results.html:26
 #, python-format
@@ -214,7 +214,7 @@ msgstr ""
 
 #: templates/channels/channel_details.html:76
 #: templates/channels/channel_list.html:46 templates/charts.html:58
-#: templates/profile/profile_timeframe.html:36
+#: templates/profile/profile_timeframe.html:40
 #: templates/search/channel_results.html:26
 #: templates/search/video_results.html:30
 msgid "Next"
@@ -335,7 +335,8 @@ msgstr ""
 msgid "Import URLs"
 msgstr ""
 
-#: templates/lists/list_details.html:12 templates/videos/video_details.html:101
+#: templates/lists/list_details.html:12
+#: templates/videos/video_details_ratings.html:35
 #, python-format
 msgid "By: <span class=\"font-bold\">%(username)s</span>"
 msgstr ""
@@ -400,7 +401,7 @@ msgstr ""
 msgid "Popular Lists"
 msgstr ""
 
-#: templates/lists/lists.html:71 templates/videos/video_details.html:163
+#: templates/lists/lists.html:71 templates/videos/video_details.html:149
 #, python-format
 msgid "by %(user)s"
 msgstr ""
@@ -413,11 +414,11 @@ msgstr ""
 msgid "Update Description"
 msgstr ""
 
-#: templates/profile/profile.html:17 templates/profile/profile.html:31
+#: templates/profile/profile.html:17 templates/profile/profile.html:34
 msgid "Video Ratings"
 msgstr ""
 
-#: templates/profile/profile.html:21 templates/profile/profile.html:59
+#: templates/profile/profile.html:21 templates/profile/profile.html:49
 msgid "Channel Ratings"
 msgstr ""
 
@@ -425,20 +426,24 @@ msgstr ""
 msgid "Date Joined"
 msgstr ""
 
-#: templates/profile/profile.html:44
-msgid "Rating:"
-msgstr ""
-
-#: templates/profile/profile.html:55
+#: templates/profile/profile.html:45
 msgid "No video ratings found."
 msgstr ""
 
-#: templates/profile/profile.html:78
+#: templates/profile/profile.html:68
 msgid "No channel ratings found."
+msgstr ""
+
+#: templates/profile/profile.html:81
+msgid "Number of Ratings"
 msgstr ""
 
 #: templates/profile/profile_timeframe.html:5
 msgid "Recently Watched Videos"
+msgstr ""
+
+#: templates/profile/profile_video_rating.html:6
+msgid "Rating:"
 msgstr ""
 
 #: templates/registration/login.html:4 templates/registration/login.html:9
@@ -490,7 +495,7 @@ msgstr ""
 msgid "All tags"
 msgstr ""
 
-#: templates/tags/tags.html:18 templates/videos/video_details.html:137
+#: templates/tags/tags.html:18 templates/videos/video_details.html:123
 msgid "No tags yet."
 msgstr ""
 
@@ -539,29 +544,33 @@ msgstr ""
 msgid "Reviews"
 msgstr ""
 
-#: templates/videos/video_details.html:99
+#: templates/videos/video_details.html:110
+msgid "Add Tag"
+msgstr ""
+
+#: templates/videos/video_details.html:133
+msgid "Select a list"
+msgstr ""
+
+#: templates/videos/video_details.html:138
+msgid "Add to List"
+msgstr ""
+
+#: templates/videos/video_details.html:156
+msgid "Not in any lists yet."
+msgstr ""
+
+#: templates/videos/video_details_ratings.html:17
+msgid "Close"
+msgstr ""
+
+#: templates/videos/video_details_ratings.html:33
 #, python-format
 msgid "Rating: <span class=\"font-bold\">%(rating)s</span>"
 msgstr ""
 
-#: templates/videos/video_details.html:104
+#: templates/videos/video_details_ratings.html:39
 msgid "Read the review"
-msgstr ""
-
-#: templates/videos/video_details.html:124
-msgid "Add Tag"
-msgstr ""
-
-#: templates/videos/video_details.html:147
-msgid "Select a list"
-msgstr ""
-
-#: templates/videos/video_details.html:152
-msgid "Add to List"
-msgstr ""
-
-#: templates/videos/video_details.html:170
-msgid "Not in any lists yet."
 msgstr ""
 
 #: templates/videos/video_item.html:30
@@ -600,8 +609,15 @@ msgstr ""
 msgid "Enter your review"
 msgstr ""
 
-#: templates/videos/video_rating.html:48 templates/videos/video_viewing.html:29
+#: templates/videos/video_rating.html:48 templates/videos/video_viewing.html:31
 msgid "Submit"
+msgstr ""
+
+#: templates/videos/video_viewing.html:26
+#, python-format
+msgid ""
+"<p>Find you viewing history on your <a class=\"font-bold\" href="
+"%(url)s>profile page</a>.</p>"
 msgstr ""
 
 #: templatetags/ratings_extras.py:13
