@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-07 16:13+0200\n"
+"POT-Creation-Date: 2023-05-07 16:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -120,7 +120,7 @@ msgid "Channels"
 msgstr ""
 
 #: templates/base.html:120 templates/import_video.html:4
-#: templates/import_video.html:7
+#: templates/import_video.html:10
 msgid "Import Video"
 msgstr ""
 
@@ -303,35 +303,26 @@ msgstr ""
 msgid "Popular Videos on TubeRank"
 msgstr ""
 
-#: templates/import_video.html:8
+#: templates/import_video.html:11
 msgid "import_video.description.1"
 msgstr ""
 "YouTube videos are not automatically indexed by TubeRank. This page allows "
 "the manually indexation of videos into TubeRank."
 
-#: templates/import_video.html:9
+#: templates/import_video.html:12
 msgid "import_video.description.2"
 msgstr "The number of new indexed videos is limited to 10,000 per day."
 
-#: templates/import_video.html:10
+#: templates/import_video.html:13
 msgid "import_video.description.3"
-msgstr ""
-"The supported URL formats are the following:\n"
-"- https://www.youtube.com/watch?v={VIDEO_ID}\n"
-"- https://m.youtube.com/watch?v={VIDEO_ID}\n"
-"- https://www.youtube.com/watch?v={VIDEO_ID}&pp={TRACKING_PARAM}\n"
-"- https://www.youtube.com/watch?v={VIDEO_ID}&list={LIST_ID}..."
+msgstr "The supported URL formats are the following:"
 
-#: templates/import_video.html:11
+#: templates/import_video.html:19
 msgid "import_video.description.4"
 msgstr ""
 "Importing all the videos from a channel is not supported at the moment."
 
-#: templates/import_video.html:15
-msgid "YouTube URLs (one by line):"
-msgstr ""
-
-#: templates/import_video.html:20
+#: templates/import_video.html:31
 msgid "Import URLs"
 msgstr ""
 

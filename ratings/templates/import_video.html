@@ -11,6 +11,11 @@
         <p class="mb-2">{% translate "import_video.description.1"|safe|linebreaks %}</p>
         <p class="mb-4">{% translate "import_video.description.2"|safe|linebreaks %}</p>
         <p class="mb-4">{% translate "import_video.description.3"|safe|linebreaks %}</p>
+        <pre><code class="language-bash">- https://www.youtube.com/watch?v={VIDEO_ID}
+- https://m.youtube.com/watch?v={VIDEO_ID}
+- https://www.youtube.com/watch?v={VIDEO_ID}&pp={TRACKING_PARAM}
+- https://www.youtube.com/watch?v={VIDEO_ID}&list={LIST_ID}...
+</code></pre>
         <p class="mb-4">{% translate "import_video.description.4"|safe|linebreaks %}</p>
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
