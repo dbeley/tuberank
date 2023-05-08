@@ -3,6 +3,8 @@
 {% load ratings_extras %}
 {% load humanize %}
 
+{% block title %}{% translate "Profile of" %} {{ user.username }} - TubeRank{% endblock title %}
+
 {% block content %}
 <div class="container mx-auto py-6">
   <div class="flex flex-wrap">

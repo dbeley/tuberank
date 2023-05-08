@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Rate {{ video.last_snapshot.title_en }} - {{ video.channel.last_snapshot.name_en }}{% endblock title %}
+{% block title %}{% translate "Rate" %} {{ video.last_snapshot.title_en }} - TubeRank{% endblock title %}
 {% block content %}
 {% load i18n %}
 {% load ratings_extras %}
