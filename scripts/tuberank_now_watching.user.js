@@ -21,12 +21,16 @@
             gmWaitMain();
         }
     }
-    , 111
+    , 1000
   );
 
+
   function gmWaitMain() {
-    console.log("TubeRank: new video detected, waiting 20 seconds");
-    setTimeout(gmMain, 20000);
+    durationSpan = document.getElementsByClassName("ytp-time-duration")[0].innerHTML;
+    var seconds = +(durationSpan.split(':').reduce((acc,time) => (60 * acc) + +time));
+    var secondsToWait = parseInt(seconds/2);
+    console.log(`New video detected, waiting ${secondsToWait} seconds to send to TubeRank`);
+    setTimeout(gmMain, secondsToWait);
   };
 
   function gmMain () {
