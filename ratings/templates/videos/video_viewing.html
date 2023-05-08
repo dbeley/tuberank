@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% block title %}{% translate "Viewing" %} {{ video.last_snapshot.title_en }} - TubeRank{% endblock title %}
-{% block content %}
 {% load i18n %}
+{% block title %}{% translate "Viewing" %}{{ video.last_snapshot.title_en }} - TubeRank{% endblock title %}
+{% block content %}
 
 <div class="flex items-center w-full mb-8">
   <a href="{% url 'video_details' pk=video.id %}" class="mr-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">

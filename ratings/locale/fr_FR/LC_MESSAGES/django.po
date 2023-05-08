@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-09 00:17+0200\n"
+"POT-Creation-Date: 2023-05-09 01:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -623,27 +623,31 @@ msgstr "Modifier description"
 msgid "Profile of"
 msgstr "Profil de"
 
-#: templates/profile/profile.html:19 templates/profile/profile.html:36
+#: templates/profile/profile.html:19
+msgid "Watched Videos"
+msgstr "Vidéos visionnées"
+
+#: templates/profile/profile.html:23 templates/profile/profile.html:40
 msgid "Video Ratings"
 msgstr "Vidéos notées"
 
-#: templates/profile/profile.html:23 templates/profile/profile.html:51
+#: templates/profile/profile.html:27 templates/profile/profile.html:55
 msgid "Channel Ratings"
 msgstr "Chaînes notées"
 
-#: templates/profile/profile.html:27
+#: templates/profile/profile.html:31
 msgid "Date Joined"
 msgstr "Date d'inscription"
 
-#: templates/profile/profile.html:47
+#: templates/profile/profile.html:51
 msgid "No video ratings found."
 msgstr "Pas de notes trouvées."
 
-#: templates/profile/profile.html:70
+#: templates/profile/profile.html:74
 msgid "No channel ratings found."
 msgstr "Pas de notes trouvées."
 
-#: templates/profile/profile.html:83
+#: templates/profile/profile.html:87
 msgid "Number of Ratings"
 msgstr "Nombre de notes"
 
@@ -782,43 +786,43 @@ msgstr "Lire la critique"
 msgid "Delete tag from video"
 msgstr "Enlever le tag"
 
-#: templates/videos/video_rating.html:2
+#: templates/videos/video_rating.html:5
 msgid "Rate"
 msgstr "Noter"
 
-#: templates/videos/video_rating.html:9 templates/videos/video_viewing.html:8
+#: templates/videos/video_rating.html:11 templates/videos/video_viewing.html:8
 msgid "&#8592; Return to Video"
 msgstr "&#8592; Retour à la vidéo"
 
-#: templates/videos/video_rating.html:19 templates/videos/video_viewing.html:18
+#: templates/videos/video_rating.html:21 templates/videos/video_viewing.html:18
 msgid "Channel:"
 msgstr "Chaîne :"
 
-#: templates/videos/video_rating.html:30
+#: templates/videos/video_rating.html:32
 msgid "Rating (0-5)"
 msgstr "Note (0-5)"
 
-#: templates/videos/video_rating.html:32
+#: templates/videos/video_rating.html:34
 msgid "Enter your rating"
 msgstr "Note"
 
-#: templates/videos/video_rating.html:36
+#: templates/videos/video_rating.html:38
 msgid "Review title (optional)"
 msgstr "Titre de la critique (optionnel)"
 
-#: templates/videos/video_rating.html:38
+#: templates/videos/video_rating.html:40
 msgid "Enter the title of your review"
 msgstr "Titre de la critique"
 
-#: templates/videos/video_rating.html:42
+#: templates/videos/video_rating.html:44
 msgid "Review (optional)"
 msgstr "Texte (optionnel)"
 
-#: templates/videos/video_rating.html:44
+#: templates/videos/video_rating.html:46
 msgid "Enter your review"
 msgstr "Texte"
 
-#: templates/videos/video_rating.html:48 templates/videos/video_viewing.html:31
+#: templates/videos/video_rating.html:50 templates/videos/video_viewing.html:31
 msgid "Submit"
 msgstr "Envoyer"
 
