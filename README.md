@@ -33,12 +33,21 @@ python manage.py migrate --run-syncdb
 
 ## Deployment
 
+Deployment from scratch with fly.io
+
+```
+fly launch
+fly secrets set LOCAL_DEPLOY="0"
+fly secrets set ... # see .env.example for list of environment variables to set
+fly deploy
+fly certs add domain.tld
+fly certs check domain.tld
+```
+
 fly.io cheatsheet
 
 ```
-fly deploy
 fly secrets list
-fly secrets set DEBUG="0"
 fly logs
 fly ssh console
 fly ssh console --pty -C 'python /code/manage.py migrate'
@@ -85,7 +94,7 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 - Feature to delete a tag from a video
 - Feature to delete a tag when no video attached to it
 - Feature to reorder a list
-- Make tags have distinct names, no spaces but dashes
+- Add ratings to each tag. When 0 -> tag is not displayed or is deleted
 
 ### Import function
 - Add channel batch import feature
@@ -94,6 +103,3 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 
 ### Charts
 - Fix average rating sort with postgresql
-
-### Responsiveness
-- Fix buttons in video item

@@ -42,10 +42,10 @@ class ChartsView(APIView):
             elif sort_method == "ratings_count":
                 videos = videos.order_by("-num_ratings")
             elif sort_method == "rating":
-                videos = videos.order_by("-avg_rating")
+                videos = videos.filter(avg_rating__isnull=False).order_by("-avg_rating")
         else:
             # default
-            videos = videos.order_by("-avg_rating")
+            videos = videos.filter(avg_rating__isnull=False).order_by("-avg_rating")
 
         if selected_tag := request.GET.get("tag"):
             tag = UserTag.objects.get(name=selected_tag)
