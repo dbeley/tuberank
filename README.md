@@ -100,6 +100,3 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 - Add channel batch import feature
 - Add search by url + importing it automatically
 - Add api to import videos + rate + view
-
-### Charts
-- Fix average rating sort with postgresql

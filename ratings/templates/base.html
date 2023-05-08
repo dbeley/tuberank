@@ -10,7 +10,7 @@
 </head>
 <body class="flex flex-col h-screen justify-between bg-gray-200" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 <nav class="bg-gray-900 border-gray-200">
-  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+  <div class="max-w-screen-xl flex items-center justify-between mx-auto p-4">
     <a href="{% url 'homepage' %}" class="flex items-center">
       <span class="self-center text-white text-2xl font-semibold whitespace-nowrap">TubeRank</span>
     </a>
@@ -115,9 +115,11 @@
         <li><a href="{% url 'channel_list' %}"
                class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-300 md:p-0">{% translate "Channels" %}</a>
         </li>
+        {% if user.is_authenticated %}
         <li><a href="{% url 'import_video' %}"
                class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-300 md:p-0">{% translate "Import Video" %}</a>
         </li>
+        {% endif %}
       </ul>
     </div>
   </div>

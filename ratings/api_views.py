@@ -1,51 +1,29 @@
-from django.core.exceptions import ValidationError
+import http
+
 from django.shortcuts import get_object_or_404
-from rest_framework import permissions, views
+from rest_framework import views, authentication, throttling
+from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
+import ratings.yt_import
 from ratings import enums
-from ratings.models.tags import UserTag
-from ratings.models.videos import Video
-from ratings.tags.serializers import UserTagSerializer
-from ratings.videos.serializers import VideoSerializer
+from ratings.models import Video, VideoViewing
 
 
-class UserTagView(views.APIView):
-    permission_classes = [permissions.IsAuthenticated]
+class ImportVideoView(views.APIView):
+    authentication_classes = [
+        authentication.SessionAuthentication,
+        authentication.BasicAuthentication,
+    ]
+    throttle_classes = [throttling.UserRateThrottle, throttling.AnonRateThrottle]
 
-    def get(self, request):
-        return Response(
-            UserTagSerializer(
-                UserTag.objects.filter(state=enums.TagState.VALIDATED), many=True
+    def post(self, request, yt_id):
+        if not len(yt_id) == 11:
+            raise ValidationError("YouTube id is most likely malformed")
+        ratings.yt_import.create_video_snapshot(yt_id)
+        if request.user.is_authenticated:
+            video = get_object_or_404(Video, yt_id=yt_id)
+            VideoViewing.objects.create(
+                video=video, user=request.user, state=enums.ViewingState.VIEWED
             )
-        )
-
-
-class UserTagVideoView(views.APIView):
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get(self, request, video_pk):
-        video = get_object_or_404(Video.objects.all(), pk=video_pk)
-        return Response(UserTagSerializer(video.tags, many=True))
-
-    def post(self, request, video_pk):
-        serializer = UserTagSerializer(data=request.data)
-        if not serializer.is_valid():
-            raise ValidationError("Payload invalid")
-        video = get_object_or_404(Video.objects.all(), pk=request.data.get("video_id"))
-        tag, created = UserTag.objects.get_or_create(
-            name=request.data.get("name"),
-            defaults={"user": self.request.user, "state": enums.TagState.VALIDATED},
-        )
-        video.tags.add(tag)
-        return Response(UserTagSerializer(tag).data)
-
-
-class UserTagOverviewView(views.APIView):
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get(self, request, name):
-        tag = get_object_or_404(UserTag.objects.all(), name=name)
-        return Response(
-            VideoSerializer(Video.objects.filter(tags__contains=tag), many=True)
-        )
+        return Response(status=http.HTTPStatus.OK)
