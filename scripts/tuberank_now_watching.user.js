@@ -16,7 +16,6 @@
             || this.lastQueryStr !== location.search
             || (fireOnHashChangesToo && this.lastHashStr !== location.hash)
         ) {
-          console.log("Clearing timer " + timer);
           clearTimeout(timer);
           this.lastPathStr  = location.pathname;
           this.lastQueryStr = location.search;
@@ -32,7 +31,6 @@
   );
 
   function gmMain () {
-    console.log("gmMain");
     let username = 'changeme';
     let password = 'changeme';
     let url = 'http://localhost:8000/en/api/now-watching/';
