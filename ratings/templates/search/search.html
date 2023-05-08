@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% translate "Search" %}{% endblock title %}
+{% block title %}{% translate "Search" %} - TubeRank{% endblock title %}
 
 {% block content %}
 <h2 class="mt-8 mb-4 text-2xl font-bold">{% blocktranslate with query=request.GET.q %}Results for "{{ query }}"{% endblocktranslate %}</h2>

@@ -154,7 +154,7 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
     "DEFAULT_THROTTLE_RATES": {
         "anon": "1/hour",
-        "user": "1/min",
+        "user": "10/min",
     },
 }
 

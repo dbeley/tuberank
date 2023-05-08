@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% translate "About" %}{% endblock title %}
+{% block title %}{% translate "About" %} - TubeRank{% endblock title %}
 
 {% block content %}
 
@@ -9,6 +9,53 @@
     <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue">
         <h1 class="text-2xl font-bold mb-4">{% translate "About" %}</h1>
         <p class="mb-2">{% translate "homepage.description"|safe|linebreaks %}</p>
+        <p>{% translate "Think IMDB or Rotten Tomatoes, but specifically targeted at YouTube videos." %}</p>
+        <p>{% translate "This website has been made with the following tools:" %}</p>
+        <ul>
+            <li><a href="https://www.djangoproject.com/">django</a> (<a href="https://www.django-rest-framework.org/">drf</a>, <a href="https://whitenoise.readthedocs.io/en/latest/">whitenoise</a>)</li>
+            <li><a href="https://tailwindcss.com/">tailwind</a> (<a href="https://flowbite.com/">flowbite</a>)</li>
+            <li><a href="https://htmx.org/">htmx</a></li>
+        </ul>
+        <p>{% blocktranslate %}This website is hosted in France using <a href="https://fly.io">fly.io</a>.{% endblocktranslate %}</p>
+        <h2>{% translate "Videos" %}</h2>
+        <p>{% translate "TubeRank cannot maintain an up-to-date index of all the videos on YouTube due to their sheer volume." %}</p>
+        {% url 'import_video' as import_video_url %}
+        <p>{% blocktranslate %}Therefore, videos have to be added to the index manually using the <a href="{{ import_video_url }}">import video</a> page.{% endblocktranslate %}</p>
+        <p>{% translate "When a video is imported, TubeRank captures a snapshot of it to obtain the most recent information about it." %}</p>
+        <p>{% translate "However, it is currently not possible to update a snapshot of an indexed video, such as for updating its view count, but this feature is planned for future implementation." %}</p>
+        <h2>{% translate "Tag" %}</h2>
+        <p>{% translate "Every video can be assigned tags, and each tag can only be used once per video. Users are free to apply as many tags as they desire." %}</p>
+        <p>{% translate "Deleting a tag from a video can be done through the tag page, and any user has the authority to remove a tag from a video." %}</p>
+        <p>{% translate "In the future, it will be possible to rate each tag assigned to a video. Once the rating for a tag reaches zero, the tag will be removed from the video. This feature is planned for implementation." %}</p>
+        <h2>{% translate "List" %}</h2>
+        <p>{% translate "Users have the ability to create lists comprising of videos, with the option to add a description for each item on the list." %}</p>
+        <p>{% translate "Currently, it is not possible to rearrange the order of the videos on a list. However, this feature is planned for implementation in the future." %}</p>
+        <h2>{% translate "Channel" %}</h2>
+        <p>{% translate "When a snapshot is created for a Video, a similar snapshot for its Channel is also created." %}</p>
+        <p>{% translate "Updating the snapshot for a Channel is planned feature, as well as being able to review Channels." %}</p>
+        <h2>{% translate "Charts" %}</h2>
+        <p>{% translate "It's possible to create Charts of videos." %}</p>
+        <p>{% translate "The available filters are:" %}</p>
+        <ul>
+            <li>{% translate "Best rated" %}</li>
+            <li>{% translate "Most rated" %}</li>
+            <li>{% translate "Most viewed (according to the latest snapshot for each video)" %}</li>
+            <li>{% translate "Least viewed (according to the latest snapshot for each video)" %}</li>
+            <li>{% translate "Newest (most recently published)" %}</li>
+            <li>{% translate "Oldest (less recently published)" %}</li>
+        </ul>
+        <h2>{% translate "Viewing history" %}</h2>
+        {% if user.is_authenticated %}
+        {% url 'profile' username=user.username as profile_url %}
+        <p>{% blocktranslate %}You can access your viewing history by visiting your <a href="{{ profile_url }}">profile page</a>.{% endblocktranslate %}</p>
+        {% else %}
+        <p>{% blocktranslate %}You can access your viewing history by visiting your profile page.{% endblocktranslate %}</p>
+        {% endif %}
+        <p>{% translate "There are two ways to track your viewing history with TubeRank:" %}</p>
+        <ul>
+            <li>{% blocktranslate %}Manual tracking: For each video that you watch, you can manually import it (if not already done) and then click on the "I'm watching this video" button from the video page.{% endblocktranslate %}</li>
+            <li>{% blocktranslate %}Automatic tracking: You will have to install <a href="https://github.com/dbeley/tuberank/blob/main/scripts/tuberank_now_watching.user.js">this userscript</a>. After installing it with a userscript manager (like ViolentMonkey) and filled in your login information (username/password, see source code), the videos you watch through YouTube will be automatically sent to TubeRank.{% endblocktranslate %}</li>
+        </ul>
     </article>
 </div>
 
