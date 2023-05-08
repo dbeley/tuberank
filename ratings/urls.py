@@ -86,8 +86,8 @@ urlpatterns = [
     ),
     path("about", ratings.views.AboutView.as_view(), name="about"),
     path(
-        "api/import-video/<str:yt_id>",
-        ratings.api_views.ImportVideoView.as_view(),
-        name="api_import_video",
+        "api/now-watching/<str:yt_id>",
+        ratings.api_views.NowWatchingView.as_view(),
+        name="api_now_watching",
     ),
 ]
