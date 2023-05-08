@@ -9,31 +9,30 @@
   // ==/UserScript==
   (function () {
   var fireOnHashChangesToo    = true;
+  var timer;
   var pageURLCheckTimer       = setInterval (
     function () {
         if (   this.lastPathStr  !== location.pathname
             || this.lastQueryStr !== location.search
             || (fireOnHashChangesToo && this.lastHashStr !== location.hash)
         ) {
-            this.lastPathStr  = location.pathname;
-            this.lastQueryStr = location.search;
-            this.lastHashStr  = location.hash;
-            gmWaitMain();
+          console.log("Clearing timer " + timer);
+          clearTimeout(timer);
+          this.lastPathStr  = location.pathname;
+          this.lastQueryStr = location.search;
+          this.lastHashStr  = location.hash;
+          durationSpan = document.getElementsByClassName("ytp-time-duration")[0].innerHTML;
+          var seconds = +(durationSpan.split(':').reduce((acc,time) => (60 * acc) + +time));
+          var secondsToWait = parseInt(seconds/2);
+          console.log(`New video detected, waiting ${secondsToWait} seconds to send to TubeRank`);
+          timer = setTimeout(gmMain, secondsToWait * 1000);
         }
     }
     , 1000
   );
 
-
-  function gmWaitMain() {
-    durationSpan = document.getElementsByClassName("ytp-time-duration")[0].innerHTML;
-    var seconds = +(durationSpan.split(':').reduce((acc,time) => (60 * acc) + +time));
-    var secondsToWait = parseInt(seconds/2);
-    console.log(`New video detected, waiting ${secondsToWait} seconds to send to TubeRank`);
-    setTimeout(gmMain, secondsToWait);
-  };
-
   function gmMain () {
+    console.log("gmMain");
     let username = 'changeme';
     let password = 'changeme';
     let url = 'http://localhost:8000/en/api/now-watching/';
