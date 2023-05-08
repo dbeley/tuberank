@@ -33,7 +33,7 @@
   function gmMain () {
     let username = 'changeme';
     let password = 'changeme';
-    let url = 'http://localhost:8000/en/api/now-watching/';
+    let url = 'https://tuberank.org/en/api/now-watching/';
 
     let authentication = btoa(username + ":" + password);
     let url1 = window.location.href;
