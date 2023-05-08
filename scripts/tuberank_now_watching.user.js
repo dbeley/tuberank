@@ -36,12 +36,11 @@
   function gmMain () {
     let username = 'changeme';
     let password = 'changeme';
-    let authentication = btoa(username + ":" + password);
-    const tubeRankUrl = "https://tuberank.org/api/now-watching/";
-    let url1 = window.location.href;
-    const url1Splitted = url1.split("watch?v=");
-    let youtubeId = url1Splitted[1];
     let url = 'http://localhost:8000/en/api/now-watching/';
+
+    let authentication = btoa(username + ":" + password);
+    let url1 = window.location.href;
+    let youtubeId = url1.split("watch?v=")[1].split("&list=")[0];
     console.log(`TubeRank: sending "now watching" request to ${url}${youtubeId}`);
     GM.xmlhttpRequest({
         method: 'POST',
