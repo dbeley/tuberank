@@ -8,6 +8,9 @@
   // @description 5/8/2023, 1:00:50 PM
   // ==/UserScript==
   (function () {
+  let username = 'changeme';
+  let password = 'changeme';
+  let url = 'https://tuberank.org/en/api/now-watching/';
   var fireOnHashChangesToo    = true;
   var timer;
   var pageURLCheckTimer       = setInterval (
@@ -31,10 +34,6 @@
   );
 
   function gmMain () {
-    let username = 'changeme';
-    let password = 'changeme';
-    let url = 'https://tuberank.org/en/api/now-watching/';
-
     let authentication = btoa(username + ":" + password);
     let url1 = window.location.href;
     let youtubeId = url1.split("watch?v=")[1].split("&list=")[0];
