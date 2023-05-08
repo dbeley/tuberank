@@ -5,6 +5,7 @@ import ratings.charts.views
 import ratings.lists.views
 import ratings.tags.views
 import ratings.videos.views
+import ratings.api_views
 from ratings import views
 
 urlpatterns = [
@@ -84,4 +85,9 @@ urlpatterns = [
         name="import_video",
     ),
     path("about", ratings.views.AboutView.as_view(), name="about"),
+    path(
+        "api/now-watching/<str:yt_id>",
+        ratings.api_views.NowWatchingView.as_view(),
+        name="api_now_watching",
+    ),
 ]
