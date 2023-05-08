@@ -20,7 +20,8 @@ class NowWatchingView(views.APIView):
         if request.user.is_authenticated:
             if not len(yt_id) == 11:
                 raise ValidationError("YouTube id is most likely malformed")
-            ratings.yt_import.create_video_snapshot(yt_id)
+            if not Video.objects.filter(yt_id=yt_id).exists():
+                ratings.yt_import.create_video_snapshot(yt_id)
             video = get_object_or_404(Video, yt_id=yt_id)
             VideoViewing.objects.create(
                 video=video, user=request.user, state=enums.ViewingState.VIEWED

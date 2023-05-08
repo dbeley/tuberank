@@ -15,6 +15,10 @@
         </div>
         <hr class="my-4">
         <div class="text-center">
+          <p class="text-xl font-bold">{{ user.viewings.count }}</p>
+          <p class="text-gray-600">{% translate "Watched Videos" %}</p>
+        </div>
+        <div class="text-center">
           <p class="text-xl font-bold">{{ user.video_ratings.count }}</p>
           <p class="text-gray-600">{% translate "Video Ratings" %}</p>
         </div>
