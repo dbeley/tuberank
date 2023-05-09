@@ -5,7 +5,7 @@ from ratings import enums
 
 
 class UserTag(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=25, unique=True)
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     date_creation = models.DateTimeField(auto_now_add=True)
     state = models.PositiveIntegerField(choices=enums.TagState.choices())
