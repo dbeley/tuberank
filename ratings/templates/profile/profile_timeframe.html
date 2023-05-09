@@ -23,7 +23,7 @@
         </li>
         {% endfor %}
     </ul>
-    <div class="my-4">
+    <div class="mt-4">
         <nav class="flex items-center justify-between">
             {% if viewings.has_previous %}
             <a hx-get="{% url 'profile' username=user.username %}?page={{ viewings.previous_page_number }}"
