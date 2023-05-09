@@ -1,4 +1,4 @@
-from django.db.models import Count, QuerySet, Sum, F
+from django.db.models import Count, QuerySet
 from django.shortcuts import get_object_or_404
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
@@ -10,8 +10,8 @@ from ratings.models.tags import UserTag
 
 def get_active_tags() -> QuerySet[UserTag]:
     return (
-        UserTag.objects.annotate(sum_score=Sum(F("votes__vote")))
-        .filter(sum_score__gt=0, state=enums.TagState.VALIDATED)
+        UserTag.objects.annotate(num_videos=Count("video"))
+        .filter(num_videos__gt=0, state=enums.TagState.VALIDATED)
         .all()
     )
 
@@ -31,9 +31,4 @@ class TagsView(APIView):
     template_name = "tags/tags.html"
 
     def get(self, request):
-        tags = (
-            get_active_tags()
-            .annotate(num_videos=Count("video"))
-            .order_by("-num_videos")
-        )
-        return Response({"tags": tags})
+        return Response({"tags": get_active_tags().order_by("-num_videos")})

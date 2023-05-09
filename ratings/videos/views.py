@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.db.models import QuerySet, Sum
-from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.renderers import TemplateHTMLRenderer
@@ -54,6 +53,28 @@ def _get_tags_with_score_for_video(video: Video):
     return result
 
 
+def _add_video_to_tag(tag_name: str, video: Video, user: User):
+    tag, _ = UserTag.objects.get_or_create(
+        name=tag_name,
+        defaults={
+            "user": user,
+            "state": enums.TagState.VALIDATED,
+        },
+    )
+    video.tags.add(tag)
+    _add_vote_to_tag_video(tag, video, user, enums.TagVote.UPVOTE)
+
+
+def _add_vote_to_tag_video(tag: UserTag, video: Video, user: User, vote: enums.TagVote):
+    if UserTagVote.objects.filter(video=video, user=user, tag=tag).exists():
+        existing_vote = UserTagVote.objects.get(video=video, user=user, tag=tag)
+        if vote != existing_vote.vote:
+            existing_vote.delete()
+    vote, _ = UserTagVote.objects.get_or_create(
+        video=video, user=user, tag=tag, vote=vote
+    )
+
+
 class VideoRatingDetailView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = "videos/video_rating.html"
@@ -89,19 +110,13 @@ class VideoViewingView(APIView):
     template_name = "videos/video_viewing.html"
 
     def get(self, request, pk):
-        try:
-            video = get_object_or_404(Video, pk=pk)
-        except Video.DoesNotExist:
-            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+        video = get_object_or_404(Video, pk=pk)
         return Response({"video": video})
 
     def post(self, request, pk):
         if not request.user.is_authenticated:
             raise PermissionDenied()
-        try:
-            video = get_object_or_404(Video, pk=pk)
-        except Video.DoesNotExist:
-            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+        video = get_object_or_404(Video, pk=pk)
         VideoViewing.objects.create(
             user=request.user,
             video=video,
@@ -149,24 +164,8 @@ class VideoDetailsView(APIView):
                 serializer = UserTagSerializer(data=request.data)
                 if not serializer.is_valid():
                     return Response({"video": video, "user_lists": user_lists})
-                tag, created = UserTag.objects.get_or_create(
-                    name=serializer.validated_data.get("name"),
-                    defaults={
-                        "user": self.request.user,
-                        "state": enums.TagState.VALIDATED,
-                    },
-                )
-                video.tags.add(tag)
-                if UserTagVote.objects.filter(
-                    video=video, user=request.user, tag=tag
-                ).exists():
-                    existing_vote = UserTagVote.objects.get(
-                        video=video, user=request.user, tag=tag
-                    )
-                    if existing_vote.vote == enums.TagVote.DOWNVOTE:
-                        existing_vote.delete()
-                vote, created = UserTagVote.objects.get_or_create(
-                    video=video, user=request.user, tag=tag, vote=enums.TagVote.UPVOTE
+                _add_video_to_tag(
+                    tag_name=serializer.data.get("name"), video=video, user=request.user
                 )
         lists = VideoList.objects.filter(videos__in=[pk])
         tags_with_score = _get_tags_with_score_for_video(video=video)
@@ -190,15 +189,9 @@ class VideoTagUpvoteView(APIView):
             raise PermissionDenied()
         video = get_object_or_404(Video, pk=video_id)
         tag = get_object_or_404(UserTag, pk=tag_id, state=enums.TagState.VALIDATED)
-        if UserTagVote.objects.filter(video=video, user=request.user, tag=tag).exists():
-            existing_vote = UserTagVote.objects.get(
-                video=video, user=request.user, tag=tag
-            )
-            if existing_vote.vote == enums.TagVote.DOWNVOTE:
-                existing_vote.delete()
-        vote, _ = UserTagVote.objects.get_or_create(
-            video=video, user=request.user, tag=tag, vote=enums.TagVote.UPVOTE
-        )
+
+        _add_vote_to_tag_video(tag, video, request.user, enums.TagVote.UPVOTE)
+
         score = tag.votes.filter(video=video).aggregate(score=Sum("vote"))["score"] or 0
         tag = {"id": tag.pk, "name": tag.name, "score": score}
         return Response(
@@ -218,15 +211,9 @@ class VideoTagDownvoteView(APIView):
             raise PermissionDenied()
         video = get_object_or_404(Video, pk=video_id)
         tag = get_object_or_404(UserTag, pk=tag_id, state=enums.TagState.VALIDATED)
-        if UserTagVote.objects.filter(video=video, user=request.user, tag=tag).exists():
-            existing_vote = UserTagVote.objects.get(
-                video=video, user=request.user, tag=tag
-            )
-            if existing_vote.vote == enums.TagVote.UPVOTE:
-                existing_vote.delete()
-        vote, _ = UserTagVote.objects.get_or_create(
-            video=video, user=request.user, tag=tag, vote=enums.TagVote.DOWNVOTE
-        )
+
+        _add_vote_to_tag_video(tag, video, request.user, enums.TagVote.DOWNVOTE)
+
         score = tag.votes.filter(video=video).aggregate(score=Sum("vote"))["score"] or 0
         if score == 0:
             video.tags.remove(tag)
