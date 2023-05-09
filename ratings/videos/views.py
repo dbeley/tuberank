@@ -75,6 +75,29 @@ def _add_vote_to_tag_video(tag: UserTag, video: Video, user: User, vote: enums.T
     )
 
 
+def _get_related_videos(
+    current_video: Video, tags_with_score: dict[str, str], count: int
+) -> QuerySet[Video]:
+    sorted_tags = sorted(tags_with_score, key=lambda d: d["score"], reverse=True)
+    related_videos = []
+    # similarity by tag
+    for tag in sorted_tags:
+        if len(related_videos) >= count:
+            break
+        related_videos += UserTag.objects.get(pk=tag.get("id")).video_set.exclude(
+            id=current_video.id
+        )[: count - len(related_videos)]
+    # similarity by channel
+    remaining = count - len(related_videos)
+    if remaining > 0:
+        related_videos += (
+            Video.objects.exclude(pk=current_video.pk)
+            .filter(channel=current_video.channel)
+            .all()[:remaining]
+        )
+    return related_videos
+
+
 class VideoRatingDetailView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = "videos/video_rating.html"
@@ -136,12 +159,16 @@ class VideoDetailsView(APIView):
             user_lists = _get_user_lists(request.user)
         lists = VideoList.objects.filter(videos__in=[pk])
         tags_with_score = _get_tags_with_score_for_video(video=video)
+        related_videos = _get_related_videos(
+            current_video=video, tags_with_score=tags_with_score, count=8
+        )
         return Response(
             {
                 "video": video,
                 "user_lists": user_lists,
                 "lists": lists,
                 "tags": tags_with_score,
+                "related_videos": related_videos,
             }
         )
 
@@ -169,6 +196,9 @@ class VideoDetailsView(APIView):
                 )
         lists = VideoList.objects.filter(videos__in=[pk])
         tags_with_score = _get_tags_with_score_for_video(video=video)
+        related_videos = _get_related_videos(
+            current_video=video, tags_with_score=tags_with_score, count=8
+        )
         return Response(
             {
                 "video": video,
@@ -176,6 +206,7 @@ class VideoDetailsView(APIView):
                 "lists": lists,
                 "notification": notification,
                 "tags": tags_with_score,
+                "related_videos": related_videos,
             }
         )
 

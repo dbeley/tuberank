@@ -86,7 +86,7 @@
     </div>
   </div>
   {% if video.ratings.exists %}
-  <div class="mt-8">
+  <div class="mt-6">
     <h2 class="text-2xl font-bold mb-4">{% translate "Reviews" %}</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {% for rating in video.ratings.all %}
@@ -97,65 +97,68 @@
     </div>
   </div>
   {% endif %}
-  <div class="w-full lg:w-3/4 mb-8 mt-8">
-    <div class="bg-white rounded-lg shadow-lg py-2 px-2">
-      <div class="flex flex-wrap -mx-2 mt-4">
-        <div class="px-2">
-          <h2 class="text-xl font-bold mb-2">{% translate "Tags" %}</h2>
-          {% if user.is_authenticated %}
-          <form id="add-tag-form" action="{% url 'video_details' video.id %}" method="POST">
-            {% csrf_token %}
-            <div class="flex items-center">
-              <input pattern="[a-zA-Z0-9 -]+" type="name" name="name" placeholder="{% blocktranslate %}Enter a tag{% endblocktranslate %}" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2" minlength="3" maxlength="50">
-              <button type="submit" class="bg-blue-700 hover:bg-blue-800 rounded-lg text-white px-4 py-2">{% translate "Add Tag" %}</button>
-            </div>
-          </form>
-          {% endif %}
-          {% if tags %}
-          <div class="flex flex-wrap mt-2">
-            {% for tag in tags %}
-            {% include "videos/video_details_tag_list.html" %}
-            {% endfor %}
-          </div>
-          {% else %}
-          <p class="text-gray-600">{% translate "No tags yet." %}</p>
-          {% endif %}
+  <div class="w-full mb-8 mt-8 bg-white rounded-lg shadow-lg py-4 px-4 flex flex-wrap">
+    <div class="px-2 lg:w-1/2">
+      <h2 class="text-xl font-bold mb-2">{% translate "Tags" %}</h2>
+      {% if user.is_authenticated %}
+      <form id="add-tag-form" action="{% url 'video_details' video.id %}" method="POST">
+        {% csrf_token %}
+        <div class="flex items-center">
+          <input pattern="[a-zA-Z0-9 -]+" type="name" name="name" placeholder="{% blocktranslate %}Enter a tag{% endblocktranslate %}" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2" minlength="3" maxlength="50">
+          <button type="submit" class="bg-blue-700 hover:bg-blue-800 rounded-lg text-white px-4 py-2">{% translate "Add Tag" %}</button>
         </div>
-        <div class="px-2">
-          <h2 class="text-xl font-bold mb-2">{% translate "Lists" %}</h2>
-          {% if user.is_authenticated %}
-          <form action="{% url 'video_details' pk=video.id %}" method="POST">
-            {% csrf_token %}
-            <div class="flex items-center">
-              <select name="list_pk" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2">
-                <option value="" disabled selected>{% translate "Select a list" %}</option>
-                {% for list in user_lists.all %}
-                <option value="{{ list.id }}">{{ list.name }}</option>
-                {% endfor %}
-              </select>
-              <button type="submit" class="bg-blue-700 hover:bg-blue-800 rounded-lg text-white px-4 py-2">{% translate "Add to List" %}</button>
-            </div>
-          </form>
-          {% endif %}
-          {% if lists.exists %}
-          <div class="flex flex-wrap mt-2">
-            <ul>
-              {% for list in lists.all %}
-              <li class="py-2 items-center justify-between">
-                <div class="bg-gray-100 rounded-lg px-4 text-gray-700 mr-2 mb-2 hover:bg-gray-200">
-                  <a href="{% url 'list_details' pk=list.id %}" class="font-medium">{{ list.name }}</a>
-                  <span class="text-sm text-gray-500 ml-2">{% blocktranslate with user=list.user.username %}by {{ user }}{% endblocktranslate %}</span>
-                </div>
-              </li>
-              {% endfor %}
-            </ul>
-          </div>
-          {% else %}
-          <p class="text-gray-600">{% translate "Not in any lists yet." %}</p>
-          {% endif %}
-        </div>
+      </form>
+      {% endif %}
+      {% if tags %}
+      <div class="flex flex-wrap mt-2">
+        {% for tag in tags %}
+        {% include "videos/video_details_tag_list.html" %}
+        {% endfor %}
       </div>
+      {% else %}
+      <p class="text-gray-600">{% translate "No tags yet." %}</p>
+      {% endif %}
     </div>
+    <div class="px-2 lg:w-1/2">
+      <h2 class="text-xl font-bold mb-2">{% translate "Lists" %}</h2>
+      {% if user.is_authenticated %}
+      <form action="{% url 'video_details' pk=video.id %}" method="POST">
+        {% csrf_token %}
+        <div class="flex items-center">
+          <select name="list_pk" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2">
+            <option value="" disabled selected>{% translate "Select a list" %}</option>
+            {% for list in user_lists.all %}
+            <option value="{{ list.id }}">{{ list.name }}</option>
+            {% endfor %}
+          </select>
+          <button type="submit" class="bg-blue-700 hover:bg-blue-800 rounded-lg text-white px-4 py-2">{% translate "Add to List" %}</button>
+        </div>
+      </form>
+      {% endif %}
+      {% if lists.exists %}
+      <div class="flex flex-wrap mt-2">
+        <ul>
+          {% for list in lists.all %}
+          <li class="py-2 items-center justify-between">
+            <div class="bg-gray-100 rounded-lg px-4 text-gray-700 mr-2 mb-2 hover:bg-gray-200">
+              <a href="{% url 'list_details' pk=list.id %}" class="font-medium">{{ list.name }}</a>
+              <span class="text-sm text-gray-500 ml-2">{% blocktranslate with user=list.user.username %}by {{ user }}{% endblocktranslate %}</span>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% else %}
+      <p class="text-gray-600">{% translate "Not in any lists yet." %}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <h2 class="text-2xl font-bold mb-4">{% translate "Related Videos" %}</h2>
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
+    {% for video in related_videos %}
+    {% include "videos/video_item.html" %}
+    {% endfor %}
   </div>
 </div>
 
