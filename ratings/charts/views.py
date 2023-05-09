@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 from ratings.models import UserTag
 from ratings.models.videos import Video
-from ratings.tags.views import _get_validated_tags
+from ratings.tags.views import get_active_tags
 
 
 class ChartsView(APIView):
@@ -15,7 +15,7 @@ class ChartsView(APIView):
     template_name = "charts.html"
 
     def get(self, request):
-        tags = _get_validated_tags().order_by("name")
+        tags = get_active_tags().order_by("name")
         videos = Video.objects.annotate(
             num_ratings=Count("ratings"),
             avg_rating=Avg(F("ratings__rating")),

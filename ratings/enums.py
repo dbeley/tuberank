@@ -91,3 +91,15 @@ class Category(IntEnum):
             (Category.SCIENCE_AND_TECHNOLOGY.value, "Science & Technology"),
             (Category.NONPROFITS_AND_ACTIVISM.value, "Non-profits & Activism"),
         ]
+
+
+class TagVote(IntEnum):
+    DOWNVOTE = 0
+    UPVOTE = 1
+
+    @staticmethod
+    def choices():
+        return [
+            (TagVote.DOWNVOTE.value, "Downvote"),
+            (TagVote.UPVOTE.value, "Upvote"),
+        ]

@@ -1,0 +1,18 @@
+{% load i18n %}
+
+<div class="flex items-center bg-gray-100 rounded-lg px-4 py-2 text-gray-700 mr-2 mb-2" hx-swap="outerHTML" hx-target="this">
+  <button hx-post="{% url 'video_tag_downvote' tag_id=tag.id video_id=video.id %}" class="text-gray-700 py-1 px-1 rounded-full hover:bg-gray-200 focus:outline-none" title="{% blocktranslate %}Downvote{% endblocktranslate %}">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+         stroke="currentColor" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6"/>
+    </svg>
+  </button>
+  <a class="hover:bg-gray-200 py-2 px-2 rounded" href="{% url 'tag_overview' tag.name %}">{{ tag.name }}</a>
+  <button hx-post="{% url 'video_tag_upvote' tag_id=tag.id video_id=video.id %}" class="text-gray-700 py-1 px-1 rounded-full hover:bg-gray-200 focus:outline-none" title="{% blocktranslate %}Upvote{% endblocktranslate %}">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+         stroke="currentColor" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"/>
+    </svg>
+  </button>
+  <span class="ml-1">{{ tag.score }}</span>
+</div>
