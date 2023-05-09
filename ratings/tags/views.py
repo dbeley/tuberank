@@ -1,16 +1,19 @@
-from django.db.models import Count, QuerySet
+from django.db.models import Count, QuerySet, Sum, F
 from django.shortcuts import get_object_or_404
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from ratings import enums
-from ratings.models import Video
 from ratings.models.tags import UserTag
 
 
-def _get_validated_tags() -> QuerySet[UserTag]:
-    return UserTag.objects.filter(state=enums.TagState.VALIDATED).all()
+def get_active_tags() -> QuerySet[UserTag]:
+    return (
+        UserTag.objects.annotate(sum_score=Sum(F("votes__vote")))
+        .filter(sum_score__gt=0, state=enums.TagState.VALIDATED)
+        .all()
+    )
 
 
 class UserTagOverviewView(APIView):
@@ -29,19 +32,8 @@ class TagsView(APIView):
 
     def get(self, request):
         tags = (
-            _get_validated_tags()
+            get_active_tags()
             .annotate(num_videos=Count("video"))
             .order_by("-num_videos")
         )
         return Response({"tags": tags})
-
-
-class UserTagDeleteItemView(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = "tags/tag_overview.html"
-
-    def get(self, request, tag_name, video_pk):
-        tag = get_object_or_404(UserTag, name=tag_name)
-        video = get_object_or_404(Video, pk=video_pk)
-        tag.video_set.remove(video)
-        return Response({"tag": tag, "videos": tag.video_set.all()})

@@ -12,3 +12,19 @@ class UserTag(models.Model):
 
     def __str__(self):
         return f"{self.pk} - {self.name} - {self.user} - {self.state}"
+
+
+class UserTagVote(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    tag = models.ForeignKey(
+        "ratings.UserTag", related_name="votes", on_delete=models.CASCADE
+    )
+    vote = models.IntegerField(choices=enums.TagVote.choices())
+    video = models.ForeignKey("ratings.Video", on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "tag", "video"], name="unique_vote_by_tag_user_video"
+            )
+        ]

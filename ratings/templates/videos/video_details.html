@@ -106,17 +106,15 @@
           <form id="add-tag-form" action="{% url 'video_details' video.id %}" method="POST">
             {% csrf_token %}
             <div class="flex items-center">
-              <input pattern="[a-zA-Z0-9 -]+" type="name" name="name" placeholder="Enter a tag" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2" minlength="3" maxlength="50">
+              <input pattern="[a-zA-Z0-9 -]+" type="name" name="name" placeholder="{% blocktranslate %}Enter a tag{% endblocktranslate %}" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2" minlength="3" maxlength="50">
               <button type="submit" class="bg-blue-700 hover:bg-blue-800 rounded-lg text-white px-4 py-2">{% translate "Add Tag" %}</button>
             </div>
           </form>
           {% endif %}
-          {% if video.tags.exists %}
+          {% if tags %}
           <div class="flex flex-wrap mt-2">
-            {% for tag in video.tags.all %}
-            <div class="flex items-center bg-gray-100 rounded-lg px-4 py-2 text-gray-700 mr-2 mb-2 hover:bg-gray-200">
-              <a href="{% url 'tag_overview' tag.name %}">{{ tag.name }}</a>
-            </div>
+            {% for tag in tags %}
+            {% include "videos/video_details_tag_list.html" %}
             {% endfor %}
           </div>
           {% else %}

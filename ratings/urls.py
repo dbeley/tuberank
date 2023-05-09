@@ -75,11 +75,6 @@ urlpatterns = [
         name="tag_overview",
     ),
     path(
-        "tags/<str:tag_name>/delete/<int:video_pk>",
-        ratings.tags.views.UserTagDeleteItemView.as_view(),
-        name="tag_delete_item",
-    ),
-    path(
         "import-video",
         ratings.views.ImportVideoView.as_view(),
         name="import_video",
@@ -89,5 +84,15 @@ urlpatterns = [
         "api/now-watching/<str:yt_id>",
         ratings.api_views.NowWatchingView.as_view(),
         name="api_now_watching",
+    ),
+    path(
+        "video/<int:video_id>/tag/<int:tag_id>/upvote",
+        ratings.videos.views.VideoTagUpvoteView.as_view(),
+        name="video_tag_upvote",
+    ),
+    path(
+        "video/<int:video_id>/tag/<int:tag_id>/downvote",
+        ratings.videos.views.VideoTagDownvoteView.as_view(),
+        name="video_tag_downvote",
     ),
 ]

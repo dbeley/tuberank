@@ -32,11 +32,6 @@
     <a href="{% url 'video_rating' pk=video.id %}" class="mr-2 mb-1 flex flex-col text-white bg-gray-500 hover:bg-gray-700 focus:ring-4 focus:ring-blue-300 rounded text-sm px-4 py-2 focus:outline-none">
       {% translate "Rate this video" %}
     </a>
-    {% if tag %}
-    <a href="{% url 'tag_delete_item' tag_name=tag.name video_pk=video.id %}" class="mr-2 my-1 flex flex-col text-white bg-gray-500 hover:bg-gray-700 focus:ring-4 focus:ring-blue-300 rounded text-sm px-4 py-2 focus:outline-none">
-      {% translate "Delete tag from video" %}
     {% endif %}
-    {% endif %}
-    </a>
   </div>
 </div>
