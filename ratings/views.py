@@ -15,7 +15,7 @@ from rest_framework.views import APIView
 from ratings.channels.serializers import ChannelSerializer
 from ratings.charts import charts
 from ratings.models.channels import Channel
-from ratings.models.videos import Video
+from ratings.models.videos import Video, VideoViewing
 from ratings.videos.serializers import VideoSerializer
 from ratings.yt_import import (
     NoResultException,
@@ -141,12 +141,30 @@ class ProfileView(APIView):
                 template_name="profile/profile_timeframe.html",
             )
         page = paginator.get_page(1)
+        most_watched_channel_dict = (
+            VideoViewing.objects.filter(user=user)
+            .values("video__channel_id")
+            .annotate(count=Count("video__channel_id"))
+            .order_by("-count")[:8]
+        )
+        most_watched_channels = []
+        for channel_dict in most_watched_channel_dict:
+            channel = Channel.objects.get(pk=channel_dict.get("video__channel_id"))
+            most_watched_channels.append(
+                {
+                    "id": channel.pk,
+                    "name": channel.last_snapshot.name_en,
+                    "count": channel_dict.get("count"),
+                    "thumbnail_url": channel.last_snapshot.thumbnail_url,
+                }
+            )
         return Response(
             {
                 "user": user,
                 "ratings_labels": chart_data["ratings_labels"],
                 "ratings_data": chart_data["ratings_data"],
                 "viewings": page,
+                "most_watched_channels": most_watched_channels,
             }
         )
 

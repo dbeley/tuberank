@@ -16,10 +16,9 @@ def get_ratings_chart_for_user(user: User) -> dict[str, list]:
     sorted_ratings_counts = sorted(ratings_counts.items(), key=lambda x: x[0])
 
     ratings_labels = [
-        Rating.choices()[rating[0]][0] for rating in sorted_ratings_counts
+        Rating.choices()[rating[0]][1] for rating in sorted_ratings_counts
     ]
     ratings_data = [rating[1] for rating in sorted_ratings_counts]
-
     return {
         "ratings_labels": ratings_labels,
         "ratings_data": ratings_data,
