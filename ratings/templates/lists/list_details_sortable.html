@@ -17,22 +17,13 @@
     <div class="gap-2 mr-auto">
       <p class="text-lg">{{ list.description }}</p>
     </div>
-    {% if request.user == list.user %}
-    {% include "lists/description_update_modal.html" with item=list %}
-    <a href="{% url 'list_reorder' pk=list.id %}" class="mr-1 bg-blue-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md">{% translate "Reorder" %}</a>
-    <button data-modal-target="popup-edit-modal" data-modal-toggle="popup-edit-modal" class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-md font-medium" type="button">
-      {% translate "Edit" %}
-    </button>
-    <button data-modal-target="popup-delete-modal" data-modal-toggle="popup-delete-modal" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md" type="button">
-      {% translate "Delete" %}
-    </button>
-    {% url 'list_delete' pk=list.id as confirm_list_delete_url %}
-    {% include "lists/list_delete_modal.html" with list=list url=confirm_list_delete_url %}
-    {% endif %}
+    <a href="{% url 'list_details' pk=list.id %}" class="mr-1 bg-blue-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md">{% translate "Go Back" %}</a>
   </div>
 
     {% if list.videos.exists %}
-      {% include "lists/list_details_partial.html" with list=list sortable=False %}
+    <form id="reorderForm" hx-post="{% url 'list_reorder' pk=list.id %}" hx-trigger="end">
+      {% include "lists/list_details_partial.html" with list=list sortable=True %}
+    </form>
     {% else %}
     <p>{% translate "No videos in this list yet." %}</p>
     {% endif %}
@@ -41,4 +32,17 @@
 
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script>
+  htmx.onLoad(function(content) {
+      var sortables = document.querySelectorAll(".sortable");
+      for (var i = 0; i < sortables.length; i++) {
+        var sortable = sortables[i];
+        new Sortable(sortable, {
+            handle: '.handle',
+            animation: 150,
+            ghostClass: 'blue-background-class'
+        });
+      }
+  })
+</script>
 {% endblock scripts %}

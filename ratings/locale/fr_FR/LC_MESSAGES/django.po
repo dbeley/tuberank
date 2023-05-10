@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-11 19:58+0200\n"
+"POT-Creation-Date: 2023-05-12 16:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -529,9 +529,24 @@ msgstr "URLs YouTube (une par ligne) :"
 msgid "Import URLs"
 msgstr "Importer URLs"
 
+#: templates/lists/description_update_modal.html:15
 #: templates/lists/list_delete_modal.html:8
 msgid "Close modal"
 msgstr "Fermer"
+
+#: templates/lists/description_update_modal.html:18
+msgid "Update Description"
+msgstr "Modifier description"
+
+#: templates/lists/description_update_modal.html:24
+#: templates/lists/lists.html:33 templates/videos/video_details.html:81
+msgid "Description"
+msgstr "Description"
+
+#: templates/lists/description_update_modal.html:30
+#: templates/lists/lists.html:35
+msgid "Enter description"
+msgstr "Entrez la description"
 
 #: templates/lists/list_delete_modal.html:12
 msgid "Confirm deletion?"
@@ -542,29 +557,39 @@ msgid "Yes"
 msgstr "Oui"
 
 #: templates/lists/list_details.html:14
+#: templates/lists/list_details_sortable.html:14
 #: templates/videos/video_details_ratings.html:39
 #, python-format
 msgid "By: <span class=\"font-bold\">%(username)s</span>"
 msgstr "Par : <span class=\"font-bold\">%(username)s</span>"
 
-#: templates/lists/list_details.html:22 templates/lists/list_details.html:64
+#: templates/lists/list_details.html:22
+msgid "Reorder"
+msgstr "Réorganiser la liste"
+
+#: templates/lists/list_details.html:24 templates/lists/list_item.html:53
 msgid "Edit"
 msgstr "Éditer"
 
-#: templates/lists/list_details.html:24 templates/lists/list_details.html:66
+#: templates/lists/list_details.html:27 templates/lists/list_item.html:56
 #: templates/lists/lists.html:55
 msgid "Delete"
 msgstr "Supprimer"
 
-#: templates/lists/list_details.html:50 templates/videos/video_details.html:75
+#: templates/lists/list_details.html:37
+#: templates/lists/list_details_sortable.html:28
+msgid "No videos in this list yet."
+msgstr "Cette liste est vide."
+
+#: templates/lists/list_details_sortable.html:20
+msgid "Go Back"
+msgstr "Retour"
+
+#: templates/lists/list_item.html:38 templates/videos/video_details.html:75
 #: templates/videos/video_item.html:22
 #, python-format
 msgid "%(count)s ratings"
 msgstr "%(count)s notes"
-
-#: templates/lists/list_details.html:76
-msgid "No videos in this list yet."
-msgstr "Cette liste est vide."
 
 #: templates/lists/lists.html:10
 msgid "My Lists"
@@ -582,17 +607,6 @@ msgstr "Nom"
 #: templates/lists/lists.html:29
 msgid "Enter name"
 msgstr "Entrez le nom"
-
-#: templates/lists/lists.html:33
-#: templates/lists/update_description_modal.html:13
-#: templates/videos/video_details.html:81
-msgid "Description"
-msgstr "Description"
-
-#: templates/lists/lists.html:35
-#: templates/lists/update_description_modal.html:16
-msgid "Enter description"
-msgstr "Entrez la description"
 
 #: templates/lists/lists.html:51 templates/lists/lists.html:74
 #: templates/tags/tags.html:15
@@ -616,10 +630,6 @@ msgstr "par %(user)s"
 #: templates/lists/lists.html:80
 msgid "No popular lists yet."
 msgstr "Pas de listes populaires."
-
-#: templates/lists/update_description_modal.html:6
-msgid "Update Description"
-msgstr "Modifier description"
 
 #: templates/profile/profile.html:6
 msgid "Profile of"
