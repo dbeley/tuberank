@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load ratings_extras %}
 
-<div class="bg-white rounded-lg shadow-lg py-6 mt-4 px-4" id="viewings" hx-swap="outerHTML" hx-target="#viewings">
+<div class="bg-white rounded-lg shadow-lg py-4 px-4" id="viewings" hx-swap="outerHTML" hx-target="#viewings">
     <h2 class="text-2xl font-bold mb-4">{% translate "Recently Watched Videos" %}</h2>
     <ul class="space-y-4">
         {% for viewing in viewings %}
