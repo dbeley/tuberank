@@ -65,6 +65,10 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 ### Video detail page
 - Display categories
 - Add htmx-aware form to add/modify a rating
+- Add dynamic search component
+
+### Charts
+- Add dynamic search component
 
 ### Categories
 - Add categories page
