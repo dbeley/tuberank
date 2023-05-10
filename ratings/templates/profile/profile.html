@@ -9,7 +9,7 @@
 <div class="container mx-auto py-6">
   <div class="flex flex-wrap">
     <div class="w-full md:w-1/4 lg:w-1/3 xl:w-1/4 px-4 mb-4">
-      <div class="bg-white rounded-lg shadow-lg py-6">
+      <div class="bg-white rounded-lg shadow-lg px-4 py-4">
         <div class="text-center">
           <h2 class="text-2xl font-bold">{{ user.username }}</h2>
         </div>
@@ -37,7 +37,7 @@
       {% include "profile/profile_timeframe.html" %}
       {% endif %}
       {% if most_watched_channels %}
-      <div class="bg-white rounded-lg shadow-lg py-6 mt-4 px-4">
+      <div class="bg-white rounded-lg shadow-lg py-4 mt-4 px-4">
         <h2 class="text-2xl font-bold mb-4">{% translate "Most Watched Channels" %}</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
           {% for channel in most_watched_channels %}
@@ -46,7 +46,7 @@
         </div>
       </div>
       {% endif %}
-      <div class="bg-white rounded-lg shadow-lg py-6 mt-4 px-4">
+      <div class="bg-white rounded-lg shadow-lg py-4 mt-4 px-4">
         <h2 class="text-2xl font-bold mb-4">{% translate "Video Ratings" %}</h2>
         {% if user.video_ratings.exists %}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 py-8">
@@ -61,7 +61,7 @@
         <p class="text-gray-600">{% translate "No video ratings found." %}</p>
         {% endif %}
       </div>
-      <div class="bg-white rounded-lg shadow-lg py-6 mt-4 px-4">
+      <div class="bg-white rounded-lg shadow-lg py-4 mt-4 px-4">
         <h2 class="text-2xl font-bold mb-4">{% translate "Channel Ratings" %}</h2>
         {% if user.channel_ratings.exists %}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
