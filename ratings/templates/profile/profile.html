@@ -36,6 +36,16 @@
       {% if user.viewings.exists %}
       {% include "profile/profile_timeframe.html" %}
       {% endif %}
+      {% if most_watched_channels %}
+      <div class="bg-white rounded-lg shadow-lg py-6 mt-4 px-4">
+        <h2 class="text-2xl font-bold mb-4">{% translate "Most Watched Channels" %}</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
+          {% for channel in most_watched_channels %}
+          {% include "channels/channel_profile_item.html" %}
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
       <div class="bg-white rounded-lg shadow-lg py-6 mt-4 px-4">
         <h2 class="text-2xl font-bold mb-4">{% translate "Video Ratings" %}</h2>
         {% if user.video_ratings.exists %}
