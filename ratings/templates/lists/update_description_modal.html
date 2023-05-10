@@ -6,18 +6,18 @@
         {% translate "Update Description" %}
         <button id="close-modal-button{{ index }}" type="button" class="float-right">&times;</button>
       </div>
-      <form id="edit-form{{ index }}" method="POST" class="p-4">
+      <form id="edit-form{{ index }}" method="POST" class="p-4 m-4">
         {% csrf_token %}
         <div class="mb-4">
-          <label class="block text-gray-700 font-bold mb-2" for="description">
+          <label class="block text-gray-700 font-bold mb-2">
             {% translate "Description" %}
           </label>
           <div class="flex justify-end">
-            <textarea name="description{{ index }}" rows="3" id="item-description{{ index }}" class="block text-gray-700 border rounded-md shadow-sm focus:border-indigo-500 flex-grow" placeholder="{% blocktranslate %}Enter description{% endblocktranslate %}" maxlength="5000">{{ item.description }}</textarea>
+            <textarea form="edit-form{{ index }}" name="description{{ index }}" rows="3" id="item-description{{ index }}" class="block text-gray-700 border rounded-md shadow-sm focus:border-indigo-500 flex-grow" placeholder="{% blocktranslate %}Enter description{% endblocktranslate %}" maxlength="5000">{{ item.description }}</textarea>
           </div>
         </div>
         <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-          <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2">Save</button>
+          <button type="submit" class="bg-blue-500 hover:bg-blue-600 rounded-lg text-white px-4 py-2" form="edit-form{{ index }}">Save</button>
         </div>
       </form>
     </div>
