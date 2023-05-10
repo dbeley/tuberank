@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-09 01:44+0200\n"
+"POT-Creation-Date: 2023-05-10 02:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -140,35 +140,17 @@ msgstr "Tag"
 #: templates/about.html:27
 msgid ""
 "Every video can be assigned tags, and each tag can only be used once per "
-"video. Users are free to apply as many tags as they desire."
+"video. Users can also vote for tags they find relevant."
 msgstr ""
 "Des tags peuvent être attribués à chaque vidéo (chaque tag ne peut être "
-"assigné qu'une seule fois par vidéo), les utilisateurs sont libres "
-"d'appliquer autant de tags qu'ils le souhaitent."
+"assigné qu'une seule fois par vidéo). Les utilisateurs peuvent également "
+"voter pour les tags qu'ils jugent pertinents."
 
 #: templates/about.html:28
-msgid ""
-"Deleting a tag from a video can be done through the tag page, and any user "
-"has the authority to remove a tag from a video."
-msgstr ""
-"La suppression d'un tag d'une vidéo peut être effectuée via la page des "
-"tags, et tout utilisateur a le droit de supprimer un tag d'une vidéo."
-
-#: templates/about.html:29
-msgid ""
-"In the future, it will be possible to rate each tag assigned to a video. "
-"Once the rating for a tag reaches zero, the tag will be removed from the "
-"video. This feature is planned for implementation."
-msgstr ""
-"À l'avenir, il sera possible d'évaluer chaque tag attribué à une vidéo. "
-"Lorsque l'évaluation d'un tag atteindra zéro, le tag sera supprimée de la "
-"vidéo."
-
-#: templates/about.html:30
 msgid "List"
 msgstr "Liste"
 
-#: templates/about.html:31
+#: templates/about.html:29
 msgid ""
 "Users have the ability to create lists comprising of videos, with the option "
 "to add a description for each item on the list."
@@ -177,7 +159,7 @@ msgstr ""
 "vidéos, avec l'option d'ajouter une description pour chaque élément de la "
 "liste."
 
-#: templates/about.html:32
+#: templates/about.html:30
 msgid ""
 "Currently, it is not possible to rearrange the order of the videos on a "
 "list. However, this feature is planned for implementation in the future."
@@ -185,11 +167,11 @@ msgstr ""
 "Il n'est actuellement pas possible de réorganiser l'ordre des vidéos dans "
 "une liste, cependant cette fonctionnalité sera implémentée à l'avenir."
 
-#: templates/about.html:33 templates/videos/video_details.html:41
+#: templates/about.html:31 templates/videos/video_details.html:41
 msgid "Channel"
 msgstr "Chaîne"
 
-#: templates/about.html:34
+#: templates/about.html:32
 msgid ""
 "When a snapshot is created for a Video, a similar snapshot for its Channel "
 "is also created."
@@ -197,55 +179,55 @@ msgstr ""
 "Lorsqu'un snapshot est créé pour une vidéo, un snapshot similaire est créé "
 "pour sa chaîne."
 
-#: templates/about.html:35
+#: templates/about.html:33
 msgid ""
 "Updating the snapshot for a Channel is planned feature, as well as being "
 "able to review Channels."
 msgstr "La mise à jour du snapshot d'une chaîne n'est pas encore possible."
 
-#: templates/about.html:36 templates/base.html:108 templates/charts.html:4
+#: templates/about.html:34 templates/base.html:108 templates/charts.html:4
 msgid "Charts"
 msgstr "Classements"
 
-#: templates/about.html:37
+#: templates/about.html:35
 msgid "It's possible to create Charts of videos."
 msgstr "Il est possible de créer des classements de vidéos."
 
-#: templates/about.html:38
+#: templates/about.html:36
 msgid "The available filters are:"
 msgstr "Les filtres disponibles sont les suivants :"
 
-#: templates/about.html:40 templates/channels/channel_details.html:47
+#: templates/about.html:38 templates/channels/channel_details.html:47
 #: templates/charts.html:17
 msgid "Best rated"
 msgstr "Les mieux notées"
 
-#: templates/about.html:41 templates/channels/channel_details.html:48
+#: templates/about.html:39 templates/channels/channel_details.html:48
 #: templates/charts.html:18
 msgid "Most rated"
 msgstr "Les plus notées"
 
-#: templates/about.html:42
+#: templates/about.html:40
 msgid "Most viewed (according to the latest snapshot for each video)"
 msgstr "Les plus vues (selon le dernier snapshot pris pour chaque vidéo)"
 
-#: templates/about.html:43
+#: templates/about.html:41
 msgid "Least viewed (according to the latest snapshot for each video)"
 msgstr "Les moins vues (selon le dernier snapshot pris pour chaque vidéo)"
 
-#: templates/about.html:44
+#: templates/about.html:42
 msgid "Newest (most recently published)"
 msgstr "Les plus récentes (selon la date de publication)"
 
-#: templates/about.html:45
+#: templates/about.html:43
 msgid "Oldest (less recently published)"
 msgstr "Les moins récentes (selon la date de publication)"
 
-#: templates/about.html:47
+#: templates/about.html:45
 msgid "Viewing history"
 msgstr "Historique de visionnage"
 
-#: templates/about.html:50
+#: templates/about.html:48
 #, python-format
 msgid ""
 "You can access your viewing history by visiting your <a href="
@@ -254,18 +236,18 @@ msgstr ""
 "Retrouvez votre historique de visionnage sur votre <a href=\"%(profile_url)s"
 "\">page profil</a>."
 
-#: templates/about.html:52
+#: templates/about.html:50
 msgid "You can access your viewing history by visiting your profile page."
 msgstr ""
 "Vous pouvez accéder à votre historique de visionnage sur votre page profil."
 
-#: templates/about.html:54
+#: templates/about.html:52
 msgid "There are two ways to track your viewing history with TubeRank:"
 msgstr ""
 "Il y a deux façons de faire suivre votre historique de visionnage par "
 "TubeRank :"
 
-#: templates/about.html:56
+#: templates/about.html:54
 msgid ""
 "Manual tracking: For each video that you watch, you can manually import it "
 "(if not already done) and then click on the \"I'm watching this video\" "
@@ -275,7 +257,7 @@ msgstr ""
 "manuellement puis cliquer sur le bouton \"Je regarde la vidéo\" sur la page "
 "de la vidéo."
 
-#: templates/about.html:57
+#: templates/about.html:55
 msgid ""
 "Automatic tracking: You will have to install <a href=\"https://github.com/"
 "dbeley/tuberank/blob/main/scripts/tuberank_now_watching.user.js\">this "
@@ -323,11 +305,13 @@ msgstr "Ouvrir le menu utilisateur"
 msgid "Home"
 msgstr "Accueil"
 
-#: templates/base.html:111 templates/videos/video_details.html:127
+#: templates/base.html:111 templates/lists/lists.html:4
+#: templates/videos/video_details.html:123
 msgid "Lists"
 msgstr "Listes"
 
-#: templates/base.html:114 templates/videos/video_details.html:104
+#: templates/base.html:114 templates/tags/tags.html:4
+#: templates/videos/video_details.html:102
 msgid "Tags"
 msgstr "Tags"
 
@@ -360,7 +344,7 @@ msgid "%(count)s subscribers"
 msgstr "%(count)s abonnés"
 
 #: templates/channels/channel_details.html:23
-#: templates/lists/list_details.html:45 templates/videos/video_item.html:15
+#: templates/videos/video_item.html:15
 #, python-format
 msgid "%(count)s views"
 msgstr "%(count)s vues"
@@ -448,6 +432,11 @@ msgstr "Les plus vues"
 #: templates/channels/channel_list.html:17
 msgid "Last Indexed"
 msgstr "Dernières vidéos indexées"
+
+#: templates/channels/channel_profile_item.html:13
+#, python-format
+msgid "%(count)s viewings"
+msgstr "%(count)s visionnages"
 
 #: templates/charts.html:26
 msgid "Filter by tag:"
@@ -546,21 +535,22 @@ msgstr "Importer URLs"
 msgid "By: <span class=\"font-bold\">%(username)s</span>"
 msgstr "Par : <span class=\"font-bold\">%(username)s</span>"
 
-#: templates/lists/list_details.html:22 templates/lists/list_details.html:56
+#: templates/lists/list_details.html:22 templates/lists/list_details.html:62
 msgid "Edit"
 msgstr "Éditer"
 
-#: templates/lists/list_details.html:24 templates/lists/list_details.html:58
+#: templates/lists/list_details.html:24 templates/lists/list_details.html:64
 #: templates/lists/lists.html:55
 msgid "Delete"
 msgstr "Supprimer"
 
-#: templates/lists/list_details.html:43
+#: templates/lists/list_details.html:48 templates/videos/video_details.html:75
+#: templates/videos/video_item.html:22
 #, python-format
-msgid "Rating: %(rating)s from %(count)s ratings"
-msgstr "Note : %(rating)s d'après %(count)s notes"
+msgid "%(count)s ratings"
+msgstr "%(count)s notes"
 
-#: templates/lists/list_details.html:66
+#: templates/lists/list_details.html:72
 msgid "No videos in this list yet."
 msgstr "Cette liste est vide."
 
@@ -606,7 +596,7 @@ msgstr "Pas de listes."
 msgid "Popular Lists"
 msgstr "Listes populaires"
 
-#: templates/lists/lists.html:73 templates/videos/video_details.html:149
+#: templates/lists/lists.html:73 templates/videos/video_details.html:145
 #, python-format
 msgid "by %(user)s"
 msgstr "par %(user)s"
@@ -627,11 +617,11 @@ msgstr "Profil de"
 msgid "Watched Videos"
 msgstr "Vidéos visionnées"
 
-#: templates/profile/profile.html:23 templates/profile/profile.html:40
+#: templates/profile/profile.html:23 templates/profile/profile.html:50
 msgid "Video Ratings"
 msgstr "Vidéos notées"
 
-#: templates/profile/profile.html:27 templates/profile/profile.html:55
+#: templates/profile/profile.html:27 templates/profile/profile.html:65
 msgid "Channel Ratings"
 msgstr "Chaînes notées"
 
@@ -639,15 +629,19 @@ msgstr "Chaînes notées"
 msgid "Date Joined"
 msgstr "Date d'inscription"
 
-#: templates/profile/profile.html:51
+#: templates/profile/profile.html:41
+msgid "Most Watched Channels"
+msgstr ""
+
+#: templates/profile/profile.html:61
 msgid "No video ratings found."
 msgstr "Pas de notes trouvées."
 
-#: templates/profile/profile.html:74
+#: templates/profile/profile.html:84
 msgid "No channel ratings found."
 msgstr "Pas de notes trouvées."
 
-#: templates/profile/profile.html:87
+#: templates/profile/profile.html:97
 msgid "Number of Ratings"
 msgstr "Nombre de notes"
 
@@ -708,7 +702,7 @@ msgstr "Pas de vidéos trouvées pour le tag \"%(tag_name)s\"."
 msgid "All tags"
 msgstr "Tous les tags"
 
-#: templates/tags/tags.html:20 templates/videos/video_details.html:123
+#: templates/tags/tags.html:20 templates/videos/video_details.html:119
 msgid "No tags yet."
 msgstr "Pas de tags."
 
@@ -744,30 +738,33 @@ msgstr "Date de publication"
 msgid "Duration"
 msgstr "Durée"
 
-#: templates/videos/video_details.html:75 templates/videos/video_item.html:22
-#, python-format
-msgid "%(count)s ratings"
-msgstr "%(count)s notes"
-
 #: templates/videos/video_details.html:90
 msgid "Reviews"
 msgstr "Critiques"
 
-#: templates/videos/video_details.html:110
+#: templates/videos/video_details.html:107
+msgid "Enter a tag"
+msgstr "Saisir un tag"
+
+#: templates/videos/video_details.html:108
 msgid "Add Tag"
 msgstr "Ajouter un tag"
 
-#: templates/videos/video_details.html:133
+#: templates/videos/video_details.html:129
 msgid "Select a list"
 msgstr "Sélectionner une liste"
 
-#: templates/videos/video_details.html:138
+#: templates/videos/video_details.html:134
 msgid "Add to List"
 msgstr "Ajouter à la liste"
 
-#: templates/videos/video_details.html:156
+#: templates/videos/video_details.html:152
 msgid "Not in any lists yet."
 msgstr "Présent dans aucune liste."
+
+#: templates/videos/video_details.html:157
+msgid "Related Videos"
+msgstr "Vidéos associées"
 
 #: templates/videos/video_details_ratings.html:25
 msgid "Close"
@@ -782,9 +779,13 @@ msgstr "Note : <span class=\"font-bold\">%(rating)s</span>"
 msgid "Read the review"
 msgstr "Lire la critique"
 
-#: templates/videos/video_item.html:37
-msgid "Delete tag from video"
-msgstr "Enlever le tag"
+#: templates/videos/video_details_tag_list.html:4
+msgid "Downvote"
+msgstr ""
+
+#: templates/videos/video_details_tag_list.html:11
+msgid "Upvote"
+msgstr ""
 
 #: templates/videos/video_rating.html:5
 msgid "Rate"
@@ -826,7 +827,7 @@ msgstr "Texte"
 msgid "Submit"
 msgstr "Envoyer"
 
-#: templates/videos/video_viewing.html:2
+#: templates/videos/video_viewing.html:3
 msgid "Viewing"
 msgstr "Visionnage"
 
@@ -849,28 +850,12 @@ msgstr ""
 msgid "%(minutes)sm %(seconds)ss"
 msgstr ""
 
-#: videos/views.py:128
+#: videos/views.py:188
 msgid "The video was successfully added to the list"
 msgstr "La vidéo a été ajoutée à la liste"
-
-#~ msgid "about.description.1"
-#~ msgstr "TubeRank"
 
 #~ msgid "Source Code"
 #~ msgstr "Code source"
 
-#~ msgid "Import video"
-#~ msgstr "Importer une vidéo"
-
 #~ msgid "Settings"
 #~ msgstr "Paramètres"
-
-#~ msgid "Rating"
-#~ msgstr "Note"
-
-#, python-format
-#~ msgid "%(rating)s from %(count)s ratings"
-#~ msgstr "%(rating)s d'après %(count)s notes"
-
-#~ msgid "Delete item from list"
-#~ msgstr "Supprimer de la liste"
