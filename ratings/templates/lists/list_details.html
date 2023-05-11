@@ -20,9 +20,11 @@
     {% if request.user == list.user %}
     {% include "lists/update_description_modal.html" with item=list %}
     <button id="update-description-button" class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-md font-medium">{% translate "Edit" %}</button>
-    <a href="{% url 'list_delete' pk=list.id %}" class="mr-1 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md">
+    <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="mr-1 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md" type="button">
       {% translate "Delete" %}
-    </a>
+    </button>
+    {% url 'list_delete' pk=list.id as confirm_list_delete_url %}
+    {% include "lists/list_delete_modal.html" with list=list url=confirm_list_delete_url %}
     {% endif %}
   </div>
 
@@ -60,9 +62,11 @@
         {% if request.user == list.user %}
         {% include "lists/update_description_modal.html" with index=forloop.counter item=item %}
         <button id="update-description-button{{ forloop.counter }}" class="bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-md font-medium">{% translate "Edit" %}</button>
-        <a href="{% url 'list_delete_item' list_pk=list.id video_pk=item.video.id %}" class="mr-1 bg-gray-500 hover:bg-gray-600 text-white font-medium font-bold py-1 px-2 rounded-md">
+        <button data-modal-target="popup-modal{{ forloop.counter }}" data-modal-toggle="popup-modal{{ forloop.counter }}" class="mr-1 bg-gray-500 hover:bg-gray-600 text-white font-medium font-bold py-1 px-2 rounded-md" type="button">
           {% translate "Delete" %}
-        </a>
+        </button>
+        {% url 'list_delete_item' list_pk=list.id video_pk=item.video.id as delete_item_list_url %}
+        {% include "lists/list_delete_modal.html" with index=forloop.counter list=item url=delete_item_list_url %}
         {% endif %}
       </div>
     </div>
