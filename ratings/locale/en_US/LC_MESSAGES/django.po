@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-10 02:20+0200\n"
+"POT-Creation-Date: 2023-05-12 16:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -356,15 +356,15 @@ msgstr ""
 #: templates/channels/channel_list.html:38 templates/charts.html:50
 #: templates/profile/profile_timeframe.html:31
 #: templates/search/channel_results.html:18
-#: templates/search/video_results.html:22
+#: templates/search/video_results.html:15
 msgid "Previous"
 msgstr ""
 
 #: templates/channels/channel_details.html:72
-#: templates/channels/channel_list.html:42
+#: templates/channels/channel_list.html:42 templates/charts.html:54
 #: templates/profile/profile_timeframe.html:35
 #: templates/search/channel_results.html:22
-#: templates/search/video_results.html:26
+#: templates/search/video_results.html:19
 #, python-format
 msgid "Page %(page_number)s of %(total_page_number)s"
 msgstr ""
@@ -373,7 +373,7 @@ msgstr ""
 #: templates/channels/channel_list.html:46 templates/charts.html:58
 #: templates/profile/profile_timeframe.html:40
 #: templates/search/channel_results.html:26
-#: templates/search/video_results.html:30
+#: templates/search/video_results.html:23
 msgid "Next"
 msgstr ""
 
@@ -492,29 +492,66 @@ msgstr ""
 msgid "Import URLs"
 msgstr ""
 
+#: templates/lists/description_update_modal.html:15
+#: templates/lists/list_delete_modal.html:8
+msgid "Close modal"
+msgstr ""
+
+#: templates/lists/description_update_modal.html:18
+msgid "Update Description"
+msgstr ""
+
+#: templates/lists/description_update_modal.html:24
+#: templates/lists/lists.html:33 templates/videos/video_details.html:81
+msgid "Description"
+msgstr ""
+
+#: templates/lists/description_update_modal.html:30
+#: templates/lists/lists.html:35
+msgid "Enter description"
+msgstr ""
+
+#: templates/lists/list_delete_modal.html:12
+msgid "Confirm deletion?"
+msgstr ""
+
+#: templates/lists/list_delete_modal.html:14
+msgid "Yes"
+msgstr ""
+
 #: templates/lists/list_details.html:14
+#: templates/lists/list_details_sortable.html:14
 #: templates/videos/video_details_ratings.html:39
 #, python-format
 msgid "By: <span class=\"font-bold\">%(username)s</span>"
 msgstr ""
 
-#: templates/lists/list_details.html:22 templates/lists/list_details.html:62
+#: templates/lists/list_details.html:22
+msgid "Reorder"
+msgstr ""
+
+#: templates/lists/list_details.html:24 templates/lists/list_item.html:53
 msgid "Edit"
 msgstr ""
 
-#: templates/lists/list_details.html:24 templates/lists/list_details.html:64
+#: templates/lists/list_details.html:27 templates/lists/list_item.html:56
 #: templates/lists/lists.html:55
 msgid "Delete"
 msgstr ""
 
-#: templates/lists/list_details.html:48 templates/videos/video_details.html:75
+#: templates/lists/list_details.html:37
+#: templates/lists/list_details_sortable.html:28
+msgid "No videos in this list yet."
+msgstr ""
+
+#: templates/lists/list_details_sortable.html:20
+msgid "Go Back"
+msgstr ""
+
+#: templates/lists/list_item.html:38 templates/videos/video_details.html:75
 #: templates/videos/video_item.html:22
 #, python-format
 msgid "%(count)s ratings"
-msgstr ""
-
-#: templates/lists/list_details.html:72
-msgid "No videos in this list yet."
 msgstr ""
 
 #: templates/lists/lists.html:10
@@ -534,42 +571,27 @@ msgstr ""
 msgid "Enter name"
 msgstr ""
 
-#: templates/lists/lists.html:33
-#: templates/lists/update_description_modal.html:13
-#: templates/videos/video_details.html:81
-msgid "Description"
-msgstr ""
-
-#: templates/lists/lists.html:35
-#: templates/lists/update_description_modal.html:16
-msgid "Enter description"
-msgstr ""
-
-#: templates/lists/lists.html:51 templates/lists/lists.html:72
+#: templates/lists/lists.html:51 templates/lists/lists.html:74
 #: templates/tags/tags.html:15
 #, python-format
 msgid "%(count)s Videos"
 msgstr ""
 
-#: templates/lists/lists.html:61
+#: templates/lists/lists.html:63
 msgid "No lists found."
 msgstr ""
 
-#: templates/lists/lists.html:65
+#: templates/lists/lists.html:67
 msgid "Popular Lists"
 msgstr ""
 
-#: templates/lists/lists.html:73 templates/videos/video_details.html:145
+#: templates/lists/lists.html:75 templates/videos/video_details.html:145
 #, python-format
 msgid "by %(user)s"
 msgstr ""
 
-#: templates/lists/lists.html:78
+#: templates/lists/lists.html:80
 msgid "No popular lists yet."
-msgstr ""
-
-#: templates/lists/update_description_modal.html:6
-msgid "Update Description"
 msgstr ""
 
 #: templates/profile/profile.html:6
@@ -645,10 +667,6 @@ msgstr ""
 #: templates/search/search.html:7
 #, python-format
 msgid "Results for \"%(query)s\""
-msgstr ""
-
-#: templates/search/video_results.html:12
-msgid "View Details"
 msgstr ""
 
 #: templates/tags/tag_overview.html:9

@@ -33,10 +33,6 @@ class VideoListItem(models.Model):
                 fields=["list", "video"],
                 name="unique_video_in_list",
             ),
-            models.UniqueConstraint(
-                fields=["list", "rank"],
-                name="unique_rank_in_list",
-            ),
         ]
 
 

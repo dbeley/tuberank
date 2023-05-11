@@ -65,6 +65,11 @@ urlpatterns = [
         name="list_delete_item",
     ),
     path(
+        "list/<int:pk>/reorder",
+        ratings.lists.views.VideoListReorderView.as_view(),
+        name="list_reorder",
+    ),
+    path(
         "tags",
         ratings.tags.views.TagsView.as_view(),
         name="tags",

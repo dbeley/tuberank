@@ -51,7 +51,7 @@
         <p class="text-gray-600">{% blocktranslate with count=list.videos.count %}{{ count }} Videos{% endblocktranslate %}</p>
       </a>
       <div class="items-right">
-        <button data-modal-target="popup-modal{{ forloop.counter }}" data-modal-toggle="popup-modal{{ forloop.counter }}" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" type="button">
+        <button data-modal-target="popup-delete-modal{{ forloop.counter }}" data-modal-toggle="popup-modal{{ forloop.counter }}" class="ml-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" type="button">
           {% translate "Delete" %}
         </button>
       </div>

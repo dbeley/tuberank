@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.db import transaction
 from django.db.models import Count, QuerySet
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
@@ -10,7 +11,7 @@ from rest_framework.views import APIView
 
 from ratings.lists.serializers import VideoListSerializer
 from ratings.models import Video
-from ratings.models.lists import VideoList
+from ratings.models.lists import VideoList, VideoListItem
 
 
 def _get_user_lists(user: User) -> QuerySet[VideoList]:
@@ -47,11 +48,7 @@ class VideoListDetailsView(APIView):
                 if request.data.get(f"description{item.rank}"):
                     item.description = request.data[f"description{item.rank}"]
                     item.save()
-        return Response(
-            {
-                "list": video_list,
-            }
-        )
+        return redirect("list_details", pk=pk)
 
 
 class VideoListView(APIView):
@@ -92,9 +89,7 @@ class VideoListDeleteView(APIView):
         except VideoList.DoesNotExist:
             raise ValidationError("List not found")
         video_list.delete()
-        user_lists = _get_user_lists(request.user)
-        popular_lists = _get_popular_lists()[0:8]
-        return Response({"user_lists": user_lists, "popular_lists": popular_lists})
+        return redirect("lists")
 
 
 class VideoListDeleteItemView(APIView):
@@ -107,8 +102,39 @@ class VideoListDeleteItemView(APIView):
         video_list = get_object_or_404(VideoList, pk=list_pk, user=request.user)
         video = get_object_or_404(Video, pk=video_pk)
         video_list.videos.remove(video)
+        return redirect("list_details", pk=list_pk)
+
+
+class VideoListReorderView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "lists/list_details_sortable.html"
+
+    def get(self, request, pk):
+        if not request.user.is_authenticated:
+            raise PermissionDenied()
+        video_list = get_object_or_404(VideoList, pk=pk)
         return Response(
             {
                 "list": video_list,
             }
+        )
+
+    def post(self, request, pk):
+        print(request.data)
+        data = dict(request.data.lists())
+        parsed_data = [
+            {"id": element.split(": ")[0], "order": element.split(": ")[1]}
+            for element in data.get("item")
+        ]
+        items = []
+        for new_rank, item in enumerate(parsed_data, 1):
+            list_item = VideoListItem.objects.get(pk=item.get("id"))
+            list_item.rank = new_rank
+            items.append(list_item)
+        with transaction.atomic():
+            [item.save() for item in items]
+        current_list = VideoList.objects.get(pk=pk)
+        return Response(
+            {"list": current_list, "sortable": True},
+            template_name="lists/list_details_partial.html",
         )
