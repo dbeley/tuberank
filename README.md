@@ -94,7 +94,7 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 ### Tag / Lists
 - Better display of tags
 - Feature to reorder a list
-- Add confirmation popup to delete item/list
+- Add pagination to list view
 
 ### Import function
 - Add channel batch import feature
