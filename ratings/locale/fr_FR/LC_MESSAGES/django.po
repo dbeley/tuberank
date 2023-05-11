@@ -92,7 +92,7 @@ msgstr "Ce site a été construit avec les outils suivants :"
 msgid ""
 "This website is hosted in France using <a href=\"https://fly.io\">fly.io</a>."
 msgstr ""
-"Ce site est hébergé en France avec <a href=\"https://fly.io\">fly.io</a>."
+"Ce site est hébergé en France via <a href=\"https://fly.io\">fly.io</a>."
 
 #: templates/about.html:20
 msgid "Videos"
