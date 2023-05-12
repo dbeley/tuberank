@@ -61,8 +61,15 @@ class SearchView(APIView):
         query = request.GET.get("q")
         if not query:
             return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+        if query.startswith("https://") and "youtube.com" in query:
+            query = (
+                query.strip()
+                .split("youtube.com/watch?v=")[-1]
+                .rsplit("&list=")[0]
+                .rsplit("&pp=")[0]
+            )
         video_queryset = Video.objects.filter(
-            Q(snapshots__title_en__icontains=query)
+            Q(snapshots__title_en__icontains=query) | Q(yt_id__icontains=query)
         ).distinct()
         video_paginator = Paginator(video_queryset, 9)
         if video_page_query_param := request.GET.get("page"):
@@ -76,8 +83,11 @@ class SearchView(APIView):
                 template_name="search/video_results.html",
             )
         video_page = video_paginator.get_page(1)
+
         channel_queryset = Channel.objects.filter(
             Q(snapshots__name_en__icontains=query)
+            | Q(snapshots__custom_url__icontains=query)
+            | Q(yt_id__icontains=query)
         ).distinct()
         channel_paginator = Paginator(channel_queryset, 4)
         if channel_page_query_param := request.GET.get("page_c"):
