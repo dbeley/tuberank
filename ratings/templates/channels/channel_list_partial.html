@@ -1,0 +1,26 @@
+{% load i18n %}
+{% load ratings_extras %}
+
+<div id="channels" hx-swap="outerHTML" hx-target="#channels">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    {% for channel in channels %}
+    <div class="bg-white rounded shadow-sm p-4">
+        <a href="{% url 'channel_details' pk=channel.id %}" class="block mb-2">
+        <img src="{{ channel.last_snapshot.thumbnail_url }}" alt="{{ channel.last_snapshot.name_en }}" class="w-full">
+        </a>
+        <a href="{% url 'channel_details' pk=channel.id %}" class="block text-lg font-bold text-gray-900">{{ channel.last_snapshot.name_en }}</a>
+    </div>
+    {% endfor %}
+    </div>
+
+{% if channels.has_previous %}
+{% urlparams page=channels.previous_page_number as previous_url_params %}
+{% endif %}
+
+{% if channels.has_next %}
+{% urlparams page=channels.next_page_number as next_url_params %}
+{% endif %}
+
+{% include "htmx-paginator.html" with page=channels previous_url_params=previous_url_params next_url_params=next_url_params %}
+
+</div>

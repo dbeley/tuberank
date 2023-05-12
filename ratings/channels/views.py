@@ -93,9 +93,13 @@ class ChannelListView(APIView):
                 channels = channels.order_by("-id")
         paginator = Paginator(channels, 12)
         page = paginator.get_page(request.GET.get("page", 1))
+        if request.META.get("HTTP_HX_REQUEST"):
+            return Response(
+                {"channels": page},
+                template_name="channels/channel_list_partial.html",
+            )
         return Response(
             {
                 "channels": page,
-                "selected_sort_method": sort_method,
             }
         )
