@@ -1,0 +1,27 @@
+{% load ratings_extras %}
+<div id="videos" hx-swap="outerHTML" hx-target="#videos">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+  {% for video in videos %}
+  {% include "videos/video_item.html" %}
+  {% endfor %}
+</div>
+
+{% if videos.has_previous %}
+    {% if request.GET.sort_by %}
+        {% urlparams page=videos.previous_page_number sort_by=request.GET.sort_by as previous_url_params %}
+    {% else %}
+        {% urlparams page=videos.previous_page_number as previous_url_params %}
+    {% endif %}
+{% endif %}
+
+{% if videos.has_next %}
+    {% if request.GET.sort_by %}
+        {% urlparams page=videos.next_page_number sort_by=request.GET.sort_by as next_url_params %}
+    {% else %}
+        {% urlparams page=videos.next_page_number as next_url_params %}
+    {% endif %}
+{% endif %}
+
+{% include "htmx-paginator.html" with page=videos previous_url_params=previous_url_params next_url_params=next_url_params %}
+
+</div>

@@ -1,13 +1,10 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load ratings_extras %}
 
 {% block title %}{% translate "Charts" %} - TubeRank{% endblock title %}
 
 {% block content %}
-<div class="mb-4">
-  <h1 class="text-3xl font-bold">{{ channel.last_snapshot.name_en }}</h1>
-  <p class="text-gray-600">{{ channel.last_snapshot.description | linebreaks }}</p>
-</div>
 
 <form class="my-4">
     <div class="grid gap-6 mb-6 md:grid-cols-2">
@@ -37,27 +34,6 @@
   </button>
 </form>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-  {% for video in page %}
-  {% include "videos/video_item.html" %}
-  {% endfor %}
-</div>
+{% include "charts_partial.html" with videos=videos %}
 
-<div class="my-4">
-  <nav class="flex items-center justify-between">
-    {% if page.has_previous %}
-    <a href="?page={{ page.previous_page_number }}{% if request.GET.sort_by %}&sort_by={{ request.GET.sort_by }}{% endif %}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-l">
-      {% translate "Previous" %}
-    </a>
-    {% endif %}
-    <div class="text-gray-600">
-      {% blocktranslate with page_number=page.number total_page_number=page.paginator.num_pages %}Page {{ page_number }} of {{ total_page_number }}{% endblocktranslate %}
-    </div>
-    {% if page.has_next %}
-    <a href="?page={{ page.next_page_number }}{% if request.GET.sort_by %}&sort_by={{ request.GET.sort_by }}{% endif %}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-r">
-      {% translate "Next" %}
-    </a>
-    {% endif %}
-  </nav>
-</div>
 {% endblock content %}

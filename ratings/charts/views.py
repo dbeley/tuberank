@@ -52,10 +52,17 @@ class ChartsView(APIView):
             videos = videos.filter(tags__in=[tag])
 
         paginator = Paginator(videos, 12)
-        page = paginator.get_page(request.GET.get("page", 1))
+        videos = paginator.get_page(request.GET.get("page", 1))
+        if request.META.get("HTTP_HX_REQUEST"):
+            return Response(
+                {
+                    "videos": videos,
+                },
+                template_name="charts_partial.html",
+            )
         return Response(
             {
-                "page": page,
+                "videos": videos,
                 "tags": tags,
                 "selected_sort_method": sort_method,
                 "selected_tag": selected_tag,
