@@ -23,23 +23,15 @@
         </li>
         {% endfor %}
     </ul>
-    <div class="mt-4">
-        <nav class="flex items-center justify-between">
-            {% if viewings.has_previous %}
-            <a hx-get="{% url 'profile' username=user.username %}?page={{ viewings.previous_page_number }}"
-               class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-l">
-                {% translate "Previous" %}
-            </a>
-            {% endif %}
-            <div class="text-gray-600">
-                {% blocktranslate with page_number=viewings.number total_page_number=viewings.paginator.num_pages %}Page {{ page_number }} of {{ total_page_number }}{% endblocktranslate %}
-            </div>
-            {% if viewings.has_next %}
-            <a hx-get="{% url 'profile' username=user.username %}?page={{ viewings.next_page_number }}"
-               class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-r">
-                {% translate "Next" %}
-            </a>
-            {% endif %}
-        </nav>
-    </div>
+
+    {% if viewings.has_previous %}
+    {% urlparams page=viewings.previous_page_number as previous_url_params %}
+    {% endif %}
+
+    {% if viewings.has_next %}
+    {% urlparams page=viewings.next_page_number as next_url_params %}
+    {% endif %}
+
+    {% url 'profile' username=user.username as profile_url %}
+    {% include "htmx-paginator.html" with page=viewings url=profile_url previous_url_params=previous_url_params next_url_params=next_url_params %}
 </div>

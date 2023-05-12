@@ -1,4 +1,6 @@
 {% load i18n %}
+{% load ratings_extras %}
+
 <div id="videos" hx-swap="outerHTML" hx-target="#videos">
   {% if videos %}
   <div class="flex flex-col items-center">
@@ -8,22 +10,16 @@
       {% endfor %}
     </div>
   </div>
-  <div class="my-4">
-    <nav class="flex items-center justify-between">
-      {% if video_page.has_previous %}
-      <a hx-get="{% url 'search' %}?q={{ query }}&page={{ video_page.previous_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-l">
-        {% translate "Previous" %}
-      </a>
-      {% endif %}
-      <div class="text-gray-600">
-        {% blocktranslate with page_number=video_page.number total_page_number=video_page.paginator.num_pages %}Page {{ page_number }} of {{ total_page_number }}{% endblocktranslate %}
-      </div>
-      {% if video_page.has_next %}
-      <a hx-get="{% url 'search' %}?q={{ query }}&page={{ video_page.next_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-r">
-        {% translate "Next" %}
-      </a>
-      {% endif %}
-    </nav>
-  </div>
+
+  {% if video_page.has_previous %}
+  {% urlparams q=query page=video_page.previous_page_number as previous_url_params %}
+  {% endif %}
+
+  {% if video_page.has_next %}
+  {% urlparams q=query page=video_page.next_page_number as next_url_params %}
+  {% endif %}
+
+  {% url 'search' as search_url %}
+  {% include "htmx-paginator.html" with page=video_page url=search_url previous_url_params=previous_url_params next_url_params=next_url_params %}
   {% endif %}
 </div>

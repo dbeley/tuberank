@@ -1,3 +1,5 @@
+from urllib.parse import urlencode
+
 from django import template
 from django.utils.translation import gettext as _
 
@@ -21,3 +23,11 @@ def duration(seconds: int):
 @register.filter
 def custom_rating(value: int | float) -> float:
     return round(value / 2, 2)
+
+
+@register.simple_tag
+def urlparams(*_, **kwargs):
+    safe_args = {k: v for k, v in kwargs.items() if v is not None}
+    if safe_args:
+        return "?{}".format(urlencode(safe_args))
+    return ""

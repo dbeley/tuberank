@@ -1,4 +1,6 @@
 {% load i18n %}
+{% load ratings_extras %}
+
 <div id="channels" hx-swap="outerHTML" hx-target="#channels">
   {% if channels %}
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -11,22 +13,16 @@
     </div>
     {% endfor %}
   </div>
-  <div class="my-4">
-    <nav class="flex items-center justify-between">
-      {% if channel_page.has_previous %}
-      <a hx-get="{% url 'search' %}?q={{ query }}&page_c={{ channel_page.previous_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-l">
-        {% translate "Previous" %}
-      </a>
-      {% endif %}
-      <div class="text-gray-600">
-        {% blocktranslate with page_number=channel_page.number total_page_number=channel_page.paginator.num_pages %}Page {{ page_number }} of {{ total_page_number }}{% endblocktranslate %}
-      </div>
-      {% if channel_page.has_next %}
-      <a hx-get="{% url 'search' %}?q={{ query }}&page_c={{ channel_page.next_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-r">
-        {% translate "Next" %}
-      </a>
-      {% endif %}
-    </nav>
-  </div>
+
+  {% if channel_page.has_previous %}
+  {% urlparams q=query page_c=channel_page.previous_page_number as previous_url_params %}
+  {% endif %}
+
+  {% if channel_page.has_next %}
+  {% urlparams q=query page_c=channel_page.next_page_number as next_url_params %}
+  {% endif %}
+
+  {% url 'search' as search_url %}
+  {% include "htmx-paginator.html" with page=channel_page url=search_url previous_url_params=previous_url_params next_url_params=next_url_params %}
   {% endif %}
 </div>
