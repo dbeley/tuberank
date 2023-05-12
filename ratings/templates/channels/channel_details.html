@@ -52,28 +52,6 @@
   </div>
 </form>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-4">
-  {% for video in videos %}
-  {% include "videos/video_item.html" %}
-  {% endfor %}
-</div>
-
-<div class="my-4">
-  <nav class="flex items-center justify-between">
-    {% if page.has_previous %}
-    <a href="?page={{ page.previous_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-l">
-      {% translate "Previous" %}
-    </a>
-    {% endif %}
-    <div class="text-gray-600">
-      {% blocktranslate with page_number=page.number total_page_number=page.paginator.num_pages %}Page {{ page_number }} of {{ total_page_number }}{% endblocktranslate %}
-    </div>
-    {% if page.has_next %}
-    <a href="?page={{ page.next_page_number }}" class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-r">
-      {% translate "Next" %}
-    </a>
-    {% endif %}
-  </nav>
-</div>
+{% include "channels/channel_details_partial.html" with videos=videos %}
 
 {% endblock content %}

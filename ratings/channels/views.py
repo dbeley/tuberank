@@ -51,11 +51,15 @@ class ChannelDetailsView(APIView):
                 videos = videos.order_by("-avg_rating")
         paginator = Paginator(videos, 8)
         page = paginator.get_page(request.GET.get("page", 1))
+        if request.META.get("HTTP_HX_REQUEST"):
+            return Response(
+                {"videos": page},
+                template_name="channels/channel_details_partial.html",
+            )
         return Response(
             {
                 "channel": channel,
                 "videos": page,
-                "page": page,
             }
         )
 
