@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-12 16:41+0200\n"
+"POT-Creation-Date: 2023-05-13 22:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,8 +81,8 @@ msgstr ""
 msgid ""
 "Think IMDB or Rotten Tomatoes, but specifically targeted at YouTube videos."
 msgstr ""
-"TubeRank est un site similaire à Allociné ou Senscritique, mais "
-"axé sur les vidéos YouTube."
+"TubeRank est un site similaire à Allociné ou Senscritique, mais axé sur les "
+"vidéos YouTube."
 
 #: templates/about.html:13
 msgid "This website has been made with the following tools:"
@@ -139,19 +139,21 @@ msgstr "Tag"
 
 #: templates/about.html:27
 msgid ""
-"Tags can be attached to each video, their relevance will be determined "
-"by votes given by users."
+"Every video can be assigned tags, and each tag can only be used once per "
+"video. Users can also vote for tags they find relevant."
 msgstr ""
-"Des tags peuvent être attribués à chaque vidéo, leur pertinence est jugée par les votes "
-"que les utilisateurs leur attribueront par vidéo."
 
 #: templates/about.html:28
 msgid "List"
 msgstr "Liste"
 
 #: templates/about.html:29
+#, fuzzy
+#| msgid ""
+#| "Users have the ability to create lists containing videos, with the option "
+#| "to add a description for each item on the list."
 msgid ""
-"Users have the ability to create lists containing videos, with the option "
+"Users have the ability to create lists comprising of videos, with the option "
 "to add a description for each item on the list."
 msgstr ""
 "Les utilisateurs ont la possibilité de créer des listes contenant des "
@@ -159,9 +161,18 @@ msgstr ""
 "liste."
 
 #: templates/about.html:30
+#, fuzzy
+#| msgid ""
+#| "However, it is currently not possible to update a snapshot of an indexed "
+#| "video, such as for updating its view count, but this feature is planned "
+#| "for future implementation."
 msgid ""
-"It's also possible to reorder the list."
-"Il est aussi possible de réarranger les éléments d'une liste."
+"Currently, it is not possible to rearrange the order of the videos on a "
+"list. However, this feature is planned for implementation in the future."
+msgstr ""
+"Il n'est actuellement pas possible de mettre à jour le snapshot d'une vidéo "
+"indexée (par exemple pour mettre à jour son nombre de vues), mais cette "
+"fonctionnalité est prévue dans le futur."
 
 #: templates/about.html:31 templates/videos/video_details.html:41
 msgid "Channel"
@@ -181,7 +192,7 @@ msgid ""
 "able to review Channels."
 msgstr "La mise à jour du snapshot d'une chaîne n'est pas encore possible."
 
-#: templates/about.html:34 templates/base.html:108 templates/charts.html:4
+#: templates/about.html:34 templates/base.html:108 templates/charts.html:5
 msgid "Charts"
 msgstr "Classements"
 
@@ -194,12 +205,12 @@ msgid "The available filters are:"
 msgstr "Les filtres disponibles sont les suivants :"
 
 #: templates/about.html:38 templates/channels/channel_details.html:47
-#: templates/charts.html:17
+#: templates/charts.html:14
 msgid "Best rated"
 msgstr "Les mieux notées"
 
 #: templates/about.html:39 templates/channels/channel_details.html:48
-#: templates/charts.html:18
+#: templates/charts.html:15
 msgid "Most rated"
 msgstr "Les plus notées"
 
@@ -311,8 +322,8 @@ msgstr "Listes"
 msgid "Tags"
 msgstr "Tags"
 
-#: templates/base.html:117 templates/channels/channel_list.html:4
-#: templates/channels/channel_list.html:8
+#: templates/base.html:117 templates/channels/channel_list.html:5
+#: templates/channels/channel_list.html:9
 msgid "Channels"
 msgstr "Chaînes"
 
@@ -330,7 +341,7 @@ msgid "French"
 msgstr "Français"
 
 #: templates/channels/channel_details.html:12
-#: templates/videos/video_details.html:27 templates/videos/video_item.html:29
+#: templates/videos/video_details.html:27 templates/videos/video_item.html:34
 msgid "Watch on YouTube"
 msgstr "Regarder sur YouTube"
 
@@ -340,7 +351,7 @@ msgid "%(count)s subscribers"
 msgstr "%(count)s abonnés"
 
 #: templates/channels/channel_details.html:23
-#: templates/videos/video_item.html:15
+#: templates/videos/video_item.html:16
 #, python-format
 msgid "%(count)s views"
 msgstr "%(count)s vues"
@@ -360,72 +371,43 @@ msgid "Channel Rating: %(rating)s from %(count)s ratings"
 msgstr "Note de la chaîne : %(rating)s d'après %(count)s notes"
 
 #: templates/channels/channel_details.html:43
-#: templates/channels/channel_list.html:11 templates/charts.html:15
+#: templates/channels/channel_list.html:13 templates/charts.html:12
 msgid "Sort by:"
 msgstr "Trier par :"
 
-#: templates/channels/channel_details.html:45 templates/charts.html:21
+#: templates/channels/channel_details.html:45 templates/charts.html:18
 msgid "Newest"
 msgstr "Les plus récentes"
 
-#: templates/channels/channel_details.html:46 templates/charts.html:22
+#: templates/channels/channel_details.html:46 templates/charts.html:19
 msgid "Oldest"
 msgstr "Les plus anciennes"
 
-#: templates/channels/channel_details.html:49 templates/charts.html:19
+#: templates/channels/channel_details.html:49 templates/charts.html:16
 msgid "Most viewed"
 msgstr "Les plus vues"
 
-#: templates/channels/channel_details.html:50 templates/charts.html:20
+#: templates/channels/channel_details.html:50 templates/charts.html:17
 msgid "Least viewed"
 msgstr "Les moins vues"
 
-#: templates/channels/channel_details.html:53 templates/charts.html:36
-msgid "Filter"
-msgstr "Filtrer"
-
-#: templates/channels/channel_details.html:68
-#: templates/channels/channel_list.html:38 templates/charts.html:50
-#: templates/profile/profile_timeframe.html:31
-#: templates/search/channel_results.html:18
-#: templates/search/video_results.html:15
-msgid "Previous"
-msgstr "Précédent"
-
-#: templates/channels/channel_details.html:72
-#: templates/channels/channel_list.html:42 templates/charts.html:54
-#: templates/profile/profile_timeframe.html:35
-#: templates/search/channel_results.html:22
-#: templates/search/video_results.html:19
-#, python-format
-msgid "Page %(page_number)s of %(total_page_number)s"
-msgstr "Page %(page_number)s sur %(total_page_number)s"
-
-#: templates/channels/channel_details.html:76
-#: templates/channels/channel_list.html:46 templates/charts.html:58
-#: templates/profile/profile_timeframe.html:40
-#: templates/search/channel_results.html:26
-#: templates/search/video_results.html:23
-msgid "Next"
-msgstr "Suivant"
-
-#: templates/channels/channel_list.html:13
+#: templates/channels/channel_list.html:15
 msgid "Most Subscribers"
 msgstr "Le plus d'abonnés"
 
-#: templates/channels/channel_list.html:14
+#: templates/channels/channel_list.html:16
 msgid "Name (A-Z)"
 msgstr "Nom (A-Z)"
 
-#: templates/channels/channel_list.html:15
+#: templates/channels/channel_list.html:17
 msgid "Name (Z-A)"
 msgstr "Nom (Z-A)"
 
-#: templates/channels/channel_list.html:16
+#: templates/channels/channel_list.html:18
 msgid "Most Viewed"
 msgstr "Les plus vues"
 
-#: templates/channels/channel_list.html:17
+#: templates/channels/channel_list.html:19
 msgid "Last Indexed"
 msgstr "Dernières vidéos indexées"
 
@@ -434,13 +416,18 @@ msgstr "Dernières vidéos indexées"
 msgid "%(count)s viewings"
 msgstr "%(count)s visionnages"
 
-#: templates/charts.html:26
+#: templates/charts.html:23
 msgid "Filter by tag:"
 msgstr "Filtrer par tag :"
 
-#: templates/charts.html:28
+#: templates/charts.html:25
 msgid " -- Select an option -- "
 msgstr " -- Sélectionnez une option -- "
+
+#: templates/charts.html:33 templates/videos/video_rating.html:50
+#: templates/videos/video_viewing.html:31
+msgid "Submit"
+msgstr "Envoyer"
 
 #: templates/homepage.html:10
 msgid "Welcome to TubeRank!"
@@ -496,6 +483,19 @@ msgstr "%(number_of_videos)s vidéos indexées sur TubeRank"
 #: templates/homepage.html:70
 msgid "Popular Videos on TubeRank"
 msgstr "Vidéos populaires sur TubeRank"
+
+#: templates/htmx-paginator.html:7
+msgid "Previous"
+msgstr "Précédent"
+
+#: templates/htmx-paginator.html:11
+#, python-format
+msgid "Page %(page_number)s of %(total_page_number)s"
+msgstr "Page %(page_number)s sur %(total_page_number)s"
+
+#: templates/htmx-paginator.html:16
+msgid "Next"
+msgstr "Suivant"
 
 #: templates/import_video.html:11
 msgid "import_video.description.1"
@@ -568,7 +568,6 @@ msgid "Edit"
 msgstr "Éditer"
 
 #: templates/lists/list_details.html:27 templates/lists/list_item.html:56
-#: templates/lists/lists.html:55
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -582,7 +581,7 @@ msgid "Go Back"
 msgstr "Retour"
 
 #: templates/lists/list_item.html:38 templates/videos/video_details.html:75
-#: templates/videos/video_item.html:22
+#: templates/videos/video_item.html:27
 #, python-format
 msgid "%(count)s ratings"
 msgstr "%(count)s notes"
@@ -604,26 +603,26 @@ msgstr "Nom"
 msgid "Enter name"
 msgstr "Entrez le nom"
 
-#: templates/lists/lists.html:51 templates/lists/lists.html:74
+#: templates/lists/lists.html:51 templates/lists/lists.html:67
 #: templates/tags/tags.html:15
 #, python-format
 msgid "%(count)s Videos"
 msgstr "%(count)s vidéos"
 
-#: templates/lists/lists.html:63
+#: templates/lists/lists.html:56
 msgid "No lists found."
 msgstr "Pas de listes."
 
-#: templates/lists/lists.html:67
+#: templates/lists/lists.html:60
 msgid "Popular Lists"
 msgstr "Listes populaires"
 
-#: templates/lists/lists.html:75 templates/videos/video_details.html:145
+#: templates/lists/lists.html:68 templates/videos/video_details.html:145
 #, python-format
 msgid "by %(user)s"
 msgstr "par %(user)s"
 
-#: templates/lists/lists.html:80
+#: templates/lists/lists.html:73
 msgid "No popular lists yet."
 msgstr "Pas de listes populaires."
 
@@ -724,7 +723,7 @@ msgstr "Pas de tags."
 msgid "&#8592; Return to Channel"
 msgstr "&#8592; Retour sur la chaîne"
 
-#: templates/videos/video_details.html:31 templates/videos/video_item.html:33
+#: templates/videos/video_details.html:31 templates/videos/video_item.html:38
 msgid "Rate this video"
 msgstr "Noter cette vidéo"
 
@@ -837,10 +836,6 @@ msgstr "Texte (optionnel)"
 msgid "Enter your review"
 msgstr "Texte"
 
-#: templates/videos/video_rating.html:50 templates/videos/video_viewing.html:31
-msgid "Submit"
-msgstr "Envoyer"
-
 #: templates/videos/video_viewing.html:3
 msgid "Viewing"
 msgstr "Visionnage"
@@ -854,12 +849,12 @@ msgstr ""
 "<p>Retrouvez votre historique de visionnage sur votre <a class=\"font-bold\" "
 "href=%(url)s>page profil</a>.</p>"
 
-#: templatetags/ratings_extras.py:13
+#: templatetags/ratings_extras.py:15
 #, python-format
 msgid "%(hours)sH %(minutes)sm %(seconds)ss"
 msgstr ""
 
-#: templatetags/ratings_extras.py:18
+#: templatetags/ratings_extras.py:20
 #, python-format
 msgid "%(minutes)sm %(seconds)ss"
 msgstr ""
@@ -867,6 +862,19 @@ msgstr ""
 #: videos/views.py:188
 msgid "The video was successfully added to the list"
 msgstr "La vidéo a été ajoutée à la liste"
+
+#~ msgid ""
+#~ "Tags can be attached to each video, their relevance will be determined by "
+#~ "votes given by users."
+#~ msgstr ""
+#~ "Des tags peuvent être attribués à chaque vidéo, leur pertinence est jugée "
+#~ "par les votes que les utilisateurs leur attribueront par vidéo."
+
+#~ msgid "It's also possible to reorder the list."
+#~ msgstr "Il est aussi possible de réarranger les éléments d'une liste."
+
+#~ msgid "Filter"
+#~ msgstr "Filtrer"
 
 #~ msgid "Source Code"
 #~ msgstr "Code source"
