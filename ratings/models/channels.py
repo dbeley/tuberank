@@ -66,11 +66,6 @@ class ChannelRating(models.Model):
     review_title = models.TextField(max_length=100, blank=True)
     review_body = models.TextField(max_length=5000, blank=True)
 
-    def __str__(self) -> str:
-        return (
-            f"{self.pk} - {self.user} - {self.channel.yt_id} - {self.date_publication}"
-        )
-
     class Meta:
         constraints = [
             models.UniqueConstraint(

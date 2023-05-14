@@ -5,6 +5,7 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from ratings import enums
 from ratings.models import UserTag
 from ratings.models.videos import Video
 from ratings.tags.views import get_active_tags
@@ -22,26 +23,22 @@ class ChartsView(APIView):
             count_views=Max(F("snapshots__count_views")),
         )
         if sort_method := request.GET.get("sort_by"):
-            if sort_method not in [
-                "newest",
-                "oldest",
-                "views_count",
-                "views_count_desc",
-                "ratings_count",
-                "rating",
-            ]:
+            if sort_method not in enums.SortingChoices.choices():
                 return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
-            elif sort_method == "newest":
+            elif sort_method == enums.SortingChoices.NEWEST.value:
                 videos = videos.order_by("-date_publication")
-            elif sort_method == "oldest":
+            elif sort_method == enums.SortingChoices.OLDEST.value:
                 videos = videos.order_by("date_publication")
-            elif sort_method == "views_count":
+            elif sort_method == enums.SortingChoices.MOST_VIEWED.value:
                 videos = videos.order_by("-count_views")
-            elif sort_method == "views_count_desc":
+            elif sort_method == enums.SortingChoices.LEAST_VIEWED.value:
                 videos = videos.order_by("count_views")
-            elif sort_method == "ratings_count":
+            elif sort_method == enums.SortingChoices.MOST_RATED.value:
                 videos = videos.order_by("-num_ratings")
-            elif sort_method == "rating":
+            elif sort_method == enums.SortingChoices.BEST_RATED.value:
+                videos = videos.filter(avg_rating__isnull=False).order_by("-avg_rating")
+            else:
+                # default sort
                 videos = videos.filter(avg_rating__isnull=False).order_by("-avg_rating")
         else:
             # default

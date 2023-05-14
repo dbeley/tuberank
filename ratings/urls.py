@@ -24,6 +24,16 @@ urlpatterns = [
         name="channel_details",
     ),
     path(
+        "channel/<int:pk>/rate",
+        ratings.channels.views.ChannelRatingDetailView.as_view(),
+        name="channel_rating",
+    ),
+    path(
+        "video/<int:pk>",
+        ratings.videos.views.VideoDetailsView.as_view(),
+        name="video_details",
+    ),
+    path(
         "video/<int:pk>/rate",
         ratings.videos.views.VideoRatingDetailView.as_view(),
         name="video_rating",
@@ -32,11 +42,6 @@ urlpatterns = [
         "video/<int:pk>/view",
         ratings.videos.views.VideoViewingView.as_view(),
         name="video_viewing",
-    ),
-    path(
-        "video/<int:pk>",
-        ratings.videos.views.VideoDetailsView.as_view(),
-        name="video_details",
     ),
     path(
         "search",

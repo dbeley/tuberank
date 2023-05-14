@@ -1,4 +1,4 @@
-from enum import IntEnum
+from enum import IntEnum, Enum
 
 
 class Rating(IntEnum):
@@ -103,3 +103,20 @@ class TagVote(IntEnum):
             (TagVote.DOWNVOTE.value, "Downvote"),
             (TagVote.UPVOTE.value, "Upvote"),
         ]
+
+
+class SortingChoices(Enum):
+    NEWEST = "newest"
+    OLDEST = "oldest"
+    BEST_RATED = "best_rated"
+    MOST_SUBSCRIBERS = "most_subscribers"
+    MOST_RATED = "most_rated"
+    MOST_VIEWED = "most_viewed"
+    LEAST_VIEWED = "least_viewed"
+    NAME_ASC = "name_asc"
+    NAME_DESC = "name_desc"
+    LATEST_INDEXED = "latest_indexed"
+
+    @staticmethod
+    def choices():
+        return [choice.value for choice in SortingChoices]

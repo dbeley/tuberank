@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from ratings.channels.serializers import ChannelSerializer
 from ratings.models.videos import Video, VideoRating, VideoSnapshot
+from ratings.serializers import CustomRatingField
 
 
 class VideoSerializer(serializers.ModelSerializer):
@@ -55,14 +56,6 @@ class VideoSnapshotSerializer(serializers.ModelSerializer):
             "description",
             "thumbnail_url",
         ]
-
-
-class CustomRatingField(serializers.CharField):
-    def to_representation(self, value: int) -> str:
-        return str(value / 2)
-
-    def to_internal_value(self, data: str) -> int:
-        return int(float(data) * 2)
 
 
 class VideoRatingSerializer(serializers.ModelSerializer):

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from ratings.models.channels import Channel, ChannelRating, ChannelSnapshot
+from ratings.serializers import CustomRatingField
 
 
 class ChannelSerializer(serializers.ModelSerializer):
@@ -53,6 +54,11 @@ class ChannelSnapshotSerializer(serializers.ModelSerializer):
 class ChannelRatingSerializer(serializers.ModelSerializer):
     date_publication = serializers.DateTimeField(read_only=True)
     channel = serializers.PrimaryKeyRelatedField(read_only=True)
+    username = serializers.SerializerMethodField(read_only=True)
+    rating = CustomRatingField()
+
+    def get_username(self, obj):
+        return obj.user.username
 
     class Meta:
         model = ChannelRating
@@ -62,4 +68,5 @@ class ChannelRatingSerializer(serializers.ModelSerializer):
             "date_publication",
             "review_title",
             "review_body",
+            "username",
         ]

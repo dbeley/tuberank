@@ -1,13 +1,26 @@
+from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.db.models import F, Max, Count, Avg
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ratings.models.channels import Channel
+from ratings import enums
+from ratings.channels.serializers import ChannelRatingSerializer
+from ratings.models.channels import Channel, ChannelRating
 from ratings.models.videos import Video
+
+
+def _get_user_rating_for_channel(user: User, channel: Channel) -> ChannelRating | None:
+    if ChannelRating.objects.filter(
+        channel=channel,
+        user=user,
+    ).exists():
+        return ChannelRating.objects.get(channel=channel, user=user)
+    return None
 
 
 class ChannelDetailsView(APIView):
@@ -16,39 +29,31 @@ class ChannelDetailsView(APIView):
 
     def get(self, request, pk):
         channel = get_object_or_404(Channel, pk=pk)
-        videos = (
-            Video.objects.filter(channel=channel)
-            .annotate(
-                num_ratings=Count("ratings"),
-                avg_rating=Avg("ratings__rating"),
-                count_views=Max("snapshots__count_views"),
-            )
-            .order_by("-date_publication")
+        videos = Video.objects.filter(channel=channel).annotate(
+            num_ratings=Count("ratings"),
+            avg_rating=Avg("ratings__rating"),
+            count_views=Max("snapshots__count_views"),
         )
         if sort_method := request.GET.get("sort_by"):
-            if sort_method not in [
-                "newest",
-                "oldest",
-                "views_count",
-                "views_count_desc",
-                "ratings_count",
-                "rating",
-            ]:
+            if sort_method not in enums.SortingChoices.choices():
                 return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
-            elif sort_method == "newest":
-                # default sorting mechanism
-                # videos = videos.order_by("-date_publication")
-                pass
-            elif sort_method == "oldest":
+            if sort_method == enums.SortingChoices.OLDEST.value:
                 videos = videos.order_by("date_publication")
-            elif sort_method == "views_count":
+            elif sort_method == enums.SortingChoices.MOST_VIEWED.value:
                 videos = videos.order_by("-count_views")
-            elif sort_method == "views_count_desc":
+            elif sort_method == enums.SortingChoices.LEAST_VIEWED.value:
                 videos = videos.order_by("count_views")
-            elif sort_method == "ratings_count":
+            elif sort_method == enums.SortingChoices.MOST_RATED.value:
                 videos = videos.order_by("-num_ratings")
-            elif sort_method == "rating":
+            elif sort_method == enums.SortingChoices.BEST_RATED.value:
                 videos = videos.order_by("-avg_rating")
+            elif sort_method == enums.SortingChoices.NEWEST.value:
+                videos = videos.order_by("-date_publication")
+            else:
+                # default sort
+                videos = videos.order_by("-date_publication")
+        else:
+            videos = videos.order_by("-date_publication")
         paginator = Paginator(videos, 8)
         page = paginator.get_page(request.GET.get("page", 1))
         if request.META.get("HTTP_HX_REQUEST"):
@@ -73,28 +78,28 @@ class ChannelListView(APIView):
             name=F("snapshots__name_en"),
             count_subscribers=Max("snapshots__count_subscribers"),
             count_views=Max("snapshots__count_views"),
-        ).order_by("-count_subscribers")
+            avg_rating=Avg(F("ratings__rating")),
+        )
         if sort_method := request.GET.get("sort_by"):
-            if sort_method not in [
-                "most_subscribers",
-                "name_asc",
-                "name_desc",
-                "views_count",
-                "latest_indexed",
-            ]:
+            if sort_method not in enums.SortingChoices.choices():
                 return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
-            if sort_method == "most_subscribers":
-                # default sorting mechanism
-                # channels = channels.order_by("-count_subscribers")
-                pass
-            elif sort_method == "name_asc":
+            if sort_method == enums.SortingChoices.NAME_ASC.value:
                 channels = channels.order_by("name")
-            elif sort_method == "name_desc":
+            elif sort_method == enums.SortingChoices.NAME_DESC.value:
                 channels = channels.order_by("-name")
-            elif sort_method == "views_count":
+            elif sort_method == enums.SortingChoices.MOST_VIEWED.value:
                 channels = channels.order_by("-count_views")
-            elif sort_method == "latest_indexed":
+            elif sort_method == enums.SortingChoices.LATEST_INDEXED.value:
                 channels = channels.order_by("-id")
+            elif sort_method == enums.SortingChoices.BEST_RATED.value:
+                channels = channels.order_by("-avg_rating")
+            elif sort_method == enums.SortingChoices.MOST_SUBSCRIBERS.value:
+                channels = channels.order_by("-count_subscribers")
+            else:
+                # default sort
+                channels = channels.order_by("-count_subscribers")
+        else:
+            channels = channels.order_by("-count_subscribers")
         paginator = Paginator(channels, 12)
         page = paginator.get_page(request.GET.get("page", 1))
         if request.META.get("HTTP_HX_REQUEST"):
@@ -107,3 +112,35 @@ class ChannelListView(APIView):
                 "channels": page,
             }
         )
+
+
+class ChannelRatingDetailView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "channels/channel_rating.html"
+
+    def get(self, request, pk):
+        channel = get_object_or_404(Channel, pk=pk)
+        channel_rating = _get_user_rating_for_channel(
+            user=request.user, channel=channel
+        )
+        if not channel_rating:
+            channel_rating = ChannelRating(channel=channel, user=request.user)
+        serializer = ChannelRatingSerializer(channel_rating)
+        return Response({"serializer": serializer, "channel": channel})
+
+    def post(self, request, pk):
+        if not request.user.is_authenticated:
+            raise PermissionDenied()
+        channel = get_object_or_404(Channel, pk=pk)
+        channel_rating = ChannelRating(channel=channel, user=request.user)
+        serializer = ChannelRatingSerializer(channel_rating, data=request.data)
+        if not serializer.is_valid():
+            return Response({"serializer": serializer, "channel": channel})
+        ChannelRating.objects.update_or_create(
+            channel=channel,
+            user=request.user,
+            defaults={
+                **serializer.validated_data,
+            },
+        )
+        return redirect("channel_details", pk=channel.id)

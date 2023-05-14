@@ -83,11 +83,6 @@ yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.yout
 - Add more statistics
 - Add user-generated lists with ratings
 
-### Channel list
-- Add channel rating feature
-- Display all channel reviews
-- Display duration
-
 ### URL mapping
 - Add slug for videos, channels
 
