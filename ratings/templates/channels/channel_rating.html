@@ -8,12 +8,12 @@
 
 <div class="flex items-center w-full mb-8">
   <a href="{% url 'channel_details' pk=channel.id %}" class="mr-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-    {% translate "&#8592; Return to Channel" %}
+    {% translate "&#8592; Return to channel" %}
   </a>
 </div>
-<h1 class="text-4xl font-bold mb-8">{{ channel.last_snapshot.name_en }}</h1>
+<h1 class="text-4xl font-bold mb-8">{% translate "Write a review" %} - {{ channel.last_snapshot.name_en }}</h1>
 <a href="{% url 'channel_details' pk=channel.id %}" class="block mb-2">
-  <img src="{{ channel.last_snapshot.thumbnail_url }}" alt="{{ channel.last_snapshot.name_en }}" class="h-32 w-32">
+  <img src="{{ channel.last_snapshot.thumbnail_url }}" alt="{{ channel.last_snapshot.name_en }}" class="h-32 w-32 rounded">
 </a>
 <form action="{% url 'channel_rating' pk=channel.pk %}" method="post">
   {% csrf_token %}

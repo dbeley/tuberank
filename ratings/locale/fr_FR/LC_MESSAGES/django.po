@@ -148,10 +148,6 @@ msgid "List"
 msgstr "Liste"
 
 #: templates/about.html:29
-#, fuzzy
-#| msgid ""
-#| "Users have the ability to create lists containing videos, with the option "
-#| "to add a description for each item on the list."
 msgid ""
 "Users have the ability to create lists comprising of videos, with the option "
 "to add a description for each item on the list."
@@ -161,11 +157,6 @@ msgstr ""
 "liste."
 
 #: templates/about.html:30
-#, fuzzy
-#| msgid ""
-#| "However, it is currently not possible to update a snapshot of an indexed "
-#| "video, such as for updating its view count, but this feature is planned "
-#| "for future implementation."
 msgid ""
 "Currently, it is not possible to rearrange the order of the videos on a "
 "list. However, this feature is planned for implementation in the future."

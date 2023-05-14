@@ -19,9 +19,16 @@
       </div>
     </div>
     {% endif %}
+    <div class="flex justify-between">
     <a href="{{ channel.url }}" class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
       {% translate "Watch on YouTube" %}
     </a>
+    {% if user.is_authenticated %}
+    <a href="{% url 'channel_rating' pk=channel.id %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">
+      {% translate "Rate this channel" %}
+    </a>
+    {% endif %}
+  </div>
   </div>
   <p class="text-gray-600">{{ channel.last_snapshot.description | linebreaks }}</p>
   <div class="flex items-center justify-between mt-4">
@@ -61,11 +68,6 @@
   <div class="justify-between">
     <h2 class="text-2xl font-bold mb-4">{% translate "Reviews" %}</h2>
   </div>
-  {% if user.is_authenticated %}
-  <a href="{% url 'channel_rating' pk=channel.id %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-    {% translate "Rate this channel" %}
-  </a>
-  {% endif %}
   {% if channel.ratings.exists %}
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
     {% for rating in channel.ratings.all %}
