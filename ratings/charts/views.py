@@ -8,7 +8,9 @@ from rest_framework.views import APIView
 from ratings import enums
 from ratings.models import UserTag
 from ratings.models.videos import Video
+from ratings.tags.serializers import SimpleUserTagSerializer
 from ratings.tags.views import get_active_tags
+from ratings.videos.serializers import SimpleVideoSerializer
 
 
 class ChartsView(APIView):
@@ -16,7 +18,9 @@ class ChartsView(APIView):
     template_name = "charts.html"
 
     def get(self, request):
-        tags = get_active_tags().order_by("name")
+        tags_data = SimpleUserTagSerializer(
+            get_active_tags().order_by("name"), many=True
+        ).data
         videos = Video.objects.annotate(
             num_ratings=Count("ratings"),
             avg_rating=Avg(F("ratings__rating")),
@@ -49,18 +53,21 @@ class ChartsView(APIView):
             videos = videos.filter(tags__in=[tag])
 
         paginator = Paginator(videos, 12)
-        videos = paginator.get_page(request.GET.get("page", 1))
+        page = paginator.get_page(request.GET.get("page", 1))
+        videos_data = SimpleVideoSerializer(page, many=True).data
         if request.META.get("HTTP_HX_REQUEST"):
             return Response(
                 {
-                    "videos": videos,
+                    "videos": videos_data,
+                    "page": page,
                 },
                 template_name="charts_partial.html",
             )
         return Response(
             {
-                "videos": videos,
-                "tags": tags,
+                "videos": videos_data,
+                "page": page,
+                "tags": tags_data,
                 "selected_sort_method": sort_method,
                 "selected_tag": selected_tag,
             }

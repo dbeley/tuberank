@@ -13,3 +13,9 @@ class UserTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserTag
         fields = ["name", "video_id"]
+
+
+class SimpleUserTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserTag
+        fields = ["name"]
