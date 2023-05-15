@@ -15,7 +15,7 @@
     <div class="px-2">
     </div>
     {% endif %}
-    <div>
+    <div class="w-full">
         <div class="flex items-center gap-4">
             <img src="{{ video.last_snapshot.thumbnail_url }}"
                  alt="{{ video.last_snapshot.title_en }}" class="w-24 h-16 object-cover rounded">
@@ -41,7 +41,6 @@
                 {% endif %}
             </div>
         </div>
-        <p class="text-gray-700 mt-2">{{ video.last_snapshot.description | truncatechars:240 }}</p>
         <div class="flex items-center gap-4 mt-4">
             <span class="text-gray-700 font-bold">#{{ item.rank }}</span>
             <div class="gap-2 mr-auto">
