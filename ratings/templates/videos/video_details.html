@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load humanize %}
 {% load i18n %}
-{% load ratings_extras %}
 
 {% block title %}{{ video.last_snapshot.title_en }} - TubeRank{% endblock title %}
 {% block content %}
@@ -127,7 +126,7 @@
         <div class="flex items-center">
           <select name="list_pk" class="bg-gray-100 rounded-lg px-4 py-2 w-full mr-2">
             <option value="" disabled selected>{% translate "Select a list" %}</option>
-            {% for list in user_lists.all %}
+            {% for list in user_lists %}
             <option value="{{ list.id }}">{{ list.name }}</option>
             {% endfor %}
           </select>
@@ -135,14 +134,14 @@
         </div>
       </form>
       {% endif %}
-      {% if lists.exists %}
+      {% if lists %}
       <div class="flex flex-wrap mt-2">
         <ul>
-          {% for list in lists.all %}
+          {% for list in lists %}
           <li class="py-2 items-center justify-between">
             <div class="bg-gray-100 rounded-lg px-4 text-gray-700 mr-2 mb-2 hover:bg-gray-200">
               <a href="{% url 'list_details' pk=list.id %}" class="font-medium">{{ list.name }}</a>
-              <span class="text-sm text-gray-500 ml-2">{% blocktranslate with user=list.user.username %}by {{ user }}{% endblocktranslate %}</span>
+              <span class="text-sm text-gray-500 ml-2">{% blocktranslate with user=list.username %}by {{ user }}{% endblocktranslate %}</span>
             </div>
           </li>
           {% endfor %}

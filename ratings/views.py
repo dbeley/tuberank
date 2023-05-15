@@ -16,7 +16,7 @@ from ratings.channels.serializers import ChannelSerializer
 from ratings.charts import charts
 from ratings.models.channels import Channel
 from ratings.models.videos import Video, VideoViewing
-from ratings.videos.serializers import VideoSerializer
+from ratings.videos.serializers import VideoSerializer, VideoDetailSerializer
 from ratings.yt_import import (
     NoResultException,
     TooManyResultException,
@@ -29,23 +29,28 @@ class HomepageView(APIView):
     template_name = "homepage.html"
 
     def get(self, request):
-        latest_videos = Video.objects.order_by("-id")[0:4]
+        latest_videos_data = VideoDetailSerializer(
+            Video.objects.order_by("-id")[0:4], many=True
+        ).data
         videos = Video.objects.annotate(
             avg_rating=Avg("ratings__rating"), num_ratings=Count("ratings")
         )
-        best_videos = videos.filter(avg_rating__isnull=False).order_by("-avg_rating")[
-            0:8
-        ]
-        popular_videos = videos.order_by("-num_ratings")[0:4]
+        best_videos_data = VideoDetailSerializer(
+            videos.filter(avg_rating__isnull=False).order_by("-avg_rating")[0:8],
+            many=True,
+        ).data
+        popular_videos_data = VideoDetailSerializer(
+            videos.order_by("-num_ratings")[0:4], many=True
+        ).data
         number_of_users = User.objects.count()
         number_of_channels = Channel.objects.count()
         number_of_videos = Video.objects.count()
 
         return Response(
             {
-                "latest_videos": latest_videos,
-                "best_videos": best_videos,
-                "popular_videos": popular_videos,
+                "latest_videos": latest_videos_data,
+                "best_videos": best_videos_data,
+                "popular_videos": popular_videos_data,
                 "number_of_users": number_of_users,
                 "number_of_channels": number_of_channels,
                 "number_of_videos": number_of_videos,

@@ -10,3 +10,15 @@ class VideoListSerializer(serializers.ModelSerializer):
     class Meta:
         model = VideoList
         fields = ["name", "description"]
+
+
+class SimpleVideoListSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(max_length=200)
+    username = serializers.SerializerMethodField()
+
+    def get_username(self, obj) -> str:
+        return obj.user.username
+
+    class Meta:
+        model = VideoList
+        fields = ["id", "name", "username"]

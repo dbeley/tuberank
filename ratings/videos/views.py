@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from django.utils.translation import gettext as _
 
 from ratings import enums
+from ratings.lists.serializers import SimpleVideoListSerializer
 from ratings.models.lists import VideoList, VideoListItem
 from ratings.models.tags import UserTag, UserTagVote
 from ratings.models.videos import Video, VideoRating, VideoViewing
@@ -134,7 +135,8 @@ class VideoViewingView(APIView):
 
     def get(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
-        return Response({"video": video})
+        video_data = VideoDetailSerializer(video).data
+        return Response({"video": video_data})
 
     def post(self, request, pk):
         if not request.user.is_authenticated:
@@ -154,31 +156,41 @@ class VideoDetailsView(APIView):
 
     def get(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
-        user_lists = None
+        user_lists_data = None
         if request.user.is_authenticated:
-            user_lists = _get_user_lists(request.user)
-        lists = VideoList.objects.filter(videos__in=[pk])
+            user_lists_data = SimpleVideoListSerializer(
+                _get_user_lists(request.user), many=True
+            ).data
+        lists_data = SimpleVideoListSerializer(
+            VideoList.objects.filter(videos__in=[pk]), many=True
+        ).data
         tags_with_score = _get_tags_with_score_for_video(video=video)
-        related_videos = _get_related_videos(
-            current_video=video, tags_with_score=tags_with_score, count=8
-        )
-        video_serializer = VideoDetailSerializer(video)
+        related_videos_data = VideoDetailSerializer(
+            _get_related_videos(
+                current_video=video, tags_with_score=tags_with_score, count=8
+            ),
+            many=True,
+        ).data
+        video_data = VideoDetailSerializer(video).data
         return Response(
             {
-                "video": video_serializer.data,
-                "user_lists": user_lists,
-                "lists": lists,
+                "video": video_data,
+                "user_lists": user_lists_data,
+                "lists": lists_data,
                 "tags": tags_with_score,
-                "related_videos": related_videos,
+                "related_videos": related_videos_data,
             }
         )
 
     def post(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
-        user_lists = None
+        user_lists_data = None
         notification = None
+        video_data = VideoDetailSerializer(video).data
         if request.user.is_authenticated:
-            user_lists = _get_user_lists(request.user)
+            user_lists_data = SimpleVideoListSerializer(
+                _get_user_lists(request.user), many=True
+            ).data
             if "list_pk" in request.data:
                 success = _add_video_to_list(
                     video_pk=video.pk, list_pk=request.data.get("list_pk")
@@ -191,23 +203,30 @@ class VideoDetailsView(APIView):
             if "name" in request.data:
                 serializer = UserTagSerializer(data=request.data)
                 if not serializer.is_valid():
-                    return Response({"video": video, "user_lists": user_lists})
+                    return Response(
+                        {"video": video_data, "user_lists": user_lists_data}
+                    )
                 _add_video_to_tag(
                     tag_name=serializer.data.get("name"), video=video, user=request.user
                 )
-        lists = VideoList.objects.filter(videos__in=[pk])
+        lists_data = SimpleVideoListSerializer(
+            VideoList.objects.filter(videos__in=[pk]), many=True
+        ).data
         tags_with_score = _get_tags_with_score_for_video(video=video)
-        related_videos = _get_related_videos(
-            current_video=video, tags_with_score=tags_with_score, count=8
-        )
+        related_videos_data = VideoDetailSerializer(
+            _get_related_videos(
+                current_video=video, tags_with_score=tags_with_score, count=8
+            ),
+            many=True,
+        ).data
         return Response(
             {
-                "video": video,
-                "user_lists": user_lists,
-                "lists": lists,
+                "video": video_data,
+                "user_lists": user_lists_data,
+                "lists": lists_data,
+                "related_videos": related_videos_data,
                 "notification": notification,
                 "tags": tags_with_score,
-                "related_videos": related_videos,
             }
         )
 
@@ -226,9 +245,10 @@ class VideoTagUpvoteView(APIView):
 
         score = tag.votes.filter(video=video).aggregate(score=Sum("vote"))["score"] or 0
         tag = {"id": tag.pk, "name": tag.name, "score": score}
+        video_data = VideoDetailSerializer(video).data
         return Response(
             {
-                "video": video,
+                "video": video_data,
                 "tag": tag,
             }
         )
@@ -250,9 +270,10 @@ class VideoTagDownvoteView(APIView):
         if score == 0:
             video.tags.remove(tag)
         tag = {"id": tag.pk, "name": tag.name, "score": score}
+        video_data = VideoDetailSerializer(video).data
         return Response(
             {
-                "video": video,
+                "video": video_data,
                 "tag": tag,
             }
         )
