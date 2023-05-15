@@ -7,7 +7,7 @@ from ratings.serializers import CustomRatingField
 from django.template.defaultfilters import date as _date
 
 
-class VideoDetailSerializer(serializers.ModelSerializer):
+class SimpleVideoSerializer(serializers.ModelSerializer):
     last_snapshot = serializers.SerializerMethodField()
     title = serializers.SerializerMethodField()
     average_rating = serializers.SerializerMethodField()

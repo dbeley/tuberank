@@ -53,6 +53,15 @@ class ChannelSerializer(serializers.ModelSerializer):
         ]
 
 
+class SimpleChannelSnapshotSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChannelSnapshot
+        fields = [
+            "name_en",
+            "thumbnail_url",
+        ]
+
+
 class ChannelSnapshotSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChannelSnapshot

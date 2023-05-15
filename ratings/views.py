@@ -12,11 +12,12 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ratings.channels.serializers import ChannelSerializer
+from ratings.channels.serializers import SimpleChannelSerializer
 from ratings.charts import charts
 from ratings.models.channels import Channel
 from ratings.models.videos import Video, VideoViewing
-from ratings.videos.serializers import VideoSerializer, VideoDetailSerializer
+from ratings.serializers import ViewingSerializer
+from ratings.videos.serializers import SimpleVideoSerializer
 from ratings.yt_import import (
     NoResultException,
     TooManyResultException,
@@ -28,18 +29,18 @@ class HomepageView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = "homepage.html"
 
-    def get(self, request):
-        latest_videos_data = VideoDetailSerializer(
+    def get(self, _):
+        latest_videos_data = SimpleVideoSerializer(
             Video.objects.order_by("-id")[0:4], many=True
         ).data
         videos = Video.objects.annotate(
             avg_rating=Avg("ratings__rating"), num_ratings=Count("ratings")
         )
-        best_videos_data = VideoDetailSerializer(
+        best_videos_data = SimpleVideoSerializer(
             videos.filter(avg_rating__isnull=False).order_by("-avg_rating")[0:8],
             many=True,
         ).data
-        popular_videos_data = VideoDetailSerializer(
+        popular_videos_data = SimpleVideoSerializer(
             videos.order_by("-num_ratings")[0:4], many=True
         ).data
         number_of_users = User.objects.count()
@@ -81,7 +82,7 @@ class SearchView(APIView):
             video_page = video_paginator.get_page(video_page_query_param)
             return Response(
                 {
-                    "videos": VideoSerializer(video_page, many=True).data,
+                    "videos": SimpleVideoSerializer(video_page, many=True).data,
                     "query": query,
                     "video_page": video_page,
                 },
@@ -99,7 +100,7 @@ class SearchView(APIView):
             channel_page = channel_paginator.get_page(channel_page_query_param)
             return Response(
                 {
-                    "channels": ChannelSerializer(channel_page, many=True).data,
+                    "channels": SimpleChannelSerializer(channel_page, many=True).data,
                     "query": query,
                     "channel_page": channel_page,
                 },
@@ -108,8 +109,8 @@ class SearchView(APIView):
         channel_page = channel_paginator.get_page(1)
         return Response(
             {
-                "channels": ChannelSerializer(channel_page, many=True).data,
-                "videos": VideoSerializer(video_page, many=True).data,
+                "channels": SimpleChannelSerializer(channel_page, many=True).data,
+                "videos": SimpleVideoSerializer(video_page, many=True).data,
                 "query": query,
                 "channel_page": channel_page,
                 "video_page": video_page,
@@ -153,7 +154,8 @@ class ProfileView(APIView):
             return Response(
                 {
                     "user": user,
-                    "viewings": page,
+                    "page": page,
+                    "viewings": ViewingSerializer(page, many=True).data,
                 },
                 template_name="profile/profile_timeframe.html",
             )
@@ -180,7 +182,8 @@ class ProfileView(APIView):
                 "user": user,
                 "ratings_labels": chart_data["ratings_labels"],
                 "ratings_data": chart_data["ratings_data"],
-                "viewings": page,
+                "page": page,
+                "viewings": ViewingSerializer(page, many=True).data,
                 "most_watched_channels": most_watched_channels,
             }
         )
@@ -226,5 +229,5 @@ class AboutView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = "about.html"
 
-    def get(self, request):
+    def get(self, _):
         return Response()

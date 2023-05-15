@@ -7,15 +7,15 @@
         {% for viewing in viewings %}
         <li class="flex items-center space-x-4">
             <div class="flex-shrink-0">
-                <img src="{{ viewing.video.last_snapshot.thumbnail_url }}"
-                     alt="{{ viewing.video.last_snapshot.title_en }}"
+                <img src="{{ viewing.video_last_snapshot.thumbnail_url }}"
+                     alt="{{ viewing.video_last_snapshot.title_en }}"
                      class="h-20 w-36 object-cover rounded-lg shadow-md">
             </div>
             <div class="flex-grow">
-                <a href="{% url 'video_details' pk=viewing.video.id %}">
-                    <h3 class="text-lg font-bold">{{ viewing.video.last_snapshot.title_en }}</h3>
+                <a href="{% url 'video_details' pk=viewing.video_id %}">
+                    <h3 class="text-lg font-bold">{{ viewing.video_last_snapshot.title_en }}</h3>
                 </a>
-                <p class="text-gray-600">{{ viewing.video.channel.last_snapshot.name_en }} &bull; {{ viewing.video.last_snapshot.duration|duration }}</p>
+                <p class="text-gray-600">{{ viewing.channel_name }} &bull; {{ viewing.video_last_snapshot.duration }}</p>
             </div>
             <div class="flex-shrink-0">
                 <p class="text-gray-500 text-sm">{{ viewing.date_creation }}</p>
@@ -24,14 +24,14 @@
         {% endfor %}
     </ul>
 
-    {% if viewings.has_previous %}
-    {% urlparams page=viewings.previous_page_number as previous_url_params %}
+    {% if page.has_previous %}
+    {% urlparams page=page.previous_page_number as previous_url_params %}
     {% endif %}
 
-    {% if viewings.has_next %}
-    {% urlparams page=viewings.next_page_number as next_url_params %}
+    {% if page.has_next %}
+    {% urlparams page=page.next_page_number as next_url_params %}
     {% endif %}
 
     {% url 'profile' username=user.username as profile_url %}
-    {% include "htmx-paginator.html" with page=viewings url=profile_url previous_url_params=previous_url_params next_url_params=next_url_params %}
+    {% include "htmx-paginator.html" with page=page url=profile_url previous_url_params=previous_url_params next_url_params=next_url_params %}
 </div>
