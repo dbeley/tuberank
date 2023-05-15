@@ -1,8 +1,56 @@
 from rest_framework import serializers
 
-from ratings.channels.serializers import ChannelSerializer
+from core.utils import get_human_readable_duration
+from ratings.channels.serializers import ChannelSerializer, SimpleChannelSerializer
 from ratings.models.videos import Video, VideoRating, VideoSnapshot
 from ratings.serializers import CustomRatingField
+from django.template.defaultfilters import date as _date
+
+
+class VideoDetailSerializer(serializers.ModelSerializer):
+    last_snapshot = serializers.SerializerMethodField()
+    title = serializers.SerializerMethodField()
+    average_rating = serializers.SerializerMethodField()
+    ratings_count = serializers.SerializerMethodField()
+    date_publication = serializers.SerializerMethodField()
+    url = serializers.SerializerMethodField()
+    channel = serializers.SerializerMethodField()
+
+    def get_last_snapshot(self, obj: Video) -> dict[str, str]:
+        return VideoSnapshotSerializer(obj.last_snapshot).data
+
+    def get_title(self, obj: Video) -> str:
+        last_snapshot = obj.last_snapshot
+        return last_snapshot.title_en
+
+    def get_average_rating(self, obj: Video) -> float:
+        return round(obj.average_rating / 2, 2)
+
+    def get_ratings_count(self, obj: Video) -> int:
+        return obj.ratings.count() or 0
+
+    def get_date_publication(self, obj: Video) -> str:
+        return _date(obj.date_publication)
+
+    def get_url(self, obj: Video) -> str:
+        return obj.url
+
+    def get_channel(self, obj: Video):
+        return SimpleChannelSerializer(obj.channel).data
+
+    class Meta:
+        model = Video
+        fields = [
+            "id",
+            "yt_id",
+            "date_publication",
+            "title",
+            "last_snapshot",
+            "average_rating",
+            "ratings_count",
+            "url",
+            "channel",
+        ]
 
 
 class VideoSerializer(serializers.ModelSerializer):
@@ -45,6 +93,11 @@ class VideoSerializer(serializers.ModelSerializer):
 
 
 class VideoSnapshotSerializer(serializers.ModelSerializer):
+    duration = serializers.SerializerMethodField()
+
+    def get_duration(self, obj):
+        return get_human_readable_duration(obj.duration)
+
     class Meta:
         model = VideoSnapshot
         fields = [
@@ -55,6 +108,7 @@ class VideoSnapshotSerializer(serializers.ModelSerializer):
             "date_creation",
             "description",
             "thumbnail_url",
+            "duration",
         ]
 
 

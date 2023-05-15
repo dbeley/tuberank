@@ -12,7 +12,7 @@ from ratings.models.lists import VideoList, VideoListItem
 from ratings.models.tags import UserTag, UserTagVote
 from ratings.models.videos import Video, VideoRating, VideoViewing
 from ratings.tags.serializers import UserTagSerializer
-from ratings.videos.serializers import VideoRatingSerializer
+from ratings.videos.serializers import VideoRatingSerializer, VideoDetailSerializer
 
 
 def _add_video_to_list(video_pk: int, list_pk: int) -> bool:
@@ -162,9 +162,10 @@ class VideoDetailsView(APIView):
         related_videos = _get_related_videos(
             current_video=video, tags_with_score=tags_with_score, count=8
         )
+        video_serializer = VideoDetailSerializer(video)
         return Response(
             {
-                "video": video,
+                "video": video_serializer.data,
                 "user_lists": user_lists,
                 "lists": lists,
                 "tags": tags_with_score,

@@ -4,6 +4,23 @@ from ratings.models.channels import Channel, ChannelRating, ChannelSnapshot
 from ratings.serializers import CustomRatingField
 
 
+class SimpleChannelSerializer(serializers.ModelSerializer):
+    last_snapshot = serializers.SerializerMethodField()
+
+    def get_last_snapshot(self, obj: Channel) -> dict[str, str]:
+        return ChannelSnapshotSerializer(obj.last_snapshot).data
+
+    class Meta:
+        model = Channel
+        fields = [
+            "id",
+            "yt_id",
+            "date_creation",
+            "description",
+            "last_snapshot",
+        ]
+
+
 class ChannelSerializer(serializers.ModelSerializer):
     last_snapshot = serializers.SerializerMethodField()
     average_rating = serializers.SerializerMethodField()
