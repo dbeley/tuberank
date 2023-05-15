@@ -12,6 +12,7 @@ from ratings import enums
 from ratings.channels.serializers import ChannelRatingSerializer
 from ratings.models.channels import Channel, ChannelRating
 from ratings.models.videos import Video
+from ratings.videos.serializers import SimpleVideoSerializer
 
 
 def _get_user_rating_for_channel(user: User, channel: Channel) -> ChannelRating | None:
@@ -56,15 +57,17 @@ class ChannelDetailsView(APIView):
             videos = videos.order_by("-date_publication")
         paginator = Paginator(videos, 8)
         page = paginator.get_page(request.GET.get("page", 1))
+        videos_data = SimpleVideoSerializer(videos, many=True).data
         if request.META.get("HTTP_HX_REQUEST"):
             return Response(
-                {"videos": page},
+                {"videos": videos_data, "page": page},
                 template_name="channels/channel_details_partial.html",
             )
         return Response(
             {
                 "channel": channel,
-                "videos": page,
+                "videos": videos_data,
+                "page": page,
             }
         )
 

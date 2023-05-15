@@ -25,7 +25,7 @@
     </table>
   </div>
 </div>
-<form action="{% url 'video_rating' pk=video.pk %}" method="post">
+<form action="{% url 'video_rating' pk=video.id %}" method="post">
   {% csrf_token %}
   <div class="mb-2 mt-2">
     <label class="block text-gray-700 font-bold mb-2" for="rating">

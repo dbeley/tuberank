@@ -28,7 +28,7 @@ class VideoListDetailsView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = "lists/list_details.html"
 
-    def get(self, request, pk):
+    def get(self, _, pk):
         video_list = get_object_or_404(VideoList, pk=pk)
         return Response(
             {

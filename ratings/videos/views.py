@@ -108,8 +108,9 @@ class VideoRatingDetailView(APIView):
         video_rating = _get_user_rating_for_video(user=request.user, video=video)
         if not video_rating:
             video_rating = VideoRating(video=video, user=request.user)
-        serializer = VideoRatingSerializer(video_rating)
-        return Response({"serializer": serializer, "video": video})
+        rating_data = VideoRatingSerializer(video_rating)
+        video_data = SimpleVideoSerializer(video).data
+        return Response({"serializer": rating_data, "video": video_data})
 
     def post(self, request, pk):
         if not request.user.is_authenticated:
@@ -118,7 +119,8 @@ class VideoRatingDetailView(APIView):
         video_rating = VideoRating(video=video, user=request.user)
         serializer = VideoRatingSerializer(video_rating, data=request.data)
         if not serializer.is_valid():
-            return Response({"serializer": serializer, "video": video})
+            video_data = SimpleVideoSerializer(video).data
+            return Response({"serializer": serializer.data, "video": video_data})
         VideoRating.objects.update_or_create(
             video=video,
             user=request.user,
@@ -133,7 +135,7 @@ class VideoViewingView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = "videos/video_viewing.html"
 
-    def get(self, request, pk):
+    def get(self, _, pk):
         video = get_object_or_404(Video, pk=pk)
         video_data = SimpleVideoSerializer(video).data
         return Response({"video": video_data})
@@ -171,6 +173,7 @@ class VideoDetailsView(APIView):
             ),
             many=True,
         ).data
+
         video_data = SimpleVideoSerializer(video).data
         return Response(
             {

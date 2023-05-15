@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 
 from ratings import enums
 from ratings.models.tags import UserTag
+from ratings.videos.serializers import SimpleVideoSerializer
 
 
 def get_active_tags() -> QuerySet[UserTag]:
@@ -20,15 +21,16 @@ class UserTagOverviewView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = "tags/tag_overview.html"
 
-    def get(self, request, name):
+    def get(self, _, name):
         tag = get_object_or_404(UserTag, name=name)
         videos = tag.video_set.all()
-        return Response({"tag": tag, "videos": videos})
+        videos_data = SimpleVideoSerializer(videos, many=True).data
+        return Response({"tag": tag, "videos": videos_data})
 
 
 class TagsView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = "tags/tags.html"
 
-    def get(self, request):
+    def get(self, _):
         return Response({"tags": get_active_tags().order_by("-num_videos")})
