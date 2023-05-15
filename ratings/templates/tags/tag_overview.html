@@ -7,17 +7,24 @@
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
   <div class="mt-10 sm:mt-0">
     <h1 class="text-3xl font-bold text-gray-900">{% blocktranslate with tag_name=tag.name %}Videos for Tag "{{ tag_name }}"{% endblocktranslate %}</h1>
+
     <div class="mt-5 border-t border-gray-200">
-      {% if videos %}
-      <ul class="divide-y divide-gray-200">
-        {% for video in videos %}
-        <li class="py-4 items-center justify-between">
-          {% include "videos/video_item.html" %}
-        </li>
+      {% if best_videos %}
+      <h2 class="text-2xl font-bold mb-4">{% translate "Best rated" %}</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mb-8">
+        {% for video in best_videos %}
+        {% include "videos/video_item.html" %}
         {% endfor %}
-      </ul>
-      {% else %}
-      <p class="mt-3 text-lg text-gray-500">{% blocktranslate with tag_name=tag.name %}No videos found for tag "{{ tag_name }}".{% endblocktranslate %}</p>
+      </div>
+      {% endif %}
+
+      {% if videos %}
+      <h2 class="text-2xl font-bold mb-4">{% translate "All videos" %}</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mb-8">
+        {% for video in videos %}
+        {% include "videos/video_item.html" %}
+        {% endfor %}
+      </div>
       {% endif %}
     </div>
   </div>

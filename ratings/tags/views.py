@@ -1,4 +1,4 @@
-from django.db.models import Count, QuerySet
+from django.db.models import Count, QuerySet, Avg
 from django.shortcuts import get_object_or_404
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
@@ -22,8 +22,21 @@ class UserTagOverviewView(APIView):
 
     def get(self, request, name):
         tag = get_object_or_404(UserTag, name=name)
-        videos = tag.video_set.all()
-        return Response({"tag": tag, "videos": videos})
+        videos = tag.video_set.annotate(
+            avg_rating=Avg("ratings__rating"), num_ratings=Count("ratings")
+        )
+        best_videos = videos.filter(avg_rating__isnull=False).order_by("-avg_rating")[
+            0:8
+        ]
+        popular_videos = videos.order_by("-num_ratings")[0:4]
+        return Response(
+            {
+                "tag": tag,
+                "videos": videos.all(),
+                "best_videos": best_videos,
+                "popular_videos": popular_videos,
+            }
+        )
 
 
 class TagsView(APIView):

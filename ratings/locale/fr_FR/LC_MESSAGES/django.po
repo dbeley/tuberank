@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-14 21:04+0200\n"
+"POT-Creation-Date: 2023-05-16 01:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,7 +67,7 @@ msgstr "Quelque chose s'est mal passé."
 msgid "Please try again later."
 msgstr "Veuillez réessayer plus tard."
 
-#: templates/about.html:4 templates/about.html:10 templates/base.html:142
+#: templates/about.html:4 templates/about.html:10 templates/base.html:165
 msgid "About"
 msgstr "À propos"
 
@@ -194,6 +194,7 @@ msgstr "Les filtres disponibles sont les suivants :"
 
 #: templates/about.html:39 templates/channels/channel_details.html:56
 #: templates/channels/channel_list.html:16 templates/charts.html:14
+#: templates/tags/tag_overview.html:12
 msgid "Best rated"
 msgstr "Les mieux notées"
 
@@ -320,11 +321,11 @@ msgstr "Chaînes"
 msgid "Import Video"
 msgstr "Importer une vidéo"
 
-#: templates/base.html:190 templates/base.html:230
+#: templates/base.html:199 templates/base.html:239
 msgid "English"
 msgstr "Anglais"
 
-#: templates/base.html:203 templates/base.html:245
+#: templates/base.html:212 templates/base.html:254
 msgid "French"
 msgstr "Français"
 
@@ -470,11 +471,11 @@ msgid "Welcome to TubeRank!"
 msgstr "Bienvenue sur TubeRank !"
 
 #: templates/homepage.html:14
-msgid "Last Indexed Videos"
+msgid "Last indexed videos"
 msgstr "Dernières vidéos indexées"
 
 #: templates/homepage.html:22
-msgid "Best Videos"
+msgid "Best videos"
 msgstr "Vidéos les mieux notées"
 
 #: templates/homepage.html:37
@@ -599,11 +600,11 @@ msgstr "Par : <span class=\"font-bold\">%(username)s</span>"
 msgid "Reorder"
 msgstr "Réorganiser la liste"
 
-#: templates/lists/list_details.html:24 templates/lists/list_item.html:53
+#: templates/lists/list_details.html:24 templates/lists/list_item.html:52
 msgid "Edit"
 msgstr "Éditer"
 
-#: templates/lists/list_details.html:27 templates/lists/list_item.html:56
+#: templates/lists/list_details.html:27 templates/lists/list_item.html:55
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -684,11 +685,11 @@ msgstr ""
 msgid "No video ratings found."
 msgstr "Pas de notes trouvées."
 
-#: templates/profile/profile.html:84
+#: templates/profile/profile.html:82
 msgid "No channel ratings found."
 msgstr "Pas de notes trouvées."
 
-#: templates/profile/profile.html:97
+#: templates/profile/profile.html:95
 msgid "Number of Ratings"
 msgstr "Nombre de notes"
 
@@ -749,10 +750,9 @@ msgstr "Résultats pour \"%(query)s\""
 msgid "Videos for Tag \"%(tag_name)s\""
 msgstr "Vidéos pour le tag \"%(tag_name)s\""
 
-#: templates/tags/tag_overview.html:20
-#, python-format
-msgid "No videos found for tag \"%(tag_name)s\"."
-msgstr "Pas de vidéos trouvées pour le tag \"%(tag_name)s\"."
+#: templates/tags/tag_overview.html:19
+msgid "All videos"
+msgstr "Toutes les vidéos"
 
 #: templates/tags/tags.html:8
 msgid "All tags"
@@ -856,6 +856,10 @@ msgstr ""
 #: videos/views.py:188
 msgid "The video was successfully added to the list"
 msgstr "La vidéo a été ajoutée à la liste"
+
+#, python-format
+#~ msgid "No videos found for tag \"%(tag_name)s\"."
+#~ msgstr "Pas de vidéos trouvées pour le tag \"%(tag_name)s\"."
 
 #~ msgid "TubeRank Stats"
 #~ msgstr "Statistiques TubeRank"
