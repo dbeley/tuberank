@@ -43,7 +43,7 @@ def _get_user_rating_for_video(user: User, video: Video) -> VideoRating | None:
     return None
 
 
-def _get_tags_with_score_for_video(video: Video):
+def _get_tags_with_score_for_video(video: Video) -> list[dict]:
     result = []
     # Tag where total score is positive for specific video
     for tag in video.tags.all():
@@ -53,7 +53,7 @@ def _get_tags_with_score_for_video(video: Video):
     return result
 
 
-def _add_video_to_tag(tag_name: str, video: Video, user: User):
+def _add_video_to_tag(tag_name: str, video: Video, user: User) -> None:
     tag, _ = UserTag.objects.get_or_create(
         name=tag_name,
         defaults={
@@ -65,7 +65,9 @@ def _add_video_to_tag(tag_name: str, video: Video, user: User):
     _add_vote_to_tag_video(tag, video, user, enums.TagVote.UPVOTE)
 
 
-def _add_vote_to_tag_video(tag: UserTag, video: Video, user: User, vote: enums.TagVote):
+def _add_vote_to_tag_video(
+    tag: UserTag, video: Video, user: User, vote: enums.TagVote
+) -> None:
     if UserTagVote.objects.filter(video=video, user=user, tag=tag).exists():
         existing_vote = UserTagVote.objects.get(video=video, user=user, tag=tag)
         if vote != existing_vote.vote:
@@ -77,20 +79,22 @@ def _add_vote_to_tag_video(tag: UserTag, video: Video, user: User, vote: enums.T
 
 def _get_related_videos(
     current_video: Video, tags_with_score: dict[str, str], count: int
-) -> QuerySet[Video]:
+) -> set[Video]:
     sorted_tags = sorted(tags_with_score, key=lambda d: d["score"], reverse=True)
-    related_videos = []
+    related_videos = set()
     # similarity by tag
     for tag in sorted_tags:
         if len(related_videos) >= count:
             break
-        related_videos += UserTag.objects.get(pk=tag.get("id")).video_set.exclude(
-            id=current_video.id
-        )[: count - len(related_videos)]
+        related_videos.update(
+            UserTag.objects.get(pk=tag.get("id")).video_set.exclude(
+                id=current_video.id
+            )[: count - len(related_videos)]
+        )
     # similarity by channel
     remaining = count - len(related_videos)
     if remaining > 0:
-        related_videos += (
+        related_videos.update(
             Video.objects.exclude(pk=current_video.pk)
             .filter(channel=current_video.channel)
             .all()[:remaining]

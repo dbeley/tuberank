@@ -150,7 +150,7 @@ def _get_video_data_class_from_id(video_id: str) -> VideoDataClass:
     )
 
 
-def _get_thumbnail_data(data: dict) -> str:
+def _get_thumbnail_data(data: dict) -> str | None:
     if thumbnail := data.get("standard"):
         return thumbnail["url"]
     elif thumbnail := data.get("medium"):
