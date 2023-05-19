@@ -8,6 +8,9 @@
 {% block content %}
 <div class="mb-4 bg-gray-100 p-4 rounded-lg">
   <div class="flex flex-wrap items-center justify-between py-4">
+    <a href="{% url 'channel_details' pk=channel.id %}" class="block mb-2">
+      <img src="{{ channel.last_snapshot.thumbnail_url }}" alt="{{ channel.last_snapshot.name_en }}" class="h-32 w-32 rounded">
+    </a>
     <h1 class="text-3xl font-bold">{{ channel.last_snapshot.name_en }}</h1>
     {% if channel.ratings.exists %}
     <div class="text-sm bg-gray-100 rounded-lg p-2">

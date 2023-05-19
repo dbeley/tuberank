@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 01:32+0200\n"
+"POT-Creation-Date: 2023-05-19 13:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -192,13 +192,13 @@ msgstr "Il est possible de créer des classements de vidéos."
 msgid "The available filters are:"
 msgstr "Les filtres disponibles sont les suivants :"
 
-#: templates/about.html:39 templates/channels/channel_details.html:56
+#: templates/about.html:39 templates/channels/channel_details.html:59
 #: templates/channels/channel_list.html:16 templates/charts.html:14
-#: templates/tags/tag_overview.html:12
+#: templates/tags/tag_overview.html:13
 msgid "Best rated"
 msgstr "Les mieux notées"
 
-#: templates/about.html:40 templates/channels/channel_details.html:57
+#: templates/about.html:40 templates/channels/channel_details.html:60
 #: templates/charts.html:15
 msgid "Most rated"
 msgstr "Les plus notées"
@@ -256,14 +256,14 @@ msgstr ""
 #: templates/about.html:56
 msgid ""
 "Automatic tracking: You will have to install <a href=\"https://github.com/"
-"dbeley/tuberank/blob/main/scripts/tuberank_now_watching.user.js\">this "
+"dbeley/tuberank/raw/main/scripts/tuberank_now_watching.user.js\">this "
 "userscript</a>. After installing it with a userscript manager (like "
 "ViolentMonkey) and filled in your login information (username/password, see "
 "source code), the videos you watch through YouTube will be automatically "
 "sent to TubeRank."
 msgstr ""
 "Automatiquement : Il vous faudra installer <a href=\"https://github.com/"
-"dbeley/tuberank/blob/main/scripts/tuberank_now_watching.user.js\">ce "
+"dbeley/tuberank/raw/main/scripts/tuberank_now_watching.user.js\">ce "
 "userscript</a>. Après l'avoir installé via un gestionnaire de script (comme "
 "Violentmonkey) et y avoir renseigné votre nom d'utilisateur et votre mot de "
 "passe (voir code source), les vidéos que vous regarderez sur YouTube seront "
@@ -329,61 +329,61 @@ msgstr "Anglais"
 msgid "French"
 msgstr "Français"
 
-#: templates/channels/channel_details.html:18 templates/lists/list_item.html:38
+#: templates/channels/channel_details.html:21 templates/lists/list_item.html:38
 #: templates/videos/video_details.html:75 templates/videos/video_item.html:27
 #, python-format
 msgid "%(count)s ratings"
 msgstr "%(count)s notes"
 
-#: templates/channels/channel_details.html:24
+#: templates/channels/channel_details.html:27
 #: templates/videos/video_details.html:27 templates/videos/video_item.html:34
 msgid "Watch on YouTube"
 msgstr "Regarder sur YouTube"
 
-#: templates/channels/channel_details.html:28
+#: templates/channels/channel_details.html:31
 msgid "Rate this channel"
 msgstr "Noter cette chaîne"
 
-#: templates/channels/channel_details.html:37
+#: templates/channels/channel_details.html:40
 #: templates/channels/channel_list_partial.html:13
 #, python-format
 msgid "%(count)s subscribers"
 msgstr "%(count)s abonnés"
 
-#: templates/channels/channel_details.html:41
+#: templates/channels/channel_details.html:44
 #: templates/videos/video_item.html:16
 #, python-format
 msgid "%(count)s views"
 msgstr "%(count)s vues"
 
-#: templates/channels/channel_details.html:45
+#: templates/channels/channel_details.html:48
 #, python-format
 msgid "Created on %(date)s"
 msgstr "Actif depuis le %(date)s"
 
-#: templates/channels/channel_details.html:52
+#: templates/channels/channel_details.html:55
 #: templates/channels/channel_list.html:13 templates/charts.html:12
 msgid "Sort by:"
 msgstr "Trier par :"
 
-#: templates/channels/channel_details.html:54 templates/charts.html:18
+#: templates/channels/channel_details.html:57 templates/charts.html:18
 msgid "Newest"
 msgstr "Les plus récentes"
 
-#: templates/channels/channel_details.html:55 templates/charts.html:19
+#: templates/channels/channel_details.html:58 templates/charts.html:19
 msgid "Oldest"
 msgstr "Les plus anciennes"
 
-#: templates/channels/channel_details.html:58
+#: templates/channels/channel_details.html:61
 #: templates/channels/channel_list.html:19 templates/charts.html:16
 msgid "Most viewed"
 msgstr "Les plus vues"
 
-#: templates/channels/channel_details.html:59 templates/charts.html:17
+#: templates/channels/channel_details.html:62 templates/charts.html:17
 msgid "Least viewed"
 msgstr "Les moins vues"
 
-#: templates/channels/channel_details.html:69
+#: templates/channels/channel_details.html:72
 #: templates/videos/video_details.html:90
 msgid "Reviews"
 msgstr "Critiques"
@@ -750,7 +750,7 @@ msgstr "Résultats pour \"%(query)s\""
 msgid "Videos for Tag \"%(tag_name)s\""
 msgstr "Vidéos pour le tag \"%(tag_name)s\""
 
-#: templates/tags/tag_overview.html:19
+#: templates/tags/tag_overview.html:22
 msgid "All videos"
 msgstr "Toutes les vidéos"
 
@@ -853,7 +853,7 @@ msgstr ""
 msgid "%(minutes)sm %(seconds)ss"
 msgstr ""
 
-#: videos/views.py:188
+#: videos/views.py:192
 msgid "The video was successfully added to the list"
 msgstr "La vidéo a été ajoutée à la liste"
 
