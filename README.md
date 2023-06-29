@@ -59,36 +59,3 @@ fly ssh console --pty -C 'python /code/manage.py createsuperuser'
 ```
 yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.youtube.com/watch?v=_'
 ```
-
-## TODO
-
-### Video detail page
-- Display categories
-- Add htmx-aware form to add/modify a rating
-- Add dynamic search component
-
-### Charts
-- Add dynamic search component
-
-### Categories
-- Add categories page
-- Add categories to videos/channels/snapshots
-
-### Login / Registration
-- Update registration template
-- Display login errors
-
-### Profile / Settings
-- Add profile / settings page
-- Add more statistics
-- Add user-generated lists with ratings
-
-### URL mapping
-- Add slug for videos, channels
-
-### Tag / Lists
-- Better display of tags
-- Add pagination to list view
-
-### Import function
-- Add channel batch import feature
