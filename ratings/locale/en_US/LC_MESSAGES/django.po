@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-19 13:43+0200\n"
+"POT-Creation-Date: 2023-06-29 21:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,7 +67,7 @@ msgstr ""
 msgid "Please try again later."
 msgstr ""
 
-#: templates/about.html:4 templates/about.html:10 templates/base.html:165
+#: templates/about.html:4 templates/about.html:10 templates/base.html:162
 msgid "About"
 msgstr ""
 
@@ -104,8 +104,8 @@ msgstr ""
 #: templates/about.html:23
 #, python-format
 msgid ""
-"Therefore, videos have to be added to the index manually using the <a href="
-"\"%(import_video_url)s\">import video</a> page."
+"Therefore, videos have to be added to the index manually using the <a "
+"href=\"%(import_video_url)s\">import video</a> page."
 msgstr ""
 
 #: templates/about.html:24
@@ -207,8 +207,8 @@ msgstr ""
 #: templates/about.html:49
 #, python-format
 msgid ""
-"You can access your viewing history by visiting your <a href="
-"\"%(profile_url)s\">profile page</a>."
+"You can access your viewing history by visiting your <a "
+"href=\"%(profile_url)s\">profile page</a>."
 msgstr ""
 
 #: templates/about.html:51
@@ -288,11 +288,15 @@ msgstr ""
 msgid "Import Video"
 msgstr ""
 
-#: templates/base.html:199 templates/base.html:239
+#: templates/base.html:149
+msgid "Source Code"
+msgstr ""
+
+#: templates/base.html:196 templates/base.html:236
 msgid "English"
 msgstr ""
 
-#: templates/base.html:212 templates/base.html:254
+#: templates/base.html:209 templates/base.html:251
 msgid "French"
 msgstr ""
 
@@ -803,8 +807,8 @@ msgstr ""
 #: templates/videos/video_viewing.html:26
 #, python-format
 msgid ""
-"<p>Find you viewing history on your <a class=\"font-bold\" href="
-"%(url)s>profile page</a>.</p>"
+"<p>Find you viewing history on your <a class=\"font-bold\" "
+"href=%(url)s>profile page</a>.</p>"
 msgstr ""
 
 #: templatetags/ratings_extras.py:15
