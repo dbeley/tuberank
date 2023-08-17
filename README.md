@@ -27,6 +27,14 @@ npm run tailwind-watch
 python manage.py migrate --run-syncdb
 ```
 
+### Update dependencies
+
+```
+poetry update
+npm update
+npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
+```
+
 ## Local Deployment
 
 - Create `.env` with the required secrets (see `.env.example` for an example)

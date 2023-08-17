@@ -1,7 +1,9 @@
 {
   "devDependencies": {
+    "autoprefixer": "^10.4.15",
     "flowbite-typography": "^1.0.3",
-    "tailwindcss": "^3.3.2"
+    "postcss": "^8.4.28",
+    "tailwindcss": "^3.3.3"
   },
   "name": "tuberank",
   "description": "A community website to rate and discover youtube videos.",
@@ -56,7 +58,6 @@
     "picomatch": "^2.3.1",
     "pify": "^2.3.0",
     "pirates": "^4.0.5",
-    "postcss": "^8.4.23",
     "postcss-import": "^15.1.0",
     "postcss-js": "^4.0.1",
     "postcss-load-config": "^4.0.1",
