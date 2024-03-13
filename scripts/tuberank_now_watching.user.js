@@ -3,7 +3,7 @@
   // @namespace   Violentmonkey Scripts
   // @include     https://www.youtube.com/watch?v=*
   // @grant       GM.xmlhttpRequest
-  // @version     1.0
+  // @version     1.1
   // @author      dbeley
   // @description 5/8/2023, 1:00:50 PM
   // ==/UserScript==
@@ -30,7 +30,7 @@
           timer = setTimeout(gmMain, secondsToWait * 1000);
         }
     }
-    , 1000
+    , 5000
   );
 
   function gmMain () {
