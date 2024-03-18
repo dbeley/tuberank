@@ -30,13 +30,18 @@
             </p>
             {% url 'import_video' as import_video_url %}
             <p>
-                {% blocktranslate %}Therefore, videos have to be added to the index manually using the <a href="{{ import_video_url }}">import video</a> page.{% endblocktranslate %}
+                {% blocktranslate %}Therefore, videos have to be added to the index using one of two methods: {% endblocktranslate %}
             </p>
+            <ul>
+                <li>
+                    {% blocktranslate %}by using the <a href="{{ import_video_url }}">import video</a> page.{% endblocktranslate %}
+                </li>
+                <li>
+                    {% blocktranslate %}by using <a href="https://github.com/dbeley/tuberank/raw/main/scripts/tuberank_now_watching.user.js">this userscript</a>.{% endblocktranslate %}
+                </li>
+            </ul>
             <p>
                 {% translate "When a video is imported, TubeRank captures a snapshot of it to obtain the most recent information about it." %}
-            </p>
-            <p>
-                {% translate "However, it is currently not possible to update a snapshot of an indexed video, such as for updating its view count, but this feature is planned for future implementation." %}
             </p>
             <h2>{% translate "Tag" %}</h2>
             <p>
@@ -50,7 +55,7 @@
             <h2>{% translate "Channel" %}</h2>
             <p>{% translate "When a snapshot is created for a Video, a similar snapshot for its Channel is also created." %}</p>
             <p>
-                {% translate "Updating the snapshot for a Channel is planned feature, as well as being able to review Channels." %}
+                {% translate "It's possible to updating the snapshot for a Channel from the Channel page. It will also create a new snapshot for all the videos associated to the channel." %}
             </p>
             <h2>{% translate "Charts" %}</h2>
             <p>{% translate "It's possible to create Charts of videos." %}</p>
