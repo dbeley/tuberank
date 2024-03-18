@@ -157,7 +157,9 @@ class ChannelRefreshView(APIView):
     def get(self, _, pk):
         channel = get_object_or_404(Channel, pk=pk)
         videos = Video.objects.filter(channel=channel)
-        latest_snapshot = ChannelSnapshot.objects.latest("date_creation")
+        latest_snapshot = ChannelSnapshot.objects.filter(channel=channel).latest(
+            "date_creation"
+        )
         if datetime.now().date() != latest_snapshot.date_creation.date():
             for index, video in enumerate(videos, 1):
                 create_video_snapshot(video.yt_id, skip_channel_snapshot=index != 1)
