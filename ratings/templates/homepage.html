@@ -12,12 +12,14 @@
         </div>
         <h2 class="text-2xl font-bold mb-4">{% translate "Last indexed videos" %}</h2>
         {% include "homepage_partial.html" with latest_videos=latest_videos %}
-        <h2 class="text-2xl font-bold mb-4">{% translate "Best videos" %}</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mb-8">
-            {% for video in best_videos %}
-                {% include "videos/video_item.html" %}
-            {% endfor %}
-        </div>
+        {% if trending_videos %}
+            <h2 class="text-2xl font-bold mb-4">{% translate "Trending videos" %}</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mb-8">
+                {% for video in trending_videos %}
+                    {% include "videos/video_item.html" %}
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
     <div class="container mx-auto flex flex-col items-center">
         <div class="grid grid-cols-3 gap-8 mb-8">
@@ -60,7 +62,13 @@
         </div>
     </div>
     <div class="container mx-auto">
-        <h2 class="text-2xl font-bold mb-4">{% translate "Popular Videos on TubeRank" %}</h2>
+        <h2 class="text-2xl font-bold mb-4">{% translate "Best videos" %}</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mb-8">
+            {% for video in best_videos %}
+                {% include "videos/video_item.html" %}
+            {% endfor %}
+        </div>
+        <h2 class="text-2xl font-bold mb-4">{% translate "Popular Videos" %}</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
             {% for video in popular_videos %}
                 {% include "videos/video_item.html" %}

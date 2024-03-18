@@ -6,6 +6,7 @@ from django.db.models import Avg, Q, Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views import generic
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.renderers import TemplateHTMLRenderer
@@ -42,9 +43,17 @@ class HomepageView(APIView):
         videos = Video.objects.annotate(
             avg_rating=Avg("ratings__rating"), num_ratings=Count("ratings")
         )
-        best_videos = videos.filter(avg_rating__isnull=False).order_by("-avg_rating")[
-            0:8
-        ]
+        best_videos = videos.filter(avg_rating__isnull=False).order_by(
+            "-avg_rating", "num_ratings"
+        )[0:8]
+        two_weeks_ago = timezone.now() - timezone.timedelta(weeks=2)
+
+        # Get videos with recent activity in the last two weeks
+        trending_videos = (
+            Video.objects.filter(ratings__date_creation__gte=two_weeks_ago)
+            .annotate(avg_rating=Avg("ratings__rating"), num_ratings=Count("ratings"))
+            .order_by("-avg_rating", "-num_ratings")
+        )
         popular_videos = videos.order_by("-num_ratings")[0:4]
         number_of_users = User.objects.count()
         number_of_channels = Channel.objects.count()
@@ -53,6 +62,7 @@ class HomepageView(APIView):
         return Response(
             {
                 "latest_videos": latest_videos,
+                "trending_videos": trending_videos,
                 "best_videos": best_videos,
                 "popular_videos": popular_videos,
                 "number_of_users": number_of_users,
