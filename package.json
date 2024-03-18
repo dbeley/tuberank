@@ -3,7 +3,7 @@
     "autoprefixer": "^10.4.15",
     "flowbite-typography": "^1.0.3",
     "postcss": "^8.4.28",
-    "tailwindcss": "^3.3.3"
+    "tailwindcss": "^3.4.1"
   },
   "name": "tuberank",
   "description": "A community website to rate and discover youtube videos.",
@@ -27,7 +27,7 @@
     "fast-glob": "^3.2.12",
     "fastq": "^1.15.0",
     "fill-range": "^7.0.1",
-    "flowbite": "^1.6.5",
+    "flowbite": "^1.8.1",
     "fs.realpath": "^1.0.0",
     "function-bind": "^1.1.1",
     "glob": "^7.1.6",
