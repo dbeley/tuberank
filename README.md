@@ -67,3 +67,10 @@ fly ssh console --pty -C 'python /code/manage.py createsuperuser'
 ```
 yt-dlp -j --flat-playlist $CHANNEL_URL | jq -r '.id' | sed 's_^_https://www.youtube.com/watch?v=_'
 ```
+
+## Update translations
+
+```
+cd ratings
+django-admin makemessages -a
+```
