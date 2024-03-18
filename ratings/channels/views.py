@@ -1,3 +1,6 @@
+import logging
+from datetime import datetime
+
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
@@ -10,9 +13,12 @@ from rest_framework.views import APIView
 
 from ratings import enums
 from ratings.channels.serializers import ChannelRatingSerializer
-from ratings.models.channels import Channel, ChannelRating
+from ratings.models.channels import Channel, ChannelRating, ChannelSnapshot
 from ratings.models.videos import Video
 from ratings.yt_import import create_video_snapshot
+
+
+logger = logging.getLogger(__name__)
 
 
 def _get_user_rating_for_channel(user: User, channel: Channel) -> ChannelRating | None:
@@ -151,6 +157,13 @@ class ChannelRefreshView(APIView):
     def get(self, _, pk):
         channel = get_object_or_404(Channel, pk=pk)
         videos = Video.objects.filter(channel=channel)
-        for index, video in enumerate(videos, 1):
-            create_video_snapshot(video.yt_id, skip_channel_snapshot=index != 1)
+        latest_snapshot = ChannelSnapshot.objects.latest("date_creation")
+        if datetime.now().date() != latest_snapshot.date_creation.date():
+            for index, video in enumerate(videos, 1):
+                create_video_snapshot(video.yt_id, skip_channel_snapshot=index != 1)
+        else:
+            logger.warning(
+                "Skipping snapshot creation for channel %s, the latest one is too recent",
+                channel.pk,
+            )
         return redirect("channel_details", pk=channel.id)
