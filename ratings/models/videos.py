@@ -76,7 +76,7 @@ class VideoRating(models.Model):
 
 class VideoViewing(models.Model):
     video = models.ForeignKey(
-        "ratings.Video", related_name="viewings", on_delete=models.DO_NOTHING
+        "ratings.Video", related_name="viewings", on_delete=models.CASCADE
     )
     user = models.ForeignKey(User, related_name="viewings", on_delete=models.CASCADE)
     date_creation = models.DateTimeField(auto_now_add=True)
