@@ -29,6 +29,11 @@ urlpatterns = [
         name="channel_rating",
     ),
     path(
+        "channel/<int:pk>/refresh",
+        ratings.channels.views.ChannelRefreshView.as_view(),
+        name="channel_refresh",
+    ),
+    path(
         "video/<int:pk>",
         ratings.videos.views.VideoDetailsView.as_view(),
         name="video_details",

@@ -30,6 +30,9 @@
     <a href="{% url 'channel_rating' pk=channel.id %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">
       {% translate "Rate this channel" %}
     </a>
+    <a href="{% url 'channel_refresh' pk=channel.id %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">
+      {% translate "Refresh data for this channel" %}
+    </a>
     {% endif %}
   </div>
   </div>

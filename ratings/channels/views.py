@@ -12,6 +12,7 @@ from ratings import enums
 from ratings.channels.serializers import ChannelRatingSerializer
 from ratings.models.channels import Channel, ChannelRating
 from ratings.models.videos import Video
+from ratings.yt_import import create_video_snapshot
 
 
 def _get_user_rating_for_channel(user: User, channel: Channel) -> ChannelRating | None:
@@ -143,4 +144,13 @@ class ChannelRatingDetailView(APIView):
                 **serializer.validated_data,
             },
         )
+        return redirect("channel_details", pk=channel.id)
+
+
+class ChannelRefreshView(APIView):
+    def get(self, _, pk):
+        channel = get_object_or_404(Channel, pk=pk)
+        videos = Video.objects.filter(channel=channel)
+        for index, video in enumerate(videos, 1):
+            create_video_snapshot(video.yt_id, skip_channel_snapshot=index != 1)
         return redirect("channel_details", pk=channel.id)

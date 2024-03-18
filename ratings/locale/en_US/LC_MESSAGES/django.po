@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-29 21:18+0200\n"
+"POT-Creation-Date: 2024-03-18 12:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -173,13 +173,13 @@ msgstr ""
 msgid "The available filters are:"
 msgstr ""
 
-#: templates/about.html:39 templates/channels/channel_details.html:59
+#: templates/about.html:39 templates/channels/channel_details.html:62
 #: templates/channels/channel_list.html:16 templates/charts.html:14
 #: templates/tags/tag_overview.html:13
 msgid "Best rated"
 msgstr ""
 
-#: templates/about.html:40 templates/channels/channel_details.html:60
+#: templates/about.html:40 templates/channels/channel_details.html:63
 #: templates/charts.html:15
 msgid "Most rated"
 msgstr ""
@@ -315,46 +315,50 @@ msgstr ""
 msgid "Rate this channel"
 msgstr ""
 
-#: templates/channels/channel_details.html:40
+#: templates/channels/channel_details.html:34
+msgid "Refresh data for this channel"
+msgstr ""
+
+#: templates/channels/channel_details.html:43
 #: templates/channels/channel_list_partial.html:13
 #, python-format
 msgid "%(count)s subscribers"
 msgstr ""
 
-#: templates/channels/channel_details.html:44
+#: templates/channels/channel_details.html:47
 #: templates/videos/video_item.html:16
 #, python-format
 msgid "%(count)s views"
 msgstr ""
 
-#: templates/channels/channel_details.html:48
+#: templates/channels/channel_details.html:51
 #, python-format
 msgid "Created on %(date)s"
 msgstr ""
 
-#: templates/channels/channel_details.html:55
+#: templates/channels/channel_details.html:58
 #: templates/channels/channel_list.html:13 templates/charts.html:12
 msgid "Sort by:"
 msgstr ""
 
-#: templates/channels/channel_details.html:57 templates/charts.html:18
+#: templates/channels/channel_details.html:60 templates/charts.html:18
 msgid "Newest"
 msgstr ""
 
-#: templates/channels/channel_details.html:58 templates/charts.html:19
+#: templates/channels/channel_details.html:61 templates/charts.html:19
 msgid "Oldest"
 msgstr ""
 
-#: templates/channels/channel_details.html:61
+#: templates/channels/channel_details.html:64
 #: templates/channels/channel_list.html:19 templates/charts.html:16
 msgid "Most viewed"
 msgstr ""
 
-#: templates/channels/channel_details.html:62 templates/charts.html:17
+#: templates/channels/channel_details.html:65 templates/charts.html:17
 msgid "Least viewed"
 msgstr ""
 
-#: templates/channels/channel_details.html:72
+#: templates/channels/channel_details.html:75
 #: templates/videos/video_details.html:90
 msgid "Reviews"
 msgstr ""

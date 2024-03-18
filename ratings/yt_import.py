@@ -182,13 +182,14 @@ def create_video_snapshot_from_url(url: str) -> None:
     create_video_snapshot(video_id)
 
 
-def create_video_snapshot(video_id: str) -> None:
+def create_video_snapshot(video_id: str, skip_channel_snapshot: bool = False) -> None:
     """
     Will create a Video Snapshot. If the associated Channel doesn't exist, it will create it.
     """
     data = _get_video_data_class_from_id(video_id)
 
-    create_channel_snapshot(data.channel_id)
+    if not skip_channel_snapshot:
+        create_channel_snapshot(data.channel_id)
     channel = Channel.objects.get(yt_id=data.channel_id)
 
     if channel:
