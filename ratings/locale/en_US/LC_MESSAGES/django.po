@@ -816,7 +816,7 @@ msgstr ""
 #: templates/videos/video_viewing.html:30
 #, python-format
 msgid ""
-"<p>Find you viewing history on your <a class=\"font-bold\" "
+"<p>Find your viewing history on your <a class=\"font-bold\" "
 "href=%(url)s>profile page</a>.</p>"
 msgstr ""
 
