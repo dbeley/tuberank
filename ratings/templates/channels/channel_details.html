@@ -2,88 +2,122 @@
 {% load i18n %}
 {% load humanize %}
 {% load ratings_extras %}
-
-{% block title %}{{ channel.last_snapshot.name_en }} - TubeRank{% endblock title %}
-
+{% block title %}
+    {{ channel.last_snapshot.name_en }} - TubeRank
+{% endblock title %}
 {% block content %}
-<div class="mb-4 bg-gray-100 p-4 rounded-lg">
-  <div class="flex flex-wrap items-center justify-between py-4">
-    <a href="{% url 'channel_details' pk=channel.id %}" class="block mb-2">
-      <img src="{{ channel.last_snapshot.thumbnail_url }}" alt="{{ channel.last_snapshot.name_en }}" class="h-32 w-32 rounded">
-    </a>
-    <h1 class="text-3xl font-bold">{{ channel.last_snapshot.name_en }}</h1>
+    <div class="mb-4 bg-gray-100 p-4 rounded-lg">
+        <div class="flex flex-wrap items-center justify-between py-4">
+            <a href="{% url 'channel_details' pk=channel.id %}" class="block mb-2">
+                <img src="{{ channel.last_snapshot.thumbnail_url }}"
+                     alt="{{ channel.last_snapshot.name_en }}"
+                     class="h-32 w-32 rounded">
+            </a>
+            <h1 class="text-3xl font-bold">{{ channel.last_snapshot.name_en }}</h1>
+            {% if channel.ratings.exists %}
+                <div class="text-sm bg-gray-100 rounded-lg p-2">
+                    <div class="flex items-center">
+                        <svg aria-hidden="true"
+                             class="w-5 h-5 text-yellow-400"
+                             fill="currentColor"
+                             viewBox="0 0 20 20"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <title>Rating star</title>
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                            </path>
+                        </svg>
+                        <p class="ml-2 font-bold text-gray-900">{{ channel.average_rating|custom_rating }}</p>
+                        <span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full"></span>
+                        <p class="font-medium text-gray-900">
+                            {% blocktranslate with count=channel.ratings.count %}{{ count }} ratings{% endblocktranslate %}
+                        </p>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="flex justify-between">
+                <a href="{{ channel.url }}"
+                   class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
+                    {% translate "Watch on YouTube" %}
+                </a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'channel_rating' pk=channel.id %}"
+                       class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">
+                        {% translate "Rate this channel" %}
+                    </a>
+                    <a href="{% url 'channel_refresh' pk=channel.id %}"
+                       class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">
+                        {% translate "Refresh data for this channel" %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <p class="text-gray-600">{{ channel.last_snapshot.description | linebreaks }}</p>
+        <div class="flex items-center justify-between mt-4">
+            <div class="flex items-center">
+                <i class="fas fa-users mr-2"></i>
+                <p class="text-gray-600">
+                    {% blocktranslate with count=channel.last_snapshot.count_subscribers|intcomma %}{{ count }} subscribers{% endblocktranslate %}
+                </p>
+            </div>
+            <div class="flex items-center">
+                <i class="far fa-eye mr-2"></i>
+                <p class="text-gray-600">
+                    {% blocktranslate with count=channel.last_snapshot.count_views|intcomma %}{{ count }} views{% endblocktranslate %}
+                </p>
+            </div>
+            <div class="flex items-center">
+                <i class="far fa-calendar-alt mr-2"></i>
+                <p class="text-gray-600">
+                    {% blocktranslate with date=channel.date_creation %}Created on {{ date }}{% endblocktranslate %}
+                </p>
+            </div>
+        </div>
+    </div>
+    <form class="my-4" method="GET">
+        <div class="flex flex-wrap items-center justify-left mb-2">
+            <label class="block text-gray-700 font-bold mb-2 mr-2" for="sort-by">{% translate "Sort by:" %}</label>
+            <select name="sort_by"
+                    id="sort-by"
+                    class="bg-white border border-gray-400 rounded-lg py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    onchange="this.form.submit()">
+                <option value="newest"
+                        {% if request.GET.sort_by == "newest" %}selected{% endif %}>{% translate "Newest" %}</option>
+                <option value="oldest"
+                        {% if request.GET.sort_by == "oldest" %}selected{% endif %}>{% translate "Oldest" %}</option>
+                <option value="best_rated"
+                        {% if request.GET.sort_by == "best_rated" %}selected{% endif %}>
+                    {% translate "Best rated" %}
+                </option>
+                <option value="most_rated"
+                        {% if request.GET.sort_by == "most_rated" %}selected{% endif %}>
+                    {% translate "Most rated" %}
+                </option>
+                <option value="most_viewed"
+                        {% if request.GET.sort_by == "most_viewed" %}selected{% endif %}>
+                    {% translate "Most viewed" %}
+                </option>
+                <option value="least_viewed"
+                        {% if request.GET.sort_by == "least_viewed" %}selected{% endif %}>
+                    {% translate "Least viewed" %}
+                </option>
+            </select>
+        </div>
+    </form>
+    {% include "channels/channel_details_partial.html" with videos=videos %}
     {% if channel.ratings.exists %}
-    <div class="text-sm bg-gray-100 rounded-lg p-2">
-      <div class="flex items-center">
-        <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Rating star</title><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-        <p class="ml-2 font-bold text-gray-900">{{ channel.average_rating|custom_rating }}</p>
-        <span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full"></span>
-        <p class="font-medium text-gray-900">{% blocktranslate with count=channel.ratings.count %}{{ count }} ratings{% endblocktranslate %}</p>
-      </div>
-    </div>
+        <div class="mt-6">
+            <div class="justify-between">
+                <h2 class="text-2xl font-bold mb-4">{% translate "Reviews" %}</h2>
+            </div>
+            {% if channel.ratings.exists %}
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+                    {% for rating in channel.ratings.all %}
+                        {% if rating.review_title %}
+                            {% include "rating_partial.html" with rating=rating index=forloop.counter %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
     {% endif %}
-    <div class="flex justify-between">
-    <a href="{{ channel.url }}" class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
-      {% translate "Watch on YouTube" %}
-    </a>
-    {% if user.is_authenticated %}
-    <a href="{% url 'channel_rating' pk=channel.id %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">
-      {% translate "Rate this channel" %}
-    </a>
-    <a href="{% url 'channel_refresh' pk=channel.id %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">
-      {% translate "Refresh data for this channel" %}
-    </a>
-    {% endif %}
-  </div>
-  </div>
-  <p class="text-gray-600">{{ channel.last_snapshot.description | linebreaks }}</p>
-  <div class="flex items-center justify-between mt-4">
-    <div class="flex items-center">
-      <i class="fas fa-users mr-2"></i>
-      <p class="text-gray-600">{% blocktranslate with count=channel.last_snapshot.count_subscribers|intcomma %}{{ count }} subscribers{% endblocktranslate %}</p>
-    </div>
-    <div class="flex items-center">
-      <i class="far fa-eye mr-2"></i>
-      <p class="text-gray-600">{% blocktranslate with count=channel.last_snapshot.count_views|intcomma %}{{ count }} views{% endblocktranslate %}</p>
-    </div>
-    <div class="flex items-center">
-      <i class="far fa-calendar-alt mr-2"></i>
-      <p class="text-gray-600">{% blocktranslate with date=channel.date_creation %}Created on {{ date }}{% endblocktranslate %}</p>
-    </div>
-  </div>
-</div>
-
-<form class="my-4" method="GET">
-  <div class="flex flex-wrap items-center justify-left mb-2">
-    <label class="block text-gray-700 font-bold mb-2 mr-2" for="sort-by">{% translate "Sort by:" %}</label>
-    <select name="sort_by" id="sort-by" class="bg-white border border-gray-400 rounded-lg py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" onchange="this.form.submit()">
-      <option value="newest" {% if request.GET.sort_by == "newest" %}selected{% endif %}>{% translate "Newest" %}</option>
-      <option value="oldest" {% if request.GET.sort_by == "oldest" %}selected{% endif %}>{% translate "Oldest" %}</option>
-      <option value="best_rated" {% if request.GET.sort_by == "best_rated" %}selected{% endif %}>{% translate "Best rated" %}</option>
-      <option value="most_rated" {% if request.GET.sort_by == "most_rated" %}selected{% endif %}>{% translate "Most rated" %}</option>
-      <option value="most_viewed" {% if request.GET.sort_by == "most_viewed" %}selected{% endif %}>{% translate "Most viewed" %}</option>
-      <option value="least_viewed" {% if request.GET.sort_by == "least_viewed" %}selected{% endif %}>{% translate "Least viewed" %}</option>
-    </select>
-  </div>
-</form>
-
-{% include "channels/channel_details_partial.html" with videos=videos %}
-
-{% if channel.ratings.exists %}
-<div class="mt-6">
-  <div class="justify-between">
-    <h2 class="text-2xl font-bold mb-4">{% translate "Reviews" %}</h2>
-  </div>
-  {% if channel.ratings.exists %}
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-    {% for rating in channel.ratings.all %}
-      {% if rating.review_title %}
-      {% include "rating_partial.html" with rating=rating index=forloop.counter %}
-      {% endif %}
-    {% endfor %}
-  </div>
-  {% endif %}
-</div>
-{% endif %}
-
 {% endblock content %}

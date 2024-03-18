@@ -1,15 +1,19 @@
 {% load i18n %}
-
 <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col justify-between">
     <a href="{% url 'channel_details' pk=channel.id %}">
-        <img src="{{ channel.thumbnail_url }}" alt="{{ channel.name }}" class="h-48 w-full object-cover">
+        <img src="{{ channel.thumbnail_url }}"
+             alt="{{ channel.name }}"
+             class="h-48 w-full object-cover">
     </a>
     <div class="p-4">
         <a href="{% url 'channel_details' pk=channel.id %}">
             <h3 class="font-semibold text-gray-900 mb-2 text-lg">{{ channel.name }}</h3>
         </a>
         <a href="{% url 'channel_details' pk=channel.id %}">
-            <p class="text-gray-700 text-md mb-2">{{ video.channel.last_snapshot.name_en }}</p></a>
-        <p class="text-gray-700 text-sm mb-2">{% blocktranslate with count=channel.count %}{{ count }} viewings{% endblocktranslate %}</p>
+            <p class="text-gray-700 text-md mb-2">{{ video.channel.last_snapshot.name_en }}</p>
+        </a>
+        <p class="text-gray-700 text-sm mb-2">
+            {% blocktranslate with count=channel.count %}{{ count }} viewings{% endblocktranslate %}
+        </p>
     </div>
 </div>

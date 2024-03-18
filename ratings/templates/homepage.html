@@ -1,74 +1,70 @@
 {% extends "base.html" %}
 {% load humanize %}
 {% load i18n %}
-
-{% block title %}{% translate "Home" %} - TubeRank{% endblock title %}
-
+{% block title %}
+    {% translate "Home" %} - TubeRank
+{% endblock title %}
 {% block content %}
-<div class="container mx-auto py-2">
-    <div class="flex flex-col items-center">
-        <h1 class="text-4xl font-bold mb-8">{% translate "Welcome to TubeRank!" %}</h1>
-        <p class="text-xl mb-4">{% translate "homepage.description" %}</p>
-    </div>
-
-    <h2 class="text-2xl font-bold mb-4">{% translate "Last indexed videos" %}</h2>
-
-    {% include "homepage_partial.html" with latest_videos=latest_videos %}
-
-    <h2 class="text-2xl font-bold mb-4">{% translate "Best videos" %}</h2>
-
-    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mb-8">
-        {% for video in best_videos %}
-        {% include "videos/video_item.html" %}
-        {% endfor %}
-    </div>
-
-</div>
-
-<div class="container mx-auto flex flex-col items-center">
-    <div class="grid grid-cols-3 gap-8 mb-8">
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div class="h-40 bg-gray-300 flex items-center justify-center">
-                <p class="text-4xl font-bold text-gray-800"> {{ number_of_users }} </p>
-                <p class="text-lg text-gray-500 ml-2"> {% translate "users" %} </p>
-            </div>
-            <div class="px-4 py-2">
-                <h2 class="text-xl font-bold mb-2">{% translate "Number of users" %}</h2>
-                <p class="text-gray-700">{% blocktranslate %}{{ number_of_users }} users have signed up for TubeRank{% endblocktranslate %}</p>
-            </div>
+    <div class="container mx-auto py-2">
+        <div class="flex flex-col items-center">
+            <h1 class="text-4xl font-bold mb-8">{% translate "Welcome to TubeRank!" %}</h1>
+            <p class="text-xl mb-4">{% translate "homepage.description" %}</p>
         </div>
-
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div class="h-40 bg-gray-300 flex items-center justify-center">
-                <p class="text-4xl font-bold text-gray-800"> {{ number_of_channels }} </p>
-                <p class="text-lg text-gray-500 ml-2"> {% translate "channels" %} </p>
-            </div>
-            <div class="px-4 py-2">
-                <h2 class="text-xl font-bold mb-2">{% translate "Number of channels" %}</h2>
-                <p class="text-gray-700">{% blocktranslate %}TubeRank has catalogued {{ number_of_channels }} channels{% endblocktranslate %}</p>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div class="h-40 bg-gray-300 flex items-center justify-center">
-                <p class="text-4xl font-bold text-gray-800"> {{ number_of_videos }} </p>
-                <p class="text-lg text-gray-500 ml-2"> {% translate "videos" %} </p>
-            </div>
-            <div class="px-4 py-2">
-                <h2 class="text-xl font-bold mb-2">{% translate "Number of videos" %}</h2>
-                <p class="text-gray-700">{% blocktranslate %}TubeRank has catalogued {{ number_of_videos }} videos{% endblocktranslate %}</p>
-            </div>
+        <h2 class="text-2xl font-bold mb-4">{% translate "Last indexed videos" %}</h2>
+        {% include "homepage_partial.html" with latest_videos=latest_videos %}
+        <h2 class="text-2xl font-bold mb-4">{% translate "Best videos" %}</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mb-8">
+            {% for video in best_videos %}
+                {% include "videos/video_item.html" %}
+            {% endfor %}
         </div>
     </div>
-</div>
-
-<div class="container mx-auto">
-    <h2 class="text-2xl font-bold mb-4">{% translate "Popular Videos on TubeRank" %}</h2>
-
-    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
-        {% for video in popular_videos %}
-        {% include "videos/video_item.html" %}
-        {% endfor %}
+    <div class="container mx-auto flex flex-col items-center">
+        <div class="grid grid-cols-3 gap-8 mb-8">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="h-40 bg-gray-300 flex items-center justify-center">
+                    <p class="text-4xl font-bold text-gray-800">{{ number_of_users }}</p>
+                    <p class="text-lg text-gray-500 ml-2">{% translate "users" %}</p>
+                </div>
+                <div class="px-4 py-2">
+                    <h2 class="text-xl font-bold mb-2">{% translate "Number of users" %}</h2>
+                    <p class="text-gray-700">
+                        {% blocktranslate %}{{ number_of_users }} users have signed up for TubeRank{% endblocktranslate %}
+                    </p>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="h-40 bg-gray-300 flex items-center justify-center">
+                    <p class="text-4xl font-bold text-gray-800">{{ number_of_channels }}</p>
+                    <p class="text-lg text-gray-500 ml-2">{% translate "channels" %}</p>
+                </div>
+                <div class="px-4 py-2">
+                    <h2 class="text-xl font-bold mb-2">{% translate "Number of channels" %}</h2>
+                    <p class="text-gray-700">
+                        {% blocktranslate %}TubeRank has catalogued {{ number_of_channels }} channels{% endblocktranslate %}
+                    </p>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="h-40 bg-gray-300 flex items-center justify-center">
+                    <p class="text-4xl font-bold text-gray-800">{{ number_of_videos }}</p>
+                    <p class="text-lg text-gray-500 ml-2">{% translate "videos" %}</p>
+                </div>
+                <div class="px-4 py-2">
+                    <h2 class="text-xl font-bold mb-2">{% translate "Number of videos" %}</h2>
+                    <p class="text-gray-700">
+                        {% blocktranslate %}TubeRank has catalogued {{ number_of_videos }} videos{% endblocktranslate %}
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+    <div class="container mx-auto">
+        <h2 class="text-2xl font-bold mb-4">{% translate "Popular Videos on TubeRank" %}</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
+            {% for video in popular_videos %}
+                {% include "videos/video_item.html" %}
+            {% endfor %}
+        </div>
+    </div>
 {% endblock content %}

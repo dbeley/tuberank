@@ -1,37 +1,38 @@
 {% load i18n %}
 {% load ratings_extras %}
-
-<div class="bg-white rounded-lg shadow-lg py-4 px-4" id="viewings" hx-swap="outerHTML" hx-target="#viewings">
+<div class="bg-white rounded-lg shadow-lg py-4 px-4"
+     id="viewings"
+     hx-swap="outerHTML"
+     hx-target="#viewings">
     <h2 class="text-2xl font-bold mb-4">{% translate "Recently Watched Videos" %}</h2>
     <ul class="space-y-4">
         {% for viewing in viewings %}
-        <li class="flex items-center space-x-4">
-            <div class="flex-shrink-0">
-                <img src="{{ viewing.video.last_snapshot.thumbnail_url }}"
-                     alt="{{ viewing.video.last_snapshot.title_en }}"
-                     class="h-20 w-36 object-cover rounded-lg shadow-md">
-            </div>
-            <div class="flex-grow">
-                <a href="{% url 'video_details' pk=viewing.video.id %}">
-                    <h3 class="text-lg font-bold">{{ viewing.video.last_snapshot.title_en }}</h3>
-                </a>
-                <p class="text-gray-600">{{ viewing.video.channel.last_snapshot.name_en }} &bull; {{ viewing.video.last_snapshot.duration|duration }}</p>
-            </div>
-            <div class="flex-shrink-0">
-                <p class="text-gray-500 text-sm">{{ viewing.date_creation }}</p>
-            </div>
-        </li>
+            <li class="flex items-center space-x-4">
+                <div class="flex-shrink-0">
+                    <img src="{{ viewing.video.last_snapshot.thumbnail_url }}"
+                         alt="{{ viewing.video.last_snapshot.title_en }}"
+                         class="h-20 w-36 object-cover rounded-lg shadow-md">
+                </div>
+                <div class="flex-grow">
+                    <a href="{% url 'video_details' pk=viewing.video.id %}">
+                        <h3 class="text-lg font-bold">{{ viewing.video.last_snapshot.title_en }}</h3>
+                    </a>
+                    <p class="text-gray-600">
+                        {{ viewing.video.channel.last_snapshot.name_en }} &bull; {{ viewing.video.last_snapshot.duration|duration }}
+                    </p>
+                </div>
+                <div class="flex-shrink-0">
+                    <p class="text-gray-500 text-sm">{{ viewing.date_creation }}</p>
+                </div>
+            </li>
         {% endfor %}
     </ul>
-
     {% if viewings.has_previous %}
-    {% urlparams page=viewings.previous_page_number as previous_url_params %}
+        {% urlparams page=viewings.previous_page_number as previous_url_params %}
     {% endif %}
-
     {% if viewings.has_next %}
-    {% urlparams page=viewings.next_page_number as next_url_params %}
+        {% urlparams page=viewings.next_page_number as next_url_params %}
     {% endif %}
-
     {% url 'profile' username=user.username as profile_url %}
     {% include "htmx-paginator.html" with page=viewings url=profile_url previous_url_params=previous_url_params next_url_params=next_url_params %}
 </div>

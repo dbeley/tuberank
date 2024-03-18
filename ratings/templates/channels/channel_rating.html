@@ -1,44 +1,61 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load ratings_extras %}
-
-{% block title %}{% translate "Rate" %} {{ channel.last_snapshot.name_en }} - TubeRank{% endblock title %}
-
+{% block title %}
+    {% translate "Rate" %} {{ channel.last_snapshot.name_en }} - TubeRank
+{% endblock title %}
 {% block content %}
-
-<div class="flex items-center w-full mb-8">
-  <a href="{% url 'channel_details' pk=channel.id %}" class="mr-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-    {% translate "&#8592; Return to channel" %}
-  </a>
-</div>
-<h1 class="text-4xl font-bold mb-8">{% translate "Write a review" %} - {{ channel.last_snapshot.name_en }}</h1>
-<a href="{% url 'channel_details' pk=channel.id %}" class="block mb-2">
-  <img src="{{ channel.last_snapshot.thumbnail_url }}" alt="{{ channel.last_snapshot.name_en }}" class="h-32 w-32 rounded">
-</a>
-<form action="{% url 'channel_rating' pk=channel.pk %}" method="post">
-  {% csrf_token %}
-  <div class="mb-2 mt-2">
-    <label class="block text-gray-700 font-bold mb-2" for="rating">
-      {% translate "Rating (0-5)" %}
-    </label>
-    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="rating" type="number" name="rating" value="{{ serializer.data.rating }}" min="0" max="5" step="0.5" placeholder="{% blocktranslate %}Enter your rating{% endblocktranslate %}" required>
-  </div>
-  <div class="mb-2">
-    <label class="block text-gray-700 font-bold mb-2" for="review_title">
-      {% translate "Review title (optional)" %}
-    </label>
-    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="review_title" type="text" name="review_title" value="{{ serializer.data.review_title }}" placeholder="{% blocktranslate %}Enter the title of your review{% endblocktranslate %}" maxlength="100">
-  </div>
-  <div class="mb-2">
-    <label class="block text-gray-700 font-bold mb-2" for="review_body">
-      {% translate "Review (optional)" %}
-    </label>
-    <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="review_body" name="review_body" rows="5" placeholder="{% blocktranslate %}Enter your review{% endblocktranslate %}" maxlength="5000">{{ serializer.data.review_body }}</textarea>
-  </div>
-  <div class="flex justify-start">
-    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-      {% translate "Submit" %}
-    </button>
-  </div>
-</form>
+    <div class="flex items-center w-full mb-8">
+        <a href="{% url 'channel_details' pk=channel.id %}"
+           class="mr-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+            {% translate "&#8592; Return to channel" %}
+        </a>
+    </div>
+    <h1 class="text-4xl font-bold mb-8">{% translate "Write a review" %} - {{ channel.last_snapshot.name_en }}</h1>
+    <a href="{% url 'channel_details' pk=channel.id %}" class="block mb-2">
+        <img src="{{ channel.last_snapshot.thumbnail_url }}"
+             alt="{{ channel.last_snapshot.name_en }}"
+             class="h-32 w-32 rounded">
+    </a>
+    <form action="{% url 'channel_rating' pk=channel.pk %}" method="post">
+        {% csrf_token %}
+        <div class="mb-2 mt-2">
+            <label class="block text-gray-700 font-bold mb-2" for="rating">{% translate "Rating (0-5)" %}</label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   id="rating"
+                   type="number"
+                   name="rating"
+                   value="{{ serializer.data.rating }}"
+                   min="0"
+                   max="5"
+                   step="0.5"
+                   placeholder="{% blocktranslate %}Enter your rating{% endblocktranslate %}"
+                   required>
+        </div>
+        <div class="mb-2">
+            <label class="block text-gray-700 font-bold mb-2" for="review_title">{% translate "Review title (optional)" %}</label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   id="review_title"
+                   type="text"
+                   name="review_title"
+                   value="{{ serializer.data.review_title }}"
+                   placeholder="{% blocktranslate %}Enter the title of your review{% endblocktranslate %}"
+                   maxlength="100">
+        </div>
+        <div class="mb-2">
+            <label class="block text-gray-700 font-bold mb-2" for="review_body">{% translate "Review (optional)" %}</label>
+            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      id="review_body"
+                      name="review_body"
+                      rows="5"
+                      placeholder="{% blocktranslate %}Enter your review{% endblocktranslate %}"
+                      maxlength="5000">{{ serializer.data.review_body }}</textarea>
+        </div>
+        <div class="flex justify-start">
+            <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                {% translate "Submit" %}
+            </button>
+        </div>
+    </form>
 {% endblock content %}

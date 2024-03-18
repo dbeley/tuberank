@@ -1,5 +1,5 @@
 <div class="sortable flex flex-col gap-8">
-  {% for item in list.items.all|dictsort:"rank" %}
-  {% include "lists/list_item.html" with item=item video=item.video %}
-  {% endfor %}
+    {% for item in list.items.all|dictsort:"rank" %}
+        {% include "lists/list_item.html" with item=item video=item.video %}
+    {% endfor %}
 </div>

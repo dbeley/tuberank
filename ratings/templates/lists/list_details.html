@@ -2,43 +2,46 @@
 {% load humanize %}
 {% load i18n %}
 {% load ratings_extras %}
-
-{% block title %}{{ list.name }} - TubeRank{% endblock title %}
-
+{% block title %}
+    {{ list.name }} - TubeRank
+{% endblock title %}
 {% block content %}
-<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 bg-gray-100 rounded-lg py-8">
-  <div class="flex justify-right">
-    <h1 class="text-3xl font-bold mb-6 w-full">{{ list.name }}</h1>
-  </div>
-  <a href="{% url 'profile' username=list.user.username %}">
-  <p class="text-lg mb-6">{% blocktranslate with username=list.user.username %}By: <span class="font-bold">{{ username }}</span>{% endblocktranslate %}</p>
-  </a>
-  <div class="flex items-center gap-4 my-4">
-    <div class="gap-2 mr-auto">
-      <p class="text-lg">{{ list.description }}</p>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 bg-gray-100 rounded-lg py-8">
+        <div class="flex justify-right">
+            <h1 class="text-3xl font-bold mb-6 w-full">{{ list.name }}</h1>
+        </div>
+        <a href="{% url 'profile' username=list.user.username %}">
+            <p class="text-lg mb-6">
+                {% blocktranslate with username=list.user.username %}By: <span class="font-bold">{{ username }}</span>{% endblocktranslate %}
+            </p>
+        </a>
+        <div class="flex items-center gap-4 my-4">
+            <div class="gap-2 mr-auto">
+                <p class="text-lg">{{ list.description }}</p>
+            </div>
+            {% if request.user == list.user %}
+                {% include "lists/description_update_modal.html" with item=list %}
+                <a href="{% url 'list_reorder' pk=list.id %}"
+                   class="mr-1 bg-blue-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md">{% translate "Reorder" %}</a>
+                <button data-modal-target="popup-edit-modal"
+                        data-modal-toggle="popup-edit-modal"
+                        class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-md font-medium"
+                        type="button">{% translate "Edit" %}</button>
+                <button data-modal-target="popup-delete-modal"
+                        data-modal-toggle="popup-delete-modal"
+                        class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md"
+                        type="button">{% translate "Delete" %}</button>
+                {% url 'list_delete' pk=list.id as confirm_list_delete_url %}
+                {% include "lists/list_delete_modal.html" with list=list url=confirm_list_delete_url %}
+            {% endif %}
+        </div>
+        {% if list.videos.exists %}
+            {% include "lists/list_details_partial.html" with list=list sortable=False %}
+        {% else %}
+            <p>{% translate "No videos in this list yet." %}</p>
+        {% endif %}
     </div>
-    {% if request.user == list.user %}
-    {% include "lists/description_update_modal.html" with item=list %}
-    <a href="{% url 'list_reorder' pk=list.id %}" class="mr-1 bg-blue-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md">{% translate "Reorder" %}</a>
-    <button data-modal-target="popup-edit-modal" data-modal-toggle="popup-edit-modal" class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-md font-medium" type="button">
-      {% translate "Edit" %}
-    </button>
-    <button data-modal-target="popup-delete-modal" data-modal-toggle="popup-delete-modal" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md" type="button">
-      {% translate "Delete" %}
-    </button>
-    {% url 'list_delete' pk=list.id as confirm_list_delete_url %}
-    {% include "lists/list_delete_modal.html" with list=list url=confirm_list_delete_url %}
-    {% endif %}
-  </div>
-
-    {% if list.videos.exists %}
-      {% include "lists/list_details_partial.html" with list=list sortable=False %}
-    {% else %}
-    <p>{% translate "No videos in this list yet." %}</p>
-    {% endif %}
-</div>
 {% endblock content %}
-
 {% block scripts %}
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 {% endblock scripts %}

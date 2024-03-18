@@ -2,37 +2,40 @@
 {% load humanize %}
 {% load i18n %}
 {% load ratings_extras %}
-
-{% block title %}{{ list.name }} - TubeRank{% endblock title %}
-
+{% block title %}
+    {{ list.name }} - TubeRank
+{% endblock title %}
 {% block content %}
-<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 bg-gray-100 rounded-lg py-8">
-  <div class="flex justify-right">
-    <h1 class="text-3xl font-bold mb-6 w-full">{{ list.name }}</h1>
-  </div>
-  <a href="{% url 'profile' username=list.user.username %}">
-  <p class="text-lg mb-6">{% blocktranslate with username=list.user.username %}By: <span class="font-bold">{{ username }}</span>{% endblocktranslate %}</p>
-  </a>
-  <div class="flex items-center gap-4 my-4">
-    <div class="gap-2 mr-auto">
-      <p class="text-lg">{{ list.description }}</p>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 bg-gray-100 rounded-lg py-8">
+        <div class="flex justify-right">
+            <h1 class="text-3xl font-bold mb-6 w-full">{{ list.name }}</h1>
+        </div>
+        <a href="{% url 'profile' username=list.user.username %}">
+            <p class="text-lg mb-6">
+                {% blocktranslate with username=list.user.username %}By: <span class="font-bold">{{ username }}</span>{% endblocktranslate %}
+            </p>
+        </a>
+        <div class="flex items-center gap-4 my-4">
+            <div class="gap-2 mr-auto">
+                <p class="text-lg">{{ list.description }}</p>
+            </div>
+            <a href="{% url 'list_details' pk=list.id %}"
+               class="mr-1 bg-blue-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md">{% translate "Go Back" %}</a>
+        </div>
+        {% if list.videos.exists %}
+            <form id="reorderForm"
+                  hx-post="{% url 'list_reorder' pk=list.id %}"
+                  hx-trigger="end">
+                {% include "lists/list_details_partial.html" with list=list sortable=True %}
+            </form>
+        {% else %}
+            <p>{% translate "No videos in this list yet." %}</p>
+        {% endif %}
     </div>
-    <a href="{% url 'list_details' pk=list.id %}" class="mr-1 bg-blue-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-md">{% translate "Go Back" %}</a>
-  </div>
-
-    {% if list.videos.exists %}
-    <form id="reorderForm" hx-post="{% url 'list_reorder' pk=list.id %}" hx-trigger="end">
-      {% include "lists/list_details_partial.html" with list=list sortable=True %}
-    </form>
-    {% else %}
-    <p>{% translate "No videos in this list yet." %}</p>
-    {% endif %}
-</div>
 {% endblock content %}
-
 {% block scripts %}
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-<script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script>
   htmx.onLoad(function(content) {
       var sortables = document.querySelectorAll(".sortable");
       for (var i = 0; i < sortables.length; i++) {
@@ -44,5 +47,5 @@
         });
       }
   })
-</script>
+    </script>
 {% endblock scripts %}
