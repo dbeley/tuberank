@@ -6,6 +6,8 @@
                class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-l">
                 {% translate "Previous" %}
             </a>
+            {% else %}
+            {# djlint:off H020 #} <a></a> {# djlint:on #}
             {% endif %}
             <div class="text-gray-600">
                 {% blocktranslate with page_number=page.number total_page_number=page.paginator.num_pages %}Page {{ page_number }} of {{ total_page_number }}{% endblocktranslate %}
@@ -15,6 +17,8 @@
                class="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-r">
                 {% translate "Next" %}
             </a>
+            {% else %}
+            {# djlint:off H020 #} <a></a> {# djlint:on #}
             {% endif %}
         </nav>
     </div>

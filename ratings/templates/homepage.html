@@ -13,11 +13,7 @@
 
     <h2 class="text-2xl font-bold mb-4">{% translate "Last indexed videos" %}</h2>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mb-4">
-        {% for video in latest_videos %}
-        {% include "videos/video_item.html" %}
-        {% endfor %}
-    </div>
+    {% include "homepage_partial.html" with latest_videos=latest_videos %}
 
     <h2 class="text-2xl font-bold mb-4">{% translate "Best videos" %}</h2>
 

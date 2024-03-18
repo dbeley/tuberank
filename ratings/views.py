@@ -29,7 +29,16 @@ class HomepageView(APIView):
     template_name = "homepage.html"
 
     def get(self, request):
-        latest_videos = Video.objects.order_by("-id")[0:4]
+        latest_videos = Video.objects.order_by("-id")[0:20]
+        paginator = Paginator(latest_videos, 4)
+        latest_videos = paginator.get_page(request.GET.get("page", 1))
+        if request.META.get("HTTP_HX_REQUEST"):
+            return Response(
+                {
+                    "latest_videos": latest_videos,
+                },
+                template_name="homepage_partial.html",
+            )
         videos = Video.objects.annotate(
             avg_rating=Avg("ratings__rating"), num_ratings=Count("ratings")
         )
