@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-18 23:30+0100\n"
+"POT-Creation-Date: 2024-03-19 22:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -110,9 +110,11 @@ msgstr ""
 msgid ""
 "Therefore, videos have to be added to the index using one of two methods: "
 msgstr ""
-"Ainsi, les vidéos doivent être indexées manuellement en utilisant une de ces deux méthodes :"
+"Ainsi, les vidéos doivent être indexées manuellement en utilisant une de ces "
+"deux méthodes :"
 
 #: templates/about.html:37
+#, python-format
 msgid "by using the <a href=\"%(import_video_url)s\">import video</a> page."
 msgstr ""
 "en utilisant la page <a href=\"%(import_video_url)s\">d'import de vidéos</a>."
@@ -121,7 +123,8 @@ msgstr ""
 msgid ""
 "by using <a href=\"https://github.com/dbeley/tuberank/raw/main/scripts/"
 "tuberank_now_watching.user.js\">this userscript</a>."
-msgstr "en utilisant <a href=\"https://github.com/dbeley/tuberank/raw/main/scripts/"
+msgstr ""
+"en utilisant <a href=\"https://github.com/dbeley/tuberank/raw/main/scripts/"
 "tuberank_now_watching.user.js\">ce userscript</a>."
 
 #: templates/about.html:44
@@ -333,7 +336,7 @@ msgstr "Anglais"
 msgid "French"
 msgstr "Français"
 
-#: templates/channels/channel_details.html:32 templates/lists/list_item.html:49
+#: templates/channels/channel_details.html:32
 #: templates/videos/video_details.html:92 templates/videos/video_item.html:40
 #, python-format
 msgid "%(count)s ratings"
@@ -637,6 +640,12 @@ msgstr "Cette liste est vide."
 #: templates/lists/list_details_sortable.html:23
 msgid "Go Back"
 msgstr "Retour"
+
+#: templates/lists/list_item.html:49
+#, fuzzy, python-format
+#| msgid "%(count)s ratings"
+msgid "%(count)s rating(s)"
+msgstr "%(count)s note(s)"
 
 #: templates/lists/lists.html:10
 msgid "My Lists"

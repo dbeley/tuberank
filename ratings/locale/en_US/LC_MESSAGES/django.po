@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-18 23:30+0100\n"
+"POT-Creation-Date: 2024-03-19 22:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -303,7 +303,7 @@ msgstr ""
 msgid "French"
 msgstr ""
 
-#: templates/channels/channel_details.html:32 templates/lists/list_item.html:49
+#: templates/channels/channel_details.html:32
 #: templates/videos/video_details.html:92 templates/videos/video_item.html:40
 #, python-format
 msgid "%(count)s ratings"
@@ -603,6 +603,11 @@ msgstr ""
 
 #: templates/lists/list_details_sortable.html:23
 msgid "Go Back"
+msgstr ""
+
+#: templates/lists/list_item.html:49
+#, python-format
+msgid "%(count)s rating(s)"
 msgstr ""
 
 #: templates/lists/lists.html:10
