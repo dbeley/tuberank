@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-19 22:16+0100\n"
+"POT-Creation-Date: 2024-03-19 22:19+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -114,8 +114,9 @@ msgstr ""
 "deux méthodes :"
 
 #: templates/about.html:37
-#, python-format
-msgid "by using the <a href=\"%(import_video_url)s\">import video</a> page."
+#, fuzzy, python-format
+#| msgid "by using the <a href=\"%(import_video_url)s\">import video</a> page."
+msgid "by using the <a href=\"%(import_video_url)s\">import videos</a> page."
 msgstr ""
 "en utilisant la page <a href=\"%(import_video_url)s\">d'import de vidéos</a>."
 
@@ -321,8 +322,10 @@ msgstr "Chaînes"
 
 #: templates/base.html:173 templates/import_video.html:4
 #: templates/import_video.html:9
-msgid "Import Video"
-msgstr "Importer une vidéo"
+#, fuzzy
+#| msgid "Import Video"
+msgid "Import Videos"
+msgstr "Importer des vidéos"
 
 #: templates/base.html:199
 msgid "Source Code"
