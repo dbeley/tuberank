@@ -53,7 +53,8 @@ class HomepageView(APIView):
             Video.objects.filter(ratings__date_creation__gte=two_weeks_ago)
             .annotate(avg_rating=Avg("ratings__rating"), num_ratings=Count("ratings"))
             .order_by("-avg_rating", "-num_ratings")
-        )
+            .filter(avg_rating__isnull=False, avg_rating__gt=3)
+        )[0:8]
         popular_videos = videos.order_by("-num_ratings")[0:4]
         number_of_users = User.objects.count()
         number_of_channels = Channel.objects.count()
