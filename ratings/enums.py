@@ -116,6 +116,7 @@ class SortingChoices(Enum):
     NAME_ASC = "name_asc"
     NAME_DESC = "name_desc"
     LATEST_INDEXED = "latest_indexed"
+    MOST_VIDEOS_INDEXED = "most_videos_indexed"
 
     @staticmethod
     def choices():

@@ -36,29 +36,33 @@ class ChannelDetailsView(APIView):
 
     def get(self, request, pk):
         channel = get_object_or_404(Channel, pk=pk)
-        videos = Video.objects.filter(channel=channel).annotate(
-            num_ratings=Count("ratings"),
-            avg_rating=Avg("ratings__rating"),
-            count_views=Max("snapshots__count_views"),
+        videos = (
+            Video.objects.filter(channel=channel)
+            .annotate(
+                num_ratings=Count("ratings"),
+                avg_rating=Avg("ratings__rating"),
+                count_views=Max("snapshots__count_views"),
+            )
+            .order_by("-date_publication")
         )
         if sort_method := request.GET.get("sort_by"):
             if sort_method not in enums.SortingChoices.choices():
                 return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
-            if sort_method == enums.SortingChoices.OLDEST.value:
-                videos = videos.order_by("date_publication")
-            elif sort_method == enums.SortingChoices.MOST_VIEWED.value:
-                videos = videos.order_by("-count_views")
-            elif sort_method == enums.SortingChoices.LEAST_VIEWED.value:
-                videos = videos.order_by("count_views")
-            elif sort_method == enums.SortingChoices.MOST_RATED.value:
-                videos = videos.order_by("-num_ratings")
-            elif sort_method == enums.SortingChoices.BEST_RATED.value:
-                videos = videos.order_by("-avg_rating")
-            elif sort_method == enums.SortingChoices.NEWEST.value:
-                videos = videos.order_by("-date_publication")
-            else:
-                # default sort
-                videos = videos.order_by("-date_publication")
+            match sort_method:
+                case enums.SortingChoices.OLDEST.value:
+                    videos = videos.order_by("date_publication")
+                case enums.SortingChoices.MOST_VIEWED.value:
+                    videos = videos.order_by("-count_views")
+                case enums.SortingChoices.LEAST_VIEWED.value:
+                    videos = videos.order_by("count_views")
+                case enums.SortingChoices.MOST_RATED.value:
+                    videos = videos.order_by("-num_ratings")
+                case enums.SortingChoices.BEST_RATED.value:
+                    videos = videos.filter(avg_rating__isnull=False).order_by(
+                        "-avg_rating"
+                    )
+                case enums.SortingChoices.NEWEST.value:
+                    videos = videos.order_by("-date_publication")
         else:
             videos = videos.order_by("-date_publication")
         paginator = Paginator(videos, 8)
@@ -85,28 +89,29 @@ class ChannelListView(APIView):
             name=F("snapshots__name_en"),
             count_subscribers=Max("snapshots__count_subscribers"),
             count_views=Max("snapshots__count_views"),
+            count_videos_indexed=Count("videos"),
             avg_rating=Avg(F("ratings__rating")),
-        )
+        ).order_by("-count_subscribers")
         if sort_method := request.GET.get("sort_by"):
             if sort_method not in enums.SortingChoices.choices():
                 return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
-            if sort_method == enums.SortingChoices.NAME_ASC.value:
-                channels = channels.order_by("name")
-            elif sort_method == enums.SortingChoices.NAME_DESC.value:
-                channels = channels.order_by("-name")
-            elif sort_method == enums.SortingChoices.MOST_VIEWED.value:
-                channels = channels.order_by("-count_views")
-            elif sort_method == enums.SortingChoices.LATEST_INDEXED.value:
-                channels = channels.order_by("-id")
-            elif sort_method == enums.SortingChoices.BEST_RATED.value:
-                channels = channels.order_by("-avg_rating")
-            elif sort_method == enums.SortingChoices.MOST_SUBSCRIBERS.value:
-                channels = channels.order_by("-count_subscribers")
-            else:
-                # default sort
-                channels = channels.order_by("-count_subscribers")
-        else:
-            channels = channels.order_by("-count_subscribers")
+            match sort_method:
+                case enums.SortingChoices.NAME_ASC.value:
+                    channels = channels.order_by("name")
+                case enums.SortingChoices.NAME_DESC.value:
+                    channels = channels.order_by("-name")
+                case enums.SortingChoices.MOST_VIEWED.value:
+                    channels = channels.order_by("-count_views")
+                case enums.SortingChoices.LATEST_INDEXED.value:
+                    channels = channels.order_by("-id")
+                case enums.SortingChoices.BEST_RATED.value:
+                    channels = channels.filter(avg_rating__isnull=False).order_by(
+                        "-avg_rating"
+                    )
+                case enums.SortingChoices.MOST_SUBSCRIBERS.value:
+                    channels = channels.order_by("-count_subscribers")
+                case enums.SortingChoices.MOST_VIDEOS_INDEXED.value:
+                    channels = channels.order_by("-count_videos_indexed")
         paginator = Paginator(channels, 12)
         page = paginator.get_page(request.GET.get("page", 1))
         if request.META.get("HTTP_HX_REQUEST"):

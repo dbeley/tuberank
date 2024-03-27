@@ -39,6 +39,10 @@
                         {% if request.GET.sort_by == "latest_indexed" %}selected{% endif %}>
                     {% translate "Last indexed" %}
                 </option>
+                <option value="most_videos_indexed"
+                        {% if request.GET.sort_by == "most_videos_indexed" %}selected{% endif %}>
+                    {% translate "Most videos indexed" %}
+                </option>
             </select>
         </div>
     </form>
