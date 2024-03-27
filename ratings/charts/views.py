@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from ratings import enums
 from ratings.models import UserTag
 from ratings.models.videos import Video
+from ratings.tags.serializers import UserTagSerializer
 from ratings.tags.views import get_active_tags
 from ratings.videos.serializers import VideoSerializer
 
@@ -63,7 +64,7 @@ class ChartsView(APIView):
             {
                 "videos": VideoSerializer(videos, many=True).data,
                 "videos_page": videos,
-                "tags": tags,
+                "tags": UserTagSerializer(tags, many=True).data,
                 "selected_sort_method": sort_method,
                 "selected_tag": selected_tag,
             }

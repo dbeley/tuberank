@@ -36,6 +36,17 @@ class ChannelSerializer(serializers.ModelSerializer):
         ]
 
 
+class ChannelSerializerWithRatings(ChannelSerializer):
+    ratings = serializers.SerializerMethodField()
+
+    def get_ratings(self, obj: Channel):
+        return ChannelRatingSerializer(obj.ratings, many=True).data
+
+    class Meta(ChannelSerializer.Meta):
+        model = Channel
+        fields = ChannelSerializer.Meta.fields + ["ratings"]
+
+
 class ChannelSnapshotSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChannelSnapshot

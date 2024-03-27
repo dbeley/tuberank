@@ -12,9 +12,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from ratings import enums
-from ratings.channels.serializers import ChannelRatingSerializer, ChannelSerializer
+from ratings.channels.serializers import (
+    ChannelRatingSerializer,
+    ChannelSerializer,
+    ChannelSerializerWithRatings,
+)
 from ratings.models.channels import Channel, ChannelRating, ChannelSnapshot
 from ratings.models.videos import Video
+from ratings.videos.serializers import VideoSerializer
 from ratings.yt_import import create_video_snapshot
 
 
@@ -66,16 +71,20 @@ class ChannelDetailsView(APIView):
         else:
             videos = videos.order_by("-date_publication")
         paginator = Paginator(videos, 8)
-        page = paginator.get_page(request.GET.get("page", 1))
+        videos = paginator.get_page(request.GET.get("page", 1))
         if request.META.get("HTTP_HX_REQUEST"):
             return Response(
-                {"videos": page},
+                {
+                    "videos": VideoSerializer(videos, many=True).data,
+                    "videos_page": videos,
+                },
                 template_name="channels/channel_details_partial.html",
             )
         return Response(
             {
-                "channel": channel,
-                "videos": page,
+                "channel": ChannelSerializerWithRatings(channel).data,
+                "videos": VideoSerializer(videos, many=True).data,
+                "videos_page": videos,
             }
         )
 

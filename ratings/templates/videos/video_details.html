@@ -103,13 +103,13 @@
                 </table>
             </div>
         </div>
-        {% if video.ratings.exists %}
+        {% if video.ratings %}
             <div class="mt-6">
                 <h2 class="text-2xl font-bold mb-4">{% translate "Reviews" %}</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {% for rating in video.ratings.all %}
+                    {% for rating in video.ratings %}
                         {% if rating.review_title %}
-                            {% include "rating_partial.html" with rating=rating index=forloop.counter %}
+                            {% include "rating_partial_serializer.html" with rating=rating index=forloop.counter %}
                         {% endif %}
                     {% endfor %}
                 </div>

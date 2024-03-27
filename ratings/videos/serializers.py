@@ -41,6 +41,17 @@ class VideoSerializer(serializers.ModelSerializer):
         ]
 
 
+class VideoSerializerWithRatings(VideoSerializer):
+    ratings = serializers.SerializerMethodField()
+
+    def get_ratings(self, obj: Video):
+        return VideoRatingSerializer(obj.ratings, many=True).data
+
+    class Meta(VideoSerializer.Meta):
+        model = Video
+        fields = VideoSerializer.Meta.fields + ["ratings"]
+
+
 class VideoSnapshotSerializer(serializers.ModelSerializer):
     class Meta:
         model = VideoSnapshot

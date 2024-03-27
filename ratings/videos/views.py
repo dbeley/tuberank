@@ -12,7 +12,10 @@ from ratings.models.lists import VideoList, VideoListItem
 from ratings.models.tags import UserTag, UserTagVote
 from ratings.models.videos import Video, VideoRating, VideoViewing
 from ratings.tags.serializers import UserTagSerializer
-from ratings.videos.serializers import VideoRatingSerializer
+from ratings.videos.serializers import (
+    VideoRatingSerializer,
+    VideoSerializerWithRatings,
+)
 
 
 def _add_video_to_list(video_pk: int, list_pk: int) -> bool:
@@ -121,7 +124,12 @@ class VideoRatingDetailView(APIView):
         video_rating = VideoRating(video=video, user=request.user)
         serializer = VideoRatingSerializer(video_rating, data=request.data)
         if not serializer.is_valid():
-            return Response({"serializer": serializer, "video": video})
+            return Response(
+                {
+                    "serializer": serializer,
+                    "video": VideoSerializerWithRatings(video).data,
+                }
+            )
         VideoRating.objects.update_or_create(
             video=video,
             user=request.user,
@@ -138,7 +146,11 @@ class VideoViewingView(APIView):
 
     def get(self, request, pk):
         video = get_object_or_404(Video, pk=pk)
-        return Response({"video": video})
+        return Response(
+            {
+                "video": VideoSerializerWithRatings(video).data,
+            }
+        )
 
     def post(self, request, pk):
         if not request.user.is_authenticated:
@@ -168,7 +180,7 @@ class VideoDetailsView(APIView):
         )
         return Response(
             {
-                "video": video,
+                "video": VideoSerializerWithRatings(video).data,
                 "user_lists": user_lists,
                 "lists": lists,
                 "tags": tags_with_score,
@@ -205,7 +217,7 @@ class VideoDetailsView(APIView):
         )
         return Response(
             {
-                "video": video,
+                "video": VideoSerializerWithRatings(video).data,
                 "user_lists": user_lists,
                 "lists": lists,
                 "notification": notification,
@@ -231,7 +243,7 @@ class VideoTagUpvoteView(APIView):
         tag = {"id": tag.pk, "name": tag.name, "score": score}
         return Response(
             {
-                "video": video,
+                "video": VideoSerializerWithRatings(video).data,
                 "tag": tag,
             }
         )
@@ -255,7 +267,7 @@ class VideoTagDownvoteView(APIView):
         tag = {"id": tag.pk, "name": tag.name, "score": score}
         return Response(
             {
-                "video": video,
+                "video": VideoSerializerWithRatings(video).data,
                 "tag": tag,
             }
         )
