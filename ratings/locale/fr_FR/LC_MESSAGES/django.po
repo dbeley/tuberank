@@ -322,8 +322,6 @@ msgstr "Chaînes"
 
 #: templates/base.html:173 templates/import_video.html:4
 #: templates/import_video.html:9
-#, fuzzy
-#| msgid "Import Video"
 msgid "Import Videos"
 msgstr "Importer des vidéos"
 
