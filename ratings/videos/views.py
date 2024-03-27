@@ -15,6 +15,7 @@ from ratings.tags.serializers import UserTagSerializer
 from ratings.videos.serializers import (
     VideoRatingSerializer,
     VideoSerializerWithRatings,
+    VideoSerializer,
 )
 
 
@@ -115,7 +116,9 @@ class VideoRatingDetailView(APIView):
         if not video_rating:
             video_rating = VideoRating(video=video, user=request.user)
         serializer = VideoRatingSerializer(video_rating)
-        return Response({"serializer": serializer, "video": video})
+        return Response(
+            {"serializer": serializer, "video": VideoSerializer(video).data}
+        )
 
     def post(self, request, pk):
         if not request.user.is_authenticated:
