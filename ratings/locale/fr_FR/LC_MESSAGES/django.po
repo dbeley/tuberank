@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-19 22:19+0100\n"
+"POT-Creation-Date: 2024-03-27 18:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -338,13 +338,15 @@ msgid "French"
 msgstr "Français"
 
 #: templates/channels/channel_details.html:32
-#: templates/videos/video_details.html:92 templates/videos/video_item.html:40
+#: templates/videos/video_details.html:92 templates/videos/video_item.html:43
+#: templates/videos/video_item_serializer.html:43
 #, python-format
 msgid "%(count)s ratings"
 msgstr "%(count)s note(s)"
 
 #: templates/channels/channel_details.html:40
-#: templates/videos/video_details.html:32 templates/videos/video_item.html:50
+#: templates/videos/video_details.html:32 templates/videos/video_item.html:53
+#: templates/videos/video_item_serializer.html:53
 msgid "Watch on YouTube"
 msgstr "Regarder sur YouTube"
 
@@ -363,7 +365,8 @@ msgid "%(count)s subscribers"
 msgstr "%(count)s abonnés"
 
 #: templates/channels/channel_details.html:65
-#: templates/videos/video_item.html:19
+#: templates/videos/video_item.html:24
+#: templates/videos/video_item_serializer.html:24
 #, python-format
 msgid "%(count)s views"
 msgstr "%(count)s vues"
@@ -415,6 +418,10 @@ msgstr "Nom (Z-A)"
 #: templates/channels/channel_list.html:40
 msgid "Last indexed"
 msgstr "Dernières vidéos indexées"
+
+#: templates/channels/channel_list.html:44
+msgid "Most videos indexed"
+msgstr "Le plus de vidéos indexées"
 
 #: templates/channels/channel_profile_item.html:16
 #, python-format
@@ -794,7 +801,8 @@ msgstr "Tous les tags"
 msgid "No tags yet."
 msgstr "Pas de tags."
 
-#: templates/videos/video_details.html:37 templates/videos/video_item.html:55
+#: templates/videos/video_details.html:37 templates/videos/video_item.html:58
+#: templates/videos/video_item_serializer.html:58
 msgid "Rate this video"
 msgstr "Noter cette vidéo"
 
