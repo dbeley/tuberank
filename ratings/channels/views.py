@@ -12,7 +12,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from ratings import enums
-from ratings.channels.serializers import ChannelRatingSerializer
+from ratings.channels.serializers import ChannelRatingSerializer, ChannelSerializer
 from ratings.models.channels import Channel, ChannelRating, ChannelSnapshot
 from ratings.models.videos import Video
 from ratings.yt_import import create_video_snapshot
@@ -113,15 +113,19 @@ class ChannelListView(APIView):
                 case enums.SortingChoices.MOST_VIDEOS_INDEXED.value:
                     channels = channels.order_by("-count_videos_indexed")
         paginator = Paginator(channels, 12)
-        page = paginator.get_page(request.GET.get("page", 1))
+        channels = paginator.get_page(request.GET.get("page", 1))
         if request.META.get("HTTP_HX_REQUEST"):
             return Response(
-                {"channels": page},
+                {
+                    "channels": ChannelSerializer(channels, many=True).data,
+                    "channels_page": channels,
+                },
                 template_name="channels/channel_list_partial.html",
             )
         return Response(
             {
-                "channels": page,
+                "channels": ChannelSerializer(channels, many=True).data,
+                "channels_page": channels,
             }
         )
 
@@ -138,7 +142,9 @@ class ChannelRatingDetailView(APIView):
         if not channel_rating:
             channel_rating = ChannelRating(channel=channel, user=request.user)
         serializer = ChannelRatingSerializer(channel_rating)
-        return Response({"serializer": serializer, "channel": channel})
+        return Response(
+            {"serializer": serializer, "channel": ChannelSerializer(channel).data}
+        )
 
     def post(self, request, pk):
         if not request.user.is_authenticated:
@@ -147,7 +153,9 @@ class ChannelRatingDetailView(APIView):
         channel_rating = ChannelRating(channel=channel, user=request.user)
         serializer = ChannelRatingSerializer(channel_rating, data=request.data)
         if not serializer.is_valid():
-            return Response({"serializer": serializer, "channel": channel})
+            return Response(
+                {"serializer": serializer, "channel": ChannelSerializer(channel).data}
+            )
         ChannelRating.objects.update_or_create(
             channel=channel,
             user=request.user,

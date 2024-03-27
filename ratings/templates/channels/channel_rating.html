@@ -17,7 +17,7 @@
              alt="{{ channel.last_snapshot.name_en }}"
              class="h-32 w-32 rounded">
     </a>
-    <form action="{% url 'channel_rating' pk=channel.pk %}" method="post">
+    <form action="{% url 'channel_rating' pk=channel.id %}" method="post">
         {% csrf_token %}
         <div class="mb-2 mt-2">
             <label class="block text-gray-700 font-bold mb-2" for="rating">{% translate "Rating (0-5)" %}</label>

@@ -96,8 +96,8 @@ class SearchView(APIView):
             return Response(
                 {
                     "videos": VideoSerializer(video_page, many=True).data,
-                    "query": query,
                     "video_page": video_page,
+                    "query": query,
                 },
                 template_name="search/video_results.html",
             )
@@ -114,8 +114,8 @@ class SearchView(APIView):
             return Response(
                 {
                     "channels": ChannelSerializer(channel_page, many=True).data,
-                    "query": query,
                     "channel_page": channel_page,
+                    "query": query,
                 },
                 template_name="search/channel_results.html",
             )
@@ -123,10 +123,10 @@ class SearchView(APIView):
         return Response(
             {
                 "channels": ChannelSerializer(channel_page, many=True).data,
-                "videos": VideoSerializer(video_page, many=True).data,
-                "query": query,
                 "channel_page": channel_page,
+                "videos": VideoSerializer(video_page, many=True).data,
                 "video_page": video_page,
+                "query": query,
             }
         )
 

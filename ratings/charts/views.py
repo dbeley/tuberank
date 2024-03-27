@@ -9,6 +9,7 @@ from ratings import enums
 from ratings.models import UserTag
 from ratings.models.videos import Video
 from ratings.tags.views import get_active_tags
+from ratings.videos.serializers import VideoSerializer
 
 
 class ChartsView(APIView):
@@ -53,13 +54,15 @@ class ChartsView(APIView):
         if request.META.get("HTTP_HX_REQUEST"):
             return Response(
                 {
-                    "videos": videos,
+                    "videos": VideoSerializer(videos, many=True).data,
+                    "videos_page": videos,
                 },
                 template_name="charts_partial.html",
             )
         return Response(
             {
-                "videos": videos,
+                "videos": VideoSerializer(videos, many=True).data,
+                "videos_page": videos,
                 "tags": tags,
                 "selected_sort_method": sort_method,
                 "selected_tag": selected_tag,

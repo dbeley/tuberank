@@ -9,9 +9,7 @@ from ratings.serializers import CustomRatingField
 class VideoSerializer(serializers.ModelSerializer):
     last_snapshot = serializers.SerializerMethodField()
     title = serializers.SerializerMethodField()
-    average_rating = serializers.DecimalField(max_digits=2, decimal_places=1)
     ratings_count = serializers.SerializerMethodField()
-    url = serializers.CharField()
     channel = ChannelSerializer(read_only=True)
     date_publication = serializers.SerializerMethodField()
 
