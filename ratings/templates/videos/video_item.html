@@ -11,16 +11,19 @@
         <a href="{% url 'video_details' pk=video.id %}">
             <h3 class="font-semibold text-gray-900 mb-2 text-lg">{{ video.last_snapshot.title_en }}</h3>
         </a>
-        <a href="{% url 'channel_details' pk=video.channel.id %}">
-            <p class="text-gray-700 text-md mb-2">{{ video.channel.last_snapshot.name_en }}</p>
-        </a>
+        <div class="flex justify-between mr-4">
+            <a href="{% url 'channel_details' pk=video.channel.id %}">
+                <p class="text-gray-700 text-md mb-2">{{ video.channel.last_snapshot.name_en }}</p>
+            </a>
+            {% if video.last_snapshot.duration %}
+                <p class="text-gray-700 text-sm mb-2">{{ video.last_snapshot.duration|duration }}</p>
+            {% endif %}
+        </div>
         <div class="flex justify-between mr-4">
             <p class="text-gray-700 text-sm mb-2">
                 {% blocktranslate with count=video.last_snapshot.count_views|intcomma %}{{ count }} views{% endblocktranslate %}
             </p>
-            {% if video.last_snapshot.duration %}
-                <p class="text-gray-700 text-sm mb-2">{{ video.last_snapshot.duration|duration }}</p>
-            {% endif %}
+            <p class="text-gray-700 text-sm mb-2">{{ video.date_publication|naturaltime }}</p>
         </div>
         {% if not video.ratings.count == 0 %}
             <div class="text-sm bg-gray-100 rounded-lg p-2">
