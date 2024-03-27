@@ -36,7 +36,8 @@ class HomepageView(APIView):
         if request.META.get("HTTP_HX_REQUEST"):
             return Response(
                 {
-                    "latest_videos": latest_videos,
+                    "latest_videos": VideoSerializer(latest_videos, many=True).data,
+                    "latest_videos_page": latest_videos,
                 },
                 template_name="homepage_partial.html",
             )
@@ -56,19 +57,17 @@ class HomepageView(APIView):
             .filter(avg_rating__isnull=False, avg_rating__gt=3)
         )[0:8]
         popular_videos = videos.order_by("-num_ratings")[0:4]
-        number_of_users = User.objects.count()
-        number_of_channels = Channel.objects.count()
-        number_of_videos = Video.objects.count()
 
         return Response(
             {
-                "latest_videos": latest_videos,
-                "trending_videos": trending_videos,
-                "best_videos": best_videos,
-                "popular_videos": popular_videos,
-                "number_of_users": number_of_users,
-                "number_of_channels": number_of_channels,
-                "number_of_videos": number_of_videos,
+                "latest_videos": VideoSerializer(latest_videos, many=True).data,
+                "latest_videos_page": latest_videos,
+                "trending_videos": VideoSerializer(trending_videos, many=True).data,
+                "best_videos": VideoSerializer(best_videos, many=True).data,
+                "popular_videos": VideoSerializer(popular_videos, many=True).data,
+                "number_of_users": User.objects.count(),
+                "number_of_channels": Channel.objects.count(),
+                "number_of_videos": Video.objects.count(),
             }
         )
 

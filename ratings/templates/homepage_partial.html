@@ -2,14 +2,14 @@
 <div id="videos" hx-swap="outerHTML" hx-target="#videos">
     <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mb-4">
         {% for video in latest_videos %}
-            {% include "videos/video_item.html" %}
+            {% include "videos/video_item_serializer.html" %}
         {% endfor %}
-        {% if latest_videos.has_previous %}
-            {% urlparams page=latest_videos.previous_page_number as previous_url_params %}
+        {% if latest_videos_page.has_previous %}
+            {% urlparams page=latest_videos_page.previous_page_number as previous_url_params %}
         {% endif %}
-        {% if latest_videos.has_next %}
-            {% urlparams page=latest_videos.next_page_number as next_url_params %}
+        {% if latest_videos_page.has_next %}
+            {% urlparams page=latest_videos_page.next_page_number as next_url_params %}
         {% endif %}
     </div>
-    {% include "htmx-paginator.html" with page=latest_videos previous_url_params=previous_url_params next_url_params=next_url_params %}
+    {% include "htmx-paginator.html" with page=latest_videos_page previous_url_params=previous_url_params next_url_params=next_url_params %}
 </div>

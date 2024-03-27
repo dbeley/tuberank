@@ -53,6 +53,7 @@ class VideoSnapshotSerializer(serializers.ModelSerializer):
             "count_comments",
             "date_creation",
             "description",
+            "duration",
             "thumbnail_url",
         ]
 

@@ -20,7 +20,7 @@
             <h2 class="text-2xl font-bold mb-4">{% translate "Trending videos" %}</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mb-8">
                 {% for video in trending_videos %}
-                    {% include "videos/video_item.html" %}
+                    {% include "videos/video_item_serializer.html" %}
                 {% endfor %}
             </div>
         {% endif %}
@@ -69,13 +69,13 @@
         <h2 class="text-2xl font-bold mb-4">{% translate "Best videos" %}</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mb-8">
             {% for video in best_videos %}
-                {% include "videos/video_item.html" %}
+                {% include "videos/video_item_serializer.html" %}
             {% endfor %}
         </div>
         <h2 class="text-2xl font-bold mb-4">{% translate "Popular Videos" %}</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
             {% for video in popular_videos %}
-                {% include "videos/video_item.html" %}
+                {% include "videos/video_item_serializer.html" %}
             {% endfor %}
         </div>
     </div>
