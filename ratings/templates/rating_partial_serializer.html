@@ -34,7 +34,7 @@
 <article class="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
     <div class="flex justify-between items-center mb-5 text-gray-500">
         <span class="text-xs">{% blocktranslate with rating=rating.rating %}Rating: <span class="font-bold">{{ rating }}</span>{% endblocktranslate %}</span>
-        <span class="bg-primary-100 text-primary-800 text-xs">{% blocktranslate with username=rating.user.username %}By: <span class="font-bold">{{ username }}</span>{% endblocktranslate %}
+        <span class="bg-primary-100 text-primary-800 text-xs">{% blocktranslate with username=rating.username %}By: <span class="font-bold">{{ username }}</span>{% endblocktranslate %}
     </span>
 </div>
 <h2 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
