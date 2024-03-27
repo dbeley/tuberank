@@ -187,7 +187,7 @@ class VideoDetailsView(APIView):
                 "user_lists": user_lists,
                 "lists": lists,
                 "tags": tags_with_score,
-                "related_videos": related_videos,
+                "related_videos": VideoSerializer(related_videos, many=True).data,
             }
         )
 
@@ -225,7 +225,7 @@ class VideoDetailsView(APIView):
                 "lists": lists,
                 "notification": notification,
                 "tags": tags_with_score,
-                "related_videos": related_videos,
+                "related_videos": VideoSerializer(related_videos, many=True).data,
             }
         )
 

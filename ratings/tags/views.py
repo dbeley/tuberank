@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 
 from ratings import enums
 from ratings.models.tags import UserTag
+from ratings.videos.serializers import VideoSerializer
 
 
 def get_active_tags() -> QuerySet[UserTag]:
@@ -32,9 +33,9 @@ class UserTagOverviewView(APIView):
         return Response(
             {
                 "tag": tag,
-                "videos": videos.all(),
-                "best_videos": best_videos,
-                "popular_videos": popular_videos,
+                "videos": VideoSerializer(videos.all(), many=True).data,
+                "best_videos": VideoSerializer(best_videos, many=True).data,
+                "popular_videos": VideoSerializer(popular_videos, many=True).data,
             }
         )
 

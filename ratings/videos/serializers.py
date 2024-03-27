@@ -12,6 +12,10 @@ class VideoSerializer(serializers.ModelSerializer):
     ratings_count = serializers.SerializerMethodField()
     channel = ChannelSerializer(read_only=True)
     date_publication = serializers.SerializerMethodField()
+    average_rating = serializers.SerializerMethodField()
+
+    def get_average_rating(self, obj: Video) -> str:
+        return str(round(obj.average_rating / 2, 2))
 
     def get_last_snapshot(self, obj: Video) -> dict[str, str]:
         return VideoSnapshotSerializer(obj.last_snapshot).data

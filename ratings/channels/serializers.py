@@ -9,6 +9,7 @@ class ChannelSerializer(serializers.ModelSerializer):
     average_rating = serializers.SerializerMethodField()
     ratings_count = serializers.SerializerMethodField()
     indexed_videos_count = serializers.SerializerMethodField()
+    url = serializers.SerializerMethodField()
 
     def get_last_snapshot(self, obj: Channel) -> dict[str, str]:
         return ChannelSnapshotSerializer(obj.last_snapshot).data
@@ -22,6 +23,9 @@ class ChannelSerializer(serializers.ModelSerializer):
     def get_indexed_videos_count(self, obj):
         return obj.indexed_videos_count
 
+    def get_url(self, obj: Channel) -> str:
+        return obj.url
+
     class Meta:
         model = Channel
         fields = [
@@ -33,6 +37,7 @@ class ChannelSerializer(serializers.ModelSerializer):
             "average_rating",
             "ratings_count",
             "indexed_videos_count",
+            "url",
         ]
 
 
