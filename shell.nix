@@ -3,19 +3,15 @@ with import <nixpkgs> { };
 let
   pythonPackages = python3Packages;
 in pkgs.mkShell rec {
-  name = "TubeRankPythonEnv";
-  venvDir = "./venv";
   buildInputs = [
     nodejs
-    pythonPackages.python
-
+    python3
     pythonPackages.pip
     poetry
     ruff
     gettext
     postgresql
     libpqxx
-
     flyctl
   ];
 
