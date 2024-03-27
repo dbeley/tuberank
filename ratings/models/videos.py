@@ -5,30 +5,6 @@ from django.db.models import Avg
 from ratings import enums
 
 
-class Video(models.Model):
-    yt_id = models.CharField(max_length=11, unique=True)
-    channel = models.ForeignKey(
-        "ratings.Channel", related_name="videos", on_delete=models.CASCADE
-    )
-    date_publication = models.DateTimeField("date of video publication")
-    tags = models.ManyToManyField("ratings.UserTag", blank=True)
-
-    def __str__(self) -> str:
-        return f"{self.pk} - {self.yt_id} - {self.date_publication}"
-
-    @property
-    def last_snapshot(self):
-        return self.snapshots.last()
-
-    @property
-    def average_rating(self) -> int:
-        return round(self.ratings.aggregate(avg=Avg("rating"))["avg"] or 0, 2)
-
-    @property
-    def url(self) -> str:
-        return f"https://www.youtube.com/watch?v={self.yt_id}"
-
-
 class VideoSnapshot(models.Model):
     title_en = models.CharField(max_length=100)
     video = models.ForeignKey(
@@ -86,3 +62,27 @@ class VideoViewing(models.Model):
 
     def __str__(self) -> str:
         return f"{self.pk} - {self.user.pk} - {self.date_creation}"
+
+
+class Video(models.Model):
+    yt_id = models.CharField(max_length=11, unique=True)
+    channel = models.ForeignKey(
+        "ratings.Channel", related_name="videos", on_delete=models.CASCADE
+    )
+    date_publication = models.DateTimeField("date of video publication")
+    tags = models.ManyToManyField("ratings.UserTag", blank=True)
+
+    def __str__(self) -> str:
+        return f"{self.pk} - {self.yt_id} - {self.date_publication}"
+
+    @property
+    def last_snapshot(self) -> VideoSnapshot:
+        return self.snapshots.last()
+
+    @property
+    def average_rating(self) -> float:
+        return round(self.ratings.aggregate(avg=Avg("rating"))["avg"] or 0, 2)
+
+    @property
+    def url(self) -> str:
+        return f"https://www.youtube.com/watch?v={self.yt_id}"

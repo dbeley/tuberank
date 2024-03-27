@@ -1,3 +1,4 @@
+from django.contrib.humanize.templatetags.humanize import naturaltime
 from rest_framework import serializers
 
 from ratings.channels.serializers import ChannelSerializer
@@ -8,10 +9,11 @@ from ratings.serializers import CustomRatingField
 class VideoSerializer(serializers.ModelSerializer):
     last_snapshot = serializers.SerializerMethodField()
     title = serializers.SerializerMethodField()
-    average_rating = serializers.SerializerMethodField()
+    average_rating = serializers.DecimalField(max_digits=2, decimal_places=1)
     ratings_count = serializers.SerializerMethodField()
-    url = serializers.SerializerMethodField()
+    url = serializers.CharField()
     channel = ChannelSerializer(read_only=True)
+    date_publication = serializers.SerializerMethodField()
 
     def get_last_snapshot(self, obj: Video) -> dict[str, str]:
         return VideoSnapshotSerializer(obj.last_snapshot).data
@@ -20,14 +22,11 @@ class VideoSerializer(serializers.ModelSerializer):
         last_snapshot = obj.last_snapshot
         return last_snapshot.title_en
 
-    def get_average_rating(self, obj: Video) -> float:
-        return obj.average_rating
-
     def get_ratings_count(self, obj: Video) -> int:
         return obj.ratings.count()
 
-    def get_url(self, obj: Video) -> str:
-        return obj.url
+    def get_date_publication(self, obj: Video) -> str:
+        return naturaltime(obj.date_publication)
 
     class Meta:
         model = Video
