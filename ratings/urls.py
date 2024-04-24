@@ -5,6 +5,7 @@ import ratings.charts.views
 import ratings.lists.views
 import ratings.tags.views
 import ratings.videos.views
+import ratings.users.views
 import ratings.api_views
 from ratings import views
 
@@ -13,6 +14,7 @@ urlpatterns = [
     path("login", views.LoginView.as_view(), name="login"),
     path("signup", views.SignupView.as_view(), name="signup"),
     path("user/<str:username>", views.ProfileView.as_view(), name="profile"),
+    path("users/list", ratings.users.views.UserListView.as_view(), name="user_list"),
     path(
         "channels/list",
         ratings.channels.views.ChannelListView.as_view(),

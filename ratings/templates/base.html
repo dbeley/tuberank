@@ -146,11 +146,6 @@
                     </div>
                     <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 ">
                         <li>
-                            <a href="{% url 'homepage' %}"
-                               class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-300 md:p-0"
-                               aria-current="page">{% translate "Home" %}</a>
-                        </li>
-                        <li>
                             <a href="{% url 'charts' %}"
                                class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-300 md:p-0 ">{% translate "Charts" %}</a>
                         </li>
@@ -165,6 +160,10 @@
                         <li>
                             <a href="{% url 'channel_list' %}"
                                class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-300 md:p-0">{% translate "Channels" %}</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'user_list' %}"
+                               class="block py-2 pl-3 pr-4 text-gray-300 rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-300 md:p-0">{% translate "Users" %}</a>
                         </li>
                         {% if user.is_authenticated %}
                             <li>
