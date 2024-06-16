@@ -2,7 +2,7 @@
   // @name        TubeRank - Now Watching
   // @namespace   Violentmonkey Scripts
   // @include     https://www.youtube.com/watch?v=*
-  // @grant       GM.xmlhttpRequest
+  // @grant       GM_xmlhttpRequest
   // @version     1.1
   // @author      dbeley
   // @description 5/8/2023, 1:00:50 PM
@@ -38,7 +38,7 @@
     let url1 = window.location.href;
     let youtubeId = url1.split("watch?v=")[1].split("&list=")[0];
     console.log(`TubeRank: sending "now watching" request to ${url}${youtubeId}`);
-    GM.xmlhttpRequest({
+    GM_xmlhttpRequest({
         method: 'POST',
         url: `${url}${youtubeId}`,
         headers: {
