@@ -18,11 +18,11 @@
             </div>
         {% endfor %}
     </div>
-    {% if channels.has_previous %}
-        {% urlparams page=channels.previous_page_number as previous_url_params %}
+    {% if channels_page.has_previous %}
+        {% urlparams page=channels_page.previous_page_number as previous_url_params %}
     {% endif %}
-    {% if channels.has_next %}
-        {% urlparams page=channels.next_page_number as next_url_params %}
+    {% if channels_page.has_next %}
+        {% urlparams page=channels_page.next_page_number as next_url_params %}
     {% endif %}
-    {% include "htmx-paginator.html" with page=channels previous_url_params=previous_url_params next_url_params=next_url_params %}
+    {% include "htmx-paginator.html" with page=channels_page previous_url_params=previous_url_params next_url_params=next_url_params %}
 </div>
