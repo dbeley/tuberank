@@ -1,5 +1,5 @@
-# Use a specific version of Python based on Alpine for better compatibility and smaller image size
-FROM python:3.11-alpine
+﻿# Builder stage
+FROM python:3.11-alpine as builder
 
 # Set environment variables for Python and Poetry
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -11,7 +11,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     POETRY_NO_INTERACTIONS=1 \
     VIRTUAL_ENV="/opt/venv"
 
-# Install system dependencies and Python packages in one layer to reduce image size
+# Install system dependencies and Python packages
 RUN apk add --no-cache \
         build-base \
         gettext \
@@ -44,6 +44,30 @@ COPY . /code
 # Collect static files and compile messages
 RUN django-admin compilemessages \
     && python manage.py collectstatic --noinput
+
+# Final stage
+FROM python:3.11-slim
+
+# Set environment variables for Python
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    VIRTUAL_ENV="/opt/venv"
+
+# Install runtime dependencies
+RUN apt-get update && apt-get install -y \
+        libpq-dev \
+        gettext \
+        tzdata \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy virtual environment and application code from the builder stage
+COPY --from=builder /opt/venv /opt/venv
+COPY --from=builder /code /code
+
+# Set working directory and PATH
+WORKDIR /code
+ENV PATH="/opt/poetry/bin:$PATH"
 
 # Expose the application port
 EXPOSE 8000
