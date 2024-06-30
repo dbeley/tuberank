@@ -14,9 +14,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from ratings.channels.serializers import ChannelSerializer
-from ratings.charts import charts
 from ratings.models.channels import Channel
-from ratings.models.videos import Video, VideoViewing
+from ratings.models.videos import Video
 from ratings.videos.serializers import VideoSerializer
 from ratings.yt_import import (
     NoResultException,
@@ -149,55 +148,6 @@ class SignupView(generic.CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy("login")
     template_name = "registration/signup.html"
-
-
-class ProfileView(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = "profile/profile.html"
-
-    def get(self, request, username):
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
-            return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
-        chart_data = charts.get_ratings_chart_for_user(user)
-        paginator = Paginator(user.viewings.order_by("-date_creation"), 10)
-        if page_query_param := request.GET.get("page"):
-            page = paginator.get_page(page_query_param)
-            return Response(
-                {
-                    "user": user,
-                    "viewings": page,
-                },
-                template_name="profile/profile_timeframe.html",
-            )
-        page = paginator.get_page(1)
-        most_watched_channel_dict = (
-            VideoViewing.objects.filter(user=user)
-            .values("video__channel_id")
-            .annotate(count=Count("video__channel_id"))
-            .order_by("-count")[:8]
-        )
-        most_watched_channels = []
-        for channel_dict in most_watched_channel_dict:
-            channel = Channel.objects.get(pk=channel_dict.get("video__channel_id"))
-            most_watched_channels.append(
-                {
-                    "id": channel.pk,
-                    "name": channel.last_snapshot.name_en,
-                    "count": channel_dict.get("count"),
-                    "thumbnail_url": channel.last_snapshot.thumbnail_url,
-                }
-            )
-        return Response(
-            {
-                "user": user,
-                "ratings_labels": chart_data["ratings_labels"],
-                "ratings_data": chart_data["ratings_data"],
-                "viewings": page,
-                "most_watched_channels": most_watched_channels,
-            }
-        )
 
 
 class ImportVideoView(APIView):

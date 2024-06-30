@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-20 23:54+0200\n"
+"POT-Creation-Date: 2024-06-30 21:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -114,8 +114,7 @@ msgstr ""
 "deux méthodes :"
 
 #: templates/about.html:37
-#, fuzzy, python-format
-#| msgid "by using the <a href=\"%(import_video_url)s\">import video</a> page."
+#, python-format
 msgid "by using the <a href=\"%(import_video_url)s\">import videos</a> page."
 msgstr ""
 "en utilisant la page <a href=\"%(import_video_url)s\">d'import de vidéos</a>."
@@ -197,7 +196,7 @@ msgid "The available filters are:"
 msgstr "Les filtres disponibles sont les suivants :"
 
 #: templates/about.html:64 templates/channels/channel_details.html:89
-#: templates/channels/channel_list.html:24 templates/charts.html:20
+#: templates/channels/channel_list.html:28 templates/charts.html:20
 #: templates/tags/tag_overview.html:14
 msgid "Best rated"
 msgstr "Les mieux notées"
@@ -337,11 +336,11 @@ msgstr "Anglais"
 msgid "French"
 msgstr "Français"
 
-#: templates/channels/channel_details.html:32
+#: templates/channels/channel_details.html:32 templates/lists/list_item.html:49
 #: templates/videos/video_details.html:93
 #: templates/videos/video_item_serializer.html:43
 #, python-format
-msgid "%(count)s ratings"
+msgid "%(count)s rating(s)"
 msgstr "%(count)s note(s)"
 
 #: templates/channels/channel_details.html:40
@@ -389,7 +388,7 @@ msgid "Oldest"
 msgstr "Les plus anciennes"
 
 #: templates/channels/channel_details.html:97
-#: templates/channels/channel_list.html:36 templates/charts.html:28
+#: templates/channels/channel_list.html:40 templates/charts.html:28
 msgid "Most viewed"
 msgstr "Les plus vues"
 
@@ -403,24 +402,24 @@ msgid "Reviews"
 msgstr "Critiques"
 
 #: templates/channels/channel_list.html:20
+msgid "Most videos indexed"
+msgstr "Le plus de vidéos indexées"
+
+#: templates/channels/channel_list.html:24
 msgid "Most subscribers"
 msgstr "Le plus d'abonnés"
 
-#: templates/channels/channel_list.html:28
+#: templates/channels/channel_list.html:32
 msgid "Name (A-Z)"
 msgstr "Nom (A-Z)"
 
-#: templates/channels/channel_list.html:32
+#: templates/channels/channel_list.html:36
 msgid "Name (Z-A)"
 msgstr "Nom (Z-A)"
 
-#: templates/channels/channel_list.html:40
+#: templates/channels/channel_list.html:44
 msgid "Last indexed"
 msgstr "Dernières vidéos indexées"
-
-#: templates/channels/channel_list.html:44
-msgid "Most videos indexed"
-msgstr "Le plus de vidéos indexées"
 
 #: templates/channels/channel_profile_item.html:16
 #, python-format
@@ -652,12 +651,6 @@ msgstr "Cette liste est vide."
 msgid "Go Back"
 msgstr "Retour"
 
-#: templates/lists/list_item.html:49
-#, fuzzy, python-format
-#| msgid "%(count)s ratings"
-msgid "%(count)s rating(s)"
-msgstr "%(count)s note(s)"
-
 #: templates/lists/lists.html:10
 msgid "My Lists"
 msgstr "Listes"
@@ -699,6 +692,8 @@ msgid "No popular lists yet."
 msgstr "Pas de listes populaires."
 
 #: templates/profile/profile.html:6
+#: templates/profile/profile_channels_ratings.html:6
+#: templates/profile/profile_videos_ratings.html:6
 msgid "Profile of"
 msgstr "Profil de"
 
@@ -707,10 +702,12 @@ msgid "Watched Videos"
 msgstr "Vidéos visionnées"
 
 #: templates/profile/profile.html:23 templates/profile/profile.html:50
+#: templates/profile/profile_videos_ratings.html:18
 msgid "Video Ratings"
 msgstr "Vidéos notées"
 
-#: templates/profile/profile.html:27 templates/profile/profile.html:65
+#: templates/profile/profile.html:27 templates/profile/profile.html:64
+#: templates/profile/profile_channels_ratings.html:18
 msgid "Channel Ratings"
 msgstr "Chaînes notées"
 
@@ -722,15 +719,25 @@ msgstr "Date d'inscription"
 msgid "Most Watched Channels"
 msgstr ""
 
-#: templates/profile/profile.html:61
+#: templates/profile/profile.html:57
+msgid "See all Video Ratings"
+msgstr "Toutes les vidéos notées"
+
+#: templates/profile/profile.html:60
+#: templates/profile/profile_videos_ratings.html:26
 msgid "No video ratings found."
 msgstr "Pas de notes trouvées."
 
-#: templates/profile/profile.html:73
+#: templates/profile/profile.html:68
+msgid "See all Channel Ratings"
+msgstr "Toutes les chaînes notées"
+
+#: templates/profile/profile.html:71
+#: templates/profile/profile_channels_ratings.html:26
 msgid "No channel ratings found."
 msgstr "Pas de notes trouvées."
 
-#: templates/profile/profile.html:86
+#: templates/profile/profile.html:84
 msgid "Number of Ratings"
 msgstr "Nombre de notes"
 
@@ -738,6 +745,11 @@ msgstr "Nombre de notes"
 #: templates/profile/profile_video_rating.html:5
 msgid "Rating:"
 msgstr "Note :"
+
+#: templates/profile/profile_channels_ratings.html:13
+#: templates/profile/profile_videos_ratings.html:13
+msgid "&#8592; Return to profile page"
+msgstr "&#8592; Retour au profil"
 
 #: templates/profile/profile_timeframe.html:7
 msgid "Recently Watched Videos"

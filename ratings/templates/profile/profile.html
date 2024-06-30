@@ -52,11 +52,10 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 py-8">
                             <canvas id="ratings-chart-videos"></canvas>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {% for rating in user.video_ratings.all %}
-                                {% include "profile/profile_video_rating.html" %}
-                            {% endfor %}
-                        </div>
+                        <a href="{% url 'user_videos_ratings' username=user.username %}"
+                           class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                            {% translate "See all Video Ratings" %}
+                        </a>
                     {% else %}
                         <p class="text-gray-600">{% translate "No video ratings found." %}</p>
                     {% endif %}
@@ -64,11 +63,10 @@
                 <div class="bg-white rounded-lg shadow-lg py-4 mt-4 px-4">
                     <h2 class="text-2xl font-bold mb-4">{% translate "Channel Ratings" %}</h2>
                     {% if user.channel_ratings.exists %}
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {% for rating in user.channel_ratings.all %}
-                                {% include "profile/profile_channel_rating.html" %}
-                            {% endfor %}
-                        </div>
+                        <a href="{% url 'user_channels_ratings' username=user.username %}"
+                           class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                            {% translate "See all Channel Ratings" %}
+                        </a>
                     {% else %}
                         <p class="text-gray-600">{% translate "No channel ratings found." %}</p>
                     {% endif %}

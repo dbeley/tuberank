@@ -120,7 +120,6 @@ class VideoListReorderView(APIView):
         )
 
     def post(self, request, pk):
-        print(request.data)
         data = dict(request.data.lists())
         parsed_data = [
             {"id": element.split(": ")[0], "order": element.split(": ")[1]}

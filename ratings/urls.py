@@ -13,7 +13,19 @@ urlpatterns = [
     path("", views.HomepageView.as_view(), name="homepage"),
     path("login", views.LoginView.as_view(), name="login"),
     path("signup", views.SignupView.as_view(), name="signup"),
-    path("user/<str:username>", views.ProfileView.as_view(), name="profile"),
+    path(
+        "user/<str:username>", ratings.users.views.ProfileView.as_view(), name="profile"
+    ),
+    path(
+        "user/<str:username>/videos/ratings",
+        ratings.users.views.ProfileVideosRatingsView.as_view(),
+        name="user_videos_ratings",
+    ),
+    path(
+        "user/<str:username>/channels/ratings",
+        ratings.users.views.ProfileChannelsRatingsView.as_view(),
+        name="user_channels_ratings",
+    ),
     path("users/list", ratings.users.views.UserListView.as_view(), name="user_list"),
     path(
         "channels/list",

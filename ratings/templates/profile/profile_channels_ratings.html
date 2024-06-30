@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load ratings_extras %}
+{% load humanize %}
+{% block title %}
+    {% translate "Profile of" %} {{ user.username }} - TubeRank
+{% endblock title %}
+{% block content %}
+    <div class="container mx-auto py-6 flex flex-wrap">
+        <div class="flex md:w-3/4 lg:w-2/3 xl:w-3/4 px-4 mb-4">
+            <a href="{% url 'profile' username=user.username %}"
+               class="mr-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                {% translate "&#8592; Return to profile page" %}
+            </a>
+        </div>
+        <div class="w-full md:w-3/4 lg:w-2/3 xl:w-3/4 px-4 mb-4">
+            <div class="bg-white rounded-lg shadow-lg py-4 mt-4 px-4">
+                <h2 class="text-2xl font-bold mb-4">{% translate "Channel Ratings" %}</h2>
+                {% if user.channel_ratings.exists %}
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {% for rating in user.channel_ratings.all %}
+                            {% include "profile/profile_channel_rating.html" %}
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-gray-600">{% translate "No channel ratings found." %}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
