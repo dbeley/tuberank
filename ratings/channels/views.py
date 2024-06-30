@@ -100,11 +100,13 @@ class ChannelListView(APIView):
             count_views=Max("snapshots__count_views"),
             count_videos_indexed=Count("videos"),
             avg_rating=Avg(F("ratings__rating")),
-        ).order_by("-count_subscribers")
+        ).order_by("-count_videos_indexed")
         if sort_method := request.GET.get("sort_by"):
             if sort_method not in enums.SortingChoices.choices():
                 return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
             match sort_method:
+                case enums.SortingChoices.MOST_VIDEOS_INDEXED.value:
+                    channels = channels.order_by("-count_videos_indexed")
                 case enums.SortingChoices.NAME_ASC.value:
                     channels = channels.order_by("name")
                 case enums.SortingChoices.NAME_DESC.value:
@@ -119,8 +121,6 @@ class ChannelListView(APIView):
                     )
                 case enums.SortingChoices.MOST_SUBSCRIBERS.value:
                     channels = channels.order_by("-count_subscribers")
-                case enums.SortingChoices.MOST_VIDEOS_INDEXED.value:
-                    channels = channels.order_by("-count_videos_indexed")
         paginator = Paginator(channels, 12)
         channels = paginator.get_page(request.GET.get("page", 1))
         if request.META.get("HTTP_HX_REQUEST"):

@@ -15,6 +15,10 @@
                     id="sort-by"
                     class="bg-white border border-gray-400 rounded-lg py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     onchange="this.form.submit()">
+                <option value="most_videos_indexed"
+                        {% if request.GET.sort_by == "most_videos_indexed" %}selected{% endif %}>
+                    {% translate "Most videos indexed" %}
+                </option>
                 <option value="most_subscribers"
                         {% if request.GET.sort_by == "most_subscribers" %}selected{% endif %}>
                     {% translate "Most subscribers" %}
@@ -38,10 +42,6 @@
                 <option value="latest_indexed"
                         {% if request.GET.sort_by == "latest_indexed" %}selected{% endif %}>
                     {% translate "Last indexed" %}
-                </option>
-                <option value="most_videos_indexed"
-                        {% if request.GET.sort_by == "most_videos_indexed" %}selected{% endif %}>
-                    {% translate "Most videos indexed" %}
                 </option>
             </select>
         </div>
