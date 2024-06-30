@@ -63,9 +63,6 @@ RUN apt-get update && apt-get install -y \
 
 # Copy Poetry and virtual environment from the builder stage
 COPY --from=builder $VIRTUAL_ENV $VIRTUAL_ENV
-COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
-COPY --from=builder /usr/local/bin/poetry /usr/local/bin/poetry
-
 # Copy application code from the builder stage
 COPY --from=builder /code /code
 
