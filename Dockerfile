@@ -1,39 +1,52 @@
-FROM alpine
+# Use a specific version of Python based on Alpine for better compatibility and smaller image size
+FROM python:3.11-alpine
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+# Set environment variables for Python and Poetry
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    POETRY_HOME="/opt/poetry" \
+    POETRY_VERSION=1.8.2 \
+    POETRY_VIRTUALENVS_CREATE=false \
+    POETRY_VIRTUALENVS_IN_PROJECT=false \
+    POETRY_NO_INTERACTIONS=1 \
+    VIRTUAL_ENV="/opt/venv"
 
-ENV POETRY_HOME="/opt/poetry"
-ENV POETRY_VERSION=1.8.2
-ENV POETRY_VIRTUALENVS_CREATE=false
-ENV POETRY_VIRTUALENVS_IN_PROJECT=false
-ENV POETRY_NO_INTERACTIONS=1
-ENV VIRTUAL_ENV=/opt/venv
+# Install system dependencies and Python packages in one layer to reduce image size
+RUN apk add --no-cache \
+        build-base \
+        gettext \
+        libpq \
+        postgresql-dev \
+        nodejs \
+        npm \
+        tzdata \
+    && npm install -g tailwindcss flowbite \
+    && pip install --no-cache-dir pip setuptools poetry==$POETRY_VERSION \
+    && python3 -m venv $VIRTUAL_ENV
 
-RUN mkdir -p /code
-WORKDIR /code
-
-RUN apk add --update build-base nodejs npm python3 gettext py3-pip libpq
-
-RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
+# Set working directory
+WORKDIR /code
+
+# Copy and install node dependencies
 COPY package*.json input.css /code/
-RUN npm install tailwindcss flowbite \
+RUN npm install \
     && npm run tailwind-build
 
-RUN pip install --no-cache-dir pip setuptools tzdata \
-	&& pip install --no-cache-dir poetry==${POETRY_VERSION}
-
-ENV PATH="${PATH}:${POETRY_HOME}/bin"
-
+# Copy Python dependencies and install using Poetry
 COPY poetry.lock pyproject.toml /code/
-RUN poetry install --without=dev --no-interaction
+RUN poetry install --only main --no-interaction
 
+# Copy the application code
 COPY . /code
+
+# Collect static files and compile messages
 RUN django-admin compilemessages \
     && python manage.py collectstatic --noinput
 
+# Expose the application port
 EXPOSE 8000
 
+# Run the application
 CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "tuberank.wsgi"]

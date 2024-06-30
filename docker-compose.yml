@@ -1,34 +1,35 @@
-version: '3'
-
-services:
+﻿services:
   tuberank:
     container_name: tuberank
     build:
-      context: "."
+      context: .
       args:
         DOCKER_BUILDKIT: 1
     volumes:
-      - .:/app
-    restart: "unless-stopped"
-    command: sh -c "npm run tailwind-build && python /code/manage.py migrate && gunicorn --bind :8000 --workers 2 tuberank.wsgi"
+      - .:/code
+    restart: unless-stopped
+    command: >
+      sh -c "npm run tailwind-build &&
+             python /code/manage.py migrate &&
+             gunicorn --bind :8000 --workers 2 tuberank.wsgi"
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=$DATABASE_URL
-      - YOUTUBE_DEVELOPER_KEY=$YOUTUBE_DEVELOPER_KEY
-      - DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY
-      - DEBUG=$DEBUG
-      - LOCAL_DEPLOY=$LOCAL_DEPLOY
-      - ALLOWED_HOSTS=$ALLOWED_HOSTS
-      - CSRF_TRUSTED_ORIGINS=$CSRF_TRUSTED_ORIGINS
+      - DATABASE_URL=${DATABASE_URL}
+      - YOUTUBE_DEVELOPER_KEY=${YOUTUBE_DEVELOPER_KEY}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DEBUG=${DEBUG}
+      - LOCAL_DEPLOY=${LOCAL_DEPLOY}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      - CSRF_TRUSTED_ORIGINS=${CSRF_TRUSTED_ORIGINS}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.tuberank.entrypoints=secure"
-      - "traefik.http.routers.tuberank.rule=Host(`tuberank.$DOMAIN`)"
+      - "traefik.http.routers.tuberank.rule=Host(`tuberank.${DOMAIN}`)"
       - "traefik.http.services.tuberank.loadbalancer.server.port=8000"
       - "traefik.http.routers.tuberank.tls.certresolver=le"
 
 networks:
-    default:
-        name: $DEFAULT_NETWORK
-        external: true
+  default:
+    name: ${DEFAULT_NETWORK}
+    external: true
