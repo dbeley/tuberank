@@ -1,17 +1,15 @@
 version: '3'
 
-x-app: &default-app
-  build:
-    context: "."
-    args:
-      DOCKER_BUILDKIT: 1
-  volumes:
-    - .:/app
-  restart: "unless-stopped"
-
 services:
-  web:
-    <<: *default-app
+  tuberank:
+    container_name: tuberank
+    build:
+      context: "."
+      args:
+        DOCKER_BUILDKIT: 1
+    volumes:
+      - .:/app
+    restart: "unless-stopped"
     command: sh -c "npm run tailwind-build && python /code/manage.py migrate && gunicorn --bind :8000 --workers 2 tuberank.wsgi"
     ports:
       - "8000:8000"
@@ -33,3 +31,4 @@ services:
 networks:
     default:
         name: $DEFAULT_NETWORK
+        external: true
