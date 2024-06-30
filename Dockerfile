@@ -61,13 +61,17 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy virtual environment and application code from the builder stage
-COPY --from=builder /opt/venv /opt/venv
+# Copy Poetry and virtual environment from the builder stage
+COPY --from=builder $VIRTUAL_ENV $VIRTUAL_ENV
+COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=builder /usr/local/bin/poetry /usr/local/bin/poetry
+
+# Copy application code from the builder stage
 COPY --from=builder /code /code
 
 # Set working directory and PATH
 WORKDIR /code
-ENV PATH="/opt/poetry/bin:$PATH"
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # Expose the application port
 EXPOSE 8000
