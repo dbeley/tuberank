@@ -30,7 +30,8 @@ class ProfileView(APIView):
             user = User.objects.get(username=username)
         except User.DoesNotExist:
             return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
-        chart_data = charts.get_ratings_chart_for_user(user)
+        video_chart_data = charts.get_video_ratings_chart_for_user(user)
+        channel_chart_data = charts.get_channel_ratings_chart_for_user(user)
         paginator = Paginator(user.viewings.order_by("-date_creation"), 10)
         if page_query_param := request.GET.get("page"):
             page = paginator.get_page(page_query_param)
@@ -62,8 +63,10 @@ class ProfileView(APIView):
         return Response(
             {
                 "user": user,
-                "ratings_labels": chart_data["ratings_labels"],
-                "ratings_data": chart_data["ratings_data"],
+                "video_ratings_labels": video_chart_data["ratings_labels"],
+                "video_ratings_data": video_chart_data["ratings_data"],
+                "channel_ratings_labels": channel_chart_data["ratings_labels"],
+                "channel_ratings_data": channel_chart_data["ratings_data"],
                 "viewings": page,
                 "most_watched_channels": most_watched_channels,
             }
