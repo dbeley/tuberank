@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-30 21:19+0200\n"
+"POT-Creation-Date: 2024-07-04 16:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -159,9 +159,8 @@ msgstr ""
 
 #: templates/about.html:58
 msgid ""
-"It's possible to updating the snapshot for a Channel from the Channel page. "
-"It will also create a new snapshot for all the videos associated to the "
-"channel."
+"It's possible to update the snapshot for a Channel from the Channel page. It "
+"will also create a new snapshot for all the videos associated to the channel."
 msgstr ""
 
 #: templates/about.html:60 templates/base.html:151 templates/charts.html:5
@@ -692,16 +691,16 @@ msgstr ""
 msgid "No video ratings found."
 msgstr ""
 
-#: templates/profile/profile.html:68
+#: templates/profile/profile.html:71
 msgid "See all Channel Ratings"
 msgstr ""
 
-#: templates/profile/profile.html:71
+#: templates/profile/profile.html:74
 #: templates/profile/profile_channels_ratings.html:26
 msgid "No channel ratings found."
 msgstr ""
 
-#: templates/profile/profile.html:84
+#: templates/profile/profile.html:87 templates/profile/profile.html:109
 msgid "Number of Ratings"
 msgstr ""
 
