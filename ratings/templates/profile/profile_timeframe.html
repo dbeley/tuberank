@@ -28,10 +28,10 @@
         {% endfor %}
     </ul>
     {% if viewings.has_previous %}
-        {% urlparams page=viewings.previous_page_number as previous_url_params %}
+        {% urlparams timeframe_page=viewings.previous_page_number as previous_url_params %}
     {% endif %}
     {% if viewings.has_next %}
-        {% urlparams page=viewings.next_page_number as next_url_params %}
+        {% urlparams timeframe_page=viewings.next_page_number as next_url_params %}
     {% endif %}
     {% url 'profile' username=user.username as profile_url %}
     {% include "htmx-paginator.html" with page=viewings url=profile_url previous_url_params=previous_url_params next_url_params=next_url_params %}

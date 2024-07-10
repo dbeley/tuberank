@@ -1,0 +1,21 @@
+{% load i18n %}
+{% load ratings_extras %}
+<div class="bg-white rounded-lg shadow-lg py-4 mt-4 px-4"
+     id="most_watched_channels"
+     hx-swap="outerHTML"
+     hx-target="#most_watched_channels">
+    <h2 class="text-2xl font-bold mb-4">{% translate "Most Watched Channels" %}</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
+        {% for channel in most_watched_channels %}
+            {% include "channels/channel_profile_item.html" %}
+        {% endfor %}
+    </div>
+    {% if most_watched_channels_page.has_previous %}
+        {% urlparams channels_page=most_watched_channels_page.previous_page_number as previous_url_params %}
+    {% endif %}
+    {% if most_watched_channels_page.has_next %}
+        {% urlparams channels_page=most_watched_channels_page.next_page_number as next_url_params %}
+    {% endif %}
+    {% url 'profile' username=user.username as profile_url %}
+    {% include "htmx-paginator.html" with page=most_watched_channels_page url=profile_url previous_url_params=previous_url_params next_url_params=next_url_params %}
+</div>

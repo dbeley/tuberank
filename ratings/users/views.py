@@ -33,23 +33,37 @@ class ProfileView(APIView):
         video_chart_data = charts.get_video_ratings_chart_for_user(user)
         channel_chart_data = charts.get_channel_ratings_chart_for_user(user)
 
-        paginator = Paginator(user.viewings.order_by("-date_creation"), 10)
-        if page_query_param := request.GET.get("page"):
-            page = paginator.get_page(page_query_param)
+        timeframe_paginator = Paginator(user.viewings.order_by("-date_creation"), 10)
+        if timeframe_page_query_param := request.GET.get("timeframe_page"):
+            timeframe_page = timeframe_paginator.get_page(timeframe_page_query_param)
             return Response(
                 {
                     "user": user,
-                    "viewings": page,
+                    "viewings": timeframe_page,
                 },
                 template_name="profile/profile_timeframe.html",
             )
-        page = paginator.get_page(1)
+        timeframe_page = timeframe_paginator.get_page(1)
 
         most_watched_channels = (
             Channel.objects.filter(videos__viewings__user=user)
             .annotate(view_count=Count("videos__viewings"))
             .order_by("-view_count")
         )
+        channels_paginator = Paginator(most_watched_channels, 8)
+        if channels_page_query_param := request.GET.get("channels_page"):
+            channels_page = channels_paginator.get_page(channels_page_query_param)
+            return Response(
+                {
+                    "user": user,
+                    "most_watched_channels_page": channels_page,
+                    "most_watched_channels": MostWatchedChannelSerializer(
+                        channels_page, many=True
+                    ).data,
+                },
+                template_name="profile/profile_most_watched_channels.html",
+            )
+        channels_page = channels_paginator.get_page(1)
         return Response(
             {
                 "user": user,
@@ -57,9 +71,10 @@ class ProfileView(APIView):
                 "video_ratings_data": video_chart_data["ratings_data"],
                 "channel_ratings_labels": channel_chart_data["ratings_labels"],
                 "channel_ratings_data": channel_chart_data["ratings_data"],
-                "viewings": page,
+                "viewings": timeframe_page,
+                "most_watched_channels_page": channels_page,
                 "most_watched_channels": MostWatchedChannelSerializer(
-                    most_watched_channels, many=True
+                    channels_page, many=True
                 ).data,
             }
         )
