@@ -74,4 +74,4 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 EXPOSE 8000
 
 # Run the application
-CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "tuberank.wsgi"]
+CMD ["gunicorn", "--bind", ":8000", "--workers", "1", "tuberank.wsgi"]

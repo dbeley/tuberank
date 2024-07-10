@@ -11,7 +11,7 @@
     command: >
       sh -c "npm run tailwind-build &&
              python /code/manage.py migrate &&
-             gunicorn --bind :8000 --workers 2 tuberank.wsgi"
+             gunicorn --bind :8000 --workers 1 tuberank.wsgi"
     ports:
       - "8000:8000"
     environment:
