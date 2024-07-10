@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from ratings.models import VideoRating, ChannelRating, VideoViewing
+from ratings.models import VideoRating, ChannelRating, VideoViewing, Channel
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -26,4 +26,28 @@ class UserSerializer(serializers.ModelSerializer):
             "number_videos_ratings",
             "number_videos_viewed",
             "number_channels_ratings",
+        ]
+
+
+class MostWatchedChannelSerializer(serializers.ModelSerializer):
+    count = serializers.SerializerMethodField()
+    name = serializers.SerializerMethodField()
+    thumbnail_url = serializers.SerializerMethodField()
+
+    def get_count(self, obj: Channel):
+        return obj.videos.count()
+
+    def get_name(self, obj: Channel):
+        return obj.last_snapshot.name_en
+
+    def get_thumbnail_url(self, obj: Channel):
+        return obj.last_snapshot.thumbnail_url
+
+    class Meta:
+        model = Channel
+        fields = [
+            "id",
+            "name",
+            "count",
+            "thumbnail_url",
         ]

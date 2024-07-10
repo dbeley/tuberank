@@ -28,7 +28,7 @@
     </div>
     {% url 'profile' username=user.get_username as url_profile %}
     {% blocktranslate with url=url_profile %}<p>Find your viewing history on your <a class="font-bold" href={{ url }}>profile page</a>.</p>{% endblocktranslate %}
-    <form action="{% url 'video_viewing' pk=video.pk %}" method="post">
+    <form action="{% url 'video_viewing' pk=video.id %}" method="post">
         {% csrf_token %}
         <div class="mt-2 flex justify-start">
             <button type="submit"

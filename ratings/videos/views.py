@@ -147,7 +147,7 @@ class VideoViewingView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = "videos/video_viewing.html"
 
-    def get(self, request, pk):
+    def get(self, _, pk):
         video = get_object_or_404(Video, pk=pk)
         return Response(
             {

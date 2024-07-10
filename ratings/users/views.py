@@ -7,9 +7,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from ratings.charts import charts
-from ratings.models import VideoViewing, Channel
+from ratings.models import Channel
 
-from ratings.users.serializers import UserSerializer
+from ratings.users.serializers import UserSerializer, MostWatchedChannelSerializer
 
 
 class UserListView(APIView):
@@ -32,6 +32,7 @@ class ProfileView(APIView):
             return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
         video_chart_data = charts.get_video_ratings_chart_for_user(user)
         channel_chart_data = charts.get_channel_ratings_chart_for_user(user)
+
         paginator = Paginator(user.viewings.order_by("-date_creation"), 10)
         if page_query_param := request.GET.get("page"):
             page = paginator.get_page(page_query_param)
@@ -43,23 +44,12 @@ class ProfileView(APIView):
                 template_name="profile/profile_timeframe.html",
             )
         page = paginator.get_page(1)
-        most_watched_channel_dict = (
-            VideoViewing.objects.filter(user=user)
-            .values("video__channel_id")
-            .annotate(count=Count("video__channel_id"))
-            .order_by("-count")[:8]
+
+        most_watched_channels = (
+            Channel.objects.filter(videos__viewings__user=user)
+            .annotate(view_count=Count("videos__viewings"))
+            .order_by("-view_count")
         )
-        most_watched_channels = []
-        for channel_dict in most_watched_channel_dict:
-            channel = Channel.objects.get(pk=channel_dict.get("video__channel_id"))
-            most_watched_channels.append(
-                {
-                    "id": channel.pk,
-                    "name": channel.last_snapshot.name_en,
-                    "count": channel_dict.get("count"),
-                    "thumbnail_url": channel.last_snapshot.thumbnail_url,
-                }
-            )
         return Response(
             {
                 "user": user,
@@ -68,7 +58,9 @@ class ProfileView(APIView):
                 "channel_ratings_labels": channel_chart_data["ratings_labels"],
                 "channel_ratings_data": channel_chart_data["ratings_data"],
                 "viewings": page,
-                "most_watched_channels": most_watched_channels,
+                "most_watched_channels": MostWatchedChannelSerializer(
+                    most_watched_channels, many=True
+                ).data,
             }
         )
 
