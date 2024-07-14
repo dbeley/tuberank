@@ -94,13 +94,17 @@ class ChannelListView(APIView):
     template_name = "channels/channel_list.html"
 
     def get(self, request):
-        channels = Channel.objects.annotate(
-            name=F("snapshots__name_en"),
-            count_subscribers=Max("snapshots__count_subscribers"),
-            count_views=Max("snapshots__count_views"),
-            count_videos_indexed=Count("videos"),
-            avg_rating=Avg(F("ratings__rating")),
-        ).order_by("-count_videos_indexed")
+        channels = (
+            Channel.objects.annotate(
+                name=F("snapshots__name_en"),
+                count_subscribers=Max("snapshots__count_subscribers"),
+                count_views=Max("snapshots__count_views"),
+                count_videos_indexed=Count("videos"),
+                avg_rating=Avg(F("ratings__rating")),
+            )
+            .filter(count_subscribers__isnull=False)
+            .order_by("-count_videos_indexed")
+        )
         if sort_method := request.GET.get("sort_by"):
             if sort_method not in enums.SortingChoices.choices():
                 return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
