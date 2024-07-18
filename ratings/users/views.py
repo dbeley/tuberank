@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.http import HttpResponseRedirect
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
@@ -47,7 +47,11 @@ class ProfileView(APIView):
 
         most_watched_channels = (
             Channel.objects.filter(videos__viewings__user=user)
-            .annotate(view_count=Count("videos__viewings"))
+            .annotate(
+                view_count=Count(
+                    "videos__viewings", filter=Q(videos__viewings__user=user)
+                )
+            )
             .order_by("-view_count")
         )
         channels_paginator = Paginator(most_watched_channels, 8)
