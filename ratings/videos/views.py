@@ -58,8 +58,10 @@ def _get_tags_with_score_for_video(video: Video) -> list[dict]:
 
 
 def _add_video_to_tag(tag_name: str, video: Video, user: User) -> None:
+    if len(tag_name) > 25:
+        raise ValueError("tag_name %s is more than 25 characters", tag_name)
     tag, _ = UserTag.objects.get_or_create(
-        name=tag_name,
+        name=tag_name.replace(" ", "-").lower(),
         defaults={
             "user": user,
             "state": enums.TagState.VALIDATED,
