@@ -119,8 +119,11 @@ class SearchView(APIView):
                 template_name="search/channel_results.html",
             )
         channel_page = channel_paginator.get_page(1)
+        video_results_count = video_queryset.count()
+        channel_results_count = channel_queryset.count()
         return Response(
             {
+                "results_count": video_results_count + channel_results_count,
                 "channels": ChannelSerializer(channel_page, many=True).data,
                 "channel_page": channel_page,
                 "videos": VideoSerializer(video_page, many=True).data,

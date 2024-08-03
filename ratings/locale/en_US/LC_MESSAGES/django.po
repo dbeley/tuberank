@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-04 16:23+0200\n"
+"POT-Creation-Date: 2024-08-03 13:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -664,12 +664,12 @@ msgstr ""
 msgid "Watched Videos"
 msgstr ""
 
-#: templates/profile/profile.html:23 templates/profile/profile.html:50
+#: templates/profile/profile.html:23 templates/profile/profile.html:43
 #: templates/profile/profile_videos_ratings.html:18
 msgid "Video Ratings"
 msgstr ""
 
-#: templates/profile/profile.html:27 templates/profile/profile.html:64
+#: templates/profile/profile.html:27 templates/profile/profile.html:57
 #: templates/profile/profile_channels_ratings.html:18
 msgid "Channel Ratings"
 msgstr ""
@@ -678,29 +678,25 @@ msgstr ""
 msgid "Date Joined"
 msgstr ""
 
-#: templates/profile/profile.html:41
-msgid "Most Watched Channels"
-msgstr ""
-
-#: templates/profile/profile.html:57
+#: templates/profile/profile.html:50
 msgid "See all Video Ratings"
 msgstr ""
 
-#: templates/profile/profile.html:60
+#: templates/profile/profile.html:53
 #: templates/profile/profile_videos_ratings.html:26
 msgid "No video ratings found."
 msgstr ""
 
-#: templates/profile/profile.html:71
+#: templates/profile/profile.html:64
 msgid "See all Channel Ratings"
 msgstr ""
 
-#: templates/profile/profile.html:74
+#: templates/profile/profile.html:67
 #: templates/profile/profile_channels_ratings.html:26
 msgid "No channel ratings found."
 msgstr ""
 
-#: templates/profile/profile.html:87 templates/profile/profile.html:109
+#: templates/profile/profile.html:80 templates/profile/profile.html:102
 msgid "Number of Ratings"
 msgstr ""
 
@@ -712,6 +708,10 @@ msgstr ""
 #: templates/profile/profile_channels_ratings.html:13
 #: templates/profile/profile_videos_ratings.html:13
 msgid "&#8592; Return to profile page"
+msgstr ""
+
+#: templates/profile/profile_most_watched_channels.html:7
+msgid "Most Watched Channels"
 msgstr ""
 
 #: templates/profile/profile_timeframe.html:7
@@ -759,7 +759,7 @@ msgstr ""
 
 #: templates/search/search.html:8
 #, python-format
-msgid "Results for \"%(query)s\""
+msgid "%(results_count)s results for \"%(query)s\""
 msgstr ""
 
 #: templates/tags/tag_overview.html:10
@@ -892,6 +892,6 @@ msgstr ""
 msgid "%(minutes)sm %(seconds)ss"
 msgstr ""
 
-#: videos/views.py:207
+#: videos/views.py:209
 msgid "The video was successfully added to the list"
 msgstr ""
