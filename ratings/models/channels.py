@@ -44,7 +44,7 @@ class ChannelSnapshot(models.Model):
     count_views = models.BigIntegerField(default=0, blank=True, null=True)
     count_videos = models.IntegerField(default=0, blank=True, null=True)
     date_creation = models.DateTimeField(auto_now_add=True)
-    custom_url = models.CharField(max_length=24, blank=True)
+    custom_url = models.CharField(max_length=31, blank=True)
     description = models.TextField(max_length=5000, blank=True)
     thumbnail_url = models.CharField(max_length=200)
 
